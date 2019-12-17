@@ -1,0 +1,5 @@
+<ca>
+<chain>
+/usr/local/nuri-ssl/certs/kepco/AMICA001.der
+</chain>
+</ca>
