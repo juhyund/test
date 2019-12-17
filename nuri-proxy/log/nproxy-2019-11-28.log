@@ -1,0 +1,14 @@
+2019-11-28 00:01:01.246769 INFO   ................ [START] NURI PROXY  ................ 
+2019-11-28 00:01:01.247033 INFO  proxy server initialization 
+2019-11-28 00:01:01.247048 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-11-28 00:01:01.247291 INFO  Listen host = 112.136.247.181
+2019-11-28 00:01:01.247310 INFO  Listen port = 12083
+2019-11-28 00:01:01.247318 INFO  Backend host = 127.0.0.1
+2019-11-28 00:01:01.247325 INFO  Backend port = 1813
+2019-11-28 00:01:01.247333 INFO  CACertificate file =/usr/local/nuri-ssl/certs/ca_chain.conf
+2019-11-28 00:01:01.247340 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A.kepco.com.pem
+2019-11-28 00:01:01.247348 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/NTC50180000A.key.pem
+2019-11-28 00:01:01.247355 INFO  Max session time =13
+2019-11-28 00:01:01.247401 INFO  ptls server initialization
+2019-11-28 00:01:01.683620 INFO  Waiting for DTLS communication...... 
+2019-11-28 00:01:01.683657 INFO  ptls_session_ctx_malloc success

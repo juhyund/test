@@ -1,0 +1,20 @@
+### Session Configuaration
+MaxSessionTime=13 # in seconds.
+
+#### Proxy Configuration
+ListenAddr=112.136.247.181
+#ListenAddr=2001:2d8:270:1047:9648:fa7e:4cc1:9bfb
+ListenPort=12083
+BackendAddr=127.0.0.1
+BackendPort=1813
+CACertificateFile=/usr/local/nuri-ssl/certs/ca_chain.conf
+CertificateFile=/usr/local/nuri-ssl/certs/kepco/NTC501800000A.kepco.com.pem
+CertificateKeyFile=/usr/local/nuri-ssl/certs/kepco/NTC50180000A.key.pem
+FEPServerIP=59.3.93.125
+FEPServerPort=19000
+
+### Trap Configuration
+ListenTrapAddr=112.136.247.181
+ListenTrapPort=10000
+BackendTrapAddr=59.3.93.125
+BackendTrapPort=19000 

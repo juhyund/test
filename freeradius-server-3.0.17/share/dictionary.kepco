@@ -1,0 +1,21 @@
+# -*- text -*-
+# Copyright (C) 2019 NuriTelecom
+# Author Shin Hyunoh (hyun5)
+##############################################################################
+#
+#	Kepco AMI attributes
+#
+##############################################################################
+
+VENDOR		Kepco				29408
+BEGIN-VENDOR	Kepco
+
+#
+#Global Attribute for Command of Access Accept
+#
+ATTRIBUTE	Kep-Devi-Fep-Sign-Certi			206	octets
+ATTRIBUTE	Kep-Devi-Emu-Sign-Certi			207	octets
+ATTRIBUTE	Kep-Devi-Aaa-Type			208	integer
+ATTRIBUTE	Kep-Devi-Fixed-Id			209 octets 
+
+END-VENDOR Kepco

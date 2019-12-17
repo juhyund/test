@@ -1,0 +1,927 @@
+nohup: failed to run command `./nproxy': 그런 파일이나 디렉터리가 없습니다
+2019-10-28 13:55:23.900731 INFO   ................ [START] NURI PROXY  ................ 
+2019-10-28 13:55:23.901006 INFO  proxy server initialization 
+2019-10-28 13:55:23.901023 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-10-28 13:55:23.901116 INFO  Listen host = 112.136.247.181
+2019-10-28 13:55:23.901129 INFO  Listen port = 12083
+2019-10-28 13:55:23.901138 INFO  Backend host = 127.0.0.1
+2019-10-28 13:55:23.901148 INFO  Backend port = 1813
+2019-10-28 13:55:23.901157 INFO  CACertificate file =/usr/local/nuri-ssl/certs/ca_chain.conf
+2019-10-28 13:55:23.901166 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A_sign.pem
+2019-10-28 13:55:23.901176 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/sign_private_A.out.key
+2019-10-28 13:55:23.901185 INFO  Max session time =13
+2019-10-28 13:55:23.901244 INFO  ptls server initialization
+2019-10-28 13:55:24.331153 INFO  Waiting for DTLS communication...... 
+2019-10-28 13:55:24.331171 INFO  ptls_session_ctx_malloc success
+2019-10-28 13:57:11.410882 INFO  Cipher-Suite : (null)
+2019-10-28 13:57:11.411032 INFO  Waiting for DTLS communication...... 
+2019-10-28 13:57:11.411053 INFO  ptls_session_ctx_malloc success
+2019-10-28 13:57:11.411138 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 13:57:11.411303 INFO  [thread_id : 2483357440] Thread start 
+2019-10-28 13:57:11.411321 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 13:57:11.411332 INFO  [thread_id : 2483357440] ptls_server_session_close_notify -1
+2019-10-28 13:57:11.411342 ERROR error code 0001
+2019-10-28 13:57:11.411364 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 13:57:11.411378 INFO  [thread_id : 2483357440] ptls_session_ctx_free -1
+2019-10-28 13:58:04.424126 INFO  Cipher-Suite : (null)
+2019-10-28 13:58:04.425773 INFO  Waiting for DTLS communication...... 
+2019-10-28 13:58:04.425805 INFO  ptls_session_ctx_malloc success
+2019-10-28 13:58:04.425878 INFO  Socket has been created. [Socket Discriptor = 4]
+2019-10-28 13:58:04.425925 INFO  [thread_id : 2474964736] Thread start 
+2019-10-28 13:58:04.425940 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 13:58:04.425955 INFO  [thread_id : 2474964736] ptls_server_session_close_notify -1
+2019-10-28 13:58:04.426002 ERROR error code 0001
+2019-10-28 13:58:04.426026 INFO  Socket has been closed. [Socket Discriptor = 4]
+2019-10-28 13:58:04.426047 INFO  [thread_id : 2474964736] ptls_session_ctx_free -1
+2019-10-28 14:00:26.997943 INFO  Cipher-Suite : (null)
+2019-10-28 14:00:26.998060 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:00:26.998081 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:00:26.998199 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 14:00:26.998322 INFO  [thread_id : 2466572032] Thread start 
+2019-10-28 14:00:26.998336 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:00:26.998347 INFO  [thread_id : 2466572032] ptls_server_session_close_notify -1
+2019-10-28 14:00:26.998358 ERROR error code 0001
+2019-10-28 14:00:26.998409 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 14:00:26.998429 INFO  [thread_id : 2466572032] ptls_session_ctx_free -1
+./nproxy: error while loading shared libraries: /root/nuri-proxy/ptls/lib/libptls.so.3.0: file too short
+2019-10-28 14:10:43.982012 INFO   ................ [START] NURI PROXY  ................ 
+2019-10-28 14:10:43.982288 INFO  proxy server initialization 
+2019-10-28 14:10:43.982306 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-10-28 14:10:43.982404 INFO  Listen host = 112.136.247.181
+2019-10-28 14:10:43.982416 INFO  Listen port = 12083
+2019-10-28 14:10:43.982425 INFO  Backend host = 127.0.0.1
+2019-10-28 14:10:43.982434 INFO  Backend port = 1813
+2019-10-28 14:10:43.982442 INFO  CACertificate file =/usr/local/nuri-ssl/certs/ca_chain.conf
+2019-10-28 14:10:43.982451 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A_sign.pem
+2019-10-28 14:10:43.982460 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/sign_private_A.out.key
+2019-10-28 14:10:43.982479 INFO  Max session time =13
+2019-10-28 14:10:43.982524 INFO  ptls server initialization
+2019-10-28 14:10:44.412387 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:10:44.412407 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:10:54.539826 INFO  Cipher-Suite : (null)
+2019-10-28 14:10:54.539937 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:10:54.539972 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:10:54.540083 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 14:10:54.540179 INFO  [thread_id : 3849242368] Thread start 
+2019-10-28 14:10:54.540197 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:10:54.540248 INFO  [thread_id : 3849242368] ptls_server_session_close_notify -1
+2019-10-28 14:10:54.540261 ERROR error code 0001
+2019-10-28 14:10:54.540286 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 14:10:54.540302 INFO  [thread_id : 3849242368] ptls_session_ctx_free -1
+2019-10-28 14:10:56.654853 INFO  Cipher-Suite : (null)
+2019-10-28 14:10:56.654974 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:10:56.655008 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:10:56.655067 INFO  Socket has been created. [Socket Discriptor = 4]
+2019-10-28 14:10:56.655106 INFO  [thread_id : 3840849664] Thread start 
+2019-10-28 14:10:56.655121 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:10:56.655142 INFO  [thread_id : 3840849664] ptls_server_session_close_notify -1
+2019-10-28 14:10:56.655153 ERROR error code 0001
+2019-10-28 14:10:56.655173 INFO  Socket has been closed. [Socket Discriptor = 4]
+2019-10-28 14:10:56.655186 INFO  [thread_id : 3840849664] ptls_session_ctx_free -1
+2019-10-28 14:11:24.305991 INFO  Cipher-Suite : (null)
+2019-10-28 14:11:24.306233 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:11:24.306257 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:11:24.306366 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 14:11:24.306448 INFO  [thread_id : 3758094080] Thread start 
+2019-10-28 14:11:24.306464 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:11:24.306486 INFO  [thread_id : 3758094080] ptls_server_session_close_notify -1
+2019-10-28 14:11:24.306497 ERROR error code 0001
+2019-10-28 14:11:24.306523 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 14:11:24.306537 INFO  [thread_id : 3758094080] ptls_session_ctx_free -1
+2019-10-28 14:21:41.557734 INFO   ................ [START] NURI PROXY  ................ 
+2019-10-28 14:21:41.558015 INFO  proxy server initialization 
+2019-10-28 14:21:41.558033 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-10-28 14:21:41.558123 INFO  Listen host = 112.136.247.181
+2019-10-28 14:21:41.558137 INFO  Listen port = 12083
+2019-10-28 14:21:41.558148 INFO  Backend host = 127.0.0.1
+2019-10-28 14:21:41.558158 INFO  Backend port = 1813
+2019-10-28 14:21:41.558168 INFO  CACertificate file =/usr/local/nuri-ssl/certs/ca_chain.conf
+2019-10-28 14:21:41.558178 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A_sign.pem
+2019-10-28 14:21:41.558188 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/sign_private_A.out.key
+2019-10-28 14:21:41.558198 INFO  Max session time =13
+2019-10-28 14:21:41.558268 INFO  ptls server initialization
+2019-10-28 14:21:41.992796 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:21:41.992845 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:22:54.994065 INFO  Cipher-Suite : (null)
+2019-10-28 14:22:54.994193 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:22:54.994259 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:22:54.994349 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 14:22:54.994447 INFO  [thread_id : 2877503232] Thread start 
+2019-10-28 14:22:54.994467 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:22:54.994512 INFO  [thread_id : 2877503232] ptls_server_session_close_notify -1
+2019-10-28 14:22:54.994525 ERROR error code 0001
+2019-10-28 14:22:54.994552 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 14:22:54.994568 INFO  [thread_id : 2877503232] ptls_session_ctx_free -1
+2019-10-28 14:30:06.332942 INFO   ................ [START] NURI PROXY  ................ 
+2019-10-28 14:30:06.333190 INFO  proxy server initialization 
+2019-10-28 14:30:06.333218 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-10-28 14:30:06.333302 INFO  Listen host = 112.136.247.181
+2019-10-28 14:30:06.333317 INFO  Listen port = 12083
+2019-10-28 14:30:06.333326 INFO  Backend host = 127.0.0.1
+2019-10-28 14:30:06.333335 INFO  Backend port = 1813
+2019-10-28 14:30:06.333344 INFO  CACertificate file =/usr/local/nuri-ssl/certs/ca_chain.conf
+2019-10-28 14:30:06.333353 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A_sign.pem
+2019-10-28 14:30:06.333362 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/sign_private_A.out.key
+2019-10-28 14:30:06.333370 INFO  Max session time =13
+2019-10-28 14:30:06.333416 INFO  ptls server initialization
+2019-10-28 14:30:06.758551 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:30:06.758570 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:34:59.156385 INFO  Cipher-Suite : (null)
+2019-10-28 14:34:59.156527 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:34:59.156563 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:34:59.156633 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 14:34:59.156702 INFO  [thread_id : 3462936320] Thread start 
+2019-10-28 14:34:59.156717 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:34:59.156728 INFO  [thread_id : 3462936320] ptls_server_session_close_notify -1
+2019-10-28 14:34:59.156739 ERROR error code 0001
+2019-10-28 14:34:59.156759 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 14:34:59.156775 INFO  [thread_id : 3462936320] ptls_session_ctx_free -1
+2019-10-28 14:37:30.751602 INFO  Cipher-Suite : (null)
+2019-10-28 14:37:30.751717 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:37:30.751740 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:37:30.751836 INFO  Socket has been created. [Socket Discriptor = 4]
+2019-10-28 14:37:30.751896 INFO  [thread_id : 3454543616] Thread start 
+2019-10-28 14:37:30.751911 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:37:30.751923 INFO  [thread_id : 3454543616] ptls_server_session_close_notify -1
+2019-10-28 14:37:30.751937 ERROR error code 0001
+2019-10-28 14:37:30.752005 INFO  Socket has been closed. [Socket Discriptor = 4]
+2019-10-28 14:37:30.752025 INFO  [thread_id : 3454543616] ptls_session_ctx_free -1
+2019-10-28 14:44:13.129007 INFO  Cipher-Suite : (null)
+2019-10-28 14:44:13.129115 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:44:13.129136 INFO  ptls_session_ctx_malloc success
+2019-10-28 14:44:13.129285 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 14:44:13.129378 INFO  [thread_id : 3446150912] Thread start 
+2019-10-28 14:44:13.129394 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:44:13.129406 INFO  [thread_id : 3446150912] ptls_server_session_close_notify -1
+2019-10-28 14:44:13.129422 ERROR error code 0001
+2019-10-28 14:44:13.129461 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 14:44:13.129478 INFO  [thread_id : 3446150912] ptls_session_ctx_free -1
+2019-10-28 14:52:14.809036 INFO   ................ [START] NURI PROXY  ................ 
+2019-10-28 14:52:14.809310 INFO  proxy server initialization 
+2019-10-28 14:52:14.809328 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-10-28 14:52:14.809439 INFO  Listen host = 112.136.247.181
+2019-10-28 14:52:14.809457 INFO  Listen port = 12083
+2019-10-28 14:52:14.809467 INFO  Backend host = 127.0.0.1
+2019-10-28 14:52:14.809482 INFO  Backend port = 1813
+2019-10-28 14:52:14.809531 INFO  CACertificate file =/usr/local/nuri-ssl/certs/ca_chain.conf
+2019-10-28 14:52:14.809557 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A_sign.pem
+2019-10-28 14:52:14.809604 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/sign_private_A.out.key
+2019-10-28 14:52:14.809613 INFO  Max session time =13
+2019-10-28 14:52:14.809659 INFO  ptls server initialization
+2019-10-28 14:52:15.233873 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:52:15.233902 INFO  ptls_session_ctx_malloc success
+ssl_tls.c:0087: |3| 0x10e2fd0: set_timer to 0 ms
+ssl_tls.c:8126: |2| 0x10e2fd0: => handshake
+ssl_srv.c:4498: |2| 0x10e2fd0: server state: 0
+ssl_tls.c:2772: |2| 0x10e2fd0: => flush output
+ssl_tls.c:2784: |2| 0x10e2fd0: <= flush output
+ssl_srv.c:4498: |2| 0x10e2fd0: server state: 1
+ssl_tls.c:2772: |2| 0x10e2fd0: => flush output
+ssl_tls.c:2784: |2| 0x10e2fd0: <= flush output
+ssl_srv.c:1349: |2| 0x10e2fd0: => parse client hello
+ssl_tls.c:2553: |2| 0x10e2fd0: => fetch input
+ssl_tls.c:2614: |2| 0x10e2fd0: in_left: 0, nb_want: 5
+ssl_tls.c:2655: |3| 0x10e2fd0: f_recv_timeout: 0 ms
+ssl_tls.c:2663: |2| 0x10e2fd0: ssl->f_recv(_timeout)() returned 147 (-0xffffff6d)
+ssl_tls.c:2759: |2| 0x10e2fd0: <= fetch input
+ssl_srv.c:1381: |4| 0x10e2fd0: dumping 'record header' (13 bytes)
+ssl_srv.c:1381: |4| 0x10e2fd0: 0000:  16 fe ff 00 00 00 00 00 00 00 00 00 86           .............
+ssl_srv.c:1393: |3| 0x10e2fd0: client hello v3, message type: 22
+ssl_srv.c:1402: |3| 0x10e2fd0: client hello v3, message len.: 134
+ssl_srv.c:1405: |3| 0x10e2fd0: client hello v3, protocol version: [254:255]
+ssl_tls.c:2553: |2| 0x10e2fd0: => fetch input
+ssl_tls.c:2614: |2| 0x10e2fd0: in_left: 147, nb_want: 147
+ssl_tls.c:2621: |2| 0x10e2fd0: <= fetch input
+ssl_srv.c:1487: |4| 0x10e2fd0: dumping 'record contents' (134 bytes)
+ssl_srv.c:1487: |4| 0x10e2fd0: 0000:  01 00 00 7a 00 00 00 00 00 00 00 7a fe fd 5d b6  ...z.......z..].
+ssl_srv.c:1487: |4| 0x10e2fd0: 0010:  82 1e 82 61 e8 78 9c 4b 46 b9 b8 4a cd a6 48 2d  ...a.x.KF..J..H-
+ssl_srv.c:1487: |4| 0x10e2fd0: 0020:  75 16 43 73 9b a4 94 e8 18 17 ad 3a d1 b5 00 00  u.Cs.......:....
+ssl_srv.c:1487: |4| 0x10e2fd0: 0030:  00 0a c0 5f c0 4b c0 5e c0 4a 00 ff 01 00 00 46  ..._.K.^.J.....F
+ssl_srv.c:1487: |4| 0x10e2fd0: 0040:  00 0d 00 16 00 14 04 03 04 01 03 03 03 01 06 03  ................
+ssl_srv.c:1487: |4| 0x10e2fd0: 0050:  06 01 05 03 05 01 02 03 02 01 00 0a 00 16 00 14  ................
+ssl_srv.c:1487: |4| 0x10e2fd0: 0060:  00 19 00 18 00 1b 00 17 00 16 00 1a 00 15 00 14  ................
+ssl_srv.c:1487: |4| 0x10e2fd0: 0070:  00 13 00 12 00 0b 00 02 01 00 00 16 00 00 00 17  ................
+ssl_srv.c:1487: |4| 0x10e2fd0: 0080:  00 00 00 23 00 00                                ...#..
+ssl_srv.c:1505: |3| 0x10e2fd0: client hello v3, handshake type: 1
+ssl_srv.c:1514: |3| 0x10e2fd0: client hello v3, handshake len.: 122
+ssl_srv.c:1603: |3| 0x10e2fd0: dumping 'client hello, version' (2 bytes)
+ssl_srv.c:1603: |3| 0x10e2fd0: 0000:  fe fd                                            ..
+ssl_srv.c:1634: |3| 0x10e2fd0: dumping 'client hello, random bytes' (32 bytes)
+ssl_srv.c:1634: |3| 0x10e2fd0: 0000:  5d b6 82 1e 82 61 e8 78 9c 4b 46 b9 b8 4a cd a6  ]....a.x.KF..J..
+ssl_srv.c:1634: |3| 0x10e2fd0: 0010:  48 2d 75 16 43 73 9b a4 94 e8 18 17 ad 3a d1 b5  H-u.Cs.......:..
+ssl_srv.c:1652: |3| 0x10e2fd0: dumping 'client hello, session id' (0 bytes)
+ssl_srv.c:1678: |3| 0x10e2fd0: dumping 'client hello, cookie' (0 bytes)
+ssl_srv.c:1691: |2| 0x10e2fd0: cookie verification failed
+ssl_srv.c:1737: |3| 0x10e2fd0: dumping 'client hello, ciphersuitelist' (10 bytes)
+ssl_srv.c:1737: |3| 0x10e2fd0: 0000:  c0 5f c0 4b c0 5e c0 4a 00 ff                    ._.K.^.J..
+ssl_srv.c:1757: |3| 0x10e2fd0: dumping 'client hello, compression' (1 bytes)
+ssl_srv.c:1757: |3| 0x10e2fd0: 0000:  00                                               .
+ssl_srv.c:1812: |3| 0x10e2fd0: dumping 'client hello extensions' (70 bytes)
+ssl_srv.c:1812: |3| 0x10e2fd0: 0000:  00 0d 00 16 00 14 04 03 04 01 03 03 03 01 06 03  ................
+ssl_srv.c:1812: |3| 0x10e2fd0: 0010:  06 01 05 03 05 01 02 03 02 01 00 0a 00 16 00 14  ................
+ssl_srv.c:1812: |3| 0x10e2fd0: 0020:  00 19 00 18 00 1b 00 17 00 16 00 1a 00 15 00 14  ................
+ssl_srv.c:1812: |3| 0x10e2fd0: 0030:  00 13 00 12 00 0b 00 02 01 00 00 16 00 00 00 17  ................
+ssl_srv.c:1812: |3| 0x10e2fd0: 0040:  00 00 00 23 00 00                                ...#..
+ssl_srv.c:1862: |3| 0x10e2fd0: found signature_algorithms extension
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 4 and hash 6
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 1 and hash 6
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 4 and hash 5
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 1 and hash 5
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 4 and hash 8
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 1 and hash 8
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 4 and hash 7
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 1 and hash 7
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 4 and hash 4
+ssl_srv.c:0269: |3| 0x10e2fd0: client hello v3, signature_algorithm ext: match sig 1 and hash 4
+ssl_srv.c:1876: |3| 0x10e2fd0: found supported elliptic curves extension
+ssl_srv.c:1884: |3| 0x10e2fd0: found supported point formats extension
+ssl_srv.c:0379: |4| 0x10e2fd0: point format selected: 0
+ssl_srv.c:1936: |3| 0x10e2fd0: found encrypt then mac extension
+ssl_srv.c:1946: |3| 0x10e2fd0: found extended master secret extension
+ssl_srv.c:1956: |3| 0x10e2fd0: found session ticket extension
+ssl_srv.c:2044: |3| 0x10e2fd0: received TLS_EMPTY_RENEGOTIATION_INFO 
+ssl_srv.c:0958: |3| 0x10e2fd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-256-GCM-SHA384
+ssl_srv.c:0856: |3| 0x10e2fd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e2fd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e2fd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e2fd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e2fd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e2fd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e2fd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x10e2fd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-256-CBC-SHA384
+ssl_srv.c:0856: |3| 0x10e2fd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e2fd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e2fd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e2fd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e2fd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e2fd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e2fd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x10e2fd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-128-GCM-SHA256
+ssl_srv.c:0856: |3| 0x10e2fd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e2fd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e2fd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e2fd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e2fd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e2fd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e2fd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x10e2fd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-128-CBC-SHA256
+ssl_srv.c:0856: |3| 0x10e2fd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e2fd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e2fd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e2fd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e2fd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e2fd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e2fd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e2fd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e2fd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e2fd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e2fd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e2fd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e2fd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e2fd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e2fd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e2fd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e2fd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e2fd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e2fd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e2fd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:2133: |1| 0x10e2fd0: got ciphersuites in common, but none of them usable
+ssl_tls.c:5267: |2| 0x10e2fd0: => send alert message
+ssl_tls.c:5268: |3| 0x10e2fd0: send alert level=2 message=40
+ssl_tls.c:3360: |2| 0x10e2fd0: => write record
+ssl_tls.c:3440: |3| 0x10e2fd0: output record: msgtype = 21, version = [254:253], msglen = 2
+ssl_tls.c:3443: |4| 0x10e2fd0: dumping 'output record sent to network' (15 bytes)
+ssl_tls.c:3443: |4| 0x10e2fd0: 0000:  15 fe fd 00 00 00 00 00 00 00 00 00 02 02 28     ..............(
+ssl_tls.c:2772: |2| 0x10e2fd0: => flush output
+ssl_tls.c:2791: |2| 0x10e2fd0: message length: 15, out_left: 15
+ssl_tls.c:2796: |2| 0x10e2fd0: ssl->f_send() returned 15 (-0xfffffff1)
+ssl_tls.c:2824: |2| 0x10e2fd0: <= flush output
+ssl_tls.c:3493: |2| 0x10e2fd0: <= write record
+ssl_tls.c:5280: |2| 0x10e2fd0: <= send alert message
+ssl_tls.c:8136: |2| 0x10e2fd0: <= handshake
+ssl_tls.c:8767: |2| 0x10e2fd0: => write close notify
+ssl_tls.c:8783: |2| 0x10e2fd0: <= write close notify
+ssl_tls.c:8981: |2| 0x10e2fd0: => free
+ssl_tls.c:9046: |2| 0x10e2fd0: <= free
+2019-10-28 14:52:30.633638 INFO  Cipher-Suite : (null)
+2019-10-28 14:52:30.633737 INFO  Waiting for DTLS communication...... 
+2019-10-28 14:52:30.633760 INFO  ptls_session_ctx_malloc success
+ssl_tls.c:0087: |3| 0x10e6c80: set_timer to 0 ms
+2019-10-28 14:52:30.633892 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 14:52:30.633980 INFO  [thread_id : 2243921664] Thread start 
+2019-10-28 14:52:30.634005 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 14:52:30.634054 INFO  [thread_id : 2243921664] ptls_server_session_close_notify -1
+2019-10-28 14:52:30.634072 ERROR error code 0001
+2019-10-28 14:52:30.634111 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 14:52:30.634153 INFO  [thread_id : 2243921664] ptls_session_ctx_free -1
+ssl_tls.c:8126: |2| 0x10e6c80: => handshake
+ssl_srv.c:4498: |2| 0x10e6c80: server state: 0
+ssl_tls.c:2772: |2| 0x10e6c80: => flush output
+ssl_tls.c:2784: |2| 0x10e6c80: <= flush output
+ssl_srv.c:4498: |2| 0x10e6c80: server state: 1
+ssl_tls.c:2772: |2| 0x10e6c80: => flush output
+ssl_tls.c:2784: |2| 0x10e6c80: <= flush output
+ssl_srv.c:1349: |2| 0x10e6c80: => parse client hello
+ssl_tls.c:2553: |2| 0x10e6c80: => fetch input
+ssl_tls.c:2614: |2| 0x10e6c80: in_left: 0, nb_want: 5
+ssl_tls.c:2655: |3| 0x10e6c80: f_recv_timeout: 0 ms
+ssl_tls.c:2663: |2| 0x10e6c80: ssl->f_recv(_timeout)() returned 155 (-0xffffff65)
+ssl_tls.c:2759: |2| 0x10e6c80: <= fetch input
+ssl_srv.c:1381: |4| 0x10e6c80: dumping 'record header' (13 bytes)
+ssl_srv.c:1381: |4| 0x10e6c80: 0000:  16 fe ff 00 00 00 00 00 00 00 00 00 8e           .............
+ssl_srv.c:1393: |3| 0x10e6c80: client hello v3, message type: 22
+ssl_srv.c:1402: |3| 0x10e6c80: client hello v3, message len.: 142
+ssl_srv.c:1405: |3| 0x10e6c80: client hello v3, protocol version: [254:255]
+ssl_tls.c:2553: |2| 0x10e6c80: => fetch input
+ssl_tls.c:2614: |2| 0x10e6c80: in_left: 155, nb_want: 155
+ssl_tls.c:2621: |2| 0x10e6c80: <= fetch input
+ssl_srv.c:1487: |4| 0x10e6c80: dumping 'record contents' (142 bytes)
+ssl_srv.c:1487: |4| 0x10e6c80: 0000:  01 00 00 82 00 00 00 00 00 00 00 82 fe fd 5d b6  ..............].
+ssl_srv.c:1487: |4| 0x10e6c80: 0010:  85 ea 19 06 6b 3a c0 f0 31 22 c8 8d 9d 86 2d c9  ....k:..1"....-.
+ssl_srv.c:1487: |4| 0x10e6c80: 0020:  77 da f1 9e 2a 7c 6f 5d 87 b9 28 bb ea da 00 00  w...*|o]..(.....
+ssl_srv.c:1487: |4| 0x10e6c80: 0030:  00 12 c0 5d c0 49 c0 5c c0 48 c0 5f c0 4b c0 5e  ...].I.\.H._.K.^
+ssl_srv.c:1487: |4| 0x10e6c80: 0040:  c0 4a 00 ff 01 00 00 46 00 0d 00 16 00 14 04 03  .J.....F........
+ssl_srv.c:1487: |4| 0x10e6c80: 0050:  04 01 03 03 03 01 06 03 06 01 05 03 05 01 02 03  ................
+ssl_srv.c:1487: |4| 0x10e6c80: 0060:  02 01 00 0a 00 16 00 14 00 19 00 18 00 1b 00 17  ................
+ssl_srv.c:1487: |4| 0x10e6c80: 0070:  00 16 00 1a 00 15 00 14 00 13 00 12 00 0b 00 02  ................
+ssl_srv.c:1487: |4| 0x10e6c80: 0080:  01 00 00 16 00 00 00 17 00 00 00 23 00 00        ...........#..
+ssl_srv.c:1505: |3| 0x10e6c80: client hello v3, handshake type: 1
+ssl_srv.c:1514: |3| 0x10e6c80: client hello v3, handshake len.: 130
+ssl_srv.c:1603: |3| 0x10e6c80: dumping 'client hello, version' (2 bytes)
+ssl_srv.c:1603: |3| 0x10e6c80: 0000:  fe fd                                            ..
+ssl_srv.c:1634: |3| 0x10e6c80: dumping 'client hello, random bytes' (32 bytes)
+ssl_srv.c:1634: |3| 0x10e6c80: 0000:  5d b6 85 ea 19 06 6b 3a c0 f0 31 22 c8 8d 9d 86  ].....k:..1"....
+ssl_srv.c:1634: |3| 0x10e6c80: 0010:  2d c9 77 da f1 9e 2a 7c 6f 5d 87 b9 28 bb ea da  -.w...*|o]..(...
+ssl_srv.c:1652: |3| 0x10e6c80: dumping 'client hello, session id' (0 bytes)
+ssl_srv.c:1678: |3| 0x10e6c80: dumping 'client hello, cookie' (0 bytes)
+ssl_srv.c:1691: |2| 0x10e6c80: cookie verification failed
+ssl_srv.c:1737: |3| 0x10e6c80: dumping 'client hello, ciphersuitelist' (18 bytes)
+ssl_srv.c:1737: |3| 0x10e6c80: 0000:  c0 5d c0 49 c0 5c c0 48 c0 5f c0 4b c0 5e c0 4a  .].I.\.H._.K.^.J
+ssl_srv.c:1737: |3| 0x10e6c80: 0010:  00 ff                                            ..
+ssl_srv.c:1757: |3| 0x10e6c80: dumping 'client hello, compression' (1 bytes)
+ssl_srv.c:1757: |3| 0x10e6c80: 0000:  00                                               .
+ssl_srv.c:1812: |3| 0x10e6c80: dumping 'client hello extensions' (70 bytes)
+ssl_srv.c:1812: |3| 0x10e6c80: 0000:  00 0d 00 16 00 14 04 03 04 01 03 03 03 01 06 03  ................
+ssl_srv.c:1812: |3| 0x10e6c80: 0010:  06 01 05 03 05 01 02 03 02 01 00 0a 00 16 00 14  ................
+ssl_srv.c:1812: |3| 0x10e6c80: 0020:  00 19 00 18 00 1b 00 17 00 16 00 1a 00 15 00 14  ................
+ssl_srv.c:1812: |3| 0x10e6c80: 0030:  00 13 00 12 00 0b 00 02 01 00 00 16 00 00 00 17  ................
+ssl_srv.c:1812: |3| 0x10e6c80: 0040:  00 00 00 23 00 00                                ...#..
+ssl_srv.c:1862: |3| 0x10e6c80: found signature_algorithms extension
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 4 and hash 6
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 1 and hash 6
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 4 and hash 5
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 1 and hash 5
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 4 and hash 8
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 1 and hash 8
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 4 and hash 7
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 1 and hash 7
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 4 and hash 4
+ssl_srv.c:0269: |3| 0x10e6c80: client hello v3, signature_algorithm ext: match sig 1 and hash 4
+ssl_srv.c:1876: |3| 0x10e6c80: found supported elliptic curves extension
+ssl_srv.c:1884: |3| 0x10e6c80: found supported point formats extension
+ssl_srv.c:0379: |4| 0x10e6c80: point format selected: 0
+ssl_srv.c:1936: |3| 0x10e6c80: found encrypt then mac extension
+ssl_srv.c:1946: |3| 0x10e6c80: found extended master secret extension
+ssl_srv.c:1956: |3| 0x10e6c80: found session ticket extension
+ssl_srv.c:2044: |3| 0x10e6c80: received TLS_EMPTY_RENEGOTIATION_INFO 
+ssl_srv.c:0958: |3| 0x10e6c80: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-256-GCM-SHA384
+ssl_srv.c:0856: |3| 0x10e6c80: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e6c80:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e6c80:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e6c80:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e6c80:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e6c80: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e6c80: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x10e6c80: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-256-CBC-SHA384
+ssl_srv.c:0856: |3| 0x10e6c80: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e6c80:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e6c80:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e6c80:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e6c80:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e6c80: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e6c80: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x10e6c80: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-128-GCM-SHA256
+ssl_srv.c:0856: |3| 0x10e6c80: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e6c80:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e6c80:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e6c80:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e6c80:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e6c80: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e6c80: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x10e6c80: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-128-CBC-SHA256
+ssl_srv.c:0856: |3| 0x10e6c80: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x10e6c80:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x10e6c80:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x10e6c80: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x10e6c80: cert. version     : 3
+ssl_srv.c:0867: |3| 0x10e6c80: serial number     : 85
+ssl_srv.c:0867: |3| 0x10e6c80: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x10e6c80: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x10e6c80: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x10e6c80: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x10e6c80: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x10e6c80: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x10e6c80: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x10e6c80: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x10e6c80:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x10e6c80: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x10e6c80:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x10e6c80:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x10e6c80: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x10e6c80: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:2133: |1| 0x10e6c80: got ciphersuites in common, but none of them usable
+ssl_tls.c:5267: |2| 0x10e6c80: => send alert message
+ssl_tls.c:5268: |3| 0x10e6c80: send alert level=2 message=40
+ssl_tls.c:3360: |2| 0x10e6c80: => write record
+ssl_tls.c:3440: |3| 0x10e6c80: output record: msgtype = 21, version = [254:253], msglen = 2
+ssl_tls.c:3443: |4| 0x10e6c80: dumping 'output record sent to network' (15 bytes)
+ssl_tls.c:3443: |4| 0x10e6c80: 0000:  15 fe fd 00 00 00 00 00 00 00 00 00 02 02 28     ..............(
+ssl_tls.c:2772: |2| 0x10e6c80: => flush output
+ssl_tls.c:2791: |2| 0x10e6c80: message length: 15, out_left: 15
+ssl_tls.c:2796: |2| 0x10e6c80: ssl->f_send() returned 15 (-0xfffffff1)
+ssl_tls.c:2824: |2| 0x10e6c80: <= flush output
+ssl_tls.c:3493: |2| 0x10e6c80: <= write record
+ssl_tls.c:5280: |2| 0x10e6c80: <= send alert message
+ssl_tls.c:8136: |2| 0x10e6c80: <= handshake
+ssl_tls.c:8767: |2| 0x10e6c80: => write close notify
+ssl_tls.c:8783: |2| 0x10e6c80: <= write close notify
+ssl_tls.c:8981: |2| 0x10e6c80: => free
+ssl_tls.c:9046: |2| 0x10e6c80: <= free
+2019-10-28 15:09:00.117154 INFO  Cipher-Suite : (null)
+2019-10-28 15:09:00.117245 INFO  Waiting for DTLS communication...... 
+2019-10-28 15:09:00.117269 INFO  ptls_session_ctx_malloc success
+ssl_tls.c:0087: |3| 0x10e2fd0: set_timer to 0 ms
+2019-10-28 15:09:00.117367 INFO  Socket has been created. [Socket Discriptor = 4]
+2019-10-28 15:09:00.117422 INFO  [thread_id : 2235528960] Thread start 
+2019-10-28 15:09:00.117438 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 15:09:00.117449 INFO  [thread_id : 2235528960] ptls_server_session_close_notify -1
+2019-10-28 15:09:00.117464 ERROR error code 0001
+2019-10-28 15:09:00.117546 INFO  Socket has been closed. [Socket Discriptor = 4]
+2019-10-28 15:09:00.117567 INFO  [thread_id : 2235528960] ptls_session_ctx_free -1
+2019-10-28 16:27:19.177009 INFO   ................ [START] NURI PROXY  ................ 
+2019-10-28 16:27:19.177298 INFO  proxy server initialization 
+2019-10-28 16:27:19.177315 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-10-28 16:27:19.177407 INFO  Listen host = 112.136.247.181
+2019-10-28 16:27:19.177420 INFO  Listen port = 12083
+2019-10-28 16:27:19.177429 INFO  Backend host = 127.0.0.1
+2019-10-28 16:27:19.177439 INFO  Backend port = 1813
+2019-10-28 16:27:19.177448 INFO  CACertificate file =/usr/local/nuri-ssl/certs/ca_chain.conf
+2019-10-28 16:27:19.177457 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A_sign.pem
+2019-10-28 16:27:19.177467 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/sign_private_A.out.key
+2019-10-28 16:27:19.177476 INFO  Max session time =13
+2019-10-28 16:27:19.177523 INFO  ptls server initialization
+2019-10-28 16:27:19.608606 INFO  Waiting for DTLS communication...... 
+2019-10-28 16:27:19.608626 INFO  ptls_session_ctx_malloc success
+ssl_tls.c:0087: |3| 0x12fefd0: set_timer to 0 ms
+ssl_tls.c:8126: |2| 0x12fefd0: => handshake
+ssl_srv.c:4498: |2| 0x12fefd0: server state: 0
+ssl_tls.c:2772: |2| 0x12fefd0: => flush output
+ssl_tls.c:2784: |2| 0x12fefd0: <= flush output
+ssl_srv.c:4498: |2| 0x12fefd0: server state: 1
+ssl_tls.c:2772: |2| 0x12fefd0: => flush output
+ssl_tls.c:2784: |2| 0x12fefd0: <= flush output
+ssl_srv.c:1349: |2| 0x12fefd0: => parse client hello
+ssl_tls.c:2553: |2| 0x12fefd0: => fetch input
+ssl_tls.c:2614: |2| 0x12fefd0: in_left: 0, nb_want: 5
+ssl_tls.c:2655: |3| 0x12fefd0: f_recv_timeout: 0 ms
+ssl_tls.c:2663: |2| 0x12fefd0: ssl->f_recv(_timeout)() returned 147 (-0xffffff6d)
+ssl_tls.c:2759: |2| 0x12fefd0: <= fetch input
+ssl_srv.c:1381: |4| 0x12fefd0: dumping 'record header' (13 bytes)
+ssl_srv.c:1381: |4| 0x12fefd0: 0000:  16 fe ff 00 00 00 00 00 00 00 00 00 86           .............
+ssl_srv.c:1393: |3| 0x12fefd0: client hello v3, message type: 22
+ssl_srv.c:1402: |3| 0x12fefd0: client hello v3, message len.: 134
+ssl_srv.c:1405: |3| 0x12fefd0: client hello v3, protocol version: [254:255]
+ssl_tls.c:2553: |2| 0x12fefd0: => fetch input
+ssl_tls.c:2614: |2| 0x12fefd0: in_left: 147, nb_want: 147
+ssl_tls.c:2621: |2| 0x12fefd0: <= fetch input
+ssl_srv.c:1487: |4| 0x12fefd0: dumping 'record contents' (134 bytes)
+ssl_srv.c:1487: |4| 0x12fefd0: 0000:  01 00 00 7a 00 00 00 00 00 00 00 7a fe fd 5d b6  ...z.......z..].
+ssl_srv.c:1487: |4| 0x12fefd0: 0010:  98 89 78 9d 24 58 13 db e5 12 51 66 06 49 47 7f  ..x.$X....Qf.IG.
+ssl_srv.c:1487: |4| 0x12fefd0: 0020:  4c b1 fe b7 ed b1 ce 07 f1 06 3c d0 05 bb 00 00  L.........<.....
+ssl_srv.c:1487: |4| 0x12fefd0: 0030:  00 0a c0 5f c0 4b c0 5e c0 4a 00 ff 01 00 00 46  ..._.K.^.J.....F
+ssl_srv.c:1487: |4| 0x12fefd0: 0040:  00 0d 00 16 00 14 04 03 04 01 03 03 03 01 06 03  ................
+ssl_srv.c:1487: |4| 0x12fefd0: 0050:  06 01 05 03 05 01 02 03 02 01 00 0a 00 16 00 14  ................
+ssl_srv.c:1487: |4| 0x12fefd0: 0060:  00 19 00 18 00 1b 00 17 00 16 00 1a 00 15 00 14  ................
+ssl_srv.c:1487: |4| 0x12fefd0: 0070:  00 13 00 12 00 0b 00 02 01 00 00 16 00 00 00 17  ................
+ssl_srv.c:1487: |4| 0x12fefd0: 0080:  00 00 00 23 00 00                                ...#..
+ssl_srv.c:1505: |3| 0x12fefd0: client hello v3, handshake type: 1
+ssl_srv.c:1514: |3| 0x12fefd0: client hello v3, handshake len.: 122
+ssl_srv.c:1603: |3| 0x12fefd0: dumping 'client hello, version' (2 bytes)
+ssl_srv.c:1603: |3| 0x12fefd0: 0000:  fe fd                                            ..
+ssl_srv.c:1634: |3| 0x12fefd0: dumping 'client hello, random bytes' (32 bytes)
+ssl_srv.c:1634: |3| 0x12fefd0: 0000:  5d b6 98 89 78 9d 24 58 13 db e5 12 51 66 06 49  ]...x.$X....Qf.I
+ssl_srv.c:1634: |3| 0x12fefd0: 0010:  47 7f 4c b1 fe b7 ed b1 ce 07 f1 06 3c d0 05 bb  G.L.........<...
+ssl_srv.c:1652: |3| 0x12fefd0: dumping 'client hello, session id' (0 bytes)
+ssl_srv.c:1678: |3| 0x12fefd0: dumping 'client hello, cookie' (0 bytes)
+ssl_srv.c:1691: |2| 0x12fefd0: cookie verification failed
+ssl_srv.c:1737: |3| 0x12fefd0: dumping 'client hello, ciphersuitelist' (10 bytes)
+ssl_srv.c:1737: |3| 0x12fefd0: 0000:  c0 5f c0 4b c0 5e c0 4a 00 ff                    ._.K.^.J..
+ssl_srv.c:1757: |3| 0x12fefd0: dumping 'client hello, compression' (1 bytes)
+ssl_srv.c:1757: |3| 0x12fefd0: 0000:  00                                               .
+ssl_srv.c:1812: |3| 0x12fefd0: dumping 'client hello extensions' (70 bytes)
+ssl_srv.c:1812: |3| 0x12fefd0: 0000:  00 0d 00 16 00 14 04 03 04 01 03 03 03 01 06 03  ................
+ssl_srv.c:1812: |3| 0x12fefd0: 0010:  06 01 05 03 05 01 02 03 02 01 00 0a 00 16 00 14  ................
+ssl_srv.c:1812: |3| 0x12fefd0: 0020:  00 19 00 18 00 1b 00 17 00 16 00 1a 00 15 00 14  ................
+ssl_srv.c:1812: |3| 0x12fefd0: 0030:  00 13 00 12 00 0b 00 02 01 00 00 16 00 00 00 17  ................
+ssl_srv.c:1812: |3| 0x12fefd0: 0040:  00 00 00 23 00 00                                ...#..
+ssl_srv.c:1862: |3| 0x12fefd0: found signature_algorithms extension
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 4 and hash 6
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 1 and hash 6
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 4 and hash 5
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 1 and hash 5
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 4 and hash 8
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 1 and hash 8
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 4 and hash 7
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 1 and hash 7
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 4 and hash 4
+ssl_srv.c:0269: |3| 0x12fefd0: client hello v3, signature_algorithm ext: match sig 1 and hash 4
+ssl_srv.c:1876: |3| 0x12fefd0: found supported elliptic curves extension
+ssl_srv.c:1884: |3| 0x12fefd0: found supported point formats extension
+ssl_srv.c:0379: |4| 0x12fefd0: point format selected: 0
+ssl_srv.c:1936: |3| 0x12fefd0: found encrypt then mac extension
+ssl_srv.c:1946: |3| 0x12fefd0: found extended master secret extension
+ssl_srv.c:1956: |3| 0x12fefd0: found session ticket extension
+ssl_srv.c:2044: |3| 0x12fefd0: received TLS_EMPTY_RENEGOTIATION_INFO 
+ssl_srv.c:0958: |3| 0x12fefd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-256-GCM-SHA384
+ssl_srv.c:0856: |3| 0x12fefd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x12fefd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x12fefd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x12fefd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x12fefd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x12fefd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x12fefd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x12fefd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-256-CBC-SHA384
+ssl_srv.c:0856: |3| 0x12fefd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x12fefd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x12fefd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x12fefd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x12fefd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x12fefd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x12fefd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x12fefd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-128-GCM-SHA256
+ssl_srv.c:0856: |3| 0x12fefd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x12fefd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x12fefd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x12fefd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x12fefd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x12fefd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x12fefd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:0958: |3| 0x12fefd0: trying ciphersuite: TLS-ECDH-ECDSA-WITH-ARIA-128-CBC-SHA256
+ssl_srv.c:0856: |3| 0x12fefd0: ciphersuite requires certificate
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #1:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 1C:74:CA
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, OU=AMI, CN=NTC501800000A
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-11-12 15:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2023-11-12 14:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Non Repudiation
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (252 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  0c b6 98 40 06 2d 1d 2a 67 9e 94 39 7d 57 84 87
+ssl_srv.c:0867: |3| 0x12fefd0:  75 7d 90 b5 76 65 4a c6 3c 9a a9 d0 52 38 87 3c
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (255 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  42 aa 28 38 bd 0e 5a 2c 18 dc 64 86 23 f5 5b f3
+ssl_srv.c:0867: |3| 0x12fefd0:  e7 68 c5 9f 74 b0 cb fb 10 fb 04 34 29 b6 78 60
+ssl_srv.c:0867: |3| 0x12fefd0: candidate certificate chain, certificate #2:
+ssl_srv.c:0867: |3| 0x12fefd0: cert. version     : 3
+ssl_srv.c:0867: |3| 0x12fefd0: serial number     : 85
+ssl_srv.c:0867: |3| 0x12fefd0: issuer name       : C=kr, O=kepco, CN=ROOTCA01
+ssl_srv.c:0867: |3| 0x12fefd0: subject name      : C=kr, O=kepco, CN=AMICA001
+ssl_srv.c:0867: |3| 0x12fefd0: issued  on        : 2018-07-15 08:00:00
+ssl_srv.c:0867: |3| 0x12fefd0: expires on        : 2032-09-15 07:59:59
+ssl_srv.c:0867: |3| 0x12fefd0: signed using      : ECDSA with SHA256
+ssl_srv.c:0867: |3| 0x12fefd0: EC key size       : 256 bits
+ssl_srv.c:0867: |3| 0x12fefd0: basic constraints : CA=true, max_pathlen=0
+ssl_srv.c:0867: |3| 0x12fefd0: key usage         : Digital Signature, Key Encipherment, Data Encipherment, Key Agreement, Key Cert Sign, CRL Sign
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(X)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  da 2f 38 6e 09 15 8d a3 a5 4a ce 95 e4 9f 18 65
+ssl_srv.c:0867: |3| 0x12fefd0:  4c ce cb a5 cb 79 48 a5 84 20 8f 6e a0 f8 dd 75
+ssl_srv.c:0867: |3| 0x12fefd0: value of 'crt->eckey.Q(Y)' (256 bits) is:
+ssl_srv.c:0867: |3| 0x12fefd0:  a5 5c ac af 2b c7 07 1a df 2d 52 9d 26 88 81 c5
+ssl_srv.c:0867: |3| 0x12fefd0:  ec a5 f2 e3 e7 1a ba 59 e5 d5 bd e1 e6 de 9e 81
+ssl_srv.c:0887: |3| 0x12fefd0: certificate mismatch: (extended) key usage extension
+ssl_srv.c:1047: |3| 0x12fefd0: ciphersuite mismatch: no suitable certificate
+ssl_srv.c:2133: |1| 0x12fefd0: got ciphersuites in common, but none of them usable
+ssl_tls.c:5267: |2| 0x12fefd0: => send alert message
+ssl_tls.c:5268: |3| 0x12fefd0: send alert level=2 message=40
+ssl_tls.c:3360: |2| 0x12fefd0: => write record
+ssl_tls.c:3440: |3| 0x12fefd0: output record: msgtype = 21, version = [254:253], msglen = 2
+ssl_tls.c:3443: |4| 0x12fefd0: dumping 'output record sent to network' (15 bytes)
+ssl_tls.c:3443: |4| 0x12fefd0: 0000:  15 fe fd 00 00 00 00 00 00 00 00 00 02 02 28     ..............(
+ssl_tls.c:2772: |2| 0x12fefd0: => flush output
+ssl_tls.c:2791: |2| 0x12fefd0: message length: 15, out_left: 15
+ssl_tls.c:2796: |2| 0x12fefd0: ssl->f_send() returned 15 (-0xfffffff1)
+ssl_tls.c:2824: |2| 0x12fefd0: <= flush output
+ssl_tls.c:3493: |2| 0x12fefd0: <= write record
+ssl_tls.c:5280: |2| 0x12fefd0: <= send alert message
+ssl_tls.c:8136: |2| 0x12fefd0: <= handshake
+ssl_tls.c:8767: |2| 0x12fefd0: => write close notify
+ssl_tls.c:8783: |2| 0x12fefd0: <= write close notify
+ssl_tls.c:8981: |2| 0x12fefd0: => free
+ssl_tls.c:9046: |2| 0x12fefd0: <= free
+2019-10-28 16:28:27.768177 INFO  Cipher-Suite : (null)
+2019-10-28 16:28:27.768296 INFO  Waiting for DTLS communication...... 
+2019-10-28 16:28:27.768319 INFO  ptls_session_ctx_malloc success
+ssl_tls.c:0087: |3| 0x1302c80: set_timer to 0 ms
+2019-10-28 16:28:27.768452 INFO  Socket has been created. [Socket Discriptor = 3]
+2019-10-28 16:28:27.768560 INFO  [thread_id : 811427584] Thread start 
+2019-10-28 16:28:27.768578 ERROR PTLS FATAL ERROR ! ! 
+2019-10-28 16:28:27.768593 INFO  [thread_id : 811427584] ptls_server_session_close_notify -1
+2019-10-28 16:28:27.768642 ERROR error code 0001
+2019-10-28 16:28:27.768675 INFO  Socket has been closed. [Socket Discriptor = 3]
+2019-10-28 16:28:27.768694 INFO  [thread_id : 811427584] ptls_session_ctx_free -1

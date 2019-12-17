@@ -1,0 +1,77 @@
+2019-02-27 14:27:48.787216 INFO   ................ [START] NURI PROXY  ................ 
+2019-02-27 14:27:48.787484 INFO  proxy server initialization 
+2019-02-27 14:27:48.787502 INFO  nproxy config file  = /root/nuri-proxy/nproxy.conf
+2019-02-27 14:27:48.787588 INFO  Listen host = 2001:2d8:270:10c0:a52e:f288:cf1e:e0f1
+2019-02-27 14:27:48.787601 INFO  Listen port = 12083
+2019-02-27 14:27:48.787611 INFO  Backend host = 127.0.0.1
+2019-02-27 14:27:48.787619 INFO  Backend port = 1813
+2019-02-27 14:27:48.787628 INFO  CACertificate file =/usr/local/nuri-ssl/certs/kepco/ca_chain.conf
+2019-02-27 14:27:48.787637 INFO  Certificate file = /usr/local/nuri-ssl/certs/kepco/NTC501800000A_sign.pem
+2019-02-27 14:27:48.787646 INFO  CertificateKeyFile =/usr/local/nuri-ssl/certs/kepco/sign_private_A.out.key
+2019-02-27 14:27:48.787655 INFO  Max session time =13
+2019-02-27 14:27:48.787701 INFO  ptls server initialization
+2019-02-27 14:27:49.265592 INFO  Waiting for DTLS communication...... 
+2019-02-27 14:27:49.265632 INFO  ptls_session_ctx_malloc success
+2019-02-27 14:28:05.848284 INFO  Cipher-Suite : TLS-ECDHE-ECDSA-WITH-ARIA-256-GCM-SHA384
+2019-02-27 14:28:05.848377 INFO  Waiting for DTLS communication...... 
+2019-02-27 14:28:05.848394 INFO  ptls_session_ctx_malloc success
+2019-02-27 14:28:05.848510 INFO  Socket has been created. [Socket Discriptor = 5]
+2019-02-27 14:28:05.848576 INFO  [thread_id : 1381017344] Thread start 
+2019-02-27 14:28:05.849131 INFO  ptls_server_read[169] : <<pass>> 
+2019-02-27 14:28:05.849182 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 14:28:05.849267 INFO  radius server <- proxy :: 169 Bytes data sent.
+2019-02-27 14:28:05.850269 INFO  radius server -> proxy :: 64 Byte data received.
+2019-02-27 14:28:05.850415 INFO  ptls_server_write[64] : <<pass>>
+
+2019-02-27 14:28:05.855283 INFO  ptls_server_read[307] : <<pass>> 
+2019-02-27 14:28:05.855324 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 14:28:05.855374 INFO  radius server <- proxy :: 307 Bytes data sent.
+2019-02-27 14:28:05.857516 INFO  radius server -> proxy :: 1068 Byte data received.
+2019-02-27 14:28:05.858252 INFO  ptls_server_write[1068] : <<pass>>
+
+2019-02-27 14:28:05.859376 INFO  ptls_server_read[167] : <<pass>> 
+2019-02-27 14:28:05.859416 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 14:28:05.859466 INFO  radius server <- proxy :: 167 Bytes data sent.
+2019-02-27 14:28:05.860088 INFO  radius server -> proxy :: 323 Byte data received.
+2019-02-27 14:28:05.860362 INFO  ptls_server_write[323] : <<pass>>
+
+2019-02-27 14:28:05.873720 INFO  ptls_server_read[1288] : <<pass>> 
+2019-02-27 14:28:05.873755 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 14:28:05.873810 INFO  radius server <- proxy :: 1288 Bytes data sent.
+2019-02-27 14:28:05.876659 INFO  radius server -> proxy :: 119 Byte data received.
+2019-02-27 14:28:05.876810 INFO  ptls_server_write[119] : <<pass>>
+
+2019-02-27 14:28:05.877649 INFO  ptls_server_read[167] : <<pass>> 
+2019-02-27 14:28:05.877677 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 14:28:05.877717 INFO  radius server <- proxy :: 167 Bytes data sent.
+2019-02-27 14:28:05.880171 INFO  radius server -> proxy :: 1118 Byte data received.
+2019-02-27 14:28:05.880762 INFO  ptls_server_write[1118] : <<pass>>
+
+2019-02-27 14:28:15.890814 ERROR The operation timed out.
+2019-02-27 14:28:15.891178 INFO  [thread_id : 1381017344] ptls_server_session_close_notify 0
+2019-02-27 14:28:15.891207 INFO  Socket has been closed. [Socket Discriptor = 5]
+2019-02-27 14:28:15.891220 INFO  [thread_id : 1381017344] ptls_session_ctx_free 0
+2019-02-27 14:54:46.918111 INFO  Cipher-Suite : TLS-ECDHE-ECDSA-WITH-ARIA-256-GCM-SHA384
+2019-02-27 14:54:46.919687 INFO  Waiting for DTLS communication...... 
+2019-02-27 14:54:46.919711 INFO  ptls_session_ctx_malloc success
+2019-02-27 14:54:46.919759 INFO  Socket has been created. [Socket Discriptor = 5]
+2019-02-27 14:54:46.920014 INFO  [thread_id : 1372624640] Thread start 
+2019-02-27 14:54:47.205538 INFO  ptls_server_read[181] : <<pass>> 
+2019-02-27 14:54:47.205586 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 14:54:47.205678 INFO  radius server <- proxy :: 181 Bytes data sent.
+2019-02-27 15:05:29.651804 INFO  Cipher-Suite : TLS-ECDHE-ECDSA-WITH-ARIA-256-GCM-SHA384
+2019-02-27 15:05:29.651914 INFO  Waiting for DTLS communication...... 
+2019-02-27 15:05:29.651933 INFO  ptls_session_ctx_malloc success
+2019-02-27 15:05:29.652047 INFO  Socket has been created. [Socket Discriptor = 7]
+2019-02-27 15:05:29.652112 INFO  [thread_id : 1364231936] Thread start 
+2019-02-27 15:05:29.867115 INFO  ptls_server_read[181] : <<pass>> 
+2019-02-27 15:05:29.867166 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 15:05:29.867258 INFO  radius server <- proxy :: 181 Bytes data sent.
+2019-02-27 15:16:11.893942 INFO  Cipher-Suite : TLS-ECDHE-ECDSA-WITH-ARIA-256-GCM-SHA384
+2019-02-27 15:16:11.894041 INFO  Waiting for DTLS communication...... 
+2019-02-27 15:16:11.894059 INFO  ptls_session_ctx_malloc success
+2019-02-27 15:16:11.894144 INFO  Socket has been created. [Socket Discriptor = 9]
+2019-02-27 15:16:11.894202 INFO  [thread_id : 1355839232] Thread start 
+2019-02-27 15:16:12.020602 INFO  ptls_server_read[181] : <<pass>> 
+2019-02-27 15:16:12.020640 INFO  Backend Server = 127.0.0.1:1813
+2019-02-27 15:16:12.020732 INFO  radius server <- proxy :: 181 Bytes data sent.
