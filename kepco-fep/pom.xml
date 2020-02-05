@@ -5,13 +5,13 @@
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>com.nuri.emi</groupId>
-		<artifactId>emi-parent</artifactId>
+		<groupId>com.nuri.kepco</groupId>
+		<artifactId>kepco-parent</artifactId>
 		<version>0.1.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.nuri.emi</groupId>
-	<artifactId>emi-fep-server</artifactId>
+	<groupId>com.nuri.kepco</groupId>
+	<artifactId>kepco-fep</artifactId>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -80,23 +80,11 @@
 			<artifactId>logback-core</artifactId>
 		</dependency>
 		
-		<!-- emi -->
+		<!-- model -->
 		<dependency>
-			<groupId>com.nuri.emi</groupId>
-			<artifactId>emi-util</artifactId>
-			<version>${emi.version.snapshot}</version>
-		</dependency>
-	
-		<dependency>
-			<groupId>com.nuri.emi</groupId>
-			<artifactId>emi-model</artifactId>
-			<version>${emi.version.snapshot}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.nuri.emi</groupId>
-			<artifactId>emi-lwm2m-redis</artifactId>
-			<version>${emi.version.snapshot}</version>
+			<groupId>com.nuri.kepco</groupId>
+			<artifactId>kepco-model</artifactId>
+			<version>${kepco.version.snapshot}</version>
 		</dependency>
 		
 		<!-- leshan -->
