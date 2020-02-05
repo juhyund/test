@@ -1,9 +1,9 @@
-package com.nuri.emi.fep.parser;
+package com.nuri.kepco.fep.parser;
 
 import com.aimir.fep.protocol.fmp.datatype.OCTET;
 import com.aimir.util.DataUtil;
 import com.aimir.util.Hex;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.DLMS_TAG_TYPE;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_TAG_TYPE;
 
 public class DLMSTag {
     private DLMS_TAG_TYPE tag;

@@ -15,8 +15,8 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.nuri.emi.fep.config.Constants;
-import com.nuri.emi.fep.util.Bcd;
+import com.nuri.kepco.fep.config.Constants;
+import com.nuri.kepco.fep.util.Bcd;
 
 public class DataUtil
 {

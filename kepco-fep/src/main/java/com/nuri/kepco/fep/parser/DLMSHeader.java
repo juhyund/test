@@ -1,8 +1,8 @@
-package com.nuri.emi.fep.parser;
+package com.nuri.kepco.fep.parser;
 
-import com.nuri.emi.fep.parser.DLMSVARIABLE.DLMS_CLASS;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.OBIS;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
 
 public class DLMSHeader {
 

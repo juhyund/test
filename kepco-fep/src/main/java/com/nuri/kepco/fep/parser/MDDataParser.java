@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.parser;
+package com.nuri.kepco.fep.parser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,11 +13,11 @@ import com.aimir.fep.protocol.fmp.datatype.OCTET;
 import com.aimir.util.DataUtil;
 import com.aimir.util.Hex;
 import com.aimir.util.Util;
-import com.nuri.emi.fep.datatype.LPData;
-import com.nuri.emi.fep.datatype.MDData;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.OBIS;
-import com.nuri.emi.fep.parser.LPChannel.CHANNEL;
+import com.nuri.kepco.fep.datatype.LPData;
+import com.nuri.kepco.fep.datatype.MDData;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
+import com.nuri.kepco.fep.parser.LPChannel.CHANNEL;
 
 public class MDDataParser extends AbstractMDParser {
 	

@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.util;
+package com.nuri.kepco.fep.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,7 +37,7 @@ import com.aimir.util.TimeUtil;
 import com.aimir.util.Util;
 import com.nuri.emi.data.util.DataUtil;
 import com.nuri.emi.data.util.Hex;
-import com.nuri.emi.fep.config.Constants;
+import com.nuri.kepco.fep.config.Constants;
 
 public class DataFormat {
     private static Log logger = LogFactory.getLog(DataFormat.class);

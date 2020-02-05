@@ -2,7 +2,7 @@ package com.aimir.fep.protocol.fmp.datatype;
 
 import org.apache.mina.core.buffer.IoBuffer;
 
-import com.nuri.emi.fep.util.Bcd;
+import com.nuri.kepco.fep.util.Bcd;
 
 public class TIMEDATE extends FMPNonFixedVariable
 {

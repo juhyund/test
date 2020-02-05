@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.parser;
+package com.nuri.kepco.fep.parser;
 
 public class LPChannel {
 	

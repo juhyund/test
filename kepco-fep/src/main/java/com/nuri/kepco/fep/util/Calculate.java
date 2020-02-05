@@ -1,7 +1,7 @@
 // javac Calculate.java && java Calculate
 // 2018/05/02 #SP-929 
 
-package com.nuri.emi.fep.util;
+package com.nuri.kepco.fep.util;
 
 //import java.io.*;
 import java.text.*;

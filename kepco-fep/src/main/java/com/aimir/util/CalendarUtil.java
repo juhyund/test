@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.nuri.emi.fep.config.Constants.WeekDay;
+import com.nuri.kepco.fep.config.Constants.WeekDay;
 
 public class CalendarUtil {
 	

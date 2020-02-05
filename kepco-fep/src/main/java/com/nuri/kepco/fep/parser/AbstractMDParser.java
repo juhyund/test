@@ -1,6 +1,6 @@
-package com.nuri.emi.fep.parser;
+package com.nuri.kepco.fep.parser;
 
-import com.nuri.emi.fep.datatype.MDData;
+import com.nuri.kepco.fep.datatype.MDData;
 
 public abstract class AbstractMDParser {
 

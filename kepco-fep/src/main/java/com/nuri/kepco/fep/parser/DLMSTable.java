@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.parser;
+package com.nuri.kepco.fep.parser;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
 import com.aimir.util.DataFormat;
 import com.aimir.util.DataUtil;
 import com.aimir.util.Hex;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.DLMS_CLASS;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.DLMS_TAG_TYPE;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.ENERGY_LOAD_PROFILE;
-import com.nuri.emi.fep.parser.DLMSVARIABLE.OBIS;
-import com.nuri.emi.service.model.MeterInfo;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_TAG_TYPE;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.ENERGY_LOAD_PROFILE;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
+import com.nuri.kepco.model.MeterInfo;
 
 
 public class DLMSTable {

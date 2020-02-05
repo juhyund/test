@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.datatype;
+package com.nuri.kepco.fep.datatype;
 
 public class MeterType {
 	

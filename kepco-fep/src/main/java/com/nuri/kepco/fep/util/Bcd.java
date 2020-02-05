@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.util;
+package com.nuri.kepco.fep.util;
 
 import com.aimir.util.DataUtil;
 import com.aimir.util.TimeUtil;

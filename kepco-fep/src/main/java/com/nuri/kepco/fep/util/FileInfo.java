@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.util;
+package com.nuri.kepco.fep.util;
 
 
 public class FileInfo implements java.io.Serializable

@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.util;
+package com.nuri.kepco.fep.util;
 
 import java.io.Serializable;
 import java.util.LinkedList;

@@ -15,8 +15,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.core.buffer.IoBuffer;
 
-import com.nuri.emi.fep.config.Constants;
-import com.nuri.emi.fep.util.Bcd;
+import com.nuri.kepco.fep.config.Constants;
+import com.nuri.kepco.fep.util.Bcd;
 
 public class DataFormat {
     private static Log logger = LogFactory.getLog(DataFormat.class);

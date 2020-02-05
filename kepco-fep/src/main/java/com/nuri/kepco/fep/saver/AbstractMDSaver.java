@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.saver;
+package com.nuri.kepco.fep.saver;
 
 import java.util.List;
 
@@ -6,6 +6,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.nuri.kepco.fep.datatype.LPData;
+import com.nuri.kepco.fep.datatype.MDData;
+import com.nuri.kepco.fep.datatype.MeterType;
+import com.nuri.kepco.fep.datatype.MeterType.DEVICESTATUS;
+import com.nuri.kepco.fep.datatype.MeterType.DEVICETYPE;
+import com.nuri.kepco.model.DeviceInfo;
+import com.nuri.kepco.model.DeviceModel;
+import com.nuri.kepco.model.DeviceStatus;
+import com.nuri.kepco.model.MeterInfo;
+import com.nuri.kepco.model.dao.DeviceInfoDAO;
+import com.nuri.kepco.model.dao.DeviceModelDAO;
+import com.nuri.kepco.model.dao.DeviceStatusDAO;
+import com.nuri.kepco.model.dao.MeterInfoDAO;
+import com.nuri.kepco.model.dao.VendorInfoDAO;
 
 @Service
 public abstract class AbstractMDSaver {
@@ -25,7 +40,7 @@ public abstract class AbstractMDSaver {
 	DeviceStatusDAO deviceStatusDAO;
 	
 	@Autowired
-	DeviceInfoDAO devieInfoDAO;
+	DeviceInfoDAO deviceInfoDAO;
 
 	MeterInfo meterInfo;
 
@@ -49,13 +64,8 @@ public abstract class AbstractMDSaver {
 
 	public abstract void save(MDData mddata);
 
-	public abstract void saveLpData(List<LPData> lpDatas);
+	public abstract int saveLpData(List<LPData> lpDatas);
 	
-	public abstract void saveBillingImportData(List<MeterBillingImport> billingDatas);
-		
-	public abstract void saveBillingExportData(List<MeterBillingExport> billingDatas);
-	
-
 	protected void checkMeter(String meterSerial) {
 
 		int result = 0;
@@ -74,36 +84,28 @@ public abstract class AbstractMDSaver {
 			String meterType = mdData.getMeterType();
 			
 			// meter model
-			if (!"".equals(meterModel) && meterModel != null) {
-				if (meterModel.substring(0, 2).equals("ET")) {
-					meter.setType_code(MeterType.METERTYPE.EType.getCode());
-				} else if (meterModel.substring(0, 2).equals("GT")) {
-					meter.setType_code(MeterType.METERTYPE.GType.getCode());
-				} else if (meterModel.substring(0, 2).equals("AE")) {
-					meter.setType_code(MeterType.METERTYPE.AEType.getCode());
+			if (!"".equals(meterType) && meterType != null) {
+				if("ET".equals(meterType)) {
+					meter.setMeter_type(MeterType.METERTYPE.EType.getCode());
+				} else if("GT".equals(meterType)) {
+					meter.setMeter_type(MeterType.METERTYPE.GType.getCode());
+				} else if("AE".equals(meterType)) {
+					meter.setMeter_type(MeterType.METERTYPE.AEType.getCode());
 				}
 				DeviceModel deviceModel = deviceModelDAO.selectModelByName(meterModel);
-				meter.setModel_id(deviceModel.getModel_id());
+				meter.setModel_seq(deviceModel.getModel_seq());
 			}
 			
-			// vendor
-			if (!"".equals(meterType) && meterType != null) {
-				VendorInfo vendor = vendorInfoDAO.selectVendorByName(meterType);
-				meter.setVendor_id(vendor.getVendor_id());
-			}
-
 			meter.setMeter_serial(this.mdData.getMeterID());
 			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
 			
 			// device id
-			DeviceInfo deviceInfo = new DeviceInfo();
-			deviceInfo.setDevice_oid(mdData.getDeviceOid());
-			devieInfoDAO.select(deviceInfo);
+			DeviceInfo deviceInfo = new DeviceInfo();			
+			deviceInfoDAO.selectByDeviceSerial(this.mdData.getModemID()); // 변경될 수 있음.
 			
 			if(deviceInfo != null) {
 				meter.setDevice_id(deviceInfo.getDevice_id());
 			}							
-			this.setMeter(meter);					
 			
 			logger.debug("isNewMeter : {}", isNewMeter);
 			
@@ -114,12 +116,13 @@ public abstract class AbstractMDSaver {
 				// update
 				result = meterInfoDAO.update(meter);
 			}
-
+			
+			this.setMeter(meter);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	protected void updateDeviceStatus(MeterInfo meterInfo) {
@@ -131,7 +134,7 @@ public abstract class AbstractMDSaver {
 
 		try {
 
-			deviceStatus = deviceStatusDAO.select(param);
+			deviceStatus = deviceStatusDAO.selectOne(param);
 
 			logger.debug("DEVICETYPE.METER.getCode() " + DEVICETYPE.METER.getCode());
 			
@@ -139,16 +142,16 @@ public abstract class AbstractMDSaver {
 				
 				deviceStatus = new DeviceStatus();
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
-				deviceStatus.setDevice_code(DEVICETYPE.METER.getCode()); // meter
-				deviceStatus.setDevice_stat(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setDevice_flag("M"); // meter
+				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
 				deviceStatusDAO.insert(deviceStatus);
 				
 			} else { // update
 
 				deviceStatus = new DeviceStatus();
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
-				deviceStatus.setDevice_code(DEVICETYPE.METER.getCode()); // meter
-				deviceStatus.setDevice_stat(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setDevice_flag(DEVICETYPE.METER.getCode()); // meter
+				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
 				deviceStatusDAO.update(deviceStatus);
 			}
 			

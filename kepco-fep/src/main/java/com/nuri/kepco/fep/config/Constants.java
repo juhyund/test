@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.config;
+package com.nuri.kepco.fep.config;
 
 public class Constants { 
 	
