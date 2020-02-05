@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	
+	<!-- 60초마다 설정 파일의 변경을 확인한다. 파일이 변경되면 다시 로딩한다 -->
+	<configuration scan="true" scanPeriod="60 seconds" debug="true">	
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+	    <encoder>
+	        <pattern>
+	         [%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{36}][%class.%method:%line] - %msg%n	         
+	        </pattern>     
+	    </encoder>
+	</appender>
+	
+	
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/command.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- d:\ testRollingFile 2015-04-07.log 파일 생성 -->
+            <fileNamePattern>/logs/command.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 30일 지난건 지우겠다. -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{36}][%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="file-sql" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/commandSql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- d:\ testRollingFile 2015-04-07.log 파일 생성 -->
+            <fileNamePattern>/logs/commandSql.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 30일 지난건 지우겠다. -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{36}][%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+   
+ 	<!-- nuri-ewsn-model -->
+	<logger name="com.nuri.emi" level="trace">	    
+	</logger>
+	
+	<!-- mapper sql-->
+	<logger name="com.nuri.emi.service.model.dao" level="debug">
+		<appender-ref ref="file-sql"></appender-ref>	    
+	</logger>	
+	
+	<root level="debug">  
+		<appender-ref ref="file"></appender-ref> 
+	    <appender-ref ref="STDOUT"> </appender-ref>	    
+	</root>	
+	
+	<root level="error">		
+		<appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
