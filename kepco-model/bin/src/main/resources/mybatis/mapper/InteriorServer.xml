@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emi.dao.model.server.InteriorServerDao">
+	<insert id="add">
+		insert into interio_server
+			(gisCode, status, ip, port, name, serverType, actionType, clientIdenKey, writeDate)
+		values
+			(
+				(select id from gis where name = #{gisCode}),			
+				(select id from code where code = '1.2.1'),
+				#{ip},
+				#{port},
+				#{name},				
+				(select id from code where name = #{serverType}),
+				(select id from code where name = #{actionType}),
+				#{clientIdenKey},
+				#{writeDate}
+			)
+		on duplicate key
+			update 
+			gisCode = (select id from gis where name = #{gisCode}), 
+			serverType = (select id from code where name = #{serverType}), 
+			actionType = (select id from code where name = #{actionType}),
+			ip = #{ip}, port = #{port}, name = #{name}, clientIdenKey = #{clientIdenKey}
+	</insert>
+
+	<select id="getInteriorServer" resultType="InteriorServer">
+		select * from interio_server
+			where 1=1
+			<if test="clientIdenKey != null and !clientIdenKey.equals('')">
+				and clientIdenKey = #{clientIdenKey}
+			</if>
+			<if test="ip != null and !ip.equals('')">
+				and ip = #{ip}
+			</if>
+			<if test="statusId != null and statusId.equals('')">
+				and statusId = #{statusId}
+			</if>
+	</select>
+</mapper>

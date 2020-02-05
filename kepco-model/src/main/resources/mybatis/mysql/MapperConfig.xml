@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties>
+		<property name="prop.enckey" value="EWSNENC"></property>
+		<property name="prop.dt" value="%Y-%m-%d %H:%i:%s"></property>
+		<property name="prop.small.dt" value="%Y-%m-%d %H:%i"></property>
+		<property name="prop.date" value="%Y-%m-%d"></property>
+		<property name="prop.time" value="%H:%i:%s"></property>		
+	</properties>
+
+	<typeAliases>		
+	
+        <!-- ObjectModel -->
+		<typeAlias alias="AllCode" type="com.nuri.kepco.model.AllCode"/>
+        <typeAlias alias="BranchInfo" type="com.nuri.kepco.model.BranchInfo"/>
+        <typeAlias alias="CompInfo" type="com.nuri.kepco.model.CompInfo"/>      		
+        <typeAlias alias="DeviceAttr" type="com.nuri.kepco.model.DeviceAttr"/>      		
+        <typeAlias alias="DeviceInfo" type="com.nuri.kepco.model.DeviceInfoInfo"/>      		
+        <typeAlias alias="DeviceModel" type="com.nuri.kepco.model.DeviceModelInfo"/>
+        <typeAlias alias="DeviceResource" type="com.nuri.kepco.model.DeviceResource"/>
+        <typeAlias alias="DeviceSecLog" type="com.nuri.kepco.model.DeviceSecLog"/>
+        <typeAlias alias="DeviceSecurity" type="com.nuri.kepco.model.DeviceSecurity" />
+		<typeAlias alias="MeterBilling" type="com.nuri.kepco.model.MeterBilling" />
+		<typeAlias alias="MeterInfo" type="com.nuri.kepco.model.MeterInfo" />
+		<typeAlias alias="MeterMonthlyDemand" type="com.nuri.kepco.model.MeterMonthlyDemand" />
+		<typeAlias alias="MeterValue" type="com.nuri.kepco.model.MeterValue" />
+		<typeAlias alias="ObjectModel" type="com.nuri.kepco.model.ObjectModel" />
+		<typeAlias alias="ResourceModel" type="com.nuri.kepco.model.ResourceModel" />
+		<typeAlias alias="ServiceInfo" type="com.nuri.kepco.model.ServiceInfo" />
+		<typeAlias alias="UserGroup" type="com.nuri.kepco.model.UserGroup" />
+		<typeAlias alias="UserInfo" type="com.nuri.kepco.model.UserInfo" />
+		<typeAlias alias="UserLogin" type="com.nuri.kepco.model.UserLogin" />
+		<typeAlias alias="Vendor" type="com.nuri.kepco.model.Vendor" />
+  	</typeAliases>
+
+	<mappers>
+		<mapper resource="mybatis/mysql/AllCodeMapper.xml" />
+		<mapper resource="mybatis/mysql/BranchInfoMapper.xml" />
+		<mapper resource="mybatis/mysql/CompInfoMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceAttrMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceInfoMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceModelMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceResourceMapper.xml" />				
+		<mapper resource="mybatis/mysql/MeterBillingMapper.xml" />
+		<mapper resource="mybatis/mysql/MeterInfoMapper.xml" />
+		<mapper resource="mybatis/mysql/MeterMonthlyDemandMapper.xml" />
+		<mapper resource="mybatis/mysql/MeterValueMapper.xml" />
+		<mapper resource="mybatis/mysql/ObjectModelMapper.xml" />
+		<mapper resource="mybatis/mysql/ResourceModelMapper.xml" />
+	
+		<mapper resource="mybatis/mysql/VendorMapper.xml" />
+		
+	</mappers>
+
+</configuration>

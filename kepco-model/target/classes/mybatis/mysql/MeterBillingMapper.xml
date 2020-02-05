@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : kepco-model
+* @FileName : MeterBillingMapper.xml
+* @Author : kh.yoon
+* @Date : 2020-02-03
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.MeterBillingDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="meter_id != null" >     
+            AND a.meter_id = #{meter_id}
+        </if>
+        
+        <if test="sdate != null and edate != null " >     
+            AND a.read_dt between #{sdate} AND #{edate}
+        </if>
+        
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="meterBilling">	
+		SELECT COUNT(*) co
+		FROM EMI_METER_BILLING a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="meterBilling" parameterType="meterBilling">	
+		SELECT 
+			meter_id
+			, read_dt
+			, active_imp_tot
+			, apprent_imp_tot
+			, lead_imp_tot
+			, lagging_imp_tot
+			, pf_imp_tot
+			, active_imp_rate1
+			, apprent_imp_rate1
+			, lead_imp_rate1
+			, lagging_imp_rate1
+			, pf_imp_rate1
+			, active_imp_rate2
+			, apprent_imp_rate2
+			, lead_imp_rate2
+			, lagging_imp_rate2
+			, pf_imp_rate2
+			, active_imp_rate3
+			, apprent_imp_rate3
+			, lead_imp_rate3
+			, lagging_imp_rate3
+			, pf_imp_rate3
+			, active_imp_rate4
+			, apprent_imp_rate4
+			, lead_imp_rate4
+			, lagging_imp_rate4
+			, pf_imp_rate4
+			, active_exp_tot
+			, apprent_exp_tot
+			, lead_exp_tot
+			, lagging_exp_tot
+			, pf_exp_tot
+			, active_exp_rate1
+			, apprent_exp_rate1
+			, lead_exp_rate1
+			, lagging_exp_rate1
+			, pf_exp_rate1
+			, active_exp_rate2
+			, apprent_exp_rate2
+			, lead_exp_rate2
+			, lagging_exp_rate2
+			, pf_exp_rate2
+			, active_exp_rate3
+			, apprent_exp_rate3
+			, lead_exp_rate3
+			, lagging_exp_rate3
+			, pf_exp_rate3
+			, active_exp_rate4
+			, apprent_exp_rate4
+			, lead_exp_rate4
+			, lagging_exp_rate4
+			, pf_exp_rate4
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+		FROM EMI_METER_BILLING a	
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="selectOne" resultType="meterBilling" parameterType="meterBilling">	
+		SELECT 
+			meter_id
+			, read_dt
+			, active_imp_tot
+			, apprent_imp_tot
+			, lead_imp_tot
+			, lagging_imp_tot
+			, pf_imp_tot
+			, active_imp_rate1
+			, apprent_imp_rate1
+			, lead_imp_rate1
+			, lagging_imp_rate1
+			, pf_imp_rate1
+			, active_imp_rate2
+			, apprent_imp_rate2
+			, lead_imp_rate2
+			, lagging_imp_rate2
+			, pf_imp_rate2
+			, active_imp_rate3
+			, apprent_imp_rate3
+			, lead_imp_rate3
+			, lagging_imp_rate3
+			, pf_imp_rate3
+			, active_imp_rate4
+			, apprent_imp_rate4
+			, lead_imp_rate4
+			, lagging_imp_rate4
+			, pf_imp_rate4
+			, active_exp_tot
+			, apprent_exp_tot
+			, lead_exp_tot
+			, lagging_exp_tot
+			, pf_exp_tot
+			, active_exp_rate1
+			, apprent_exp_rate1
+			, lead_exp_rate1
+			, lagging_exp_rate1
+			, pf_exp_rate1
+			, active_exp_rate2
+			, apprent_exp_rate2
+			, lead_exp_rate2
+			, lagging_exp_rate2
+			, pf_exp_rate2
+			, active_exp_rate3
+			, apprent_exp_rate3
+			, lead_exp_rate3
+			, lagging_exp_rate3
+			, pf_exp_rate3
+			, active_exp_rate4
+			, apprent_exp_rate4
+			, lead_exp_rate4
+			, lagging_exp_rate4
+			, pf_exp_rate4
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+		FROM EMI_METER_BILLING a				
+		WHERE meter_id = #{meter_id}
+		and read_dt = #{read_dt}
+	</select>
+	
+	<insert id="insert" parameterType="meterBilling">     	
+		INSERT INTO EMI_METER_BILLING (
+			meter_id
+			, read_dt
+			, active_imp_tot
+			, apprent_imp_tot
+			, lead_imp_tot
+			, lagging_imp_tot
+			, pf_imp_tot
+			, active_imp_rate1
+			, apprent_imp_rate1
+			, lead_imp_rate1
+			, lagging_imp_rate1
+			, pf_imp_rate1
+			, active_imp_rate2
+			, apprent_imp_rate2
+			, lead_imp_rate2
+			, lagging_imp_rate2
+			, pf_imp_rate2
+			, active_imp_rate3
+			, apprent_imp_rate3
+			, lead_imp_rate3
+			, lagging_imp_rate3
+			, pf_imp_rate3
+			, active_imp_rate4
+			, apprent_imp_rate4
+			, lead_imp_rate4
+			, lagging_imp_rate4
+			, pf_imp_rate4
+			, active_exp_tot
+			, apprent_exp_tot
+			, lead_exp_tot
+			, lagging_exp_tot
+			, pf_exp_tot
+			, active_exp_rate1
+			, apprent_exp_rate1
+			, lead_exp_rate1
+			, lagging_exp_rate1
+			, pf_exp_rate1
+			, active_exp_rate2
+			, apprent_exp_rate2
+			, lead_exp_rate2
+			, lagging_exp_rate2
+			, pf_exp_rate2
+			, active_exp_rate3
+			, apprent_exp_rate3
+			, lead_exp_rate3
+			, lagging_exp_rate3
+			, pf_exp_rate3
+			, active_exp_rate4
+			, apprent_exp_rate4
+			, lead_exp_rate4
+			, lagging_exp_rate4
+			, pf_exp_rate4
+			, reg_dt
+			, update_dt
+		) VALUES (
+			 #{meter_id}
+			, #{read_dt}
+			, #{active_imp_tot}
+			, #{apprent_imp_tot}
+			, #{lead_imp_tot}
+			, #{lagging_imp_tot}
+			, #{pf_imp_tot}
+			, #{active_imp_rate1}
+			, #{apprent_imp_rate1}
+			, #{lead_imp_rate1}
+			, #{lagging_imp_rate1}
+			, #{pf_imp_rate1}
+			, #{active_imp_rate2}
+			, #{apprent_imp_rate2}
+			, #{lead_imp_rate2}
+			, #{lagging_imp_rate2}
+			, #{pf_imp_rate2}
+			, #{active_imp_rate3}
+			, #{apprent_imp_rate3}
+			, #{lead_imp_rate3}
+			, #{lagging_imp_rate3}
+			, #{pf_imp_rate3}
+			, #{active_imp_rate4}
+			, #{apprent_imp_rate4}
+			, #{lead_imp_rate4}
+			, #{lagging_imp_rate4}
+			, #{pf_imp_rate4}
+			, #{active_exp_tot}
+			, #{apprent_exp_tot}
+			, #{lead_exp_tot}
+			, #{lagging_exp_tot}
+			, #{pf_exp_tot}
+			, #{active_exp_rate1}
+			, #{apprent_exp_rate1}
+			, #{lead_exp_rate1}
+			, #{lagging_exp_rate1}
+			, #{pf_exp_rate1}
+			, #{active_exp_rate2}
+			, #{apprent_exp_rate2}
+			, #{lead_exp_rate2}
+			, #{lagging_exp_rate2}
+			, #{pf_exp_rate2}
+			, #{active_exp_rate3}
+			, #{apprent_exp_rate3}
+			, #{lead_exp_rate3}
+			, #{lagging_exp_rate3}
+			, #{pf_exp_rate3}
+			, #{active_exp_rate4}
+			, #{apprent_exp_rate4}
+			, #{lead_exp_rate4}
+			, #{lagging_exp_rate4}
+			, #{pf_exp_rate4}
+			, now()
+			, now()
+		)
+    </insert>
+    
+    <insert id="insertAll" parameterType="meterBilling">     	
+		INSERT INTO EMI_METER_BILLING (
+			meter_id
+			, read_dt
+			, active_imp_tot
+			, apprent_imp_tot
+			, lead_imp_tot
+			, lagging_imp_tot
+			, pf_imp_tot
+			, active_imp_rate1
+			, apprent_imp_rate1
+			, lead_imp_rate1
+			, lagging_imp_rate1
+			, pf_imp_rate1
+			, active_imp_rate2
+			, apprent_imp_rate2
+			, lead_imp_rate2
+			, lagging_imp_rate2
+			, pf_imp_rate2
+			, active_imp_rate3
+			, apprent_imp_rate3
+			, lead_imp_rate3
+			, lagging_imp_rate3
+			, pf_imp_rate3
+			, active_imp_rate4
+			, apprent_imp_rate4
+			, lead_imp_rate4
+			, lagging_imp_rate4
+			, pf_imp_rate4
+			, active_exp_tot
+			, apprent_exp_tot
+			, lead_exp_tot
+			, lagging_exp_tot
+			, pf_exp_tot
+			, active_exp_rate1
+			, apprent_exp_rate1
+			, lead_exp_rate1
+			, lagging_exp_rate1
+			, pf_exp_rate1
+			, active_exp_rate2
+			, apprent_exp_rate2
+			, lead_exp_rate2
+			, lagging_exp_rate2
+			, pf_exp_rate2
+			, active_exp_rate3
+			, apprent_exp_rate3
+			, lead_exp_rate3
+			, lagging_exp_rate3
+			, pf_exp_rate3
+			, active_exp_rate4
+			, apprent_exp_rate4
+			, lead_exp_rate4
+			, lagging_exp_rate4
+			, pf_exp_rate4
+			, reg_dt
+			, update_dt
+		) VALUES 
+		<foreach collection="list" item="list" index="index" open="(" separator="),("  close=")">
+			 #{list.meter_id}
+			, #{list.read_dt}
+			, #{list.active_imp_tot}
+			, #{list.apprent_imp_tot}
+			, #{list.lead_imp_tot}
+			, #{list.lagging_imp_tot}
+			, #{list.pf_imp_tot}
+			, #{list.active_imp_rate1}
+			, #{list.apprent_imp_rate1}
+			, #{list.lead_imp_rate1}
+			, #{list.lagging_imp_rate1}
+			, #{list.pf_imp_rate1}
+			, #{list.active_imp_rate2}
+			, #{list.apprent_imp_rate2}
+			, #{list.lead_imp_rate2}
+			, #{list.lagging_imp_rate2}
+			, #{list.pf_imp_rate2}
+			, #{list.active_imp_rate3}
+			, #{list.apprent_imp_rate3}
+			, #{list.lead_imp_rate3}
+			, #{list.lagging_imp_rate3}
+			, #{list.pf_imp_rate3}
+			, #{list.active_imp_rate4}
+			, #{list.apprent_imp_rate4}
+			, #{list.lead_imp_rate4}
+			, #{list.lagging_imp_rate4}
+			, #{list.pf_imp_rate4}
+			, #{list.active_exp_tot}
+			, #{list.apprent_exp_tot}
+			, #{list.lead_exp_tot}
+			, #{list.lagging_exp_tot}
+			, #{list.pf_exp_tot}
+			, #{list.active_exp_rate1}
+			, #{list.apprent_exp_rate1}
+			, #{list.lead_exp_rate1}
+			, #{list.lagging_exp_rate1}
+			, #{list.pf_exp_rate1}
+			, #{list.active_exp_rate2}
+			, #{list.apprent_exp_rate2}
+			, #{list.lead_exp_rate2}
+			, #{list.lagging_exp_rate2}
+			, #{list.pf_exp_rate2}
+			, #{list.active_exp_rate3}
+			, #{list.apprent_exp_rate3}
+			, #{list.lead_exp_rate3}
+			, #{list.lagging_exp_rate3}
+			, #{list.pf_exp_rate3}
+			, #{list.active_exp_rate4}
+			, #{list.apprent_exp_rate4}
+			, #{list.lead_exp_rate4}
+			, #{list.lagging_exp_rate4}
+			, #{list.pf_exp_rate4}
+			, now()
+			, now()
+		</foreach>
+    </insert>
+    
+</mapper>
