@@ -6,5 +6,6 @@ import com.nuri.kepco.model.DeviceInfo;
 
 @Mapper
 public interface DeviceInfoDAO extends GenericDAO<DeviceInfo> {
-
+	
+	DeviceInfo selectByDeviceSerial(String device_serial) throws Exception;
 }

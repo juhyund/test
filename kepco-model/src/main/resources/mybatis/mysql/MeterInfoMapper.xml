@@ -107,6 +107,30 @@
 		WHERE meter_id = #{meter_id}
 	</select>
 	
+	<select id="selectByMeterSerial" resultType="meterInfo" parameterType="java.lang.String">	
+		SELECT 
+			 meter_id
+			, meter_serial
+			, device_id
+			, meter_type
+			, energy_type_code
+			, meter_phase
+			, branch_id
+			, model_seq
+			, INET_NTOA(ip) as ip
+			, port
+			, prog_id
+			, prog_version
+			, latitude
+			, longtitude
+			, altitude
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(a.ins_dt,'${prop.dt}') AS ins_dt
+			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
+		FROM EMI_METER_INFO a				
+		WHERE meter_serial = #{meter_serial}
+	</select>
+	
 	<insert id="insert" parameterType="meterInfo">     	
 		INSERT INTO EMI_METER_INFO (
 			  meter_id

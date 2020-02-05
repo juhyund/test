@@ -7,6 +7,6 @@ import com.nuri.kepco.model.MeterInfo;
 @Mapper
 public interface MeterInfoDAO extends GenericDAO<MeterInfo> {
 	
-	int insertAll(MeterInfo param) throws Exception;
+	MeterInfo selectByMeterSerial(String meterSerial) throws Exception;
 	
 }

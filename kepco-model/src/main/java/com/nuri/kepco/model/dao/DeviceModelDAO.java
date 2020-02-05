@@ -6,5 +6,7 @@ import com.nuri.kepco.model.DeviceModel;
 
 @Mapper
 public interface DeviceModelDAO extends GenericDAO<DeviceModel> {
+	
+	DeviceModel selectModelByName(String model_nm) throws Exception;
 
 }
