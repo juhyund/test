@@ -17,8 +17,8 @@
         <typeAlias alias="BranchInfo" type="com.nuri.kepco.model.BranchInfo"/>
         <typeAlias alias="CompInfo" type="com.nuri.kepco.model.CompInfo"/>      		
         <typeAlias alias="DeviceAttr" type="com.nuri.kepco.model.DeviceAttr"/>      		
-        <typeAlias alias="DeviceInfo" type="com.nuri.kepco.model.DeviceInfoInfo"/>      		
-        <typeAlias alias="DeviceModel" type="com.nuri.kepco.model.DeviceModelInfo"/>
+        <typeAlias alias="DeviceInfo" type="com.nuri.kepco.model.DeviceInfo"/>      		
+        <typeAlias alias="DeviceModel" type="com.nuri.kepco.model.DeviceModel"/>
         <typeAlias alias="DeviceResource" type="com.nuri.kepco.model.DeviceResource"/>
         <typeAlias alias="DeviceSecLog" type="com.nuri.kepco.model.DeviceSecLog"/>
         <typeAlias alias="DeviceSecurity" type="com.nuri.kepco.model.DeviceSecurity" />
@@ -32,7 +32,7 @@
 		<typeAlias alias="UserGroup" type="com.nuri.kepco.model.UserGroup" />
 		<typeAlias alias="UserInfo" type="com.nuri.kepco.model.UserInfo" />
 		<typeAlias alias="UserLogin" type="com.nuri.kepco.model.UserLogin" />
-		<typeAlias alias="Vendor" type="com.nuri.kepco.model.Vendor" />
+		<typeAlias alias="VendorInfo" type="com.nuri.kepco.model.VendorInfo" />
   	</typeAliases>
 
 	<mappers>

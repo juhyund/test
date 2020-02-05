@@ -13,7 +13,7 @@
 	<version>${kepco.version.snapshot}</version>
 	<name>kepco-model</name>
 	<packaging>jar</packaging>
-	<description>Nuritelecom Iot Modem Module</description>
+	<description>Nuritelecom Iot Model Module</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -43,12 +43,6 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>${mybatis.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.nuri.emi</groupId>
-			<artifactId>emi-util</artifactId>
-			<version>${emi.version.snapshot}</version>
 		</dependency>
 
 		<dependency>

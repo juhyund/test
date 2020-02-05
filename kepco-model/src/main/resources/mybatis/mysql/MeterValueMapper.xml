@@ -108,6 +108,7 @@
 			, #{list.sect_meter_value}			
 			, now()
 		</foreach>
+		ON DUPLICATE KEY UPDATE meter_value=VALUES(meter_value);
 	</insert>
     
     <update id="update" parameterType="meterValue">

@@ -25,21 +25,25 @@ public class MeterValueTest {
 		List<MeterValue> meterValues = new ArrayList<MeterValue>();
 		MeterValue meterValue1 = new MeterValue();
 		
-		meterValue1.setMeter_id("MT0000001");
-		meterValue1.setRead_dt("20200205010101");
+		meterValue1.setMeter_id("MT00000001");
+		meterValue1.setRead_dt("20200205010103");
 		meterValue1.setChannel("CH001");
 		meterValue1.setMeter_value(0.0);
 		meterValue1.setSect_meter_value(0.0);
 		
+		meterValues.add(meterValue1);
+		
 		MeterValue meterValue2 = new MeterValue();
 		
-		meterValue2.setMeter_id("MT0000001");
-		meterValue2.setRead_dt("20200205010101");
+		meterValue2.setMeter_id("MT00000001");
+		meterValue2.setRead_dt("20200205010104");
 		meterValue2.setChannel("CH001");
 		meterValue2.setMeter_value(0.0);
 		meterValue2.setSect_meter_value(0.0);
 		
 		meterValues.add(meterValue2);
+		
+		System.out.println(meterValues.size());
 		
 		
 		meterValueDAO.insertAll(meterValues);

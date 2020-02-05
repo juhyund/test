@@ -2,6 +2,8 @@ package com.nuri.kepco.model;
 
 import com.nuri.kepco.model.common.CommonObj;
 
+import lombok.Data;
+
 @Data
 public class MeterInfo extends CommonObj {
 	

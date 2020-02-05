@@ -2,12 +2,12 @@
 <!--***********************************
 * @Copyright : nuritelecom
 * @ProjectName : kepco-model
-* @FileName : resourceModelMapper.xml
+* @FileName : ResourceModelMapper.xml
 * @Author : kh.yoon
 * @Date : 2020-02-03
 ************************************-->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
-<mapper namespace="com.nuri.kepco.model.dao.resourceModelDAO">
+<mapper namespace="com.nuri.kepco.model.dao.ResourceModelDAO">
 
 	<sql id="base_where_list">
 		<where>
