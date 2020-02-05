@@ -23,9 +23,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
-import com.nuri.emi.fep.datatype.ResultMessage;
-import com.nuri.emi.fep.parser.MDDataParser;
 import com.nuri.emi.redis.model.RedisModelProvider;
+import com.nuri.kepco.fep.datatype.ResultMessage;
+import com.nuri.kepco.fep.parser.MDDataParser;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
