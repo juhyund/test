@@ -175,7 +175,7 @@
 				<configuration>
 					<classifier>spring-boot</classifier>
 					<mainClass>
-						com.nuri.fep.SpringFepApplication
+						com.nuri.kepco.fep.SpringFepApplication
 					</mainClass>
 				</configuration>
 				<executions>
