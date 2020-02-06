@@ -142,7 +142,7 @@
 	
 	<insert id="insert" parameterType="deviceInfo">
 		<selectKey keyProperty="device_id" resultType="String" order="BEFORE">
-			SELECT CONCAT('D', SUBSTR(IFNULL(SUBSTR(MAX(device_id),2),0) + 1000000001,2)) AS device_id
+			SELECT CONCAT('GW', SUBSTR(IFNULL(SUBSTR(MAX(device_id),3),0) + 100000001,2)) AS device_id
 			FROM EMI_DEVICE_INFO				
 		</selectKey>	
 		     	
