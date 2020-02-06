@@ -79,7 +79,11 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 			meterValues.add(lp);
 		}
 		
-		return this.meterValueDAO.insertAll(meterValues);
+		if(meterValues.size() > 0) {
+			return this.meterValueDAO.insertAll(meterValues);
+		} else {
+			return 0;
+		}
 	}
 
 }
