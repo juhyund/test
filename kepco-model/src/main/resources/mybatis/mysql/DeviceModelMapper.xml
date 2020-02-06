@@ -76,6 +76,19 @@
 		WHERE model_seq = #{model_seq}
 	</select>
 	
+	<select id="selectModelByName" resultType="deviceModel" parameterType="java.lang.String">	
+		SELECT 
+			model_seq
+			, model_nm
+			, vendor_seq
+			, reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, update_id
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+		FROM EMI_DEVICE_MODEL a				
+		WHERE model_nm = #{model_nm}
+	</select>
+	
 	<insert id="insert" parameterType="deviceModel">     	
 		INSERT INTO EMI_DEVICE_MODEL (			
 			model_nm

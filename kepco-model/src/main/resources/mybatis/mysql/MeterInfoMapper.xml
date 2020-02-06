@@ -131,7 +131,13 @@
 		WHERE meter_serial = #{meter_serial}
 	</select>
 	
-	<insert id="insert" parameterType="meterInfo">     	
+	<insert id="insert" parameterType="meterInfo">
+		
+		<selectKey keyProperty="meter_id" resultType="String" order="BEFORE">			
+			SELECT CONCAT('MT', SUBSTR(IFNULL(SUBSTR(MAX(meter_id),3),0) + 100000001,2)) AS meter_id 
+			FROM EMI_METER_INFO
+		</selectKey>
+		     	
 		INSERT INTO EMI_METER_INFO (
 			  meter_id
 			, meter_serial
