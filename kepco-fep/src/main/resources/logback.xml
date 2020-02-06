@@ -43,11 +43,11 @@
     </appender>
    
  	<!-- nuri-ewsn-model -->
-	<logger name="com.nuri.emi" level="trace">	    
+	<logger name="com.nuri.kepco" level="trace">	    
 	</logger>
 	
 	<!-- mapper sql-->
-	<logger name="com.nuri.emi.service.model.dao" level="debug">
+	<logger name="com.nuri.kepco.service.model.dao" level="debug">
 		<appender-ref ref="file-sql"></appender-ref>	    
 	</logger>	
 	

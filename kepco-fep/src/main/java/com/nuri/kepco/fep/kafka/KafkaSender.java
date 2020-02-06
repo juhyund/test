@@ -1,4 +1,4 @@
-package com.nuri.emi.fep.kafka;
+package com.nuri.kepco.fep.kafka;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

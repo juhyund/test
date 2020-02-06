@@ -1,21 +1,13 @@
-package com.nuri.emi.fep;
+package com.nuri.kepco.fep;
 
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.eclipse.leshan.core.model.LwM2mModel;
-import org.eclipse.leshan.core.node.LwM2mNode;
 import org.eclipse.leshan.core.node.LwM2mPath;
-import org.eclipse.leshan.core.node.codec.DefaultLwM2mNodeDecoder;
-import org.eclipse.leshan.core.node.codec.LwM2mNodeDecoder;
-import org.eclipse.leshan.core.request.ContentFormat;
 import org.eclipse.leshan.json.JsonArrayEntry;
 import org.eclipse.leshan.json.JsonRootObject;
 import org.eclipse.leshan.json.LwM2mJson;
-import org.eclipse.leshan.json.LwM2mJsonException;
-import org.eclipse.leshan.util.Hex;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +15,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
-import com.nuri.emi.redis.model.RedisModelProvider;
 import com.nuri.kepco.fep.datatype.ResultMessage;
-import com.nuri.kepco.fep.parser.MDDataParser;
+import com.nuri.kepco.fep.process.MDDataProcess;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ParserTest {
 	
 	@Autowired
-	RedisModelProvider redisModelProvider;
+	MDDataProcess process;
 
 	@Test
     public void test() {
@@ -79,14 +70,14 @@ public class ParserTest {
 					}
 				}			
 			}
-			MDDataParser parser = new MDDataParser();
-			
-			for(Integer key : meterInfo.keySet()) {
-				meterInfo.get(key);
-				meterData.get(key);
-				parser.parseMeterInfo(meterInfo.get(key));
-				parser.parser(meterData.get(key));
-			}
+//			MDDataParser parser = new MDDataParser();
+//			
+//			for(Integer key : meterInfo.keySet()) {
+//				meterInfo.get(key);
+//				meterData.get(key);
+//				parser.parseMeterInfo(meterInfo.get(key));
+//				parser.parser(meterData.get(key));
+//			}
 	
 		} catch (Exception e) {
 			e.printStackTrace();

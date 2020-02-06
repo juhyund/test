@@ -1,4 +1,4 @@
-package com.nuri.emi.fep;
+package com.nuri.kepco.fep;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.nuri.emi.fep.kafka.KafkaReceiver;
-import com.nuri.emi.fep.kafka.KafkaSender;
+import com.nuri.kepco.fep.kafka.KafkaReceiver;
+import com.nuri.kepco.fep.kafka.KafkaSender;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

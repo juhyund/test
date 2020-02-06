@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.nuri.emi"})
+@ComponentScan({"com.nuri.kepco"})
 public class SpringFepApplication {
 	
 	public static void main(String[] args) {

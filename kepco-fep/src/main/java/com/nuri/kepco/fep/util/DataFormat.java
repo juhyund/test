@@ -3,7 +3,6 @@ package com.nuri.kepco.fep.util;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -16,27 +15,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mina.core.buffer.IoBuffer;
 
-import com.aimir.fep.protocol.fmp.datatype.BCD;
-import com.aimir.fep.protocol.fmp.datatype.BOOL;
-import com.aimir.fep.protocol.fmp.datatype.BYTE;
-import com.aimir.fep.protocol.fmp.datatype.CHAR;
-import com.aimir.fep.protocol.fmp.datatype.DataType;
-import com.aimir.fep.protocol.fmp.datatype.FMPVariable;
-import com.aimir.fep.protocol.fmp.datatype.HEX;
-import com.aimir.fep.protocol.fmp.datatype.INT;
-import com.aimir.fep.protocol.fmp.datatype.IPADDR;
-import com.aimir.fep.protocol.fmp.datatype.OCTET;
-import com.aimir.fep.protocol.fmp.datatype.OID;
-import com.aimir.fep.protocol.fmp.datatype.SHORT;
-import com.aimir.fep.protocol.fmp.datatype.TIMEDATE;
-import com.aimir.fep.protocol.fmp.datatype.TIMESTAMP;
-import com.aimir.fep.protocol.fmp.datatype.UINT;
-import com.aimir.fep.protocol.fmp.datatype.VER;
-import com.aimir.fep.protocol.fmp.datatype.WORD;
+import com.aimir.util.DataUtil;
 import com.aimir.util.TimeUtil;
 import com.aimir.util.Util;
-import com.nuri.emi.data.util.DataUtil;
-import com.nuri.emi.data.util.Hex;
 import com.nuri.kepco.fep.config.Constants;
 
 public class DataFormat {

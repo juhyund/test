@@ -63,7 +63,8 @@ public class MeterType {
     
     public enum DEVICETYPE {
     	
-    	METER("C220040", "METER");
+    	DEVICE("DT001", "DEVICE"),
+    	GATEWAY("DT002", "GATEWAY");
     	
         private String code;
         private String value;
@@ -89,9 +90,71 @@ public class MeterType {
         }
     }
     
+    public enum COMMTYPE {
+    	
+    	LTE("CT001", "LTE");
+    	
+        private String code;
+        private String value;
+        
+        COMMTYPE(String code, String value) {
+            this.code = code;
+            this.value = value;           
+        }
+       
+        public String getCode() {
+            return this.code;
+        }
+        
+        public String getValue() {
+            return this.value;
+        }
+        
+        public static COMMTYPE getType(String code) {
+            for (COMMTYPE type : values()) {
+                if (type.getCode().equals(code)) return type;
+            }
+            return null;
+        }
+    }
+    
+    public enum DEVICEFLAG {
+    	
+    	METER("M", "METER"),
+    	DEVICE("D", "DEVICE");
+    	
+        private String code;
+        private String value;
+        
+        DEVICEFLAG(String code, String value) {
+            this.code = code;
+            this.value = value;           
+        }
+       
+        public String getCode() {
+            return this.code;
+        }
+        
+        public String getValue() {
+            return this.value;
+        }
+        
+        public static DEVICEFLAG getType(String code) {
+            for (DEVICEFLAG type : values()) {
+                if (type.getCode().equals(code)) return type;
+            }
+            return null;
+        }
+    }
+    
     public enum DEVICESTATUS {
     	
-    	NORMAL("C229100", "NORMAL");
+    	NORMAL("DS001", "NORMAL"),
+    	WAIT("DS001", "WAIT"),
+    	DEREGISTRATION("DS001", "DE-REGISTRATION"),
+    	POWERDOWN("DS001", "POWER DOWN"),
+    	NEWREGISTRATION("DS001", "NEW-REGISTRATION"),
+    	DELETE("DS001", "DELETE");
     	
         private String code;
         private String value;

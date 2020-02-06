@@ -1,11 +1,17 @@
 package com.nuri.kepco.fep.parser;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.leshan.core.node.LwM2mPath;
+import org.eclipse.leshan.json.JsonArrayEntry;
+import org.eclipse.leshan.json.JsonRootObject;
+import org.eclipse.leshan.json.LwM2mJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,62 +21,120 @@ import com.aimir.util.Hex;
 import com.aimir.util.Util;
 import com.nuri.kepco.fep.datatype.LPData;
 import com.nuri.kepco.fep.datatype.MDData;
+import com.nuri.kepco.fep.mddata.MeterDataParser;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
 import com.nuri.kepco.fep.parser.LPChannel.CHANNEL;
 
-public class MDDataParser extends AbstractMDParser {
+public class KepcoMDDataParser extends MeterDataParser {
+
+	private static final Logger LOG = LoggerFactory.getLogger(KepcoMDDataParser.class);
 	
-	private static final Logger LOG = LoggerFactory.getLogger(MDDataParser.class);
+	private final int METERING_DATA_ID = 31008;
+	private final int MODEM_INFO_RESOURCE_ID = 101;
+	private final int METER_INFO_RESOURCE_ID = 102;
+	private final int DLMS_RESOURCE_ID = 103;
 	
 	LinkedHashMap<String, Map<String, Object>> result = new LinkedHashMap<String, Map<String, Object>>();
-
-	MDData mdData = new MDData();
-
-	String customerID = "";
-	String modemTime = "";
-	String meterTime = "";
-	String fwVersion = "";	
+	List<MDData> mdLists = new ArrayList<MDData>();
+	
+	String deviceID = "";
 	String meterID = "";
+	String meterTime = "";
+	String billingDate = "";
+	String fwVersion = "";
 	String meterType = "";
 	String meterModel = "";
-	String billingDate = "";
 	
-	int dcnt = 0;
-	
-	public void parseMeterInfo(byte[] frame) throws Exception {
+	public void parser(String frame) throws Exception {
+		
+		Map<Integer, byte[]> meterInfo = new HashMap<Integer, byte[]>();
+		Map<Integer, byte[]> meterData = new HashMap<Integer, byte[]>();
+
+		try {
+			JsonRootObject jsonObject = LwM2mJson.fromJsonLwM2m(frame);
+			String bn = jsonObject.getBaseName();
+			
+
+			for (JsonArrayEntry e : jsonObject.getResourceList()) {
+				String strPath = bn + "/" + e.getName();
 				
+
+				LwM2mPath path = new LwM2mPath(strPath);
+
+				if (path.getObjectId() == METERING_DATA_ID) {
+
+					if (path.getResourceId() == MODEM_INFO_RESOURCE_ID) { // modem info
+						// todo
+					}
+
+					if (path.getResourceId() == METER_INFO_RESOURCE_ID) { // meter info
+						if (path.getResourceInstanceId() != null) {
+							meterInfo.put(path.getResourceInstanceId(), Base64.getDecoder().decode(e.getStringValue()));
+						}
+					}
+
+					if (path.getResourceId() == DLMS_RESOURCE_ID) { // DLMS_Metering Data
+						if (path.getResourceInstanceId() != null) {
+							meterData.put(path.getResourceInstanceId(), Base64.getDecoder().decode(e.getStringValue()));
+						}
+					}
+				}
+			}
+		
+			mdLists = new ArrayList<MDData>();
+			
+			for(Integer key : meterInfo.keySet()) {
+				
+				MDData mdData = new MDData();
+				
+				// meterInfo
+				parseMeterInfo(meterInfo.get(key), mdData);
+				
+				// parser
+				parser(meterData.get(key), mdData);
+				
+				// add mdData
+				mdLists.add(mdData);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	private void parseMeterInfo(byte[] frame, MDData mdData) throws Exception {
+
 		int total_len = frame.length;
 		int pos = 0;
 		byte[] data = new byte[total_len];
 		System.arraycopy(frame, pos, data, 0, total_len);
-		
+
 		byte[] MID = new byte[11];
 		byte[] ITIME = new byte[7];
 		byte[] DCNT = new byte[2];
-			
+
 		System.arraycopy(data, pos, MID, 0, MID.length);
 		pos += MID.length;
 		meterID = new String(MID);
-		
+
 		System.arraycopy(data, pos, ITIME, 0, ITIME.length);
 		pos += ITIME.length;
-		
+
 		System.arraycopy(data, pos, DCNT, 0, DCNT.length);
 		pos += DCNT.length;
 		DataUtil.convertEndian(true, DCNT);
-		int dcnt = DataUtil.getIntTo2Byte(DCNT);		
-				
+		int dcnt = DataUtil.getIntTo2Byte(DCNT);
+
 		String modemTime = getBCDTime(ITIME);
-		
+
 		mdData.setMeterID(meterID);
 		mdData.setModemTime(modemTime);
-		
-		setMeterModel(meterID);
+
+		setMeterModel(meterID, mdData);
 	}
 
-	@Override
-	public MDData parser(byte[] frame) throws Exception {
+	private void parser(byte[] frame, MDData mdData) throws Exception {
 
 		String obisCode = "";
 		int clazz = 0;
@@ -125,19 +189,19 @@ public class MDDataParser extends AbstractMDParser {
 				System.arraycopy(data, pos, TAGDATA, 0, data.length - pos);
 				pos += data.length - pos;
 			}
-			
+
 			String _obisCode = obisCode.substring(0, 10);
-			if(_obisCode.equals("0100000102") || _obisCode.equals("0000620101") || _obisCode.equals("0000620103")) {
+			if (_obisCode.equals("0100000102") || _obisCode.equals("0000620101") || _obisCode.equals("0000620103")) {
 				obisCode = _obisCode + "00";
 				dlms.setObis(obisCode);
 			}
-			
+
 			LOG.debug("OBIS[" + obisCode + "] CLASS[" + clazz + "] ATTR[" + attr + "] LENGTH[" + len + "] TAGDATA=["
 					+ Hex.decode(TAGDATA) + "]");
 
 			dlms.parseDlmsTag(TAGDATA);
 			Map<String, Object> dlmsData = dlms.getData();
-		
+
 			if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.ENERGY_LOAD_PROFILE) {
 				for (int cnt = 0;; cnt++) {
 					obisCode = dlms.getDlmsHeader().getObis().getCode() + "-" + cnt;
@@ -152,7 +216,7 @@ public class MDDataParser extends AbstractMDParser {
 			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.BILLING_DATE) {
 				result.put(obisCode, dlmsData);
 			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.BILLING) {// 순방향 전력량 (월별)
-				
+
 				for (int cnt = 0;; cnt++) {
 					obisCode = dlms.getDlmsHeader().getObis().getCode() + "-" + cnt;
 					LOG.debug("obisCode : " + obisCode);
@@ -172,63 +236,20 @@ public class MDDataParser extends AbstractMDParser {
 				}
 			} else if (dlmsData != null && !dlmsData.isEmpty()) {
 				result.put(obisCode, dlmsData);
-			} 
+			}
 		}
 		
-		
-		setLpData();
+		List<LPData> lpDatas = setLpData();
+		mdData.setLpDatas(lpDatas);
+	}
+
 	
-		return mdData;
-	}
-
-	public void setMeterInfo() {
-
+	public List<LPData> setLpData() {
+		
+		Map<String, Object> lpMap = null;
+		List<LPData> lpDataList = new ArrayList<LPData>();
+		
 		try {
-
-			Map<String, Object> map = null;
-			
-			map = (Map<String, Object>) result.get(OBIS.METER_TIME.getCode());
-			if (map != null) {
-				Object obj = map.get(OBIS.METER_TIME.getName());
-				if (obj != null)
-					meterTime = (String) obj;
-				if (meterTime != null && meterTime.length() != 14) {
-					meterTime = meterTime + "00";
-				}
-				LOG.debug("METER_TIME[" + meterTime + "]");
-				mdData.setMeterTime(meterTime);
-			}
-
-			map = (Map<String, Object>) result.get(OBIS.BILLING_DATE.getCode());
-			if (map != null) {
-				Object obj = map.get(OBIS.BILLING_DATE.getName());
-				if (obj != null)
-					billingDate = (String) obj;
-				if (billingDate != null && billingDate.length() != 14) {
-					billingDate = billingDate + "00";
-				}
-				LOG.debug("BILLINGDATE[" + billingDate + "]");
-				mdData.setBillingDate(billingDate);
-			}
-			map = (Map<String, Object>) result.get(OBIS.METER_VERSION.getCode());
-			if (map != null) {
-				Object obj = map.get(OBIS.METER_VERSION.getName());
-				if (obj != null)
-					fwVersion = (String) obj;
-				LOG.debug("METER_VERSION[" + fwVersion + "]");
-			}
-
-		} catch (Exception e) {
-			LOG.error("error {}", e);
-		}
-	}
-
-	public void setLpData() {
-
-		try {
-
-			Map<String, Object> lpMap = null;
-			List<LPData> lpDataList = new ArrayList<LPData>();
 
 			for (int i = 0; i < result.size(); i++) {
 
@@ -402,16 +423,18 @@ public class MDDataParser extends AbstractMDParser {
 				} // end while
 			}
 
-			mdData.setLpDatas(lpDataList);
-			Collections.sort(mdData.getLpDatas());
+			
+			Collections.sort(lpDataList);
 
 		} catch (Exception e) {
 			LOG.error("error {}", e);
 		}
+		
+		return lpDataList;
 
 	}
 
-	public void setMeterModel(String meter_name) {
+	public void setMeterModel(String meter_name, MDData mdData) {
 
 		String vendorCd = meter_name.substring(0, 2);
 		String modelCd = meter_name.substring(2, 4);
@@ -430,25 +453,29 @@ public class MDDataParser extends AbstractMDParser {
 		mdData.setMeterModel(meterModel);
 		mdData.setMeterType(meterType);
 	}
-	
+
 	/**
-	 * getBCDTime
-	 * bcd(7byte) time -> stirng 
+	 * getBCDTime bcd(7byte) time -> stirng
+	 * 
 	 * @param bcd
 	 * @return
 	 */
 	private String getBCDTime(byte[] bcdTime) {
-		
+
 		StringBuffer strBCDTime = new StringBuffer();
 		String appender = "";
-		for(int i = 0; i < bcdTime.length; i++) {
-			
-			appender = (i==0) ? "20" : "";
-			if(i != 3) {
+		for (int i = 0; i < bcdTime.length; i++) {
+
+			appender = (i == 0) ? "20" : "";
+			if (i != 3) {
 				strBCDTime.append(appender + Util.frontAppendNStr('0', Integer.toHexString(bcdTime[i]), 2));
 			}
 		}
-			
+
 		return strBCDTime.toString();
+	}
+	
+	public List<MDData> getMDList() {
+		return mdLists;
 	}
 }
