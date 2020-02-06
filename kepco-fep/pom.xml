@@ -133,11 +133,11 @@
 			<scope>test</scope>
 		</dependency>
 		
-		  <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-	<artifactId>jackson-mapper-asl</artifactId>
-	<version>1.9.13</version>
-    </dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.mina/mina-core -->
 	    <dependency>
@@ -175,7 +175,7 @@
 				<configuration>
 					<classifier>spring-boot</classifier>
 					<mainClass>
-						com.nuri.emi.Lwm2mServerApplication
+						com.nuri.fep.SpringFepApplication
 					</mainClass>
 				</configuration>
 				<executions>
