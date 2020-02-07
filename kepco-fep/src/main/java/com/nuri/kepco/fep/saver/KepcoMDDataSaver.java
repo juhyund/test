@@ -119,8 +119,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
 					result += meterBillingDAO.insertImport(meterBilling);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOG.error("e: {}", e.getMessage());
 				}
 			}
 			
@@ -150,8 +149,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
 					result += meterBillingDAO.insertExport(meterBilling);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOG.error("e: {}", e.getMessage());
 				}
 			}
 		}

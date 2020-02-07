@@ -123,8 +123,7 @@ public abstract class AbstractMDSaver {
 			mdData.setMeterInfo(meter);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
