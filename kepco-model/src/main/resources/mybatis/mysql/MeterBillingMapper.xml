@@ -346,7 +346,33 @@
 			, now()
 			, now()
 		)
-		ON DUPLICATE KEY UPDATE update_dt = now()
+		ON DUPLICATE KEY UPDATE 
+		active_imp_tot    			=  #{active_imp_tot}   
+		, apprent_imp_tot   			=  #{apprent_imp_tot}  
+		, lead_imp_tot      			=  #{lead_imp_tot}     
+		, lagging_imp_tot   			=  #{lagging_imp_tot}  
+		, pf_imp_tot        			=  #{pf_imp_tot}       
+		, active_imp_rate1  			=  #{active_imp_rate1} 
+		, apprent_imp_rate1 			=  #{apprent_imp_rate1}
+		, lead_imp_rate1    			=  #{lead_imp_rate1}   
+		, lagging_imp_rate1 			=  #{lagging_imp_rate1}
+		, pf_imp_rate1      			=  #{pf_imp_rate1}     
+		, active_imp_rate2  			=  #{active_imp_rate2} 
+		, apprent_imp_rate2 			=  #{apprent_imp_rate2}
+		, lead_imp_rate2    			=  #{lead_imp_rate2}   
+		, lagging_imp_rate2 			=  #{lagging_imp_rate2}
+		, pf_imp_rate2      			=  #{pf_imp_rate2}     
+		, active_imp_rate3  			=  #{active_imp_rate3} 
+		, apprent_imp_rate3 			=  #{apprent_imp_rate3}
+		, lead_imp_rate3    			=  #{lead_imp_rate3}   
+		, lagging_imp_rate3 			=  #{lagging_imp_rate3}
+		, pf_imp_rate3      			=  #{pf_imp_rate3}     
+		, active_imp_rate4  			=  #{active_imp_rate4} 
+		, apprent_imp_rate4 			=  #{apprent_imp_rate4}
+		, lead_imp_rate4    			=  #{lead_imp_rate4}   
+		, lagging_imp_rate4 			=  #{lagging_imp_rate4}
+		, pf_imp_rate4		  			=  #{pf_imp_rate4}			
+		, update_dt         			=  now()               
     </insert>
     
     <insert id="insertExport" parameterType="meterBilling">     	
@@ -411,7 +437,33 @@
 			, now()
 			, now()
 		)
-		ON DUPLICATE KEY UPDATE update_dt = now()
+		ON DUPLICATE KEY UPDATE		
+		active_exp_tot      = #{active_exp_tot}
+		, apprent_exp_tot     = #{apprent_exp_tot}
+		, lead_exp_tot        = #{lead_exp_tot}     
+		, lagging_exp_tot     = #{lagging_exp_tot}  
+		, pf_exp_tot          = #{pf_exp_tot}       
+		, active_exp_rate1    = #{active_exp_rate1} 
+		, apprent_exp_rate1   = #{apprent_exp_rate1}
+		, lead_exp_rate1      = #{lead_exp_rate1}   
+		, lagging_exp_rate1   = #{lagging_exp_rate1}
+		, pf_exp_rate1        = #{pf_exp_rate1}    
+		, active_exp_rate2    = #{active_exp_rate2} 
+		, apprent_exp_rate2   = #{apprent_exp_rate2}
+		, lead_exp_rate2      = #{lead_exp_rate2}   
+		, lagging_exp_rate2   = #{lagging_exp_rate2}
+		, pf_exp_rate2        = #{pf_exp_rate2}    
+		, active_exp_rate3    = #{active_exp_rate3} 
+		, apprent_exp_rate3   = #{apprent_exp_rate3}
+		, lead_exp_rate3      = #{lead_exp_rate3}  
+		, lagging_exp_rate3   = #{lagging_exp_rate3}
+		, pf_exp_rate3        = #{pf_exp_rate3}    
+		, active_exp_rate4    = #{active_exp_rate4}
+		, apprent_exp_rate4   = #{apprent_exp_rate4}
+		, lead_exp_rate4      = #{lead_exp_rate4}   
+		, lagging_exp_rate4   = #{lagging_exp_rate4}
+		, pf_exp_rate4        = #{pf_exp_rate4}         
+		, update_dt           = now()
     </insert>
     
     <insert id="insertAll" parameterType="meterBilling">     	
