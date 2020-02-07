@@ -129,6 +129,10 @@ public class DLMSHeader {
 			else if (attr == DLMS_CLASS_ATTR.DATA_ATTR04.getAttr())
 				this.attr = DLMS_CLASS_ATTR.DATA_ATTR04;
 			break;
+		case SINGLE_ACTION_SCHEDULE:
+			if (attr == DLMS_CLASS_ATTR.SINGLE_ACTION_SCHEDULE_ATTR04.getAttr())
+				this.attr = DLMS_CLASS_ATTR.SINGLE_ACTION_SCHEDULE_ATTR04;			
+			break;
 		default:
 			break;
 		}

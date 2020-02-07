@@ -1,15 +1,10 @@
 package com.nuri.kepco.fep.mddata;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.nuri.kepco.fep.datatype.MDData;
-import com.nuri.kepco.fep.parser.KepcoMDDataParser;
 
 @Service
 public class MeasurementData implements IMeasurementData {

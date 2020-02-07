@@ -25,6 +25,7 @@ import com.nuri.kepco.fep.mddata.MeterDataParser;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
 import com.nuri.kepco.fep.parser.LPChannel.CHANNEL;
+import com.nuri.kepco.model.MeterBilling;
 
 public class KepcoMDDataParser extends MeterDataParser {
 
@@ -213,8 +214,18 @@ public class KepcoMDDataParser extends MeterDataParser {
 			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.METER_TIME
 					&& dlms.getDlmsHeader().getAttr() != DLMS_CLASS_ATTR.CLOCK_ATTR02) {
 				result.put(obisCode + "-" + dlms.getDlmsHeader().getAttr().getAttr(), dlmsData);
-			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.BILLING_DATE) {
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.HW_VER) { // cosem
 				result.put(obisCode, dlmsData);
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.ACTIVEPOWER_CONSTANT) { // 유효전력량 계기정수
+				result.put(obisCode, dlmsData);	
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.REACTIVEPOWER_CONSTANT) { // 무효전력량 계기정수
+				result.put(obisCode, dlmsData);
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.APPRENTPOWER_CONSTANT) { // 피상전력량계기정수
+				result.put(obisCode, dlmsData);				
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.MEASUREMENT_DATE) { // 정기검침일
+				result.put(obisCode, dlmsData);		
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.LP_INTERVAL) { // LP PERIOD
+				result.put(obisCode, dlmsData);							
 			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.BILLING) {// 순방향 전력량 (월별)
 
 				for (int cnt = 0;; cnt++) {
@@ -239,10 +250,120 @@ public class KepcoMDDataParser extends MeterDataParser {
 			}
 		}
 		
+		setMeterInfo(mdData);
+		
 		List<LPData> lpDatas = setLpData();
 		mdData.setLpDatas(lpDatas);
+		
+		// 정기검침 순방향과 역박향이 각각 올라온다.
+		// 미터시간은 정기검침을 조회한 시간이다.
+		// 정기검침은 정기검침일에 생성된 데이터이다.		
+		List<MeterBilling> billingImport = setBillingImportData();
+		List<MeterBilling> billingExport = setBillingExportData();
+		
+		mdData.setBillingImportData(billingImport);
+		mdData.setBillingExportData(billingExport);
 	}
+	
+	public void setMeterInfo(MDData mdData) {
+		
+		try {
+			String meterVersion = "";
+			String cosem_device_id = "";
+			String manufactureID = "";
+			String meterTime = "";
+			String billingDate = "";
+			String fwVersion = "";
+			int lpInterval = 0;
+			Double acon = 0.0;
+			Double rcon = 0.0;
+			Double pcon = 0.0;
+			
+			Map<String, Object> map = null;
+			map = (Map<String, Object>) result.get(OBIS.HW_VER.getCode()); // cosem_id
+			if (map != null) {
+				Object obj = null;
+				obj = map.get(OBIS.HW_VER.getName());
+				if (obj != null)
+					cosem_device_id = new String(Hex.encode((String) obj));
+				LOG.debug("COSEM_ID(HW_VER) [" + cosem_device_id + "]");
+				mdData.setCosemDeviceName(cosem_device_id);
+			}
 
+			map = (Map<String, Object>) result.get(OBIS.METER_TIME.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.METER_TIME.getName());
+				if (obj != null)
+					meterTime = (String) obj;
+				if (meterTime != null && meterTime.length() != 14) {
+					meterTime = meterTime + "00";
+				}
+				LOG.debug("METER_TIME[" + meterTime + "]");
+				mdData.setMeterTime(meterTime);
+			}
+
+			map = (Map<String, Object>) result.get(OBIS.MEASUREMENT_DATE.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.MEASUREMENT_DATE.getName());
+				if (obj != null)
+					billingDate = (String) obj;
+				
+				if(!"".equals(meterTime)) {
+					billingDate = meterTime.substring(0, 6) + billingDate + "000000";
+				}
+				
+				LOG.debug("BILLINGDATE[" + billingDate + "]");
+				mdData.setBillingDate(billingDate);
+			}
+			
+			map = (Map<String, Object>) result.get(OBIS.METER_VERSION.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.METER_VERSION.getName());
+				if (obj != null)
+					fwVersion = (String) obj;
+				LOG.debug("METER_VERSION[" + fwVersion + "]");
+			}
+
+			map = (Map<String, Object>) result.get(OBIS.LP_INTERVAL.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.LP_INTERVAL.getName());
+				if (obj != null)
+					lpInterval = Integer.parseInt(String.valueOf(obj));
+				LOG.debug("LP INTERVAL[" + lpInterval + "]");
+				mdData.setLpPeriod(lpInterval);
+			}
+			
+			map = (Map<String, Object>) result.get(OBIS.ACTIVEPOWER_CONSTANT.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.ACTIVEPOWER_CONSTANT.getName());
+				if (obj != null)
+					acon = Double.parseDouble(String.valueOf(obj));
+				LOG.debug("ACON[" + acon + "]");
+				mdData.setAcon(acon);
+			}
+			
+			map = (Map<String, Object>) result.get(OBIS.REACTIVEPOWER_CONSTANT.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.REACTIVEPOWER_CONSTANT.getName());
+				if (obj != null)
+					rcon = Double.parseDouble(String.valueOf(obj));
+				LOG.debug("RCON[" + rcon + "]");
+				mdData.setRcon(rcon);
+			}
+			
+			map = (Map<String, Object>) result.get(OBIS.APPRENTPOWER_CONSTANT.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.APPRENTPOWER_CONSTANT.getName());
+				if (obj != null)
+					pcon = Double.parseDouble(String.valueOf(obj));
+				LOG.debug("PCON[" + pcon + "]");
+				mdData.setPcon(pcon);
+			}
+			
+		} catch (Exception e) {
+			LOG.error("error {}", e);
+		}
+	}
 	
 	public List<LPData> setLpData() {
 		
@@ -298,9 +419,9 @@ public class KepcoMDDataParser extends MeterDataParser {
 							chValue = ((Float) value).doubleValue();
 
 						// 단상 2선식 40(10)A & CHANNEL2 번 결선체결확인인 경우를 제외하고 단위 설정
-						LOG.debug("meterType [" + meterType + "] : [" + DLMSVARIABLE.METERMODEL.ET1P2W40A.getName()
+						LOG.debug("meterType [" + meterType + "] : [" + DLMSVARIABLE.METERTYPE.ET1P2W40A.getName()
 								+ "]");
-						if (!meterType.equals(DLMSVARIABLE.METERMODEL.ET1P2W40A.getName())) {
+						if (!meterType.equals(DLMSVARIABLE.METERTYPE.ET1P2W40A.getName())) {
 							chValue = (chValue) * 0.001;
 						}
 
@@ -441,17 +562,12 @@ public class KepcoMDDataParser extends MeterDataParser {
 
 		LOG.debug("setMeterModel vendorCd : [" + vendorCd + "] modelCd : [" + modelCd + "]");
 
-		DLMSVARIABLE.VENDOR vendor = DLMSVARIABLE.VENDOR.getVendor(vendorCd);
-		DLMSVARIABLE.METERMODEL model = DLMSVARIABLE.METERMODEL.getMeterModel(modelCd);
-
-		String vendorShortName = (vendor == null) ? "" : vendor.getSname();
-		String meterType = (model == null) ? "" : model.getName();
-
-		this.meterModel = vendorShortName + meterType;
-		this.meterType = meterType;
-
-		mdData.setMeterModel(meterModel);
-		mdData.setMeterType(meterType);
+		DLMSVARIABLE.METERTYPE type = DLMSVARIABLE.METERTYPE.getMeterType(modelCd);
+		DLMSVARIABLE.METERPHASE phase = DLMSVARIABLE.METERPHASE.getMeterPhase(modelCd);
+		
+		mdData.setMeterType(type.getName());
+		mdData.setMeterPhase(phase.getName());
+		mdData.setVendorCd(vendorCd);
 	}
 
 	/**
@@ -477,5 +593,187 @@ public class KepcoMDDataParser extends MeterDataParser {
 	
 	public List<MDData> getMDList() {
 		return mdLists;
+	}
+	
+	public List<MeterBilling> setBillingImportData() {
+		try {
+
+			Map<String, Object> lpMap = null;
+			List<MeterBilling> billingList = new ArrayList<MeterBilling>();
+			
+			for (int i = 0; i < result.size(); i++) {
+
+				if (!result.containsKey(OBIS.BILLING.getCode() + "-" + i))
+					break;
+
+				if (result.containsKey(OBIS.BILLING.getCode() + "-" + i)) {
+					lpMap = (Map<String, Object>) result.get(OBIS.BILLING.getCode() + "-" + i);
+				}
+
+				if (lpMap == null) {
+					break;
+				}
+
+				Object value = null;
+				int cnt = 0;
+				Double[] billing = new Double[25];
+				Double chValue = 0.0;
+
+				while ((value = lpMap.get("Channel[1]" + "-" + cnt)) != null) {
+
+					for (int j = 0; j < 25; j++) {
+
+						value = lpMap.get("Channel[" + j + 1 + "]" + "-" + cnt);
+
+						if (value instanceof OCTET)
+							chValue = (double) DataUtil.getLongToBytes(((OCTET) value).getValue());
+						else if (value instanceof Long)
+							chValue = ((Long) value).doubleValue();
+						else if (value instanceof Float)
+							chValue = ((Float) value).doubleValue();
+
+						billing[j] = chValue;
+					}
+
+					MeterBilling billingImport = new MeterBilling();
+
+					billingImport.setMeter_id(meterID);
+					billingImport.setBilling_dt(billingDate);
+
+					billingImport.setActive_imp_tot(billing[0] * 0.001);
+					billingImport.setApprent_imp_tot(billing[1] * 0.001);
+					billingImport.setLead_imp_tot(billing[2] * 0.001);
+					billingImport.setLagging_imp_tot(billing[3] * 0.001);
+					billingImport.setPf_imp_tot(billing[4]);
+
+					billingImport.setActive_imp_rate1(billing[5] * 0.001);
+					billingImport.setApprent_imp_rate1(billing[6] * 0.001);
+					billingImport.setLead_imp_rate1(billing[7] * 0.001);
+					billingImport.setLagging_imp_rate1(billing[8] * 0.001);
+					billingImport.setPf_imp_rate1(billing[9]);
+
+					billingImport.setActive_imp_rate2(billing[10] * 0.001);
+					billingImport.setApprent_imp_rate2(billing[11] * 0.001);
+					billingImport.setLead_imp_rate2(billing[12] * 0.001);
+					billingImport.setLagging_imp_rate2(billing[13] * 0.001);
+					billingImport.setPf_imp_rate2(billing[14]);
+
+					billingImport.setActive_imp_rate3(billing[15] * 0.001);
+					billingImport.setApprent_imp_rate3(billing[16] * 0.001);
+					billingImport.setLead_imp_rate3(billing[17] * 0.001);
+					billingImport.setLagging_imp_rate3(billing[18] * 0.001);
+					billingImport.setPf_imp_rate3(billing[19]);
+
+					billingImport.setActive_imp_rate4(billing[20] * 0.001);
+					billingImport.setApprent_imp_rate4(billing[21] * 0.001);
+					billingImport.setLead_imp_rate4(billing[22] * 0.001);
+					billingImport.setLagging_imp_rate4(billing[23] * 0.001);
+					billingImport.setPf_imp_rate4(billing[24]);
+					
+					billingList.add(billingImport);
+					
+					cnt++;
+
+				} // end while
+				
+				return billingList;
+			}
+		} catch (Exception e) {
+			LOG.error("error {}", e);
+		}
+		
+		return null;
+	}
+	
+	public List<MeterBilling> setBillingExportData() {
+		
+		try {
+
+			Map<String, Object> lpMap = null;
+			List<MeterBilling> billingList = new ArrayList<MeterBilling>();
+
+			for (int i = 0; i < result.size(); i++) {
+
+				if (!result.containsKey(OBIS.BILLING_REVERSE.getCode() + "-" + i))
+					break;
+
+				if (result.containsKey(OBIS.BILLING_REVERSE.getCode() + "-" + i)) {
+					lpMap = (Map<String, Object>) result.get(OBIS.BILLING_REVERSE.getCode() + "-" + i);
+				}
+
+				if (lpMap == null) {
+					break;
+				}
+
+				Object value = null;
+				int cnt = 0;
+				Double[] billing = new Double[25];
+				Double chValue = 0.0;
+
+				while ((value = lpMap.get("Channel[1]" + "-" + cnt)) != null) {
+
+					for (int j = 0; j < 25; j++) {
+
+						value = lpMap.get("Channel[" + j + 1 + "]" + "-" + cnt);
+
+						if (value instanceof OCTET)
+							chValue = (double) DataUtil.getLongToBytes(((OCTET) value).getValue());
+						else if (value instanceof Long)
+							chValue = ((Long) value).doubleValue();
+						else if (value instanceof Float)
+							chValue = ((Float) value).doubleValue();
+
+						billing[j] = chValue;
+					}
+
+					MeterBilling billingImport = new MeterBilling();
+
+					billingImport.setMeter_id(meterID);
+					billingImport.setBilling_dt(billingDate);
+
+					billingImport.setActive_exp_tot(billing[0] * 0.001);
+					billingImport.setApprent_exp_tot(billing[1] * 0.001);
+					billingImport.setLead_exp_tot(billing[2] * 0.001);
+					billingImport.setLagging_exp_tot(billing[3] * 0.001);
+					billingImport.setPf_exp_tot(billing[4]);
+
+					billingImport.setActive_exp_rate1(billing[5] * 0.001);
+					billingImport.setApprent_exp_rate1(billing[6] * 0.001);
+					billingImport.setLead_exp_rate1(billing[7] * 0.001);
+					billingImport.setLagging_exp_rate1(billing[8] * 0.001);
+					billingImport.setPf_exp_rate1(billing[9]);
+
+					billingImport.setActive_exp_rate2(billing[10] * 0.001);
+					billingImport.setApprent_exp_rate2(billing[11] * 0.001);
+					billingImport.setLead_exp_rate2(billing[12] * 0.001);
+					billingImport.setLagging_exp_rate2(billing[13] * 0.001);
+					billingImport.setPf_exp_rate2(billing[14]);
+
+					billingImport.setActive_exp_rate3(billing[15] * 0.001);
+					billingImport.setApprent_exp_rate3(billing[16] * 0.001);
+					billingImport.setLead_exp_rate3(billing[17] * 0.001);
+					billingImport.setLagging_exp_rate3(billing[18] * 0.001);
+					billingImport.setPf_exp_rate3(billing[19]);
+
+					billingImport.setActive_exp_rate4(billing[20] * 0.001);
+					billingImport.setApprent_exp_rate4(billing[21] * 0.001);
+					billingImport.setLead_exp_rate4(billing[22] * 0.001);
+					billingImport.setLagging_exp_rate4(billing[23] * 0.001);
+					billingImport.setPf_exp_rate4(billing[24]);
+					
+					billingList.add(billingImport);
+					
+					cnt++;
+
+				} // end while
+				
+				return billingList;
+			}
+			
+		} catch (Exception e) {
+			LOG.error("error {}", e);
+		}
+		
+		return null;
 	}
 }

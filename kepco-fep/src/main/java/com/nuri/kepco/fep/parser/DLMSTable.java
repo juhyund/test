@@ -19,11 +19,10 @@ import com.nuri.kepco.fep.parser.DLMSVARIABLE.ENERGY_LOAD_PROFILE;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
 import com.nuri.kepco.model.MeterInfo;
 
-
 public class DLMSTable {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DLMSTable.class);
-	
+
 	private DLMSHeader dlmsHeader = new DLMSHeader();
 	private List<DLMSTag> dlmsTags = new ArrayList<DLMSTag>();
 	private MeterInfo meterInfo;
@@ -232,12 +231,49 @@ public class DLMSTable {
 					}
 				}
 				
+				if (obis == OBIS.BILLING_DATE && dlmsTags.size() != 0) {
+
+					byte[] data = dlmsTags.get(0).getOCTET().getValue();
+					if (data.length == 12) {
+						try {
+							String str = getDateTime(data);
+							ret.put(OBIS.BILLING_DATE.getName(), str);
+						} catch (Exception e) {
+							LOG.warn("Exception : {}", e);
+						}
+					}
+				}
 				break;
 			default:
 				break;
 			}
 			break;
-		case SCRIPT_TABLE:
+		case SINGLE_ACTION_SCHEDULE:
+			if (attr == null)
+				break;
+			switch (attr) {
+			case SINGLE_ACTION_SCHEDULE_ATTR04: // execution_time, array
+				try {
+					if (obis == OBIS.MEASUREMENT_DATE && dlmsTags.size() != 0) {
+						
+						if(dlmsTags.get(3) != null) {					
+							byte[] data = dlmsTags.get(3).getOCTET().getValue();
+							if (data.length == 5) {
+								try {									
+									int day = DataFormat.getIntToByte(data[3]);
+									DecimalFormat df = new DecimalFormat("00");									
+									ret.put(OBIS.MEASUREMENT_DATE.getName(), df.format(day));
+								} catch (Exception e) {
+									LOG.warn("Exception : {}", e);
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					LOG.error("ERROR", e);
+				}
+				break;
+			}
 			break;
 		case RELAY_CLASS:
 			break;
@@ -261,11 +297,10 @@ public class DLMSTable {
 		@SuppressWarnings("unused")
 		int channelCount = 0;
 		int channelIndex = 1;
-		
+
 		if (obis != null) {
-			
-			if (obis.equals(OBIS.ENERGY_LOAD_PROFILE) 
-					|| obis.equals(OBIS.BILLING) 
+
+			if (obis.equals(OBIS.ENERGY_LOAD_PROFILE) || obis.equals(OBIS.BILLING)
 					|| obis.equals(OBIS.BILLING_REVERSE)) {
 				name = "";
 				for (DLMSTag tag : tags) {
@@ -287,16 +322,17 @@ public class DLMSTable {
 						} else if (tag.getTag().equals(DLMS_TAG_TYPE.BitString)) { // Status
 							name = "Status";
 						} else {
-						
+
 						}
-	
+
 						putData(ret, obis, name, tag);
 					}
 				}
-	
+
 			} else {
 				for (int i = 0; i < tags.size(); i++) {
-					LOG.debug(obis.getName() + ",tag=" + tags.get(i).getTag().name() + ", value=" + tags.get(i).getValue());
+					LOG.debug(obis.getName() + ",tag=" + tags.get(i).getTag().name() + ", value="
+							+ tags.get(i).getValue());
 					// name = DLMSVARIABLE.getDataName(obis, i);
 					putData(ret, obis, name, tags.get(i));
 				}
@@ -315,7 +351,7 @@ public class DLMSTable {
 				break;
 			case BILLING_REVERSE:
 				getOBIS_CODE_BILLING_REVERSE_PROFILE(map, dataName, tag);
-				break;			
+				break;
 			}
 
 		} catch (Exception e) {
@@ -377,8 +413,7 @@ public class DLMSTable {
 	}
 
 	// 현재검침
-	private void getOBIS_CODE_BILLING_PROFILE(Map<String, Object> map, String dataName, DLMSTag tag)
-			throws Exception {
+	private void getOBIS_CODE_BILLING_PROFILE(Map<String, Object> map, String dataName, DLMSTag tag) throws Exception {
 
 		String key = dataName;
 		for (int cnt = 0;; cnt++) {
@@ -405,8 +440,6 @@ public class DLMSTable {
 			}
 		}
 	}
-
-	
 
 	/**
 	 * DLMS 12bytes OCTET 시간 포맷 년 : 0,1 월 : 2 일 : 3 시 : 5 분 : 6
@@ -472,5 +505,4 @@ public class DLMSTable {
 
 		return str;
 	}
-
 }

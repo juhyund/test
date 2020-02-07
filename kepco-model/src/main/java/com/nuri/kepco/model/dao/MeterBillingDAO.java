@@ -7,4 +7,8 @@ import com.nuri.kepco.model.MeterBilling;
 @Mapper
 public interface MeterBillingDAO extends GenericDAO<MeterBilling> {
 
+	int insertImport(MeterBilling param) throws Exception;
+	
+	int insertExport(MeterBilling param) throws Exception;
+	
 }

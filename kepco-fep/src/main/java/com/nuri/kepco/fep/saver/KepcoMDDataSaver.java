@@ -12,10 +12,11 @@ import com.nuri.kepco.fep.datatype.LPData;
 import com.nuri.kepco.fep.datatype.MDData;
 import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
-import com.nuri.kepco.fep.mddata.MeterDataParser;
 import com.nuri.kepco.fep.parser.KepcoMDDataParser;
+import com.nuri.kepco.model.MeterBilling;
 import com.nuri.kepco.model.MeterInfo;
 import com.nuri.kepco.model.MeterValue;
+import com.nuri.kepco.model.dao.MeterBillingDAO;
 import com.nuri.kepco.model.dao.MeterValueDAO;
 
 @Service
@@ -25,6 +26,9 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 	
 	@Autowired
 	MeterValueDAO meterValueDAO;
+	
+	@Autowired
+	MeterBillingDAO meterBillingDAO;
 		
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
@@ -45,8 +49,15 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				checkMeter(mdData);
 				
 				if(mdData.getMeterInfo() != null) {
+				
 					// 1. save lp
 					saveLpData(mdData);
+					
+					// 2. save meterBillingImport					
+					saveMeterBillingImport(mdData);
+					
+					// 3. save meterBillingExport
+					saveMeterBillingExport(mdData);
 				}
 			}
 		}
@@ -80,10 +91,68 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		}
 		
 		if(meterValues.size() > 0) {
+			LOG.debug("meterValues : {}", meterValues);
 			return this.meterValueDAO.insertAll(meterValues);
 		} else {
 			return 0;
 		}
 	}
-
+	
+	/**
+	 * 순방향 정기검침
+	 * @param mdData
+	 * @return
+	 */
+	public int saveMeterBillingImport(MDData mdData) {
+		
+		int result = 0;		
+		List<MeterBilling> meterBillings = mdData.getBillingImportData();
+		
+		if(meterBillings != null) {
+			MeterInfo meterInfo = mdData.getMeterInfo();
+			
+			for (MeterBilling meterBilling : meterBillings) {
+				
+				try {
+					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
+					result += meterBillingDAO.insertImport(meterBilling);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 역방향 정기검침
+	 * @param mdData
+	 * @return
+	 */
+	public int saveMeterBillingExport(MDData mdData) {
+		
+		int result = 0;		
+		List<MeterBilling> meterBillings = mdData.getBillingExportData();
+		
+		if(meterBillings != null) {
+			MeterInfo meterInfo = mdData.getMeterInfo();
+			
+			for (MeterBilling meterBilling : meterBillings) {
+				
+				try {
+					LOG.debug("METER_ID : " + meterInfo.getMeter_id());
+					meterBilling.setMeter_id(meterInfo.getMeter_id());
+					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
+					result += meterBillingDAO.insertExport(meterBilling);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
 }

@@ -70,6 +70,15 @@
 			, latitude
 			, longtitude
 			, altitude
+			, cosem_device_name
+			, acon
+			, rcon
+			, billing_dt
+			, itime
+			, mtime
+			, lp_period
+			, pcon
+			, net_metering
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, DATE_FORMAT(a.ins_dt,'${prop.dt}') AS ins_dt
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -100,6 +109,15 @@
 			, latitude
 			, longtitude
 			, altitude
+			, cosem_device_name
+			, acon
+			, rcon
+			, billing_dt
+			, itime
+			, mtime
+			, lp_period
+			, pcon
+			, net_metering
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, DATE_FORMAT(a.ins_dt,'${prop.dt}') AS ins_dt
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -124,6 +142,15 @@
 			, latitude
 			, longtitude
 			, altitude
+			, cosem_device_name
+			, acon
+			, rcon
+			, billing_dt
+			, itime
+			, mtime
+			, lp_period
+			, pcon
+			, net_metering
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, DATE_FORMAT(a.ins_dt,'${prop.dt}') AS ins_dt
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -154,6 +181,15 @@
 			, latitude
 			, longtitude
 			, altitude
+			, cosem_device_name
+			, acon
+			, rcon
+			, billing_dt
+			, itime
+			, mtime
+			, lp_period
+			, pcon
+			, net_metering
 			, reg_dt
 		) VALUES (
 			  #{meter_id}
@@ -171,6 +207,15 @@
 			, #{latitude}
 			, #{longtitude}
 			, #{altitude}
+			, #{cosem_device_name}
+			, #{acon}
+			, #{rcon}
+			, #{billing_dt}
+			, #{itime}
+			, #{mtime}
+			, #{lp_period}
+			, #{pcon}
+			, #{net_metering}
 			, now()
 		)
     </insert>
@@ -178,19 +223,28 @@
     <update id="update" parameterType="meterInfo">
 		UPDATE EMI_METER_INFO SET			 
 			meter_serial = #{meter_serial}
-			, device_id = #{device_id}
-			, meter_type = #{meter_type}
-			, energy_type_code = #{energy_type_code}
-			, meter_phase = #{meter_phase}
-			, branch_id = #{branch_id}
-			, model_seq = #{model_seq}
-			, ip = INET_ATON(#{ip})
-			, port = #{port}
-			, prog_id = #{prog_id}
-			, prog_version = #{prog_version}
-			, latitude = #{latitude}
-			, longtitude = #{longtitude}
-			, altitude = #{altitude}			
+			<if test="device_id != null" > , device_id = #{device_id} </if>
+			<if test="meter_type != null" >, meter_type = #{meter_type}</if>
+			<if test="energy_type_code != null" >, energy_type_code = #{energy_type_code}</if>
+			<if test="meter_phase != null" >, meter_phase = #{meter_phase}</if>
+			<if test="branch_id != null" >, branch_id = #{branch_id}</if>
+			<if test="model_seq != null" >, model_seq = #{model_seq}</if>
+			<if test="ip != null" >, ip = INET_ATON(#{ip})</if>
+			<if test="port != null" >, port = #{port}</if>
+			<if test="prog_id != null" >, prog_id = #{prog_id}</if>
+			<if test="prog_version != null" >, prog_version = #{prog_version}</if>
+			<if test="latitude != null" >, latitude = #{latitude}</if>
+			<if test="longtitude != null" >, longtitude = #{longtitude}</if>
+			<if test="altitude != null" >, altitude = #{altitude}</if>	
+			<if test="cosem_device_name != null" >, cosem_device_name = #{cosem_device_name}</if>
+			<if test="acon != null" >, acon = #{acon}</if>
+			<if test="rcon != null" >, rcon = #{rcon}</if>
+			<if test="billing_dt != null" >, billing_dt = #{billing_dt}</if>
+			<if test="itime != null" >, itime = #{itime}</if>
+			<if test="mtime != null" >, mtime = #{mtime}</if>
+			<if test="lp_period != null" >, lp_period = #{lp_period}</if>
+			<if test="pcon != null" >, pcon = #{pcon}</if>
+			<if test="net_metering != null" >, net_metering = #{net_metering}</if>
 		WHERE meter_id = #{meter_id}
 	</update>
 	

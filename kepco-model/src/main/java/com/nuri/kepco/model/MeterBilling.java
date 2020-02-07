@@ -8,7 +8,7 @@ import lombok.Data;
 public class MeterBilling extends CommonObj {
 	
 	private String meter_id;		
-	private String read_dt;
+	private String billing_dt;
 	private Double active_imp_tot;
 	private Double apprent_imp_tot;
 	private Double lead_imp_tot;

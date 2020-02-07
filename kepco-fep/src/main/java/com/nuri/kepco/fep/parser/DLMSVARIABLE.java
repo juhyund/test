@@ -21,7 +21,7 @@ public class DLMSVARIABLE {
     
     public enum OBIS {
     	
-    	METER_TIME("0000010000FF", "Meter Time"),
+    	METER_TIME("0000010000FF", "Meter Time"),    	
     	CUSTOMER_ID("0100000000FF", "Customer meter ID"),	//Customer meter ID
     	MANUFACTURE_ID("0100000001FF", "Manufacturer meter ID"),	//Manufacturer meter ID
     	METER_VERSION("0101000300FF", "LDN for checking Meter Version"),	//LDN for checking Meter Version
@@ -39,7 +39,7 @@ public class DLMSVARIABLE {
         BILLING_REVERSE("000062010300", "Billing"),	// billing 역방향 0000620103VZ
             	
         HW_VER("00002A0000FF", "METER VERSION");	// COSEM 계기 식별자
-		        
+    
         private String code;
         private String name;
         
@@ -112,20 +112,20 @@ public class DLMSVARIABLE {
     }
     
     
-    public enum METERMODEL {
-
-    	ET1P2W40A("17","ET1P2W40A"),	// 단상 2선식 40(10)A
-    	ET1P2W40A1("18","ET1P2W40A"),  // 단상 2선식 40(10)A  	
-    	GT1P2W100A("25","GT1P2W100A"), // 단상 2선식 100(10)A_contactor내장
-    	GT3P4W100A("45","GT3P4W100A"), // 3상 4선식 100(10)A
-    	GT1P2W5A("26","GT1P2W5A"), // 단상 2선식 5A
-    	GT3P4W5A("46","GT3P4W5A"), // 3상 4선식 5A
-    	AET1P2W50A("19","AET1P2W50A"); // 단상 2선식 50(5)A_contactor내장
+    public enum METERTYPE {
+    	
+    	ET1P2W40A("17","MT002"),	// 단상 2선식 40(10)A
+    	ET1P2W40A1("18","MT002"),  // 단상 2선식 40(10)A  	
+    	GT1P2W100A("25","MT004"), // 단상 2선식 100(10)A_contactor내장
+    	GT3P4W100A("45","MT004"), // 3상 4선식 100(10)A
+    	GT1P2W5A("26","MT004"), // 단상 2선식 5A
+    	GT3P4W5A("46","MT004"), // 3상 4선식 5A
+    	AET1P2W50A("19","MT003"); // 단상 2선식 50(5)A_contactor내장
     	        
         private String code;
         private String name;
         
-        METERMODEL(String code, String name) {
+        METERTYPE(String code, String name) {
             this.code = code;
             this.name = name;
         }
@@ -138,9 +138,44 @@ public class DLMSVARIABLE {
             return this.name;
         }
         
-        public static METERMODEL getMeterModel(String code) {
-            for (METERMODEL metermodel : values()) {
-                if (metermodel.getCode().equals(code)) return metermodel;
+        public static METERTYPE getMeterType(String code) {
+            for (METERTYPE metertype : values()) {
+                if (metertype.getCode().equals(code)) return metertype;
+            }
+            return null;
+        }
+    }
+    
+    
+    public enum METERPHASE {
+    	
+    	ET1P2W40A("17","MP002"),	// 단상 2선식 40(10)A
+    	ET1P2W40A1("18","MP002"),  // 단상 2선식 40(10)A  	
+    	GT1P2W100A("25","MP002"), // 단상 2선식 100(10)A_contactor내장
+    	GT3P4W100A("45","MP005"), // 3상 4선식 100(10)A
+    	GT1P2W5A("26","MP002"), // 단상 2선식 5A
+    	GT3P4W5A("46","MP005"), // 3상 4선식 5A
+    	AET1P2W50A("19","MP002"); // 단상 2선식 50(5)A_contactor내장
+    	        
+        private String code;
+        private String name;
+        
+        METERPHASE(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+        
+        public String getCode() {
+            return this.code;
+        }
+        
+        public String getName() {
+            return this.name;
+        }
+        
+        public static METERPHASE getMeterPhase(String code) {
+            for (METERPHASE meterphase : values()) {
+                if (meterphase.getCode().equals(code)) return meterphase;
             }
             return null;
         }
@@ -236,7 +271,8 @@ public class DLMSVARIABLE {
     	LIMIT_ATTR06(6),
     	LIMIT_ATTR07(7),
         SCRIPT_TABLE_ATTR01(1),
-        SCRIPT_TABLE_ATTR02(2);
+        SCRIPT_TABLE_ATTR02(2),
+        SINGLE_ACTION_SCHEDULE_ATTR04(4); // execution_time, array;
         
         private int attr;
         

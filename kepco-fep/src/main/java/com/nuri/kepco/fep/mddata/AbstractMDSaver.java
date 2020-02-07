@@ -37,14 +37,14 @@ public abstract class AbstractMDSaver {
 
 	@Autowired
 	DeviceStatusDAO deviceStatusDAO;
-	
+
 	@Autowired
 	DeviceInfoDAO deviceInfoDAO;
-	
+
 	private DeviceInfo deviceInfo;
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
-	
+
 	protected void checkMeter(MDData mdData) {
 
 		int result = 0;
@@ -53,87 +53,105 @@ public abstract class AbstractMDSaver {
 		try {
 			String meterSerial = mdData.getMeterID();
 			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterSerial);
-			
+
 			if (meter == null) {
 				meter = new MeterInfo();
 				isNewMeter = true;
 			}
-
-			String meterModel = mdData.getMeterModel();
 			String meterType = mdData.getMeterType();
-			
-			// meter model
+			String meterPhase = mdData.getMeterPhase();
+
+			// meter type
 			if (!"".equals(meterType) && meterType != null) {
-				if("ET".equals(meterType)) {
-					meter.setMeter_type(MeterType.METERTYPE.EType.getCode());
-				} else if("GT".equals(meterType)) {
-					meter.setMeter_type(MeterType.METERTYPE.GType.getCode());
-				} else if("AE".equals(meterType)) {
-					meter.setMeter_type(MeterType.METERTYPE.AEType.getCode());
-				}		
+				meter.setMeter_type(meterType);
+			} else {
+				meter.setMeter_type(MeterType.METERTYPE.UNKNOWN.getCode());
+			}
+
+			meter.setMeter_phase(meterPhase);
+			meter.setMeter_serial(mdData.getMeterID());
+			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());			
+			meter.setDevice_id(deviceInfo.getDevice_id());
+			
+			if (mdData.getBillingDate() != null) {
+				meter.setBilling_dt(mdData.getBillingDate());
 			}
 			
-			// device model
-			DeviceModel deviceModel = deviceModelDAO.selectModelByName(meterModel);
-			if(deviceModel != null) {
-				meter.setModel_seq(deviceModel.getModel_seq());
-			}		
-			
-			meter.setMeter_serial(mdData.getMeterID());
-			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
-		
-			meter.setDevice_id(deviceInfo.getDevice_id());			
-			
+			if (mdData.getCosemDeviceName() != null) {
+				meter.setCosem_device_name(mdData.getCosemDeviceName());
+			}
+			if (mdData.getAcon() != null) {
+				meter.setAcon(mdData.getAcon());
+			}
+			if (mdData.getRcon() != null) {
+				meter.setRcon(mdData.getRcon());
+			}
+			if (mdData.getPcon() != null) {
+				meter.setPcon(mdData.getPcon());
+			}
+			if (mdData.getItime() != null) {
+				meter.setItime(mdData.getItime());
+			}
+			if (mdData.getMtime() != null) {
+				meter.setMtime(mdData.getMtime());
+			}
+			if (mdData.getLpPeriod() != null) {
+				meter.setLp_period(mdData.getLpPeriod());
+			}
+			if (mdData.getNetMetering() != null) {
+				meter.setNet_metering(mdData.getNetMetering());
+			}
+
 			logger.debug("isNewMeter : {}", isNewMeter);
-			
-			if(isNewMeter) {
+
+			if (isNewMeter) {
 				// insert
 				result = meterInfoDAO.insert(meter);
 			} else {
 				// update
 				result = meterInfoDAO.update(meter);
 			}
-			
+
+			logger.debug(meter.getMeter_id());
+
 			mdData.setMeterInfo(meter);
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void checkDevice(String deviceSerial) {
 
 		int result = 0;
 		boolean isNewDevice = false;
 
 		try {
-			
-			logger.debug("deviceInfoDAO : {}", deviceInfoDAO);
 			// device id
 			DeviceInfo deviceInfo = null;
 			deviceInfo = deviceInfoDAO.selectByDeviceSerial(deviceSerial);
-			
+
 			if (deviceInfo == null) {
 				deviceInfo = new DeviceInfo();
 				isNewDevice = true;
 			}
-			
+
 			deviceInfo.setDevice_serial(deviceSerial);
 			deviceInfo.setDevice_type(DEVICETYPE.DEVICE.getCode()); // DEVICE
 			deviceInfo.setAllow_yn("1");
 			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
-			
-			if(isNewDevice) {
+
+			if (isNewDevice) {
 				deviceInfoDAO.insert(deviceInfo);
 				updateDeviceStatus(deviceInfo);
 			} else {
 				deviceInfoDAO.update(deviceInfo);
 				updateDeviceStatus(deviceInfo);
 			}
-			
+
 			this.deviceInfo = deviceInfo;
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,15 +168,15 @@ public abstract class AbstractMDSaver {
 		try {
 
 			deviceStatus = deviceStatusDAO.selectOne(param);
-			
+
 			if (deviceStatus == null) { // insert
-				
+
 				deviceStatus = new DeviceStatus();
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.METER.getCode()); // meter
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
 				deviceStatusDAO.insert(deviceStatus);
-				
+
 			} else { // update
 
 				deviceStatus = new DeviceStatus();
@@ -167,15 +185,16 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
 				deviceStatusDAO.update(deviceStatus);
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * updateDeviceStatus
+	 * 
 	 * @param deviceInfo
 	 */
 	protected void updateDeviceStatus(DeviceInfo deviceInfo) {
@@ -188,15 +207,15 @@ public abstract class AbstractMDSaver {
 		try {
 
 			deviceStatus = deviceStatusDAO.selectOne(param);
-			
+
 			if (deviceStatus == null) { // insert
-				
+
 				deviceStatus = new DeviceStatus();
 				deviceStatus.setDevice_id(deviceInfo.getDevice_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.DEVICE.getCode()); // device
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
 				deviceStatusDAO.insert(deviceStatus);
-				
+
 			} else { // update
 
 				deviceStatus = new DeviceStatus();
@@ -205,7 +224,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
 				deviceStatusDAO.update(deviceStatus);
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -215,5 +234,5 @@ public abstract class AbstractMDSaver {
 	public DeviceInfo getDeviceInfo() {
 		return deviceInfo;
 	}
-	
+
 }

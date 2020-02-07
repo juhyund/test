@@ -3,6 +3,7 @@ package com.nuri.kepco.fep.process;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import com.nuri.kepco.fep.mddata.MeterDataParser;
 public class MDDataProcess implements ApplicationContextAware  {
 	
 	private ApplicationContext applicationContext;
+	
+	@Value("${mddata.saver.class}")
+	private String saverClassName;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(MeasurementData.class);
 	
@@ -37,7 +41,6 @@ public class MDDataProcess implements ApplicationContextAware  {
 			md.setMeterDataParser();
 			md.decode(payload);
 			
-			String saverClassName = "kepcoMDDataSaver";
 			AbstractMDSaver saver = (AbstractMDSaver)applicationContext.getBean(saverClassName);
 			
 			saver.save(md);
