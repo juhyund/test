@@ -95,7 +95,7 @@
 			, #{device_flag}
 			, #{device_status}
 			, DATE_FORMAT(#{last_comm_dt},'${prop.dt}')
-			, DATE_FORMAT(#{last_renw_dt},'${prop.dt}')	
+			, now()	
 		)
     </insert>
     
@@ -104,7 +104,7 @@
 			device_flag = #{device_flag}
 			, device_status = #{device_status}
 			, last_comm_dt = DATE_FORMAT(#{last_comm_dt},'${prop.dt}')
-			, last_renw_dt = DATE_FORMAT(#{last_renw_dt},'${prop.dt}')			
+			, last_renw_dt = now()			
 		WHERE device_id = #{device_id}
 	</update>
 	

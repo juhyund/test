@@ -39,7 +39,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		String deviceSerial = md.getDeviceId();
 		
 		// checkDevice
-		checkDevice(deviceSerial);
+		checkDevice(deviceSerial, md.getTimeStamp());
 		
 		if(getDeviceInfo() != null) {
 				

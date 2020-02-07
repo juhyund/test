@@ -44,6 +44,8 @@ public abstract class AbstractMDSaver {
 	private DeviceInfo deviceInfo;
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
+	
+	String modemTime;
 
 	protected void checkMeter(MDData mdData) {
 
@@ -101,7 +103,9 @@ public abstract class AbstractMDSaver {
 			if (mdData.getNetMetering() != null) {
 				meter.setNet_metering(mdData.getNetMetering());
 			}
-
+			
+			
+			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
 
 			if (isNewMeter) {
@@ -113,6 +117,8 @@ public abstract class AbstractMDSaver {
 			}
 
 			logger.debug(meter.getMeter_id());
+			
+			updateDeviceStatus(meter, mdData);
 
 			mdData.setMeterInfo(meter);
 
@@ -122,10 +128,11 @@ public abstract class AbstractMDSaver {
 		}
 	}
 
-	protected void checkDevice(String deviceSerial) {
+	protected void checkDevice(String deviceSerial, String modemTime) {
 
 		int result = 0;
 		boolean isNewDevice = false;
+		this.modemTime = modemTime;
 
 		try {
 			// device id
@@ -158,7 +165,7 @@ public abstract class AbstractMDSaver {
 		}
 	}
 
-	protected void updateDeviceStatus(MeterInfo meterInfo) {
+	protected void updateDeviceStatus(MeterInfo meterInfo, MDData mdData) {
 
 		DeviceStatus param = new DeviceStatus();
 		param.setDevice_id(meterInfo.getMeter_id());
@@ -175,6 +182,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.METER.getCode()); // meter
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setLast_comm_dt(mdData.getMeterTime()); // meter time
 				deviceStatusDAO.insert(deviceStatus);
 
 			} else { // update
@@ -183,6 +191,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.METER.getCode()); // meter
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setLast_comm_dt(mdData.getMeterTime()); // meter time
 				deviceStatusDAO.update(deviceStatus);
 			}
 
@@ -214,6 +223,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(deviceInfo.getDevice_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.DEVICE.getCode()); // device
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setLast_comm_dt(modemTime); // modem time
 				deviceStatusDAO.insert(deviceStatus);
 
 			} else { // update
@@ -222,6 +232,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(deviceInfo.getDevice_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.DEVICE.getCode()); // device
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setLast_comm_dt(modemTime); // modem time
 				deviceStatusDAO.update(deviceStatus);
 			}
 
