@@ -114,6 +114,8 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 			for (MeterBilling meterBilling : meterBillings) {
 				
 				try {
+					LOG.debug("METER_ID : " + meterInfo.getMeter_id());
+					meterBilling.setMeter_id(meterInfo.getMeter_id());
 					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
 					result += meterBillingDAO.insertImport(meterBilling);
 				} catch (Exception e) {
