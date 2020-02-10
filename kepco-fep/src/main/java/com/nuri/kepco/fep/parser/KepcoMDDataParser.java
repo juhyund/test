@@ -265,6 +265,126 @@ public class KepcoMDDataParser extends MeterDataParser {
 		mdData.setBillingExportData(billingExport);
 	}
 	
+	public void parser(byte[] frame) throws Exception {
+
+		String obisCode = "";
+		int clazz = 0;
+		int attr = 0;
+		int pos = 0;
+		int len = 0;
+		int total_len = frame.length;
+
+		byte[] data = new byte[total_len];
+		System.arraycopy(frame, pos, data, 0, total_len);
+
+		LOG.debug("[" + Hex.decode(data) + "]");
+		pos = 0;
+
+		byte[] OBIS = new byte[6];
+		byte[] CLAZZ = new byte[2];
+		byte[] ATTR = new byte[1];
+		byte[] LEN = new byte[2];
+		byte[] TAGDATA = null;
+
+		DLMSTable dlms = null;
+
+		while (pos < data.length) {
+
+			dlms = new DLMSTable();
+
+			System.arraycopy(data, pos, OBIS, 0, OBIS.length);
+			pos += OBIS.length;
+			obisCode = Hex.decode(OBIS);
+			dlms.setObis(obisCode);
+
+			System.arraycopy(data, pos, CLAZZ, 0, CLAZZ.length);
+			pos += CLAZZ.length;
+			clazz = DataUtil.getIntTo2Byte(CLAZZ);
+			dlms.setClazz(clazz);
+
+			System.arraycopy(data, pos, ATTR, 0, ATTR.length);
+			pos += ATTR.length;
+			attr = DataUtil.getIntToBytes(ATTR);
+			dlms.setAttr(attr);
+
+			System.arraycopy(data, pos, LEN, 0, LEN.length);
+			pos += LEN.length;
+			len = DataUtil.getIntTo2Byte(LEN);
+			dlms.setLength(len);
+
+			TAGDATA = new byte[len];
+			if (pos + TAGDATA.length <= data.length) {
+				System.arraycopy(data, pos, TAGDATA, 0, TAGDATA.length);
+				pos += TAGDATA.length;
+			} else {
+				System.arraycopy(data, pos, TAGDATA, 0, data.length - pos);
+				pos += data.length - pos;
+			}
+
+			String _obisCode = obisCode.substring(0, 10);
+			if (_obisCode.equals("0100000102") || _obisCode.equals("0000620101") || _obisCode.equals("0000620103")) {
+				obisCode = _obisCode + "00";
+				dlms.setObis(obisCode);
+			}
+
+			LOG.debug("OBIS[" + obisCode + "] CLASS[" + clazz + "] ATTR[" + attr + "] LENGTH[" + len + "] TAGDATA=["
+					+ Hex.decode(TAGDATA) + "]");
+
+			dlms.parseDlmsTag(TAGDATA);
+			Map<String, Object> dlmsData = dlms.getData();
+
+			if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.ENERGY_LOAD_PROFILE) {
+				for (int cnt = 0;; cnt++) {
+					obisCode = dlms.getDlmsHeader().getObis().getCode() + "-" + cnt;
+					if (!result.containsKey(obisCode)) {
+						result.put(obisCode, dlmsData);
+						break;
+					}
+				}
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.METER_TIME
+					&& dlms.getDlmsHeader().getAttr() != DLMS_CLASS_ATTR.CLOCK_ATTR02) {
+				result.put(obisCode + "-" + dlms.getDlmsHeader().getAttr().getAttr(), dlmsData);
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.HW_VER) { // cosem
+				result.put(obisCode, dlmsData);
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.ACTIVEPOWER_CONSTANT) { // 유효전력량 계기정수
+				result.put(obisCode, dlmsData);	
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.REACTIVEPOWER_CONSTANT) { // 무효전력량 계기정수
+				result.put(obisCode, dlmsData);
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.APPRENTPOWER_CONSTANT) { // 피상전력량계기정수
+				result.put(obisCode, dlmsData);				
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.MEASUREMENT_DATE) { // 정기검침일
+				result.put(obisCode, dlmsData);		
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.LP_INTERVAL) { // LP PERIOD
+				result.put(obisCode, dlmsData);							
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.BILLING) {// 순방향 전력량 (월별)
+
+				for (int cnt = 0;; cnt++) {
+					obisCode = dlms.getDlmsHeader().getObis().getCode() + "-" + cnt;
+					LOG.debug("obisCode : " + obisCode);
+					if (!result.containsKey(obisCode)) {
+						result.put(obisCode, dlmsData);
+						break;
+					}
+				}
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.BILLING_REVERSE) {// 역방향 전력량 (월별)
+				for (int cnt = 0;; cnt++) {
+					obisCode = dlms.getDlmsHeader().getObis().getCode() + "-" + cnt;
+					LOG.debug("obisCode : " + obisCode);
+					if (!result.containsKey(obisCode)) {
+						result.put(obisCode, dlmsData);
+						break;
+					}
+				}
+			} else if (dlmsData != null && !dlmsData.isEmpty()) {
+				result.put(obisCode, dlmsData);
+			}
+		}
+		
+		LOG.debug("debug : {}" , result);
+	
+	
+	}
+	
 	public void setMeterInfo(MDData mdData) {
 		
 		try {
@@ -316,14 +436,6 @@ public class KepcoMDDataParser extends MeterDataParser {
 				mdData.setBillingDate(billingDate);
 			}
 			
-			map = (Map<String, Object>) result.get(OBIS.METER_VERSION.getCode());
-			if (map != null) {
-				Object obj = map.get(OBIS.METER_VERSION.getName());
-				if (obj != null)
-					fwVersion = (String) obj;
-				LOG.debug("METER_VERSION[" + fwVersion + "]");
-			}
-
 			map = (Map<String, Object>) result.get(OBIS.LP_INTERVAL.getCode());
 			if (map != null) {
 				Object obj = map.get(OBIS.LP_INTERVAL.getName());

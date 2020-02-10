@@ -24,7 +24,6 @@ public class DLMSVARIABLE {
     	METER_TIME("0000010000FF", "Meter Time"),    	
     	CUSTOMER_ID("0100000000FF", "Customer meter ID"),	//Customer meter ID
     	MANUFACTURE_ID("0100000001FF", "Manufacturer meter ID"),	//Manufacturer meter ID
-    	METER_VERSION("0101000300FF", "LDN for checking Meter Version"),	//LDN for checking Meter Version
 //    	COSEM_ID("00002A0000FF", "COSEM ID"),	//COSEM 계기 식별자
     	ACTIVEPOWER_CONSTANT("0101000300FF","ActivePower Constant"),	// 유효전력량 계기 정수
         REACTIVEPOWER_CONSTANT("0101000301FF","ReactivePower Constant"),	// 무효전력량 계기 정수

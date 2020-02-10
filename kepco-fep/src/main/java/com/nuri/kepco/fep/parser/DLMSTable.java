@@ -142,10 +142,7 @@ public class DLMSTable {
 				}
 				if (obis == OBIS.MANUFACTURE_ID && dlmsTags.size() != 0) {
 					ret.put(OBIS.MANUFACTURE_ID.getName(), Hex.decode(dlmsTags.get(0).getOCTET().getValue()));
-				}
-				if (obis == OBIS.METER_VERSION && dlmsTags.size() != 0) {
-					ret.put(OBIS.METER_VERSION.getName(), Hex.decode(dlmsTags.get(0).getOCTET().getValue()));
-				}
+				}				
 				if (obis == OBIS.HW_VER && dlmsTags.size() != 0) {
 					ret.put(OBIS.HW_VER.getName(), Hex.decode(dlmsTags.get(0).getOCTET().getValue()));
 				}
