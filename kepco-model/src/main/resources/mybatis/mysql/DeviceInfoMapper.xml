@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : kepco-model
+* @FileName : DeviceInfoMapper.xml
+* @Author : kh.yoon
+* @Date : 2020-02-03
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.DeviceInfoDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="device_id != null" >     
+            AND a.device_id = #{device_id}
+        </if>
+		<if test="service_id != null" >     
+            AND a.service_id = #{service_id}
+        </if>
+		<if test="branch_id != null" >     
+            AND a.branch_id = #{branch_id}
+        </if>
+        <if test="model_seq != null" >     
+            AND a.model_seq = #{model_seq}
+        </if>
+        <if test="device_oid != null" >     
+            AND a.device_oid = #{device_oid}
+        </if>
+        <if test="comm_type != null" >     
+            AND a.comm_type = #{comm_type}
+        </if>
+        <if test="allow_yn != null" >     
+            AND a.allow_yn = #{allow_yn}
+        </if>
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="deviceInfo">	
+		SELECT COUNT(*) co
+		FROM EMI_DEVICE_INFO a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="deviceInfo" parameterType="deviceInfo">	
+		SELECT 
+			a.device_id
+			, a.device_serial
+			, a.service_id
+			, a.branch_id
+			, a.model_seq
+			, a.device_oid
+			, a.comm_type
+			, FNC_GET_CODE_NM(a.comm_type) as comm_type_nm
+			, a.device_type
+			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
+			, INET_NTOA(ip) as ip
+			, a.port
+			, a.allow_yn			
+			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
+			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
+			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
+			, b.device_status
+		FROM EMI_DEVICE_INFO a	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="selectOne" resultType="deviceInfo" parameterType="deviceInfo">	
+		SELECT 
+			a.device_id
+			, a.device_serial
+			, a.service_id
+			, a.branch_id
+			, a.model_seq
+			, a.device_oid
+			, a.comm_type
+			, FNC_GET_CODE_NM(a.comm_type) as comm_type_nm
+			, a.device_type
+			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
+			, INET_NTOA(ip) as ip
+			, a.port
+			, a.allow_yn			
+			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
+			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
+			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
+			, b.device_status
+		FROM EMI_DEVICE_INFO a	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		WHERE a.device_id = #{device_id}
+		
+	</select>
+	
+	<select id="selectByDeviceSerial" resultType="deviceInfo" parameterType="java.lang.String">	
+		SELECT 
+			a.device_id
+			, a.device_serial
+			, a.service_id
+			, a.branch_id
+			, a.model_seq
+			, a.device_oid
+			, a.comm_type
+			, FNC_GET_CODE_NM(a.comm_type) as comm_type_nm
+			, a.device_type
+			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
+			, INET_NTOA(ip) as ip
+			, a.port
+			, a.allow_yn			
+			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
+			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
+			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
+			, b.device_status
+		FROM EMI_DEVICE_INFO a	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		WHERE a.device_serial = #{device_serial}		
+	</select>
+	
+	<insert id="insert" parameterType="deviceInfo">
+		<selectKey keyProperty="device_id" resultType="String" order="BEFORE">
+			SELECT CONCAT('GW', SUBSTR(IFNULL(SUBSTR(MAX(device_id),3),0) + 100000001,2)) AS device_id
+			FROM EMI_DEVICE_INFO				
+		</selectKey>	
+		     	
+		INSERT INTO EMI_DEVICE_INFO (
+			  device_id
+			, device_serial
+			, service_id
+			, branch_id
+			, model_seq
+			, device_oid
+			, comm_type
+			, device_type
+			, ip
+			, port
+			, allow_yn			
+			, reg_id
+			, reg_dt			
+		) VALUES (
+			  #{device_id}
+			, #{device_serial}
+			, #{service_id}
+			, #{branch_id}
+			, #{model_seq}
+			, #{device_oid}
+			, #{comm_type}
+			, #{device_type}
+			, INET_ATON(#{ip})
+			, #{port}
+			, #{allow_yn}			
+			, #{reg_id}
+			, now()			
+		)
+    </insert>
+    
+    <update id="update" parameterType="deviceInfo">
+		UPDATE EMI_DEVICE_INFO SET
+			device_serial = #{device_serial}
+			, service_id = #{service_id}
+			, branch_id = #{branch_id}
+			, model_seq = #{model_seq}
+			, device_oid = #{device_oid}
+			, comm_type = #{comm_type}
+			, device_type = #{device_type}
+			, ip = INET_ATON(#{ip})
+			, port = #{port}
+			, allow_yn = #{allow_yn}			
+		WHERE device_id = #{device_id}
+	</update>
+	
+</mapper>

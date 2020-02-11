@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<CODE code="1" name="STATUS"></CODE>
+	<CODE code="1.1" name="DEVICE" parent="1"></CODE>
+	<CODE code="1.1.1" name="NORMAL" parent="1.1"></CODE>
+	<CODE code="1.1.2" name="DELETE" parent="1.1"></CODE>
+	<CODE code="1.1.3" name="REGISTER" parent="1.1"></CODE>
+	<CODE code="1.1.4" name="DE-REGISTER" parent="1.1"></CODE>
+	<CODE code="1.1.5" name="NEW-REGISTER" parent="1.1"></CODE>
+	
+	<CODE code="1.2" name="SERVER" parent="1"></CODE>
+	<CODE code="1.2.1" name="NORMAL" parent="1.2"></CODE>
+	<CODE code="1.2.2" name="DELETE" parent="1.2"></CODE>
+	
+	<CODE code="1.3" name="DOWNLINK" parent="1"></CODE>
+	<CODE code="1.3.1" name="SUCCESS" parent="1.3"></CODE>
+	<CODE code="1.3.2" name="ERROR" parent="1.3"></CODE>
+	<CODE code="1.3.3" name="WAIT" parent="1.3"></CODE>
+	
+	<CODE code="2" name="SERVER"></CODE>
+	<CODE code="2.1" name="SERVICE_TYPE" parent="2"></CODE>
+	<CODE code="2.1.1" name="CONNECTIVITY" parent="2.1"></CODE>
+	<CODE code="2.1.2" name="COMMAND_MANAGER" parent="2.1"></CODE>
+	<CODE code="2.1.3" name="MESSAGE" parent="2.1"></CODE>
+	<CODE code="2.1.4" name="API" parent="2.1"></CODE>
+	<CODE code="2.1.5" name="ADMIN_POTAL" parent="2.1"></CODE>
+	<CODE code="2.1.6" name="APPLICATIO" parent="2.1"></CODE>
+	
+	<CODE code="2.2" name="ACTION_TYPE" parent="2"></CODE>
+	<CODE code="2.2.1" name="INCOMING" parent="2.2"></CODE>
+	<CODE code="2.2.2" name="OUTGOING" parent="2.2"></CODE>
+	
+	
+</dataset>

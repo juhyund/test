@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: NURI
+Build-Jdk: 12
+Implementation-Title: emi-fep-server
+Implementation-Version: 0.1.1-SNAPSHOT
+Implementation-Vendor-Id: com.nuri.emi
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/emi-parent/emi-fep-server
+Created-By: Maven Integration for Eclipse
+

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : kepco-model
+* @FileName : DeviceStatusMapper.xml
+* @Author : kh.yoon
+* @Date : 2020-02-03
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.DeviceStatusDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="device_id != null" >     
+            AND a.device_id = #{device_id}
+        </if>
+        <if test="device_flag != null" >     
+            AND a.device_flag = #{device_flag}
+        </if>
+        <if test="device_status != null" >     
+            AND a.device_status = #{device_status}
+        </if> 
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+  
+    <select id="select" resultType="deviceStatus" parameterType="deviceStatus"> 
+      SELECT 
+          device_id
+      	, device_flag
+      	, device_status
+      	, DATE_FORMAT(last_comm_dt,'${prop.dt}')
+      	, DATE_FORMAT(last_renw_dt,'${prop.dt}')
+      FROM EMI_DEVICE_STATUS a   
+      <include refid="base_where_list" /> 
+    </select>
+    
+    <select id="selectOne" resultType="deviceStatus" parameterType="deviceStatus"> 
+      SELECT 
+          device_id
+      	, device_flag
+      	, device_status
+      	, DATE_FORMAT(last_comm_dt,'${prop.dt}')
+      	, DATE_FORMAT(last_renw_dt,'${prop.dt}')
+      FROM EMI_DEVICE_STATUS a   
+      WHERE device_id = #{device_id} 
+    </select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="deviceStatus">	
+		SELECT COUNT(*) co
+		FROM EMI_DEVICE_STATUS a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="java.util.Map" parameterType="deviceStatus">	
+		SELECT 
+			device_id
+			, device_flag
+			, device_status
+			, DATE_FORMAT(last_comm_dt,'${prop.dt}')
+			, DATE_FORMAT(last_renw_dt,'${prop.dt}')
+		FROM EMI_DEVICE_STATUS a		
+		
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />
+				
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<insert id="insert" parameterType="deviceStatus">     	
+		INSERT INTO EMI_DEVICE_STATUS (
+			device_id
+			, device_flag
+			, device_status
+			, last_comm_dt
+			, last_renw_dt
+		) VALUES (
+			#{device_id}
+			, #{device_flag}
+			, #{device_status}
+			, DATE_FORMAT(#{last_comm_dt},'${prop.dt}')
+			, now()	
+		)
+    </insert>
+    
+    <update id="update" parameterType="deviceStatus">
+		UPDATE EMI_DEVICE_STATUS SET
+			device_flag = #{device_flag}
+			, device_status = #{device_status}
+			, last_comm_dt = DATE_FORMAT(#{last_comm_dt},'${prop.dt}')
+			, last_renw_dt = now()			
+		WHERE device_id = #{device_id}
+	</update>
+	
+</mapper>

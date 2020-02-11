@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : kepco-model
+* @FileName : MeterMonthlyDemandMapper.xml
+* @Author : kh.yoon
+* @Date : 2020-02-03
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.MeterMonthlyDemandDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="meter_id != null" >     
+            AND a.meter_id = #{meter_id}
+        </if>
+        <if test="sdate != null and edate != null " >     
+            AND a.read_dt between #{sdate} AND #{edate}
+        </if>        
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="meterMonthlyDemand">	
+		SELECT COUNT(*) co
+		FROM EMI_METER_MONTHLY_DEMAND a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="meterMonthlyDemand" parameterType="meterMonthlyDemand">	
+		SELECT 
+			  meter_id
+			, read_dt
+			, active_pwr_tot
+			, active_pwr_time
+			, active_pwr_cum
+			, active_pwr_rate1
+			, active_pwr_time_rate1
+			, active_pwr_cum_rate1
+			, active_pwr_rate2
+			, active_pwr_time_rate2
+			, active_pwr_cum_rate2
+			, active_pwr_rate3
+			, active_pwr_time_rate3
+			, active_pwr_cum_rate3
+			, active_pwr_rate4
+			, active_pwr_time_rate4
+			, active_pwr_cum_rate4
+			, apparent_pwr_total
+			, apparent_pwr_time
+			, apparent_pwr_cum
+			, apparent_pwr_rate1
+			, apparent_pwr_time_rate1
+			, apparent_pwr_cum_rate1
+			, apparent_pwr_rate2
+			, apparent_pwr_time_rate2
+			, apparent_pwr_cum_rate2
+			, apparent_pwr_rate3
+			, apparent_pwr_time_rate3
+			, apparent_pwr_cum_rate3
+			, apparent_pwr_rate4
+			, apparent_pwr_time_rate4
+			, apparent_pwr_cum_rate4
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt			
+		FROM EMI_METER_MONTHLY_DEMAND a	
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="selectOne" resultType="meterMonthlyDemand" parameterType="meterMonthlyDemand">	
+		SELECT 
+			meter_id
+			, read_dt
+			, active_pwr_tot
+			, active_pwr_time
+			, active_pwr_cum
+			, active_pwr_rate1
+			, active_pwr_time_rate1
+			, active_pwr_cum_rate1
+			, active_pwr_rate2
+			, active_pwr_time_rate2
+			, active_pwr_cum_rate2
+			, active_pwr_rate3
+			, active_pwr_time_rate3
+			, active_pwr_cum_rate3
+			, active_pwr_rate4
+			, active_pwr_time_rate4
+			, active_pwr_cum_rate4
+			, apparent_pwr_total
+			, apparent_pwr_time
+			, apparent_pwr_cum
+			, apparent_pwr_rate1
+			, apparent_pwr_time_rate1
+			, apparent_pwr_cum_rate1
+			, apparent_pwr_rate2
+			, apparent_pwr_time_rate2
+			, apparent_pwr_cum_rate2
+			, apparent_pwr_rate3
+			, apparent_pwr_time_rate3
+			, apparent_pwr_cum_rate3
+			, apparent_pwr_rate4
+			, apparent_pwr_time_rate4
+			, apparent_pwr_cum_rate4
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+		FROM EMI_METER_MONTHLY_DEMAND a				
+		WHERE meter_id = #{meter_id} and read_dt = #{read_dt}
+	</select>
+	
+	<insert id="insert" parameterType="meterMonthlyDemand">     	
+		INSERT INTO EMI_METER_MONTHLY_DEMAND (
+			meter_id
+			, read_dt
+			, active_pwr_tot
+			, active_pwr_time
+			, active_pwr_cum
+			, active_pwr_rate1
+			, active_pwr_time_rate1
+			, active_pwr_cum_rate1
+			, active_pwr_rate2
+			, active_pwr_time_rate2
+			, active_pwr_cum_rate2
+			, active_pwr_rate3
+			, active_pwr_time_rate3
+			, active_pwr_cum_rate3
+			, active_pwr_rate4
+			, active_pwr_time_rate4
+			, active_pwr_cum_rate4
+			, apparent_pwr_total
+			, apparent_pwr_time
+			, apparent_pwr_cum
+			, apparent_pwr_rate1
+			, apparent_pwr_time_rate1
+			, apparent_pwr_cum_rate1
+			, apparent_pwr_rate2
+			, apparent_pwr_time_rate2
+			, apparent_pwr_cum_rate2
+			, apparent_pwr_rate3
+			, apparent_pwr_time_rate3
+			, apparent_pwr_cum_rate3
+			, apparent_pwr_rate4
+			, apparent_pwr_time_rate4
+			, apparent_pwr_cum_rate4
+			, reg_dt
+			, update_dt
+		) VALUES (
+			  #{meter_id}
+			, #{read_dt}
+			, #{active_pwr_tot}
+			, #{active_pwr_time}
+			, #{active_pwr_cum}
+			, #{active_pwr_rate1}
+			, #{active_pwr_time_rate1}
+			, #{active_pwr_cum_rate1}
+			, #{active_pwr_rate2}
+			, #{active_pwr_time_rate2}
+			, #{active_pwr_cum_rate2}
+			, #{active_pwr_rate3}
+			, #{active_pwr_time_rate3}
+			, #{active_pwr_cum_rate3}
+			, #{active_pwr_rate4}
+			, #{active_pwr_time_rate4}
+			, #{active_pwr_cum_rate4}
+			, #{apparent_pwr_total}
+			, #{apparent_pwr_time}
+			, #{apparent_pwr_cum}
+			, #{apparent_pwr_rate1}
+			, #{apparent_pwr_time_rate1}
+			, #{apparent_pwr_cum_rate1}
+			, #{apparent_pwr_rate2}
+			, #{apparent_pwr_time_rate2}
+			, #{apparent_pwr_cum_rate2}
+			, #{apparent_pwr_rate3}
+			, #{apparent_pwr_time_rate3}
+			, #{apparent_pwr_cum_rate3}
+			, #{apparent_pwr_rate4}
+			, #{apparent_pwr_time_rate4}
+			, #{apparent_pwr_cum_rate4}
+			, now()
+			, now()
+		)
+    </insert>
+    
+    <insert id="insertAll" parameterType="meterMonthlyDemand">     	
+		INSERT INTO EMI_METER_MONTHLY_DEMAND (
+			meter_id
+			, read_dt
+			, active_pwr_tot
+			, active_pwr_time
+			, active_pwr_cum
+			, active_pwr_rate1
+			, active_pwr_time_rate1
+			, active_pwr_cum_rate1
+			, active_pwr_rate2
+			, active_pwr_time_rate2
+			, active_pwr_cum_rate2
+			, active_pwr_rate3
+			, active_pwr_time_rate3
+			, active_pwr_cum_rate3
+			, active_pwr_rate4
+			, active_pwr_time_rate4
+			, active_pwr_cum_rate4
+			, apparent_pwr_total
+			, apparent_pwr_time
+			, apparent_pwr_cum
+			, apparent_pwr_rate1
+			, apparent_pwr_time_rate1
+			, apparent_pwr_cum_rate1
+			, apparent_pwr_rate2
+			, apparent_pwr_time_rate2
+			, apparent_pwr_cum_rate2
+			, apparent_pwr_rate3
+			, apparent_pwr_time_rate3
+			, apparent_pwr_cum_rate3
+			, apparent_pwr_rate4
+			, apparent_pwr_time_rate4
+			, apparent_pwr_cum_rate4
+			, reg_dt
+			, update_dt
+		) VALUES 
+		<foreach collection="list" item="list" index="index" open="(" separator="),("  close=")">
+			#{list.meter_id}
+			, #{list.read_dt}
+			, #{list.active_pwr_tot}
+			, #{list.active_pwr_time}
+			, #{list.active_pwr_cum}
+			, #{list.active_pwr_rate1}
+			, #{list.active_pwr_time_rate1}
+			, #{list.active_pwr_cum_rate1}
+			, #{list.active_pwr_rate2}
+			, #{list.active_pwr_time_rate2}
+			, #{list.active_pwr_cum_rate2}
+			, #{list.active_pwr_rate3}
+			, #{list.active_pwr_time_rate3}
+			, #{list.active_pwr_cum_rate3}
+			, #{list.active_pwr_rate4}
+			, #{list.active_pwr_time_rate4}
+			, #{list.active_pwr_cum_rate4}
+			, #{list.apparent_pwr_total}
+			, #{list.apparent_pwr_time}
+			, #{list.apparent_pwr_cum}
+			, #{list.apparent_pwr_rate1}
+			, #{list.apparent_pwr_time_rate1}
+			, #{list.apparent_pwr_cum_rate1}
+			, #{list.apparent_pwr_rate2}
+			, #{list.apparent_pwr_time_rate2}
+			, #{list.apparent_pwr_cum_rate2}
+			, #{list.apparent_pwr_rate3}
+			, #{list.apparent_pwr_time_rate3}
+			, #{list.apparent_pwr_cum_rate3}
+			, #{list.apparent_pwr_rate4}
+			, #{list.apparent_pwr_time_rate4}
+			, #{list.apparent_pwr_cum_rate4}
+			, now()
+			, now()
+		</foreach>		
+    </insert>
+  
+</mapper>
