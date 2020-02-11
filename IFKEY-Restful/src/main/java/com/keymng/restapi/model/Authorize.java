@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * @Version: TAUTHORIZE 테이블의 Entity 객체
  */
 @Entity
-@Table(name="TAUTHORIZE")
+@Table(name="EMI_AUTH")
 public class Authorize {
 	
 	@Id
