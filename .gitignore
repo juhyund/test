@@ -1,0 +1,8 @@
+/.metadata/
+/.recommenders/
+*/.project
+*/.classpath
+*/.factorypath
+*/bin/
+*/log/
+*/logs/

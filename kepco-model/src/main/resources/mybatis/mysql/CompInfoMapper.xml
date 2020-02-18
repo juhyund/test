@@ -156,4 +156,32 @@
 		WHERE object_id = #{object_id}
 	</update>
 	
+	<select id="getCompInfoByUser" resultType="CompInfo" parameterType="int">	
+		SELECT
+			a.comp_seq
+			, a.comp_name
+			, a.corp_reg_num
+			, a.comp_reg_num
+			, a.comp_stat
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, a.comp_manage
+			, a.comp_type
+			, a.comp_sector
+			, a.comp_cat
+			, a.comp_zcode
+			, a.comp_addr1
+			, a.comp_addr2
+			, a.comp_addr3
+			, a.comp_phone
+			, a.comp_email
+			, a.comp_fax
+			, a.comp_id
+			, a.reg_id
+			, INET_NTOA(a.reg_ip) as reg_ip	  
+			, a.comp_addr4
+		FROM EMI_COMP_INFO a 
+		INNER JOIN EMI_USER_INFO b ON (a.comp_seq = b.comp_seq)
+		WHERE b.user_seq = #{user_seq}
+	</select>
+	
 </mapper>
