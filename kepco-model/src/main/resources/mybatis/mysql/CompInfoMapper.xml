@@ -34,7 +34,7 @@
 	
 	<select id="selectCount" resultType="java.lang.Integer" parameterType="compInfo">	
 		SELECT COUNT(*) co
-		FROM EMI_COMP_INFO a		
+		FROM EMI_COMP_INFO		
 		<include refid="base_where_list" /> 
 	</select>
 
@@ -45,7 +45,7 @@
 			, corp_reg_num
 			, comp_reg_num
 			, comp_stat
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt 
 			, comp_manage
 			, comp_type
 			, comp_sector
@@ -61,7 +61,7 @@
 			, reg_id
 			, reg_ip
 			, comp_addr4
-		FROM EMI_COMP_INFO a	
+		FROM EMI_COMP_INFO	
 			
 		<include refid="base_where_list" />
 		
@@ -78,7 +78,7 @@
 			, corp_reg_num
 			, comp_reg_num
 			, comp_stat
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt 
 			, comp_manage
 			, comp_type
 			, comp_sector
@@ -94,7 +94,7 @@
 			, reg_id
 			, reg_ip
 			, comp_addr4
-		FROM EMI_COMP_INFO a				
+		FROM EMI_COMP_INFO 				
 		WHERE object_id = #{object_id}
 	</select>
 	
@@ -104,7 +104,7 @@
 			, corp_reg_num
 			, comp_reg_num
 			, comp_stat
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, reg_dt 
 			, comp_manage
 			, comp_type
 			, comp_sector

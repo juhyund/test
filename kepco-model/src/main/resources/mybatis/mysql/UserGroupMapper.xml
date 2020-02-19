@@ -39,7 +39,7 @@
 	
 	<select id="selectCount" resultType="java.lang.Integer" parameterType="userGroup">	
 		SELECT COUNT(*) co
-		FROM EMI_USER_GROUP a		
+		FROM EMI_USER_GROUP		
 		<include refid="base_where_list" /> 
 	</select>
 
@@ -47,10 +47,10 @@
 		SELECT
 			user_seq
 			, group_user_seq
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
 			, reg_user_id
 			, INET_NTOA(reg_user_ip) AS reg_user_ip
-		FROM EMI_USER_GROUP a	
+		FROM EMI_USER_GROUP	
 			
 		<include refid="base_where_list" />
 		
@@ -64,10 +64,10 @@
 		SELECT 
 			user_seq
 			, group_user_seq
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
 			, reg_user_id
 			, INET_NTOA(reg_user_ip) AS reg_user_ip
-		FROM EMI_USER_GROUP a				
+		FROM EMI_USER_GROUP				
 		WHERE user_seq = #{user_seq}
 	</select>
 	

@@ -48,21 +48,21 @@
 	
 	<select id="selectCount" resultType="java.lang.Integer" parameterType="userLogin">	
 		SELECT COUNT(*) co
-		FROM EMI_USER_LOGIN a		
+		FROM EMI_USER_LOGIN		
 		<include refid="base_where_list" /> 
 	</select>
 
 	<select id="selectList" resultType="userLogin" parameterType="userLogin">	
 		SELECT
 			user_seq
-			, DATE_FORMAT(a.login_dt,'${prop.dt}') AS login_dt
+			, DATE_FORMAT(login_dt,'${prop.dt}') AS login_dt
 			, user_id
 			, login_yn
 			, INET_NTOA(login_ip) AS login_ip
 			, login_text
 			, login_page
 			, login_pre_page
-		FROM EMI_USER_LOGIN a	
+		FROM EMI_USER_LOGIN	
 			
 		<include refid="base_where_list" />
 		
@@ -75,7 +75,7 @@
 	<select id="selectOne" resultType="userLogin" parameterType="userLogin">	
 		SELECT 
 			user_seq
-			, DATE_FORMAT(a.login_dt,'${prop.dt}') AS login_dt
+			, DATE_FORMAT(login_dt,'${prop.dt}') AS login_dt
 			, user_id
 			, login_yn
 			, INET_NTOA(login_ip) AS login_ip

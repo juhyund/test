@@ -68,13 +68,13 @@
 			, user_id
 			, user_name
 			, user_pass
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
 			, user_yn
 			, dept_name
 			, user_phone
 			, user_email
 			, INET_NTOA(reg_user_ip) AS reg_user_ip
-		FROM EMI_USER_INFO a	
+		FROM EMI_USER_INFO	
 			
 		<include refid="base_where_list" />
 		
@@ -91,13 +91,13 @@
 			, user_id
 			, user_name
 			, user_pass
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
 			, user_yn
 			, dept_name
 			, user_phone
 			, user_email
 			, INET_NTOA(reg_user_ip) AS reg_user_ip
-		FROM EMI_USER_INFO a				
+		FROM EMI_USER_INFO				
 		WHERE user_seq = #{user_seq}
 	</select>
 	
@@ -150,7 +150,7 @@
 			, user_id
 			, user_name
 			, user_pass
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
 			, user_yn
 			, dept_name
 			, user_phone
