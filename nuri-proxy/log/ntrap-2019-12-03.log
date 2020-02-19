@@ -1,8 +1,0 @@
-2019-12-03 00:01:02.631780 INFO  _NTRAP_ is started.
-2019-12-03 00:01:02.632038 INFO  ntrap config file  = /root/nuri-proxy/nproxy.conf
-2019-12-03 00:01:02.632125 INFO  Listen trap host = 112.136.247.181
-2019-12-03 00:01:02.632136 INFO  Listen trap port = 10000
-2019-12-03 00:01:02.632145 INFO  Backend trap host = 59.3.93.125
-2019-12-03 00:01:02.632153 INFO  Backend trap port = 19000
-2019-12-03 15:28:15.334675 INFO  RECEIVE Trap Packet [102] 
-2019-12-03 15:28:15.334776 INFO  RECEIVE Trap Packet End
