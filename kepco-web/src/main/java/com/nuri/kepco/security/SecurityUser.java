@@ -3,14 +3,12 @@ package com.nuri.kepco.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
-import com.nuri.kepco.model.CompInfo;
-import com.nuri.kepco.model.GroupInfo;
-import com.nuri.kepco.model.UserInfo;
 
 @SuppressWarnings("serial")
 public class SecurityUser extends User {
@@ -24,23 +22,23 @@ public class SecurityUser extends User {
 
 	private String user_name;
 	private String user_email;
-	private CompInfo company;
+	private JSONObject company;
 
-	public SecurityUser(UserInfo user, GroupInfo group, CompInfo company) {
+	public SecurityUser(JSONObject user, JSONObject group, JSONObject company) throws JSONException {
 
-		super(user.getUser_id(), user.getUser_pass(), (user.getUser_yn() == 1 ? true : false) 
+		super(user.getString("user_id"), user.getString("user_pass"), (user.getInt("user_yn") == 1 ? true : false) 
 				, true, true, true, makeGrantedAuthority(group));
 
-		this.user_name = user.getUser_name();
-		this.user_email = user.getUser_email();
+		this.user_name = user.getString("user_name");
+		this.user_email = user.getString("user_email");
 		
 		this.company = company;
 
 	}
 
-	private static List<GrantedAuthority> makeGrantedAuthority(GroupInfo group) {
+	private static List<GrantedAuthority> makeGrantedAuthority(JSONObject group) throws JSONException {
 		List<GrantedAuthority> list = new ArrayList<>();
-		list.add(new SimpleGrantedAuthority(ROLE_PREFIX + group.getGroup_name()));
+		list.add(new SimpleGrantedAuthority(ROLE_PREFIX + group.getString("group_name")));
 		return list;
 	}
 	
@@ -52,7 +50,7 @@ public class SecurityUser extends User {
 		return user_email;
 	}
 
-	public CompInfo getCompany() {
+	public JSONObject getCompany() {
 		return company;
 	}
 

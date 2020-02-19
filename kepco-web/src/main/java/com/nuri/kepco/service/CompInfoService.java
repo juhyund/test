@@ -1,9 +1,8 @@
 package com.nuri.kepco.service;
 
-import com.nuri.kepco.model.CompInfo;
-import com.nuri.kepco.model.dao.GenericDAO;
+import org.json.JSONObject;
 
-public interface CompInfoService extends GenericDAO<CompInfo> {
+public interface CompInfoService extends GenericService {
 
-	CompInfo getCompInfoByUser(int user_seq) throws Exception;
+	JSONObject getCompInfoByUser(int user_seq) throws Exception;
 }

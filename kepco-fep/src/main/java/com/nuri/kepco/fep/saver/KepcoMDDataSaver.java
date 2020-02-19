@@ -38,6 +38,8 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		
 		String deviceSerial = md.getDeviceId();
 		
+		LOG.debug("md.getModemTime() : {} " , md.getModemTime());
+		
 		// checkDevice
 		checkDevice(deviceSerial, md.getModemTime());
 		
@@ -48,19 +50,18 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				// 0. check meter
 				checkMeter(mdData);
 				
-				if(mdData.getMeterInfo() != null) {
-				
-					// 1. save lp
-					LOG.debug("## SAVE LP - deviceSerial : [{}], meterId : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial());
-					saveLpData(mdData);
+				if(mdData.getMeterInfo() != null) {				
+					// 1. save lp					
+					int result = saveLpData(mdData);
+					LOG.debug("## SAVE LP - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result);
 					
-					// 2. save meterBillingImport
-					LOG.debug("## SAVE meterBillingImport - deviceSerial : [{}], meterId : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial());
-					saveMeterBillingImport(mdData);
+					// 2. save meterBillingImport					
+					int result2 = saveMeterBillingImport(mdData);
+					LOG.debug("## SAVE meterBillingImport - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result2);
 					
-					// 3. save meterBillingExport
-					LOG.debug("## SAVE meterBillingExport - deviceSerial : [{}], meterId : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial());
-					saveMeterBillingExport(mdData);
+					// 3. save meterBillingExport					
+					int result3 = saveMeterBillingExport(mdData);
+					LOG.debug("## SAVE meterBillingExport - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result3);
 				}
 			}
 		}
@@ -148,8 +149,13 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				
 				try {
 					LOG.debug("METER_ID : " + meterInfo.getMeter_id());
+					LOG.debug("MODEM TIME : " + mdData.getModemTime());
+					
+					
+					
 					meterBilling.setMeter_id(meterInfo.getMeter_id());
-					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
+					meterBilling.setBilling_dt(getBillingDate(mdData.getModemTime(), meterInfo.getBilling_dt())); // 정기검침일자
+					
 					result += meterBillingDAO.insertExport(meterBilling);
 				} catch (Exception e) {
 					LOG.error("e: {}", e.getMessage());
@@ -158,4 +164,6 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		}
 		return result;
 	}
+	
+	
 }

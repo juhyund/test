@@ -1,14 +1,18 @@
 package com.nuri.kepco.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nuri.kepco.model.UserInfo;
 import com.nuri.kepco.model.dao.UserInfoDAO;
 import com.nuri.kepco.service.UserInfoService;
-import com.nuri.kepco.model.UserInfo;
+import com.nuri.kepco.util.ConversionUtil;
 
 @Service
 @Transactional
@@ -19,33 +23,51 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 
 	@Override
-	public UserInfo selectOne(UserInfo param) throws Exception {
-		return this.userInfoDAO.selectOne(param);
+	public JSONObject selectOne(Map<String, Object> param) throws Exception {
+		UserInfo userInfo = new UserInfo();
+		ConversionUtil.getModelByMap(userInfo, param);
+		userInfo = this.userInfoDAO.selectOne(userInfo);
+
+		return ConversionUtil.getJSONObjectByModel(userInfo);
 	}
 
 	@Override
-	public List<UserInfo> selectList(UserInfo param) throws Exception {
-		return this.userInfoDAO.selectList(param);
+	public JSONArray selectList(Map<String, Object> param) throws Exception {
+		UserInfo userInfo = new UserInfo();
+		ConversionUtil.getModelByMap(userInfo, param);
+		List<UserInfo> list = this.userInfoDAO.selectList(userInfo);
+
+		return ConversionUtil.getJSONArrayByModel(list);
 	}
 
 	@Override
-	public int selectCount(UserInfo param) throws Exception {
-		return this.userInfoDAO.selectCount(param);
+	public int selectCount(Map<String, Object> param) throws Exception {
+		UserInfo userInfo = new UserInfo();
+		ConversionUtil.getModelByMap(userInfo, param);
+		return this.userInfoDAO.selectCount(userInfo);
 	}
 
 	@Override
-	public int insert(UserInfo param) throws Exception {
-		return this.userInfoDAO.insert(param);
+	public int insert(Map<String, Object> param) throws Exception {
+		UserInfo userInfo = new UserInfo();
+		ConversionUtil.getModelByMap(userInfo, param);
+
+		return this.userInfoDAO.insert(userInfo);
 	}
 
 	@Override
-	public int update(UserInfo param) throws Exception {
-		return this.userInfoDAO.update(param);
+	public int update(Map<String, Object> param) throws Exception {
+		UserInfo userInfo = new UserInfo();
+		ConversionUtil.getModelByMap(userInfo, param);
+
+		return this.userInfoDAO.update(userInfo);
 	}
 
 	@Override
-	public UserInfo getOneByUserId(String user_id) throws Exception {
-		return this.userInfoDAO.getOneByUserId(user_id);
+	public JSONObject getOneByUserId(String user_id) throws Exception {
+		UserInfo userInfo = this.userInfoDAO.getOneByUserId(user_id);
+
+		return ConversionUtil.getJSONObjectByModel(userInfo);
 	}
 
 }
