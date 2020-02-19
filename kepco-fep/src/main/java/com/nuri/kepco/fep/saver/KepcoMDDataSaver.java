@@ -39,7 +39,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		String deviceSerial = md.getDeviceId();
 		
 		// checkDevice
-		checkDevice(deviceSerial, md.getTimeStamp());
+		checkDevice(deviceSerial, md.getModemTime());
 		
 		if(getDeviceInfo() != null) {
 				
@@ -51,12 +51,15 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				if(mdData.getMeterInfo() != null) {
 				
 					// 1. save lp
+					LOG.debug("## SAVE LP - deviceSerial : [{}], meterId : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial());
 					saveLpData(mdData);
 					
-					// 2. save meterBillingImport					
+					// 2. save meterBillingImport
+					LOG.debug("## SAVE meterBillingImport - deviceSerial : [{}], meterId : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial());
 					saveMeterBillingImport(mdData);
 					
 					// 3. save meterBillingExport
+					LOG.debug("## SAVE meterBillingExport - deviceSerial : [{}], meterId : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial());
 					saveMeterBillingExport(mdData);
 				}
 			}

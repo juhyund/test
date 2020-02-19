@@ -2,9 +2,11 @@ package com.nuri.kepco.fep.mddata;
 
 public interface IMeasurementData
 {
-    public MeterDataParser getMeterDataParser();
+    public DataParser getMeterDataParser();
     
     public String getDeviceId();
     
-    public String getTimeStamp();
+    public String getModemTime();
+    
 }
+
