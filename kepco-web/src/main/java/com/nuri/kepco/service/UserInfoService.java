@@ -1,9 +1,8 @@
 package com.nuri.kepco.service;
 
-import com.nuri.kepco.model.UserInfo;
-import com.nuri.kepco.model.dao.GenericDAO;
+import org.json.JSONObject;
 
-public interface UserInfoService extends GenericDAO<UserInfo> {
+public interface UserInfoService extends GenericService {
 	
-	UserInfo getOneByUserId(String user_id) throws Exception;
+	JSONObject getOneByUserId(String user_id) throws Exception;
 }

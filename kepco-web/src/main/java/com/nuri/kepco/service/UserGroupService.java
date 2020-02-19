@@ -1,10 +1,8 @@
 package com.nuri.kepco.service;
 
-import com.nuri.kepco.model.GroupInfo;
-import com.nuri.kepco.model.UserGroup;
-import com.nuri.kepco.model.dao.GenericDAO;
+import org.json.JSONObject;
 
-public interface UserGroupService extends GenericDAO<UserGroup> {
+public interface UserGroupService extends GenericService {
 
-	GroupInfo getGroupInfoByUserSeq(int user_seq) throws Exception;
+	JSONObject getGroupInfoByUserSeq(int user_seq) throws Exception;
 }
