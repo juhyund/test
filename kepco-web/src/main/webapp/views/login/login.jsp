@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>eWSN 실증 시스템</title>
+<title>LWM2M LTE 5차</title>
 
 <link href="<%=COMMON_PATH_JS%>/bootstrap.min.css" rel="stylesheet">
 <link href="<%=COMMON_PATH_JS%>/font-awesome.css" rel="stylesheet">
@@ -52,7 +52,7 @@
 							<div class="login-con"></div>
 							<div class="col-lg-12">
 								<img src="<%=COMMON_PATH_IMG%>/login_logo.png"> <br> <br> <br>
-								<h2 class="logo-name">eWSN SOC 실증시스템</h2>
+								<h2 class="logo-name">LWM2M LTE 5차</h2>
 							</div>
 							<div class="col-lg-12">
 								<form class="m-t" role="form" action="./login" method="post">
@@ -75,7 +75,7 @@
 									</c:if>
 									<button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 									<p class="m-t" style="font-color:#ffffff">
-										<strong>Copyright</strong> NuriTelecom.com ⓒ2019
+										<strong>Copyright</strong> NuriTelecom.com ⓒ2020
 									</p>
 								</form>
 							</div>

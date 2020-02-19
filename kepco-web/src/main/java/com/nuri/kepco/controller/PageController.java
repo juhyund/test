@@ -21,4 +21,28 @@ public class PageController {
 		return "login/login";
 	}
 	
+	@RequestMapping("/model")
+	public String model() throws Exception {
+		return "model/model";
+	}
+	
+	@RequestMapping("/device")
+	public String device() throws Exception {
+		return "device/device";
+	}
+	
+	@RequestMapping("/metering")
+	public String metering() throws Exception {
+		return "mvm/metering";
+	}
+	
+	@RequestMapping("/NMS") 
+	public String NMS() throws Exception {
+		return "device/NMS";
+	}
+	
+	@RequestMapping("/deviceControl")
+	public String deviceControl() throws Exception {
+		return "device/deviceControl";
+	}
 }
