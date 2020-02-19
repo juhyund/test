@@ -1,0 +1,326 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.UserInfoDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="user_seq != null" >     
+            AND a.user_seq = #{user_seq}
+        </if>
+        <if test="comp_seq != null" >     
+            AND a.comp_seq = #{comp_seq}
+        </if>
+        <if test="user_id != null" >     
+            AND a.user_id = #{user_id}
+        </if>
+        <if test="user_name != null" >     
+            AND a.user_name = #{user_name}
+        </if>
+        <if test="user_pass != null" >     
+            AND a.user_pass = #{user_pass}
+        </if>
+        <if test="user_yn != null" >     
+            AND a.user_yn = #{user_yn}
+        </if>
+        <if test="dept_name != null" >     
+            AND a.dept_name = #{dept_name}
+        </if>
+        <if test="user_phone != null" >     
+            AND a.user_phone = #{user_phone}
+        </if>
+        <if test="user_email != null" >     
+            AND a.user_email = #{user_email}
+        </if>
+         <if test="reg_user_ip != null" >     
+            AND a.reg_user_ip = INET_ATON(#{reg_user_ip})
+        </if>
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		<if test="sdate != null and edate != null">
+			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="userInfo">	
+		SELECT COUNT(*) co
+		FROM EMI_USER_INFO a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="userInfo" parameterType="userInfo">	
+		SELECT
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, INET_NTOA(reg_user_ip) AS reg_user_ip
+		FROM EMI_USER_INFO	
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="selectOne" resultType="userInfo" parameterType="userInfo">	
+		SELECT 
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, INET_NTOA(reg_user_ip) AS reg_user_ip
+		FROM EMI_USER_INFO				
+		WHERE user_seq = #{user_seq}
+	</select>
+	
+	<insert id="add" parameterType="userInfo">     	
+		INSERT INTO EMI_USER_INFO (
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, reg_user_ip
+		) VALUES (
+			#{user_seq}
+			, #{comp_seq}
+			, #{user_id}
+			, #{user_name}
+			, #{user_pass}
+			, now()
+			, #{user_yn}
+			, #{dept_name}
+			, #{user_phone}
+			, #{user_email}
+			, INET_ATON(#{reg_user_ip})
+		)
+    </insert>
+    
+    <update id="update" parameterType="userInfo">
+		UPDATE EMI_USER_INFO SET
+			comp_seq = #{group_user_seq}
+			, user_id = #{group_user_seq}
+			, user_name = #{group_user_seq}
+			, user_pass = #{group_user_seq}
+			, user_yn = #{group_user_seq}
+			, dept_name = #{group_user_seq}
+			, user_phone = #{group_user_seq}
+			, user_email = #{group_user_seq}
+			, reg_user_ip = INET_ATON(#{reg_user_ip})
+		WHERE user_seq = #{user_seq}
+	</update>
+
+	<select id="getOneByUserId" resultType="userInfo" parameterType="java.lang.String">	
+		SELECT
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, INET_NTOA(reg_user_ip) AS reg_user_ip	
+		FROM EMI_USER_INFO		
+		WHERE user_id = #{user_id}
+	</select>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.UserInfoDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="user_seq != null" >     
+            AND a.user_seq = #{user_seq}
+        </if>
+        <if test="comp_seq != null" >     
+            AND a.comp_seq = #{comp_seq}
+        </if>
+        <if test="user_id != null" >     
+            AND a.user_id = #{user_id}
+        </if>
+        <if test="user_name != null" >     
+            AND a.user_name = #{user_name}
+        </if>
+        <if test="user_pass != null" >     
+            AND a.user_pass = #{user_pass}
+        </if>
+        <if test="user_yn != null" >     
+            AND a.user_yn = #{user_yn}
+        </if>
+        <if test="dept_name != null" >     
+            AND a.dept_name = #{dept_name}
+        </if>
+        <if test="user_phone != null" >     
+            AND a.user_phone = #{user_phone}
+        </if>
+        <if test="user_email != null" >     
+            AND a.user_email = #{user_email}
+        </if>
+         <if test="reg_user_ip != null" >     
+            AND a.reg_user_ip = INET_ATON(#{reg_user_ip})
+        </if>
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		<if test="sdate != null and edate != null">
+			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="userInfo">	
+		SELECT COUNT(*) co
+		FROM EMI_USER_INFO a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="userInfo" parameterType="userInfo">	
+		SELECT
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, INET_NTOA(reg_user_ip) AS reg_user_ip
+		FROM EMI_USER_INFO a	
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="selectOne" resultType="userInfo" parameterType="userInfo">	
+		SELECT 
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, INET_NTOA(reg_user_ip) AS reg_user_ip
+		FROM EMI_USER_INFO a				
+		WHERE user_seq = #{user_seq}
+	</select>
+	
+	<insert id="add" parameterType="userInfo">     	
+		INSERT INTO EMI_USER_INFO (
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, reg_user_ip
+		) VALUES (
+			#{user_seq}
+			, #{comp_seq}
+			, #{user_id}
+			, #{user_name}
+			, #{user_pass}
+			, now()
+			, #{user_yn}
+			, #{dept_name}
+			, #{user_phone}
+			, #{user_email}
+			, INET_ATON(#{reg_user_ip})
+		)
+    </insert>
+    
+    <update id="update" parameterType="userInfo">
+		UPDATE EMI_USER_INFO SET
+			comp_seq = #{group_user_seq}
+			, user_id = #{group_user_seq}
+			, user_name = #{group_user_seq}
+			, user_pass = #{group_user_seq}
+			, user_yn = #{group_user_seq}
+			, dept_name = #{group_user_seq}
+			, user_phone = #{group_user_seq}
+			, user_email = #{group_user_seq}
+			, reg_user_ip = INET_ATON(#{reg_user_ip})
+		WHERE user_seq = #{user_seq}
+	</update>
+
+	<select id="getOneByUserId" resultType="userInfo" parameterType="java.lang.String">	
+		SELECT
+			user_seq
+			, comp_seq
+			, user_id
+			, user_name
+			, user_pass
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, user_yn
+			, dept_name
+			, user_phone
+			, user_email
+			, INET_NTOA(reg_user_ip) AS reg_user_ip	
+		FROM EMI_USER_INFO		
+		WHERE user_id = #{user_id}
+	</select>
+>>>>>>> branch 'master' of https://guyrune@git-n.nuritelecom.com/scm/aimirpf/kepco-lwm2m-5.0.git
+</mapper>

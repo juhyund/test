@@ -7,13 +7,13 @@ import lombok.Data;
 @Data
 public class UserInfo extends CommonObj {
 	
-	private String user_seq;
+	private int user_seq;
 	private String comp_seq;
 	private String user_id;
 	private String user_name;
 	private String user_pass;
 	private String reg_dt;
-	private String user_yn;
+	private int user_yn;
 	private String dept_name;
 	private String user_phone;
 	private String user_email;
