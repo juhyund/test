@@ -22,10 +22,10 @@ public class KafkaReceiver {
 //        LOG.info("received message='{}'", message);
 //    }
     
-//    @KafkaListener(topics = "${kafka.topic.dpdata}")
-//    public void dpDataListen(@Payload String message) {    	
-//    	mdDataProcess.process(message);
-//    }
+    @KafkaListener(topics = "${kafka.topic.dpdata}")
+    public void dpDataListen(@Payload String message) {    	
+    	mdDataProcess.process(message);
+    }
     
 //    @KafkaListener(topics = "${kafka.topic.eventdata}")
 //    public void eventDatalisten(@Payload String message) {    	
