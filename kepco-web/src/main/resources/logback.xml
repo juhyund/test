@@ -43,11 +43,11 @@
     </appender>
    
  	<!-- nuri-ewsn-model -->
-	<logger name="com.nuri.ewsn" level="debug">	    
+	<logger name="com.nuri.kepco" level="debug">	    
 	</logger>
 	
 	<!-- mapper sql-->
-	<logger name="com.nuri.ewsn.mapper" level="debug">
+	<logger name="com.nuri.kepco.model" level="debug">
 		<appender-ref ref="file-sql"></appender-ref>	    
 	</logger>	
 	

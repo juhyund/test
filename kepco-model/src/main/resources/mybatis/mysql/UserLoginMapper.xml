@@ -46,13 +46,13 @@
 		</if>
 	</sql>
 	
-	<select id="selectCount" resultType="java.lang.Integer" parameterType="UserLogin">	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="userLogin">	
 		SELECT COUNT(*) co
 		FROM EMI_USER_LOGIN a		
 		<include refid="base_where_list" /> 
 	</select>
 
-	<select id="selectList" resultType="UserLogin" parameterType="UserLogin">	
+	<select id="selectList" resultType="userLogin" parameterType="userLogin">	
 		SELECT
 			user_seq
 			, DATE_FORMAT(a.login_dt,'${prop.dt}') AS login_dt
@@ -72,7 +72,7 @@
 		
 	</select>
 	
-	<select id="selectOne" resultType="UserLogin" parameterType="UserLogin">	
+	<select id="selectOne" resultType="userLogin" parameterType="userLogin">	
 		SELECT 
 			user_seq
 			, DATE_FORMAT(a.login_dt,'${prop.dt}') AS login_dt
@@ -86,7 +86,7 @@
 		WHERE user_seq = #{user_seq} AND login_dt = #{login_dt}
 	</select>
 	
-	<insert id="add" parameterType="UserLogin">     	
+	<insert id="add" parameterType="userLogin">     	
 		INSERT INTO EMI_USER_LOGIN (
 			user_seq
 			, login_dt
@@ -108,7 +108,7 @@
 		)
     </insert>
     
-    <update id="update" parameterType="UserLogin">
+    <update id="update" parameterType="userLogin">
 		UPDATE EMI_USER_LOGIN SET
 			 user_id = #{user_id}
 			, login_yn = #{login_yn}

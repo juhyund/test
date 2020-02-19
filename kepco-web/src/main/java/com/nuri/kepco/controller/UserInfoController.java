@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.nuri.kepco.config.Constants;
 import com.nuri.kepco.model.common.OrderByMap;
 import com.nuri.kepco.model.common.PagingGridReturnObj;
+import com.nuri.kepco.service.UserInfoService;
 import com.nuri.kepco.model.UserInfo;
-import com.nuri.kepco.service.user.UserInfoService;
 import com.nuri.kepco.util.FormatUtil;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import com.nuri.kepco.model.CompInfo;
 import com.nuri.kepco.model.GroupInfo;
 import com.nuri.kepco.model.UserInfo;
-import com.nuri.kepco.service.user.UserCompService;
-import com.nuri.kepco.service.user.UserGroupService;
-import com.nuri.kepco.service.user.UserInfoService;
+import com.nuri.kepco.service.CompInfoService;
+import com.nuri.kepco.service.UserGroupService;
+import com.nuri.kepco.service.UserInfoService;
 
 @Service
 public class AuthUserDetailsService implements UserDetailsService {
@@ -28,7 +28,7 @@ public class AuthUserDetailsService implements UserDetailsService {
 	UserGroupService userGroupService;
 	
 	@Autowired
-	UserCompService userCompService;
+	CompInfoService userCompService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {

@@ -37,13 +37,13 @@
 		</if>
 	</sql>
 	
-	<select id="selectCount" resultType="java.lang.Integer" parameterType="UserGroup">	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="userGroup">	
 		SELECT COUNT(*) co
 		FROM EMI_USER_GROUP a		
 		<include refid="base_where_list" /> 
 	</select>
 
-	<select id="selectList" resultType="UserGroup" parameterType="UserGroup">	
+	<select id="selectList" resultType="userGroup" parameterType="userGroup">	
 		SELECT
 			user_seq
 			, group_user_seq
@@ -60,7 +60,7 @@
 		
 	</select>
 	
-	<select id="selectOne" resultType="UserGroup" parameterType="UserGroup">	
+	<select id="selectOne" resultType="userGroup" parameterType="userGroup">	
 		SELECT 
 			user_seq
 			, group_user_seq
@@ -71,7 +71,7 @@
 		WHERE user_seq = #{user_seq}
 	</select>
 	
-	<insert id="add" parameterType="UserGroup">     	
+	<insert id="add" parameterType="userGroup">     	
 		INSERT INTO EMI_USER_GROUP (
 			user_seq
 			, group_user_seq
@@ -87,7 +87,7 @@
 		)
     </insert>
     
-    <update id="update" parameterType="UserGroup">
+    <update id="update" parameterType="userGroup">
 		UPDATE EMI_USER_GROUP SET
 			group_user_seq = #{group_user_seq}
 			, reg_user_id = #{reg_user_id}
@@ -95,7 +95,7 @@
 		WHERE user_seq = #{user_seq}
 	</update>
 	
-	<select id="getGroupInfoByUserSeq" resultType="GroupInfo" parameterType="int">	
+	<select id="getGroupInfoByUserSeq" resultType="groupInfo" parameterType="int">	
 		SELECT
 			b.group_user_seq
 			, b.group_id

@@ -55,13 +55,13 @@
 		</if>
 	</sql>
 	
-	<select id="selectCount" resultType="java.lang.Integer" parameterType="UserInfo">	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="userInfo">	
 		SELECT COUNT(*) co
 		FROM EMI_USER_INFO a		
 		<include refid="base_where_list" /> 
 	</select>
 
-	<select id="selectList" resultType="UserInfo" parameterType="UserInfo">	
+	<select id="selectList" resultType="userInfo" parameterType="userInfo">	
 		SELECT
 			user_seq
 			, comp_seq
@@ -84,7 +84,7 @@
 		
 	</select>
 	
-	<select id="selectOne" resultType="UserInfo" parameterType="UserInfo">	
+	<select id="selectOne" resultType="userInfo" parameterType="userInfo">	
 		SELECT 
 			user_seq
 			, comp_seq
@@ -101,7 +101,7 @@
 		WHERE user_seq = #{user_seq}
 	</select>
 	
-	<insert id="add" parameterType="UserInfo">     	
+	<insert id="add" parameterType="userInfo">     	
 		INSERT INTO EMI_USER_INFO (
 			user_seq
 			, comp_seq
@@ -129,7 +129,7 @@
 		)
     </insert>
     
-    <update id="update" parameterType="UserInfo">
+    <update id="update" parameterType="userInfo">
 		UPDATE EMI_USER_INFO SET
 			comp_seq = #{group_user_seq}
 			, user_id = #{group_user_seq}
@@ -143,7 +143,7 @@
 		WHERE user_seq = #{user_seq}
 	</update>
 
-	<select id="getOneByUserId" resultType="UserInfo" parameterType="java.lang.String">	
+	<select id="getOneByUserId" resultType="userInfo" parameterType="java.lang.String">	
 		SELECT
 			user_seq
 			, comp_seq

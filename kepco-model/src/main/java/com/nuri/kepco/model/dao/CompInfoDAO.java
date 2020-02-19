@@ -7,4 +7,5 @@ import com.nuri.kepco.model.CompInfo;
 @Mapper
 public interface CompInfoDAO extends GenericDAO<CompInfo> {
 
+	CompInfo getCompInfoByUser(int user_seq) throws Exception;
 }

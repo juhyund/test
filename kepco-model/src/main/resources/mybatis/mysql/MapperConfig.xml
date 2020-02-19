@@ -23,6 +23,7 @@
 		<typeAlias alias="deviceSecLog" type="com.nuri.kepco.model.DeviceSecLog"/>
 		<typeAlias alias="deviceSecurity" type="com.nuri.kepco.model.DeviceSecurity" />
 		<typeAlias alias="deviceStatus" type="com.nuri.kepco.model.DeviceStatus" />
+		<typeAlias alias="groupInfo" type="com.nuri.kepco.model.GroupInfo" />
 		<typeAlias alias="meterBilling" type="com.nuri.kepco.model.MeterBilling" />
 		<typeAlias alias="meterInfo" type="com.nuri.kepco.model.MeterInfo" />
 		<typeAlias alias="meterMonthlyDemand" type="com.nuri.kepco.model.MeterMonthlyDemand" />
