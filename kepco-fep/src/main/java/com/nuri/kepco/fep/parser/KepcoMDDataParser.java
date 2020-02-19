@@ -432,11 +432,11 @@ public class KepcoMDDataParser extends DataParser {
 				if (obj != null)
 					billingDate = (String) obj;
 				
-				if(!"".equals(meterTime)) {
-					billingDate = meterTime.substring(0, 6) + billingDate + "000000";
-				}
+//				if(!"".equals(meterTime)) {
+//					billingDate = meterTime.substring(0, 6) + billingDate + "000000";
+//				}
 				
-				LOG.debug("BILLINGDATE[" + billingDate + "]");
+				LOG.debug("BILLINGDATE[" + billingDate + "]"); // 정기검침일자
 				mdData.setBillingDate(billingDate);
 			}
 			
@@ -752,10 +752,7 @@ public class KepcoMDDataParser extends DataParser {
 					}
 
 					MeterBilling billingImport = new MeterBilling();
-
 					billingImport.setMeter_id(meterID);
-					billingImport.setBilling_dt(billingDate);
-
 					billingImport.setActive_imp_tot(billing[0] * 0.001);
 					billingImport.setApprent_imp_tot(billing[1] * 0.001);
 					billingImport.setLead_imp_tot(billing[2] * 0.001);
@@ -845,8 +842,7 @@ public class KepcoMDDataParser extends DataParser {
 					MeterBilling billingImport = new MeterBilling();
 
 					billingImport.setMeter_id(meterID);
-					billingImport.setBilling_dt(billingDate);
-
+					
 					billingImport.setActive_exp_tot(billing[0] * 0.001);
 					billingImport.setApprent_exp_tot(billing[1] * 0.001);
 					billingImport.setLead_exp_tot(billing[2] * 0.001);
