@@ -12,13 +12,22 @@
 	<sql id="base_where_list">
 		<where>
 		<if test="object_id != null" >     
+            AND a.device_id = #{device_id}
+        </if>
+        <if test="resource_path != null" >     
+            AND a.resource_path = #{resource_path}
+        </if>
+        <if test="object_id != null" >     
             AND a.object_id = #{object_id}
         </if>
-        <if test="instances != null" >     
-            AND a.instances = #{instances}
+        <if test="object_instance_id != null" >     
+            AND a.object_instance_id = #{object_instance_id}
         </if>
-        <if test="mandatory != null" >     
-            AND a.mandatory = #{mandatory}
+        <if test="resource_id != null" >     
+            AND a.resource_id = #{resource_id}
+        </if>
+        <if test="resource_instance_id != null" >     
+            AND a.resource_instance_id = #{resource_instance_id}
         </if>
 		<if test="searchfield != null and searchquery != null " >
 			AND ${searchfield} like concat(#{searchquery},'%')
@@ -47,7 +56,7 @@
 	<select id="selectList" resultType="deviceResource" parameterType="deviceResource">	
 		SELECT 
 			device_id
-			, resource_seq
+			, resource_path
 			, object_id
 			, object_instance_id
 			, resource_id
@@ -70,7 +79,7 @@
 	<select id="selectOne" resultType="deviceResource" parameterType="deviceResource">	
 		SELECT 
 			device_id
-			, resource_seq
+			, resource_path
 			, object_id
 			, object_instance_id
 			, resource_id
@@ -87,7 +96,7 @@
 	<insert id="insert" parameterType="deviceResource">     	
 		INSERT INTO EMI_DEVICE_RESOURCE (
 			device_id
-			, resource_seq
+			, resource_path
 			, object_id
 			, object_instance_id
 			, resource_id
@@ -99,7 +108,7 @@
 			, update_dt
 		) VALUES (
 			#{device_id}
-			, #{resource_seq}
+			, #{resource_path}
 			, #{object_id}
 			, #{object_instance_id}
 			, #{resource_id}
@@ -112,6 +121,43 @@
 		)
     </insert>
     
+    <insert id="insertAll" parameterType="java.util.List">     	
+		INSERT INTO EMI_DEVICE_RESOURCE (
+			device_id
+			, resource_path
+			, object_id
+			, object_instance_id
+			, resource_id
+			, resource_instance_id
+			, resource_val
+			, reg_id
+			, reg_dt
+			, update_id
+			, update_dt
+		) 
+		VALUES 
+		<foreach collection="list" item="list" index="index" open="(" separator="),("  close=")">
+			#{list.device_id}
+			, #{list.resource_path}
+			, #{list.object_id}
+			, #{list.object_instance_id}
+			, #{list.resource_id}
+			, #{list.resource_instance_id}
+			, #{list.resource_val}
+			, #{list.reg_id}			
+			, now()
+			, #{list.update_id}
+			, now()
+		</foreach>		
+		ON DUPLICATE KEY UPDATE resource_val=VALUES(resource_val),update_dt=now();
+    </insert>
+    
+    <delete id="delete" parameterType="deviceResource">
+		DELETE FROM 
+			EMI_DEVICE_RESOURCE 
+		WHERE device_id = #{device_id} and resource_path = #{resource_path}
+	</delete>
+    
     <update id="update" parameterType="deviceResource">
 		UPDATE EMI_DEVICE_RESOURCE SET			
 			object_id = #{object_id}
@@ -121,7 +167,7 @@
 			, resource_val = #{resource_val}			
 			, update_id = #{update_id}
 			, update_dt = now()
-		WHERE device_id = #{device_id} and resource_seq = #{resource_seq}
+		WHERE device_id = #{device_id} and resource_path = #{resource_path}
 	</update>
 	
 </mapper>

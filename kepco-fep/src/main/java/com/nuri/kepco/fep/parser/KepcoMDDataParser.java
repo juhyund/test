@@ -14,6 +14,7 @@ import org.eclipse.leshan.json.JsonRootObject;
 import org.eclipse.leshan.json.LwM2mJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.aimir.fep.protocol.fmp.datatype.OCTET;
 import com.aimir.util.DataUtil;
@@ -21,13 +22,14 @@ import com.aimir.util.Hex;
 import com.aimir.util.Util;
 import com.nuri.kepco.fep.datatype.LPData;
 import com.nuri.kepco.fep.datatype.MDData;
-import com.nuri.kepco.fep.mddata.MeterDataParser;
+import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE.DLMS_CLASS_ATTR;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
 import com.nuri.kepco.fep.parser.LPChannel.CHANNEL;
 import com.nuri.kepco.model.MeterBilling;
 
-public class KepcoMDDataParser extends MeterDataParser {
+@Service
+public class KepcoMDDataParser extends DataParser {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KepcoMDDataParser.class);
 	
@@ -105,7 +107,9 @@ public class KepcoMDDataParser extends MeterDataParser {
 	}
 	
 	private void parseMeterInfo(byte[] frame, MDData mdData) throws Exception {
-
+		
+		LOG.debug("deviceId : ["+ deviceID +"] + parseMeterInfo [" + Hex.decode(frame) + "]");
+		
 		int total_len = frame.length;
 		int pos = 0;
 		byte[] data = new byte[total_len];
@@ -147,7 +151,7 @@ public class KepcoMDDataParser extends MeterDataParser {
 		byte[] data = new byte[total_len];
 		System.arraycopy(frame, pos, data, 0, total_len);
 
-		LOG.debug("[" + Hex.decode(data) + "]");
+		LOG.debug("meterID : ["+meterID+"] + [" + Hex.decode(data) + "]");
 		pos = 0;
 
 		byte[] OBIS = new byte[6];
@@ -672,7 +676,7 @@ public class KepcoMDDataParser extends MeterDataParser {
 		String vendorCd = meter_name.substring(0, 2);
 		String modelCd = meter_name.substring(2, 4);
 
-		LOG.debug("setMeterModel vendorCd : [" + vendorCd + "] modelCd : [" + modelCd + "]");
+		LOG.debug("setMeterModel meter_name : [" + meter_name + "] vendorCd : [" + vendorCd + "] modelCd : [" + modelCd + "]");
 
 		DLMSVARIABLE.METERTYPE type = DLMSVARIABLE.METERTYPE.getMeterType(modelCd);
 		DLMSVARIABLE.METERPHASE phase = DLMSVARIABLE.METERPHASE.getMeterPhase(modelCd);
