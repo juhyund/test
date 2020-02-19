@@ -100,7 +100,8 @@
 	
 	<insert id="insert" parameterType="compInfo">     	
 		INSERT INTO EMI_COMP_INFO (
-			comp_name
+			comp_seq
+			, comp_name
 			, corp_reg_num
 			, comp_reg_num
 			, comp_stat
@@ -121,7 +122,8 @@
 			, reg_ip
 			, comp_addr4
 		) VALUES (
-			#{comp_name}
+			#{comp_seq}
+			, #{comp_name}
 			, #{corp_reg_num}
 			, #{comp_reg_num}
 			, #{comp_stat}
@@ -156,7 +158,7 @@
 		WHERE object_id = #{object_id}
 	</update>
 	
-	<select id="getCompInfoByUser" resultType="CompInfo" parameterType="int">	
+	<select id="getCompInfoByUser" resultType="compInfo" parameterType="int">	
 		SELECT
 			a.comp_seq
 			, a.comp_name
