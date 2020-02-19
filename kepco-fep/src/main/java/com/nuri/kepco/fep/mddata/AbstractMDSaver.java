@@ -44,7 +44,7 @@ public abstract class AbstractMDSaver {
 	private DeviceInfo deviceInfo;
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
-	
+
 	String modemTime;
 
 	protected void checkMeter(MDData mdData) {
@@ -72,13 +72,13 @@ public abstract class AbstractMDSaver {
 
 			meter.setMeter_phase(meterPhase);
 			meter.setMeter_serial(mdData.getMeterID());
-			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());			
+			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
 			meter.setDevice_id(deviceInfo.getDevice_id());
-			
+
 			if (mdData.getBillingDate() != null) {
 				meter.setBilling_dt(mdData.getBillingDate());
 			}
-			
+
 			if (mdData.getCosemDeviceName() != null) {
 				meter.setCosem_device_name(mdData.getCosemDeviceName());
 			}
@@ -103,8 +103,7 @@ public abstract class AbstractMDSaver {
 			if (mdData.getNetMetering() != null) {
 				meter.setNet_metering(mdData.getNetMetering());
 			}
-			
-			
+
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
 
@@ -117,7 +116,7 @@ public abstract class AbstractMDSaver {
 			}
 
 			logger.debug(meter.getMeter_id());
-			
+
 			updateDeviceStatus(meter, mdData);
 
 			mdData.setMeterInfo(meter);
@@ -245,4 +244,18 @@ public abstract class AbstractMDSaver {
 		return deviceInfo;
 	}
 
+	/**
+	 * 정기검침일
+	 * 
+	 * @param mrd
+	 * @return
+	 */
+	public String getBillingDate(String modemTime, String billingDay) {
+		
+		if("".equals(billingDay) || billingDay == null) {
+			billingDay = "01";
+		}
+		
+		return modemTime.substring(0, 6) + billingDay + "000000";
+	}
 }
