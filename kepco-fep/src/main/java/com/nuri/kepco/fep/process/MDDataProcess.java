@@ -51,6 +51,11 @@ public class MDDataProcess implements ApplicationContextAware  {
 				
 				parserClassName = "objectLinkDataParser";
 				saverClassName = "objectLinkDataSaver";
+				
+			}  else if ("NOTIFICATION".equals(method)) {
+				
+				parserClassName = "notifyDataParser";
+				saverClassName = "notifyDataSaver";
 			}
 			
 			DataParser parser = (DataParser)applicationContext.getBean(parserClassName);
