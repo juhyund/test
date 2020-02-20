@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,11 +26,11 @@ public class SecurityUser extends User {
 
 	public SecurityUser(JSONObject user, JSONObject group, JSONObject company) throws JSONException {
 
-		super(user.getString("user_id"), user.getString("user_pass"), (user.getInt("user_yn") == 1 ? true : false) 
+		super((String)user.get("user_id"), (String)user.get("user_pass"), ((int)(long)user.get("user_yn") == 1 ? true : false) 
 				, true, true, true, makeGrantedAuthority(group));
 
-		this.user_name = user.getString("user_name");
-		this.user_email = user.getString("user_email");
+		this.user_name = (String)user.get("user_name");
+		this.user_email = (String)user.get("user_email");
 		
 		this.company = company;
 
@@ -38,7 +38,7 @@ public class SecurityUser extends User {
 
 	private static List<GrantedAuthority> makeGrantedAuthority(JSONObject group) throws JSONException {
 		List<GrantedAuthority> list = new ArrayList<>();
-		list.add(new SimpleGrantedAuthority(ROLE_PREFIX + group.getString("group_name")));
+		list.add(new SimpleGrantedAuthority(ROLE_PREFIX + (String)group.get("group_name")));
 		return list;
 	}
 	

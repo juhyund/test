@@ -38,8 +38,8 @@ public class KepcoMDDataParser extends DataParser {
 	private final int METER_INFO_RESOURCE_ID = 102;
 	private final int DLMS_RESOURCE_ID = 103;
 	
-	LinkedHashMap<String, Map<String, Object>> result = new LinkedHashMap<String, Map<String, Object>>();
-	List<MDData> mdLists = new ArrayList<MDData>();
+	LinkedHashMap<String, Map<String, Object>> result = null;
+	List<MDData> mdLists = null;
 	
 	String deviceID = "";
 	String meterID = "";
@@ -84,7 +84,7 @@ public class KepcoMDDataParser extends DataParser {
 					}
 				}
 			}
-		
+			result = new LinkedHashMap<String, Map<String, Object>>();
 			mdLists = new ArrayList<MDData>();
 			
 			for(Integer key : meterInfo.keySet()) {

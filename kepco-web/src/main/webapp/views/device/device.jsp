@@ -169,13 +169,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "아이디", field: "device_id"},
 	{headerName: "단말번호", field: "device_serial"},
-	{headerName: "단말OID", field: "device_oid", width:250},
-	{headerName: "단말상태", field: "device_stat_nm"},
-	{headerName: "최종통신일자", field: "last_comm_dt"},
-	{headerName: "아이피", field: "device_ip"},
-	{headerName: "PORT", field: "device_port"}
+	{headerName: "지역번호", field: "branch_nm", width:250},
+	{headerName: "단말모뎀", field: "model_nm"},
+	{headerName: "제조사", field: "vendor_nm"},
+	{headerName: "단말상태", field: "device_status"},
+	{headerName: "최종통신일시", field: "last_comm_dt"},
+	{headerName: "등록일자", field: "reg_dt"}
 ];
 
 var initGrid = function() {
@@ -213,6 +213,9 @@ function successResultHandler(data, status) {
 	var currentPage = $("#page").val();
 	
 	dataGrid.setData(data.resultGrid);
+	console.log(dataGrid);
+	console.log(dataPerPage);
+	console.log(currentPage);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }
 
