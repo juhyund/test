@@ -23,7 +23,7 @@ public class DeviceController {
 	
 	Logger logger = LoggerFactory.getLogger(DeviceController.class);
 
-	private String[] commStr = { "branch_nm", "vendor_nm", "device_status" };
+	private String[] commStr = { "branch_nm", "vendor_nm", "device_status", "lsdate", "ledate" };
 	
 	@Autowired
 	private DeviceInfoService deviceInfoService;
@@ -35,6 +35,9 @@ public class DeviceController {
 		try {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			param.put("sort", "reg_dt");
+			param.put("dir", "DESC");
 			
 			int cnt = this.deviceInfoService.getDeviceListCnt(param);
 			JSONArray jarr = this.deviceInfoService.getDeviceList(param);

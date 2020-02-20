@@ -70,24 +70,18 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-lg-1 col-form-label">단말명</label>
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">지역본부</label>
 														<div class="col-lg-3">
-															<input type="text" class="form-control">
+															<select class="form-control" name="branch_nm"
+																id="branch_nm"></select>
 														</div>
 														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">단말시리얼</label>
+															style="padding-left: 10px;">단말모델</label>
 														<div class="col-lg-3">
-															<input type="text" class="form-control">
+															<select class="form-control" name="model_nm"
+																id="model_nm"></select>
 														</div>
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">단말구분</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="device_type"
-																id="device_type"></select>
-														</div>
-													</div>
-
-													<div class="form-group form-group-end row">
 														<label class="col-sm-1 col-form-label">등록일자</label>
 														<div class="col-sm-3" id="datePicker">
 															<div class="input-group date"
@@ -106,15 +100,41 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	class="fa fa-calendar"></i></span>
 															</div>
 														</div>
+													</div>
+
+													<div class="form-group form-group-end row">
 														<label class="col-sm-1 col-form-label"
-															style="padding-left: 10px;">미터아이디</label>
-														<div class="col-sm-3">
-															<input type="text" class="form-control">
+															style="padding-left: 10px;">검색</label>
+														<div class="col-lg-3">
+														<select class="form-control" name="device_status"
+															id="device_status" style="width: 29%; display: inline;"></select>
+															<input type="text" class="form-control" style="width: 69%; display: inline;">
 														</div>
-														<label class="col-sm-1 col-form-label"
-															style="padding-left: 10px;">미터아이디</label>
-														<div class="col-sm-3">
-															<input type="text" class="form-control">
+														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">단말상태</label>
+														<div class="col-lg-3">
+															<select class="form-control" name="device_status"
+																id="device_status"></select>
+														</div>
+														
+														<label class="col-sm-1 col-form-label">통신일자</label>
+														<div class="col-sm-3" id="datePicker">
+															<div class="input-group date"
+																style="width: 48%; float: left;">
+																<input type="text" class="form-control" id="lsdate" name="lsdate"
+																	value=""> <span
+																	class="input-group-addon" style="list-style: none;"><i
+																	class="fa fa-calendar"></i></span>
+															</div>
+															<label class="col-form-label"
+																style="width: 4%; float: left; text-align: center">~</label>
+															<div class="input-group date" style="width: 48%;">
+																<input type="text" class="form-control"  id="ledate" name="ledate"
+																	value=""> <span
+																	class="input-group-addon" style="list-style: none;"><i
+																	class="fa fa-calendar"></i></span>
+															</div>
 														</div>
 													</div>
 
@@ -213,9 +233,6 @@ function successResultHandler(data, status) {
 	var currentPage = $("#page").val();
 	
 	dataGrid.setData(data.resultGrid);
-	console.log(dataGrid);
-	console.log(dataPerPage);
-	console.log(currentPage);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }
 
@@ -223,6 +240,14 @@ function successResultHandler(data, status) {
 function comboDeviceType() { 
      selectComboBox('device_type', 'MT');
 }
+
+function resetForm() {
+	$('#sdate').val("");
+	$('#edate').val("");
+	$('#lsdate').val("");
+	$('#ledate').val("");
+}
+
 
 function init() {
 	
