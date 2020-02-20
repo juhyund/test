@@ -50,6 +50,8 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				// 0. check meter
 				checkMeter(mdData);
 				
+				LOG.debug("meter time : {}" , mdData.getMeterTime());
+				
 				if(mdData.getMeterInfo() != null) {				
 					// 1. save lp					
 					int result = saveLpData(mdData);
@@ -113,20 +115,30 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		List<MeterBilling> meterBillings = mdData.getBillingImportData();
 		
 		if(meterBillings != null) {
+			
 			MeterInfo meterInfo = mdData.getMeterInfo();
 			
 			for (MeterBilling meterBilling : meterBillings) {
 				
 				try {
-					LOG.debug("METER_ID : " + meterInfo.getMeter_id());
+					
+					LOG.debug("METER_ID : {}", meterInfo.getMeter_id());
 					meterBilling.setMeter_id(meterInfo.getMeter_id());
-					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
+					
+					LOG.debug("meter time : {}" , mdData.getMeterTime());
+										
+					String billingDate = getBillingDate(mdData.getMeterTime(), meterInfo.getBilling_dt());
+					
+					if(meterBilling.getBilling_dt() == null || "".equals(billingDate)) {
+						meterBilling.setBilling_dt(billingDate); // 정기검침일자
+					}
+					
 					result += meterBillingDAO.insertImport(meterBilling);
+					
 				} catch (Exception e) {
 					LOG.error("e: {}", e.getMessage());
 				}
-			}
-			
+			}			
 		}
 		
 		return result;
@@ -147,16 +159,21 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 			
 			for (MeterBilling meterBilling : meterBillings) {
 				
-				try {
-					LOG.debug("METER_ID : " + meterInfo.getMeter_id());
-					LOG.debug("MODEM TIME : " + mdData.getModemTime());
+				try {					
+					String billingDate = getBillingDate(mdData.getModemTime(), meterInfo.getBilling_dt());
 					
-					
+					LOG.debug("METER_ID : {}" + meterInfo.getMeter_id());
+					LOG.debug("MODEM TIME : {}" + mdData.getModemTime());
+					LOG.debug("BILLING DATE : {} " + billingDate);
 					
 					meterBilling.setMeter_id(meterInfo.getMeter_id());
-					meterBilling.setBilling_dt(getBillingDate(mdData.getModemTime(), meterInfo.getBilling_dt())); // 정기검침일자
+					
+					if(meterBilling.getBilling_dt() == null || "".equals(billingDate)) {
+						meterBilling.setBilling_dt(billingDate); // 정기검침일자
+					}
 					
 					result += meterBillingDAO.insertExport(meterBilling);
+					
 				} catch (Exception e) {
 					LOG.error("e: {}", e.getMessage());
 				}

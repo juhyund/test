@@ -1,5 +1,6 @@
 package com.nuri.kepco.fep.mddata;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -40,12 +41,40 @@ public class MeasurementData implements IMeasurementData {
 	public void setModemTime(Date modemTime) {	
 		if(modemTime != null) {
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			this.modemTime = sdf.format(modemTime);
+			this.modemTime = sdf.format(modemTime);			
 		}
 	}
 	
-	public void setMeterDataParser(DataParser parser) {
-		this.parser = parser;
+	public void setMeterDataParser(String parserClassName) {		
+		Class<?> clazz;		
+		try {			
+			clazz = Class.forName(parserClassName);
+			this.parser = (DataParser)clazz.getDeclaredConstructor().newInstance();
+			
+			LOG.debug("parser : {}", this.parser);
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void decode(String data) throws Exception

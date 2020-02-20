@@ -435,6 +435,8 @@ public class KepcoMDDataParser extends DataParser {
 //					billingDate = meterTime.substring(0, 6) + billingDate + "000000";
 //				}
 				
+				this.billingDate = billingDate;
+				
 				LOG.debug("MEASUREMENT_DATE[" + billingDate + "]"); // 정기검침일자
 				mdData.setBillingDate(billingDate);
 			}
@@ -480,6 +482,8 @@ public class KepcoMDDataParser extends DataParser {
 				Object obj = map.get(OBIS.BILLING_DATE.getName());
 				if (obj != null)
 					billingDate = (String) obj;
+				
+				this.billingDate = billingDate;
 			
 				LOG.debug("BILLING_DATE[" + billingDate + "]"); // monthly billing date
 				mdData.setBillingDate(billingDate);
