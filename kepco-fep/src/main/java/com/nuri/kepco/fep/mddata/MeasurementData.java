@@ -17,7 +17,7 @@ public class MeasurementData implements IMeasurementData {
 	
 	private DataParser parser = null;
 	private String deviceId;
-	private String modemTime;
+	private String modemTime;	
 		
 	@Override
 	public DataParser getMeterDataParser() {
