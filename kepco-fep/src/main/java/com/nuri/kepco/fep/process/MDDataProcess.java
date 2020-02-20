@@ -46,10 +46,10 @@ public class MDDataProcess implements ApplicationContextAware  {
 				parserClassName = "com.nuri.kepco.fep.parser.KepcoMDDataParser";
 				saverClassName = "kepcoMDDataSaver";				
 			} else if ("OBJECTLINK".equals(method)) {				
-				parserClassName = "com.nuri.kepco.fep.parser.objectLinkDataParser";
+				parserClassName = "com.nuri.kepco.fep.parser.ObjectLinkDataParser";
 				saverClassName = "objectLinkDataSaver";				
 			}  else if ("NOTIFICATION".equals(method)) {				
-				parserClassName = "com.nuri.kepco.fep.parser.notifyDataParser";
+				parserClassName = "com.nuri.kepco.fep.parser.NotifyDataParser";
 				saverClassName = "notifyDataSaver";
 			}
 			
