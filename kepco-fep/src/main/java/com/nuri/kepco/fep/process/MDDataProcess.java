@@ -42,38 +42,31 @@ public class MDDataProcess implements ApplicationContextAware  {
 			LOG.debug("### deviceId : [{}] payload : [{}]", deviceId, payload);
 			LOG.debug("### deviceId : [{}] method : [{}]", deviceId, method);
 			
-			if("DATAPUSH".equals(method)) {			
-				
-				parserClassName = "kepcoMDDataParser";
-				saverClassName = "kepcoMDDataSaver";
-				
-			} else if ("OBJECTLINK".equals(method)) {
-				
-				parserClassName = "objectLinkDataParser";
-				saverClassName = "objectLinkDataSaver";
-				
-			}  else if ("NOTIFICATION".equals(method)) {
-				
-				parserClassName = "notifyDataParser";
+			if("DATAPUSH".equals(method)) {				
+				parserClassName = "com.nuri.kepco.fep.parser.KepcoMDDataParser";
+				saverClassName = "kepcoMDDataSaver";				
+			} else if ("OBJECTLINK".equals(method)) {				
+				parserClassName = "com.nuri.kepco.fep.parser.objectLinkDataParser";
+				saverClassName = "objectLinkDataSaver";				
+			}  else if ("NOTIFICATION".equals(method)) {				
+				parserClassName = "com.nuri.kepco.fep.parser.notifyDataParser";
 				saverClassName = "notifyDataSaver";
 			}
 			
-			DataParser parser = (DataParser)applicationContext.getBean(parserClassName);
 			AbstractMDSaver saver = (AbstractMDSaver)applicationContext.getBean(saverClassName);
 						
 			md.setDeviceId(deviceId);
 			md.setModemTime(modemTime);
-			md.setMeterDataParser(parser);
+			md.setMeterDataParser(parserClassName);
 			md.decode(payload);
 			
-			LOG.debug("parser : {}", parser);
+			LOG.debug("parser : {}", parserClassName);
 			LOG.debug("saver : {}", saver);
 			
 			saver.save(md);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
 	}
 
