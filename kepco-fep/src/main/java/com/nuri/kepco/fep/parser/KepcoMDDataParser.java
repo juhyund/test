@@ -28,7 +28,6 @@ import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
 import com.nuri.kepco.fep.parser.LPChannel.CHANNEL;
 import com.nuri.kepco.model.MeterBilling;
 
-@Service
 public class KepcoMDDataParser extends DataParser {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KepcoMDDataParser.class);
@@ -270,7 +269,7 @@ public class KepcoMDDataParser extends DataParser {
 	}
 	
 	public void parser(byte[] frame) throws Exception {
-
+		result = new LinkedHashMap<String, Map<String, Object>>();
 		String obisCode = "";
 		int clazz = 0;
 		int attr = 0;
@@ -436,7 +435,7 @@ public class KepcoMDDataParser extends DataParser {
 //					billingDate = meterTime.substring(0, 6) + billingDate + "000000";
 //				}
 				
-				LOG.debug("BILLINGDATE[" + billingDate + "]"); // 정기검침일자
+				LOG.debug("MEASUREMENT_DATE[" + billingDate + "]"); // 정기검침일자
 				mdData.setBillingDate(billingDate);
 			}
 			
@@ -474,6 +473,16 @@ public class KepcoMDDataParser extends DataParser {
 					pcon = Double.parseDouble(String.valueOf(obj));
 				LOG.debug("PCON[" + pcon + "]");
 				mdData.setPcon(pcon);
+			}
+			
+			map = (Map<String, Object>) result.get(OBIS.BILLING_DATE.getCode());
+			if (map != null) {
+				Object obj = map.get(OBIS.BILLING_DATE.getName());
+				if (obj != null)
+					billingDate = (String) obj;
+			
+				LOG.debug("BILLING_DATE[" + billingDate + "]"); // monthly billing date
+				mdData.setBillingDate(billingDate);
 			}
 			
 		} catch (Exception e) {
@@ -753,6 +762,7 @@ public class KepcoMDDataParser extends DataParser {
 
 					MeterBilling billingImport = new MeterBilling();
 					billingImport.setMeter_id(meterID);
+					billingImport.setBilling_dt(billingDate);
 					billingImport.setActive_imp_tot(billing[0] * 0.001);
 					billingImport.setApprent_imp_tot(billing[1] * 0.001);
 					billingImport.setLead_imp_tot(billing[2] * 0.001);
@@ -842,7 +852,7 @@ public class KepcoMDDataParser extends DataParser {
 					MeterBilling billingImport = new MeterBilling();
 
 					billingImport.setMeter_id(meterID);
-					
+					billingImport.setBilling_dt(billingDate);
 					billingImport.setActive_exp_tot(billing[0] * 0.001);
 					billingImport.setApprent_exp_tot(billing[1] * 0.001);
 					billingImport.setLead_exp_tot(billing[2] * 0.001);

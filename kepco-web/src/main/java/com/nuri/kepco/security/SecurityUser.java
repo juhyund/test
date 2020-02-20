@@ -3,7 +3,6 @@ package com.nuri.kepco.security;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
@@ -24,7 +23,7 @@ public class SecurityUser extends User {
 	private String user_email;
 	private JSONObject company;
 
-	public SecurityUser(JSONObject user, JSONObject group, JSONObject company) throws JSONException {
+	public SecurityUser(JSONObject user, JSONObject group, JSONObject company) {
 
 		super((String)user.get("user_id"), (String)user.get("user_pass"), ((int)(long)user.get("user_yn") == 1 ? true : false) 
 				, true, true, true, makeGrantedAuthority(group));
@@ -36,7 +35,7 @@ public class SecurityUser extends User {
 
 	}
 
-	private static List<GrantedAuthority> makeGrantedAuthority(JSONObject group) throws JSONException {
+	private static List<GrantedAuthority> makeGrantedAuthority(JSONObject group) {
 		List<GrantedAuthority> list = new ArrayList<>();
 		list.add(new SimpleGrantedAuthority(ROLE_PREFIX + (String)group.get("group_name")));
 		return list;
