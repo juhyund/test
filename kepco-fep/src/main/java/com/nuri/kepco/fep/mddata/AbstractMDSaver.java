@@ -21,6 +21,8 @@ import com.nuri.kepco.model.dao.DeviceStatusDAO;
 import com.nuri.kepco.model.dao.MeterInfoDAO;
 import com.nuri.kepco.model.dao.VendorInfoDAO;
 
+import jdk.internal.net.http.common.Log;
+
 @Service
 public abstract class AbstractMDSaver {
 
@@ -250,12 +252,16 @@ public abstract class AbstractMDSaver {
 	 * @param mrd
 	 * @return
 	 */
-	public String getBillingDate(String modemTime, String billingDay) {
+	public String getBillingDate(String meterTime, String billingDay) {
 		
 		if("".equals(billingDay) || billingDay == null) {
 			billingDay = "01";
 		}
 		
-		return modemTime.substring(0, 6) + billingDay + "000000";
+		if(billingDay.length() == 1) {
+			billingDay = "0" + billingDay;
+		}
+		logger.debug("billingDay : {}", billingDay);
+		return meterTime.substring(0, 6) + billingDay + "000000";
 	}
 }
