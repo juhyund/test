@@ -1,6 +1,6 @@
 package com.nuri.kepco.security;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +43,10 @@ public class AuthUserDetailsService implements UserDetailsService {
 			if(user != null) {
 				
 				// group 
-				role = userGroupService.getGroupInfoByUserSeq(user.getInt("user_seq"));
+				role = userGroupService.getGroupInfoByUserSeq((int)(long)user.get("user_seq"));
 				
 				// company
-				company = userCompService.getCompInfoByUser(user.getInt("user_seq"));				
+				company = userCompService.getCompInfoByUser((int)(long)user.get("user_seq"));			
 			} 
 			
 		} catch (Exception e) {		

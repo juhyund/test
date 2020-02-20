@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONArray;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,18 +34,13 @@ public class DeviceController {
 		JSONObject json = new JSONObject();
 		try {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
-
-			for(String key : commStr) {
-				if(request.getParameterMap().containsKey(key)) {
-					param.put(key, request.getParameter(key));	
-				}
-			}
+			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			int cnt = this.deviceInfoService.selectCount(param);
+			int cnt = this.deviceInfoService.getDeviceListCnt(param);
 			JSONArray jarr = this.deviceInfoService.getDeviceList(param);
 			
 			json.put("totalCount", cnt);
-			json.put("resultGrid", jarr.toString());
+			json.put("resultGrid", jarr);
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);

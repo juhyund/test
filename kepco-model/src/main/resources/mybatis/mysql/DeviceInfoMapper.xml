@@ -35,6 +35,23 @@
 		<if test="searchfield != null and searchquery != null " >
 			AND ${searchfield} like concat(#{searchquery},'%')
 		</if>
+		<!-- DeviceInfoList -->		
+		<if test="branch_nm != null" >     
+            AND d.branch_nm = #{branch_nm}
+        </if>
+		<if test="vendor_nm != null" >     
+            AND e.vendor_nm = #{vendor_nm}
+        </if>
+		<if test="device_status != null" >     
+            AND b.device_status = #{device_status}
+        </if>
+		<if test="sdate != null and edate != null">
+			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="s_last != null and e_last != null">
+			AND c.last_comm_dt between date_format(concat(#{s_last},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{e_last},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		
 		</where>
 	</sql>
 	
@@ -191,7 +208,7 @@
 			, allow_yn = #{allow_yn}			
 		WHERE device_id = #{device_id}
 	</update>
-		
+	
 	<select id="getDeviceList" resultType="deviceInfo" parameterType="deviceInfo">	
 		SELECT
 			a.device_serial
@@ -208,31 +225,25 @@
 		LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
 		LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
 		
-		<where>
-		<if test="branch_nm != null" >     
-            AND d.branch_nm = #{branch_nm}
-        </if>
-		<if test="vendor_nm != null" >     
-            AND e.vendor_nm = #{vendor_nm}
-        </if>
-		<if test="device_status != null" >     
-            AND b.device_status = #{device_status}
-        </if>
-		<if test="searchfield != null and searchquery != null " >
-			AND ${searchfield} like concat(#{searchquery},'%')
-		</if>
-		<if test="sdate != null and edate != null">
-			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
-		</if>
-		<if test="s_last != null and e_last != null">
-			AND c.last_comm_dt between date_format(concat(#{s_last},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{e_last},'235959'), '%Y-%m-%d %H:%i:%s')
-		</if>
-		</where>
+		<include refid="base_where_list" />	
 		
 		<include refid="order_by_list" />	
 		
 		<include refid="query_limit" />
 		
+	</select>
+
+	<select id="getDeviceListCnt" resultType="int" parameterType="deviceInfo">		
+		SELECT
+			 COUNT(*) co
+		FROM
+		EMI_DEVICE_INFO a
+		LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
+		LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
+		LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
+		LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
+		
+		<include refid="base_where_list" />	
 	</select>
 	
 </mapper>

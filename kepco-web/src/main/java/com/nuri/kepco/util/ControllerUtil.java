@@ -19,17 +19,35 @@ public class ControllerUtil {
 		Map<String, Object> param = new HashMap<String, Object>();
 		
 		for(String key : commStr) {
-			if(request.getParameterMap().containsKey(key)) {
+			if(validator(request, key)) {
 				param.put(key, request.getParameter(key));	
 			}
 		}
 		
 		for(String key : commInt) {
-			if(request.getParameterMap().containsKey(key)) {
+			if(validator(request, key)) {
 				param.put(key, Integer.parseInt(request.getParameter(key)));	
 			}
 		}
 		
 		return param;
+	}
+	
+	public static void getCustomParam(HttpServletRequest request, String[] commStr, Map<String, Object> param) {
+		for(String key : commStr) {
+			if(validator(request, key)) {
+				param.put(key, request.getParameter(key).trim());
+			}
+		}
+	}
+	
+	private static boolean validator(HttpServletRequest request, String key) {
+		if(request.getParameterMap().containsKey(key)) {
+			if(request.getParameter(key) != null && !"".equals(request.getParameter(key))) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

@@ -13,4 +13,6 @@ public interface DeviceInfoDAO extends GenericDAO<DeviceInfo> {
 	
 	List<DeviceInfo> getDeviceList(DeviceInfo deviceInfo) throws Exception;
 	
+	int getDeviceListCnt(DeviceInfo deviceInfo) throws Exception;
+	
 }

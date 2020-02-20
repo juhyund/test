@@ -2,8 +2,8 @@ package com.nuri.kepco.service;
 
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public interface GenericService {
 
