@@ -22,4 +22,13 @@ public class DeviceInfo extends CommonObj {
 	private String reg_id;
 	private String reg_dt;
 	private String dest_dt;
+	
+	private String branch_nm;
+	private String model_nm;
+	private String vendor_nm;
+	private String device_status;
+	private String last_comm_dt;
+	private String s_last;
+	private String e_last;
+	
 }
