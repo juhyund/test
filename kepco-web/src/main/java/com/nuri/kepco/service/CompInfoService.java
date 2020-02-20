@@ -1,6 +1,6 @@
 package com.nuri.kepco.service;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 public interface CompInfoService extends GenericService {
 
