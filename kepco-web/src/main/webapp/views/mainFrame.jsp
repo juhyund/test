@@ -39,7 +39,7 @@
 <div class="navbar-header" style="width:250px">
 <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-angle-double-left"></i> </a>
 <div style="padding:20px;width:300px">
-	<span class="m-r-sm text-muted welcome-message" > Welcome to NURI AMI System!!</span>
+	<span class="m-r-sm text-muted welcome-message" > Welcome to LWM2M!!</span>
 </div>
 </div>
 <ul class="nav navbar-top-links navbar-right" style="margin-right:5px;">
@@ -75,7 +75,7 @@
 <!-- footer -->
 <div class="footer">
 	<div>
-		<strong>Copyright</strong> NuriTelecom.com ©2019
+		<strong>Copyright</strong> NuriTelecom.com ©2020
 	</div>
 </div>
 <!-- footer -->
