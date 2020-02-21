@@ -17,5 +17,9 @@ public class DeviceResource extends CommonObj {
 	private String reg_id;
 	private String reg_dt;
 	private String update_id;
-	private String update_dt;	
+	private String update_dt;
+	
+	private String object_nm;
+	private int instances;
+	private String descr;
 }

@@ -31,6 +31,11 @@ public class PageController {
 		return "device/device";
 	}
 	
+	@RequestMapping("/deviceDetail")
+	public String deviceDetail() throws Exception {
+		return "device/deviceDetail";
+	}
+	
 	@RequestMapping("/metering")
 	public String metering() throws Exception {
 		return "mvm/metering";

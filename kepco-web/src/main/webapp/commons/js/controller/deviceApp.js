@@ -31,7 +31,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         });     
         
 	}
-	
+	/*
 	$scope.read = function (resource) {
 		
 		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
@@ -207,5 +207,5 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        resource.statusMsg = "전송실패";	    	
 	    });
     };
-  
+  */
 });
