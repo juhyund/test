@@ -106,7 +106,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<tr>
 									<td><h3>${meter_id}</h3></td>
 									<td><h3 id = "device_id"></h3></td>
-									<td><h3 id = "meter_type"></h3</td>
+									<td><h3 id = "meter_type"></h3></td>
 									<td><h3 id = "last_comm_dt"></h3></td>
 								</tr>
 							</tbody>

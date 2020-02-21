@@ -45,4 +45,9 @@ public class PageController {
 	public String deviceControl() throws Exception {
 		return "device/deviceControl";
 	}
+	
+	@RequestMapping("/meter")
+	public String meter() throws Exception {
+		return "meter/meterManagement";
+	}
 }

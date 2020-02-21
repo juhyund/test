@@ -51,7 +51,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<li class="breadcrumb-item"><a
 								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 							</li>
-							<li class="breadcrumb-item active"><strong>Layouts</strong>
+							<li class="breadcrumb-item active"><strong>단말 관리</strong>
 							</li>
 						</ol>
 					</div>
@@ -70,75 +70,62 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">지역본부</label>
+														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="branch_nm"
-																id="branch_nm"></select>
+															<select class="form-control" name="branch_id" id="branch_id"></select>
 														</div>
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">단말모델</label>
+														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="model_nm"
-																id="model_nm"></select>
+															<select class="form-control" name="model_seq" id="model_seq"></select>
 														</div>
 														<label class="col-sm-1 col-form-label">등록일자</label>
 														<div class="col-sm-3" id="datePicker">
 															<div class="input-group date"
 																style="width: 48%; float: left;">
-																<input type="text" class="form-control" id="sdate" name="sdate"
-																	value=""> <span
-																	class="input-group-addon" style="list-style: none;"><i
-																	class="fa fa-calendar"></i></span>
+																<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
 															</div>
-															<label class="col-form-label"
-																style="width: 4%; float: left; text-align: center">~</label>
+															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 															<div class="input-group date" style="width: 48%;">
-																<input type="text" class="form-control"  id="edate" name="edate"
-																	value=""> <span
-																	class="input-group-addon" style="list-style: none;"><i
-																	class="fa fa-calendar"></i></span>
+																<input type="text" class="form-control"  id="edate" name="edate" value=""> 
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
 															</div>
 														</div>
 													</div>
 
 													<div class="form-group form-group-end row">
-														<label class="col-sm-1 col-form-label"
-															style="padding-left: 10px;">검색</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
 														<div class="col-lg-3">
-														<select class="form-control" name="device_status"
-															id="device_status" style="width: 29%; display: inline;"></select>
-															<input type="text" class="form-control" style="width: 69%; display: inline;">
+														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;"></select>
+															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; display: inline;">
 														</div>
 														
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">단말상태</label>
+														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="device_status"
-																id="device_status"></select>
+															<select class="form-control" name="device_status" id="device_status"></select>
 														</div>
 														
 														<label class="col-sm-1 col-form-label">통신일자</label>
 														<div class="col-sm-3" id="datePicker">
-															<div class="input-group date"
-																style="width: 48%; float: left;">
-																<input type="text" class="form-control" id="lsdate" name="lsdate"
-																	value=""> <span
-																	class="input-group-addon" style="list-style: none;"><i
-																	class="fa fa-calendar"></i></span>
+															<div class="input-group date" style="width: 48%; float: left;">
+																<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
 															</div>
-															<label class="col-form-label"
-																style="width: 4%; float: left; text-align: center">~</label>
+															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 															<div class="input-group date" style="width: 48%;">
-																<input type="text" class="form-control"  id="ledate" name="ledate"
-																	value=""> <span
-																	class="input-group-addon" style="list-style: none;"><i
-																	class="fa fa-calendar"></i></span>
+																<input type="text" class="form-control"  id="ledate" name="ledate" value=""> 
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
 															</div>
 														</div>
 													</div>
-
-
 												</td>
 												<td width="180" height="80" style="text-align: right">
 													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
@@ -193,7 +180,7 @@ var columnDefs = [
 	{headerName: "지역번호", field: "branch_nm", width:250},
 	{headerName: "단말모뎀", field: "model_nm"},
 	{headerName: "제조사", field: "vendor_nm"},
-	{headerName: "단말상태", field: "device_status"},
+	{headerName: "단말상태", field: "code_local_nm"},
 	{headerName: "최종통신일시", field: "last_comm_dt"},
 	{headerName: "등록일자", field: "reg_dt"}
 ];
@@ -238,16 +225,39 @@ function successResultHandler(data, status) {
 
 // device type
 function comboDeviceType() { 
-     selectComboBox('device_type', 'MT');
+	var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/ajaxDeviceInfoCombo",
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	    
+	     $.ajax(options);
+}
+
+function successResultCombo(data, status) {
+	$.each(data, function(nm, combo) {
+		$('#'+nm).append(new Option("선택", ""));
+		$.each(data[nm], function(key, value){
+			$('#'+nm).append(new Option(value, key));
+		});
+	});
 }
 
 function resetForm() {
-	$('#sdate').val("");
-	$('#edate').val("");
-	$('#lsdate').val("");
-	$('#ledate').val("");
+	$('#sdate').datepicker('setDate', null);
+	$('#edate').datepicker('setDate', null);
+	$('#lsdate').datepicker('setDate', null);
+	$('#ledate').datepicker('setDate', null);
+	$("#branch_id").val($("#target option:first").val());
+	$("#model_seq").val($("#target option:first").val());
+	$("#searchfield").val($("#target option:first").val());
+	$("#device_status").val($("#target option:first").val());
+	$("#searchquery").val("");
 }
-
 
 function init() {
 	
