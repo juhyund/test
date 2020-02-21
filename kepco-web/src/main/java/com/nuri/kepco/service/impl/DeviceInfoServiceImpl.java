@@ -76,7 +76,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		ConversionUtil.getModelByMap(deviceInfo, param);
 		List<DeviceInfo> list = this.deviceInfoDAO.getDeviceList(deviceInfo);
 
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list, deviceInfo.getStart());
 	}
 
 	@Override

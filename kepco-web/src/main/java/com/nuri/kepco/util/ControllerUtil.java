@@ -20,7 +20,7 @@ public class ControllerUtil {
 		for(String key : commStr) {
 			if(validator(request, key)) {
 				String val = request.getParameter(key);
-				if(val.indexOf("date") > 0) {
+				if(key.indexOf("date") > 0) {
 					val = val.replace("/", "");
 				}
 				param.put(key, val);	
@@ -41,7 +41,7 @@ public class ControllerUtil {
 		for(String key : commStr) {
 			if(validator(request, key)) {
 				String val = request.getParameter(key);
-				if(val.indexOf("date") > 0) {
+				if(key.indexOf("date") > 0) {
 					val = val.replace("/", "");
 				}
 				param.put(key, val);

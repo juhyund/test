@@ -106,7 +106,6 @@ function selectComboBox(combo_id, code) {
      $.ajax(options);
 }
 
-
 /**
  * <PRE>
  * setSearchPeriod
