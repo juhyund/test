@@ -205,7 +205,8 @@
 	
 	<select id="getDeviceList" resultType="deviceInfo" parameterType="deviceInfo">	
 		SELECT
-			a.device_serial
+			a.device_id
+			, a.device_serial
 			, d.branch_nm
 			, b.model_nm
 			, e.vendor_nm
