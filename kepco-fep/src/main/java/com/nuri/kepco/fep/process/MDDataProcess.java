@@ -53,20 +53,21 @@ public class MDDataProcess implements ApplicationContextAware  {
 				saverClassName = "notifyDataSaver";
 			}
 			
-			AbstractMDSaver saver = (AbstractMDSaver)applicationContext.getBean(saverClassName);
-						
-			md.setDeviceId(deviceId);
-			md.setModemTime(modemTime);
-			md.setMeterDataParser(parserClassName);
-			md.decode(payload);
+			LOG.debug("parserClassName : {}", parserClassName);
+			LOG.debug("saverClassName : {}", saverClassName);
 			
-			LOG.debug("parser : {}", parserClassName);
-			LOG.debug("saver : {}", saver);
-			
-			saver.save(md);
+			if(!"".equals(saverClassName)) {
+				
+				AbstractMDSaver saver = (AbstractMDSaver)applicationContext.getBean(saverClassName);
+				md.setDeviceId(deviceId);
+				md.setModemTime(modemTime);
+				md.setMeterDataParser(parserClassName);
+				md.decode(payload);			
+				saver.save(md);	
+			}
 			
 		} catch (Exception e) {
-			LOG.error(e.getMessage());
+			LOG.error("error", e);
 		}
 	}
 

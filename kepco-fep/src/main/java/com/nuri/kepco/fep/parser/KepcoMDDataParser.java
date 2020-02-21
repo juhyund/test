@@ -14,7 +14,6 @@ import org.eclipse.leshan.json.JsonRootObject;
 import org.eclipse.leshan.json.LwM2mJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import com.aimir.fep.protocol.fmp.datatype.OCTET;
 import com.aimir.util.DataUtil;
@@ -59,9 +58,8 @@ public class KepcoMDDataParser extends DataParser {
 			
 
 			for (JsonArrayEntry e : jsonObject.getResourceList()) {
-				String strPath = bn + "/" + e.getName();
 				
-
+				String strPath = bn + "/" + e.getName();
 				LwM2mPath path = new LwM2mPath(strPath);
 
 				if (path.getObjectId() == METERING_DATA_ID) {
@@ -150,7 +148,7 @@ public class KepcoMDDataParser extends DataParser {
 		byte[] data = new byte[total_len];
 		System.arraycopy(frame, pos, data, 0, total_len);
 
-		LOG.debug("meterID : ["+meterID+"] + [" + Hex.decode(data) + "]");
+		LOG.debug("meterID : ["+meterID+"] + parser: [" + Hex.decode(data) + "]");
 		pos = 0;
 
 		byte[] OBIS = new byte[6];
@@ -269,6 +267,7 @@ public class KepcoMDDataParser extends DataParser {
 	}
 	
 	public void parser(byte[] frame) throws Exception {
+		
 		result = new LinkedHashMap<String, Map<String, Object>>();
 		String obisCode = "";
 		int clazz = 0;
@@ -490,7 +489,7 @@ public class KepcoMDDataParser extends DataParser {
 			}
 			
 		} catch (Exception e) {
-			LOG.error("error {}", e);
+			LOG.error("error setMeterInfo", e);
 		}
 	}
 	
@@ -677,7 +676,7 @@ public class KepcoMDDataParser extends DataParser {
 			Collections.sort(lpDataList);
 
 		} catch (Exception e) {
-			LOG.error("error {}", e);
+			LOG.error("error", e);
 		}
 		
 		return lpDataList;
@@ -806,7 +805,7 @@ public class KepcoMDDataParser extends DataParser {
 				return billingList;
 			}
 		} catch (Exception e) {
-			LOG.error("error {}", e);
+			LOG.error("error", e);
 		}
 		
 		return null;
@@ -897,7 +896,7 @@ public class KepcoMDDataParser extends DataParser {
 			}
 			
 		} catch (Exception e) {
-			LOG.error("error {}", e);
+			LOG.error("error", e);
 		}
 		
 		return null;

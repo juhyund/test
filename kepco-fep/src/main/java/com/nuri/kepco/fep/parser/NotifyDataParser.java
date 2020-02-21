@@ -16,7 +16,6 @@ import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
 
-@Service
 public class NotifyDataParser extends DataParser {
 
 	private static final Logger LOG = LoggerFactory.getLogger(NotifyDataParser.class);
@@ -67,7 +66,7 @@ public class NotifyDataParser extends DataParser {
 			}
 			
 		} catch (Exception e) {
-			LOG.error(e.toString());
+			LOG.error("error", e);
 		}
 	}
 	

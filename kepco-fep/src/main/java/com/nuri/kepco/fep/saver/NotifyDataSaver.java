@@ -67,7 +67,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			result = cpuUsageList.size();
 			
 		} catch (Exception e) {
-			LOG.error(e.toString());
+			LOG.error("error", e);
 			result = -1;
 		}
 		
@@ -92,7 +92,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			result = ramUsageList.size();
 			
 		} catch (Exception e) {
-			LOG.error(e.toString());
+			LOG.error("error", e);
 			result = -1;
 		}
 		return result;

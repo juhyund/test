@@ -1,6 +1,5 @@
 package com.nuri.kepco.fep.saver;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -93,23 +92,25 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 		DeviceInfo deviceInfo = getDeviceInfo();
 
 		if (deviceInfo != null) {
-
-			for (Integer key : meterInfoList.keySet()) {
-				
-				MeterInfo meterInfo = meterInfoList.get(key);
-				meterInfo.setDevice_id(deviceInfo.getDevice_id());
-				
-				try {					
-					MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
+			
+			if(meterInfoList != null) {
+				for (Integer key : meterInfoList.keySet()) {
 					
-					if(meter == null) {
-						result += meterInfoDAO.insert(meterInfo);
-					} else {
-						meterInfo.setMeter_id(meter.getMeter_id()); // meter id
-						result += meterInfoDAO.update(meterInfo);
-					}					
-				} catch (Exception e) {
-					LOG.error(e.toString());
+					MeterInfo meterInfo = meterInfoList.get(key);
+					meterInfo.setDevice_id(deviceInfo.getDevice_id());
+					
+					try {					
+						MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
+						
+						if(meter == null) {
+							result += meterInfoDAO.insert(meterInfo);
+						} else {
+							meterInfo.setMeter_id(meter.getMeter_id()); // meter id
+							result += meterInfoDAO.update(meterInfo);
+						}					
+					} catch (Exception e) {
+						LOG.error("error", e);
+					}
 				}
 			}
 		}
