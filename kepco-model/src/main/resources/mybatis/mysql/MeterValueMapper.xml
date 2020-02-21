@@ -203,6 +203,9 @@
 			<if test="meter_id != null and meter_id != ''" >     
 			    AND a.meter_id = #{meter_id}
 			</if>
+			<if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
+            	AND a.read_dt between #{sdate} AND #{edate}
+        	</if>  
 			<include refid="order_by_list" />	
 		) T
 		GROUP BY meter_id , read_dt
