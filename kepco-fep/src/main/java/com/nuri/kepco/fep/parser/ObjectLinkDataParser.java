@@ -23,7 +23,6 @@ import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.model.DeviceResource;
 import com.nuri.kepco.model.MeterInfo;
 
-@Service
 public class ObjectLinkDataParser extends DataParser {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ObjectLinkDataParser.class);
@@ -71,7 +70,7 @@ public class ObjectLinkDataParser extends DataParser {
 			}
 
 		} catch (Exception e) {
-			LOG.error(e.toString());
+			LOG.error("error", e);
 		}
 	}
 

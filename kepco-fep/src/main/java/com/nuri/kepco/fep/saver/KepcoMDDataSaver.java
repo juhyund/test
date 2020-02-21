@@ -136,7 +136,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 					result += meterBillingDAO.insertImport(meterBilling);
 					
 				} catch (Exception e) {
-					LOG.error("e: {}", e.getMessage());
+					LOG.error("error", e);
 				}
 			}			
 		}
@@ -175,7 +175,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 					result += meterBillingDAO.insertExport(meterBilling);
 					
 				} catch (Exception e) {
-					LOG.error("e: {}", e.getMessage());
+					LOG.error("error", e);
 				}
 			}
 		}
