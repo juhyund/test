@@ -29,11 +29,17 @@ public class MeterInfo extends CommonObj {
 	private String cosem_device_name;
 	private Double acon;
 	private Double rcon;
+	private Double pcon;
 	private String billing_dt;
 	private String itime;
 	private String mtime;
 	private int lp_period;
-	private Double pcon;
 	private int net_metering;
+	
+	private String allow_yn;
+	private String device_serial;
+	private String vendor_seq;
+	private String device_status;
+	private String last_comm_dt;
 
 }
