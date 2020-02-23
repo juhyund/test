@@ -86,5 +86,12 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 
 		return this.deviceInfoDAO.getDeviceListCnt(deviceInfo);
 	}
+
+	@Override
+	public JSONObject getDeviceInfo(String deviceId) throws Exception {
+		DeviceInfo deviceInfo = this.deviceInfoDAO.getDeviceInfo(deviceId);
+
+		return ConversionUtil.getJSONObjectByModel(deviceInfo);
+	}
 	
 }

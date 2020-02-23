@@ -12,4 +12,6 @@ public interface DeviceInfoService extends GenericService {
 	int getDeviceListCnt(Map<String, Object> param) throws Exception;
 	
 	JSONArray getDeviceList(Map<String, Object> param) throws Exception;
+	
+	JSONObject getDeviceInfo(String deviceId) throws Exception;
 }
