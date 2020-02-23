@@ -13,7 +13,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     });
 	
 	function successCallback(data, status, headers, config) {
-		
         $.each(data.data.result, function (index, item) {
         	
 	    	$http({
@@ -21,7 +20,8 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	            url: COMMON_URL + "/ajaxDeviceResourceModelList",
 	            params : {"device_id" : $("#device_id").val(), "object_id" : item.object_id}
 	    	
-	        }).then(function resourceSuccessCallback(data, status, headers, config) {            	
+	        }).then(function resourceSuccessCallback(data, status, headers, config) {
+	        	console.log(data);
 	        	// resources
 	        	item.resources = data.data.result;	        	
 	        	$scope.objects[index] = item;
@@ -31,7 +31,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         });     
         
 	}
-	/*
 	$scope.read = function (resource) {
 		
 		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
@@ -207,5 +206,4 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        resource.statusMsg = "전송실패";	    	
 	    });
     };
-  */
 });
