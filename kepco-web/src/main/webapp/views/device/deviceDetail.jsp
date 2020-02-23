@@ -52,7 +52,7 @@ function goBack() {
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active"><strong>단말정보 상세</strong>
+							<li class="breadcrumb-item active"><strong>단말 관리</strong>
 							</li>
 						</ol>
 					</div>
@@ -233,6 +233,58 @@ function goBack() {
 			</div>
 		</div>
 	</div>
+
+	<!-- modal -->
+	<div class="modal bs-example-modal-sm" id="writeModal" tabindex="-1" role="dialog"
+	aria-labelledby="writeModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">				
+				<h4 class="modal-title" id="writeModalLabel"></h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">		
+			<form class="form-horizontal" role="form" method="post" id="form">	
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최소주기</label>
+					<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최대주기</label>
+					<div class="col-lg-9"><input type="text" name="pmax" id="pmax" placeholder="pmax" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최소값</label>
+					<div class="col-lg-9"><input type="text" name="lt" id="lt" placeholder="lt" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최대값</label>
+					<div class="col-lg-9"><input type="text" name="gt" id="gt" placeholder="gt" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">간격</label>
+					<div class="col-lg-9"><input type="text" name="step" id="step" placeholder="step" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Notification</label>
+					<div class="col-lg-9">
+					<select class="form-control m-b" name="ntype" id="ntype">
+                        <option value="true">true</option>
+                        <option value="false">false</option>                        
+                    </select>
+					</div>
+				</div>	
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="writeSubmit">적용</button>
+			</div>
+		</form>
+		</div>
+	</div>
+	</div>
+	<!-- modal -->
 
 </body>
 </html>

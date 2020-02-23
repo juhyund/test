@@ -33,7 +33,8 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	
 	        }).then(function resourceSuccessCallback(data, status, headers, config) {
 	        	// resources
-	        	item.resources = data.data.result;	        	
+	        	item.resources = data.data.result;	
+	        	console.log(data.data.result);
 	        	$scope.objects[index] = item;
 	    	}, function errorCallback(response) {
 	        	console.log("error");
