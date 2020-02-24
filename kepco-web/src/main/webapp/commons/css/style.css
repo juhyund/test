@@ -9663,6 +9663,7 @@ body.md-skin {
 }
 
 .device-detail-head {
+	font-weight: bold;
 	width: 13%;
 }
 

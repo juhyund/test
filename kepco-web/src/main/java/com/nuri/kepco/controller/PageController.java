@@ -1,6 +1,8 @@
 package com.nuri.kepco.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -61,7 +63,8 @@ public class PageController {
 	}
 	
 	@RequestMapping("/meterDetail")
-	public String meterDetail() throws Exception {
+	public String meterDetail(@ModelAttribute(value="meter_serial") String meter_serial, Model model) throws Exception {
+		model.addAttribute("meter_serial", meter_serial);
 		return "meter/meterDetail";
 	}
 }

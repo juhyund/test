@@ -253,7 +253,6 @@
 			b.device_serial
 			, br.branch_nm
 			, a.meter_serial
-			, b.device_serial
 			, b.allow_yn
 			, mo.model_nm
 			, mo.vendor_seq
@@ -301,7 +300,6 @@
 			b.device_serial
 			, br.branch_nm
 			, a.meter_serial
-			, b.device_serial
 			, b.allow_yn
 			, mo.model_nm
 			, mo.vendor_seq
