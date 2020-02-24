@@ -59,11 +59,11 @@ public class MeterController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String meter_serial = request.getParameter("meter_serial");
+			String meter_serial = request.getParameter("_meter_serial");
 			
 			JSONObject jarr = this.meterInfoService.getMeterDetailInfo(meter_serial);
 			
-			json.put("resultGrid", jarr);
+			json.put("result", jarr);
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);

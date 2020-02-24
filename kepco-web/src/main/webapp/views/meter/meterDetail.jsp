@@ -26,7 +26,14 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
-
+<style>
+  div .ibox-title {
+		background-color: #dee2e6;
+	}
+  table th.text-navy {
+  	color: #676a6c !important;
+  }	
+</style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
@@ -81,70 +88,80 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                         <div class="tab-content">
                             <div role="tabpanel" id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-                                	<table class="table text-center m-t">
-										<tbody>
-											<tr>
-												<th class="text-navy" scope="row">모뎀 번호 : </th>
-												<td id = "device_serial"></td>
-												<th class="text-navy" scope="row">운전 상태 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">최종 총신 일시 : </th>
-												<td id = "last_comm_dt"></td>
-												<th class="text-navy" scope="row">통신 방식 : </th>
-												<td id = ""></td>
-											</tr>
-											<tr>
-												<th class="text-navy" scope="row">통신사 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">모뎀 아이피 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">수신감도 레벨 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row"></th>
-												<td id = ""></td>
-											</tr>
+                                	<div class="ibox">
+	                                	<div class="ibox-title">
+	                                		<h5>모뎀 정보</h5>
+	                                	</div>
+		                                	<table class="table text-center">
+												<tbody>
+													<tr>
+														<th class="text-navy" scope="row">모뎀 번호 : </th>
+														<td id = "device_serial"></td>
+														<th class="text-navy" scope="row">운전 상태 : </th>
+														<td id = ""></td>
+														<th class="text-navy" scope="row">최종 총신 일시 : </th>
+														<td id = "last_comm_dt"></td>
+														<th class="text-navy" scope="row">통신 방식 : </th>
+														<td id = ""></td>
+													</tr>
+													<tr>
+														<th class="text-navy" scope="row">통신사 : </th>
+														<td id = ""></td>
+														<th class="text-navy" scope="row">모뎀 아이피 : </th>
+														<td id = ""></td>
+														<th class="text-navy" scope="row">수신감도 레벨 : </th>
+														<td id = ""></td>
+														<th class="text-navy" scope="row"></th>
+														<td id = ""></td>
+													</tr>
+												</tbody>
+											</table>
+									</div>
+									<div class="ibox">
+										<div class="ibox-title">
+	                                		<h5>계기 정보</h5>
+	                                	</div>
+										<table class="table text-center">
+											<tbody>
+												<tr>
+													<th class="text-navy" scope="row">계기번호 : </th>
+													<td id = "meter_serial"></td>
+													<th class="text-navy" scope="row">운전 상태 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">마지막 검침 일시 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">검침 주기 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">계기 배수 : </th>
+													<td id = ""></td>
+												</tr>
+												<tr>
+													<th class="text-navy" scope="row">계기 타입 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">프로그램 ID : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">프로그램 버전 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">제조사 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">자재 번호 : </th>
+													<td id = ""></td>
+												</tr>
+												<tr>
+													<th class="text-navy" scope="row">인입주전주번호 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">계기 소유 구분 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">계기 제조년월 : </th>
+													<td id = "reg_dt"></td>
+													<th class="text-navy" scope="row">선식구분 : </th>
+													<td id = ""></td>
+													<th class="text-navy" scope="row">계량점전압 : </th>
+													<td id = ""></td>
+												</tr>
 										</tbody>
-									</table>
-									<table class="table text-center m-t">
-										<tbody>
-											<tr>
-												<th class="text-navy" scope="row">계기번호 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">운전 상태 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">마지막 검침 일시 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">검침 주기 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">계기 배수 : </th>
-												<td id = ""></td>
-											</tr>
-											<tr>
-												<th class="text-navy" scope="row">계기 타입 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">프로그램 ID : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">프로그램 버전 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">제조사 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">자재 번호 : </th>
-												<td id = ""></td>
-											</tr>
-											<tr>
-												<th class="text-navy" scope="row">인입주전주번호 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">계기 소유 구분 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">계기 제조년월 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">선식구분 : </th>
-												<td id = ""></td>
-												<th class="text-navy" scope="row">계량점전압 : </th>
-												<td id = ""></td>
-											</tr>
-									</tbody>
-									</table>
+										</table>
+									</div>
                                 </div>
                             </div>
                             <div role="tabpanel" id="tab-2" class="tab-pane">
@@ -175,7 +192,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                    		 </div>
                 	</div>
 				<form name="control_detail_form" id="control_detail_form" method="post">
-					<input type="hidden" id="meter_serial" name="meter_serial" value="${meter_serial}" class="form-control">
+					<input type="hidden" id="_meter_serial" name="_meter_serial" value="${meter_serial}" class="form-control">
 				</form>
 				</div>
 				<!--  end : summary_area  -->
@@ -194,7 +211,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 
 <script type="text/javascript" charset="utf-8">	
-var meter_serial = $(meter_serial);alert(getUrlValue("meter_serial"));alert($('#meter_serial').val());
+//var meter_serial = $('#_meter_serial').val();
 
 //specify the columns  
 var columnDefs = [
@@ -222,7 +239,7 @@ function ajaxSearchForm() {
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
-           data        : meter_serial
+           data        : $("#control_detail_form").serialize()
      };             
     
      $.ajax(options);
@@ -240,10 +257,10 @@ function showRequest() {
 function successResultHandler(data, status) {	
 	//로딩
 	
-	var service_cd = data.result[0].service_cd;
-	var app_id = data.result[0].app_id;
-	var resource_path = data.result[0].resource_path;
-	var control_type = data.result[0].control_type;
+	var device_serial = data.result[0].device_serial;
+	var meter_serial = data.result[0].meter_serial;
+	var reg_dt = data.result[0].reg_dt;
+/* 	var control_type = data.result[0].control_type;
 	var request_msg = data.result[0].request_msg;
 	var reg_id = data.result[0].reg_id;
 	var reg_dt = data.result[0].reg_dt;
@@ -251,14 +268,13 @@ function successResultHandler(data, status) {
 	var status_cd = data.result[0].status_cd;
 	var status_msg = data.result[0].status_msg;
 	var result_dt = data.result[0].result_dt;
-	var result_msg = data.result[0].result_msg;
+	var result_msg = data.result[0].result_msg; */
 
-	success_yn = (success_yn==1) ? "성공" : "실패";
 	
-	$('#service_cd').text(service_cd);
-	$('#app_id').text(app_id);
-	$('#resource_path').text(resource_path);
-	$('#control_type').text(control_type);
+	$('#device_serial').text(device_serial);
+	$('#meter_serial').text(meter_serial);
+	$('#reg_dt').text(reg_dt);
+/* 	$('#control_type').text(control_type);
 	$('#request_msg').text(request_msg);
 	$('#reg_id').text(reg_id);
 	$('#reg_dt').text(reg_dt);
@@ -266,13 +282,12 @@ function successResultHandler(data, status) {
 	$('#status_cd').text(status_cd);
 	$('#status_msg').text(status_msg);
 	$('#result_dt').text(result_dt);
-	$('#result_msg').text(result_msg);
+	$('#result_msg').text(result_msg); */
 	
 }
 
 function init() {
 	// init
-	meter_serial = $("#meter_serial").val();
 	
 	// form search
 	ajaxSearchForm();

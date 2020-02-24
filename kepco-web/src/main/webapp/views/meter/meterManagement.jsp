@@ -112,7 +112,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															style="padding-left: 10px;">통신상태</label>
 														<div class="col-lg-3">
 															<select class="form-control" name="device_status"
-																id="comm_status"></select>
+																id="device_status"></select>
 														</div>
 														
 														<label class="col-lg-1 col-form-label"
@@ -204,6 +204,17 @@ var columnDefs = [
 	{headerName: "고객번호", field: ""} */
 ];
 
+// init selectComboBox
+//device type
+function comboDeviceType() { 
+     selectComboBox('meter_type', 'MT');
+}
+
+//device type
+function comboDeviceStatus() { 
+     selectComboBox('device_status', 'CT');
+}
+
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500);    
     dataGrid.makeGrid();
@@ -216,7 +227,8 @@ onRowClicked = function(event){
 }
 
 function ajaxSearchForm() {
-
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
+	
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
@@ -230,6 +242,35 @@ function ajaxSearchForm() {
      $.ajax(options);
 }
 
+function excelDownload() {
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
+	
+	if( totalCnt == 0){
+		Swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: 'excel 다운로드 불가',
+			text: '조회 결과가 없습니다!',
+			showConfirmButton: false,
+				timer: 1500
+			});
+	}else{
+
+		 $('#search_form').attr('action', "/ewsn-app/downloadMeterValue");
+		 $('#search_form').attr('method',"GET");
+		 $('#search_form').submit();
+		Swal.fire({
+			position: 'center',
+			icon: 'info',
+			text: 'excel 생성중',
+			showConfirmButton: false,
+				timer: 1500
+		});
+	}
+
+}
+
+
 function showRequest() {
 	// $("#loading").show();
 }
@@ -240,11 +281,6 @@ function successResultHandler(data, status) {
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
-}
-
-// device type
-function comboDeviceType() { 
-     selectComboBox('device_type', 'MT');
 }
 
 function resetForm() {
@@ -258,14 +294,15 @@ function resetForm() {
 function init() {
 	
 	// init
-	//modified
+	// combo
+	comboDeviceType();
+	comboDeviceStatus()
+	
+	// Grid
 	initGrid();
 	
 	// form search
 	ajaxSearchForm();
-	
-	// combo
-	comboDeviceType();	
 }
 	
 $(document).ready(function() {	
