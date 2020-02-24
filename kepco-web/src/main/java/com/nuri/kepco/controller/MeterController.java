@@ -53,5 +53,8 @@ public class MeterController {
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> branch 'develop' of https://git-n.nuritelecom.com/scm/aimirpf/kepco-lwm2m-5.0.git
 }

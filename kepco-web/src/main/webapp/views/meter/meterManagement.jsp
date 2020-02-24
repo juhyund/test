@@ -44,14 +44,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">단말 목록 조회</h3>
+						<h3 style="margin-top: 6px">미터 정보 조회</h3>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
 							<li class="breadcrumb-item"><a
 								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 							</li>
-							<li class="breadcrumb-item active"><strong>단말 관리</strong>
+							<li class="breadcrumb-item active"><strong>Layouts</strong>
 							</li>
 						</ol>
 					</div>
@@ -70,26 +70,65 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">지역본부</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="branch_id" id="branch_id"></select>
+															<select class="form-control" name=""
+																id="central_nm"></select>
 														</div>
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">지사</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="model_seq" id="model_seq"></select>
+															<select class="form-control" name="branch_nm"
+																id="branch_nm"></select>
 														</div>
-														<label class="col-sm-1 col-form-label">등록일자</label>
-														<div class="col-sm-3" id="datePicker">
-															<div class="input-group date"
-																style="width: 48%; float: left;">
-																<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
+													</div>
+
+													<div class="form-group form-group-end row">
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">계기타입</label>
+														<div class="col-lg-3">
+															<select class="form-control" name="meter_type"
+																id="meter_type"></select>
+														</div>
+														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">계기번호</label>
+														<div class="col-lg-3">
+															<input class="form-control" name="meter_serial"
+																id="meter_serial"></input>
+														</div>
+														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">모뎀번호</label>
+														<div class="col-lg-3">
+															<input class="form-control" name="device_serial"
+																id="device_serial"></input>
+														</div>
+													</div>
+													
+													<div class="form-group form-group-end row">
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">통신상태</label>
+														<div class="col-lg-3">
+															<select class="form-control" name="device_status"
+																id="comm_status"></select>
+														</div>
+														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">최종통신 일자</label>
+														<div class="col-sm-4" id="datePicker">
+															<div class="input-group date" style="width: 48%; float: left;">
+																<input type="hidden" id="sdate" name="sdate" value=""> 
+																<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
 															</div>
 															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 															<div class="input-group date" style="width: 48%;">
-																<input type="text" class="form-control"  id="edate" name="edate" value=""> 
+																<input type="hidden" id="edate" name="edate" value=""> 
+																<input type="text" class="form-control" id="edateView" name="edateView" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
@@ -97,35 +136,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 													</div>
 
-													<div class="form-group form-group-end row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
-														<div class="col-lg-3">
-														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;"></select>
-															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; display: inline;">
-														</div>
-														
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="device_status" id="device_status"></select>
-														</div>
-														
-														<label class="col-sm-1 col-form-label">통신일자</label>
-														<div class="col-sm-3" id="datePicker">
-															<div class="input-group date" style="width: 48%; float: left;">
-																<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
-															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
-															<div class="input-group date" style="width: 48%;">
-																<input type="text" class="form-control"  id="ledate" name="ledate" value=""> 
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
-														</div>
-													</div>
+
 												</td>
 												<td width="180" height="80" style="text-align: right">
 													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
@@ -134,11 +145,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
 														<i class="fa fa-undo"></i>
 													</button>
+													<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
+														<i class="fa fa-download"></i>
+													</button>
 												</td>
 											</tr>
 										</tbody>
 									</table>
 
+								</form>
+								<form name="detail_form" id="detail_form" method="get" action="meter/meterDetail">
+									<input type="hidden" id="detail_meter_serial" name="detail_meter_serial" class="form-control">
 								</form>
 								<div>
 									<!-- page option -->
@@ -158,11 +175,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
-									<center>
 									<div id="grid-page" style ="display:none;" class="m-t-sm">
 										<ul id="pagination" class="pagination"></ul>
 									</div>
-									</center>
 						        </div>
 							</div>
 						</div>
@@ -170,19 +185,26 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				</div>
 				
 				<!-- body -->
-
+			</div>	
+		</div>
+	</div>
 <script type="text/javascript" charset="utf-8">
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:80},
-	{headerName: "단말번호", field: "device_serial"},
-	{headerName: "지역번호", field: "branch_nm", width:250},
-	{headerName: "단말모뎀", field: "model_nm"},
-	{headerName: "제조사", field: "vendor_nm"},
-	{headerName: "단말상태", field: "code_local_nm"},
-	{headerName: "최종통신일시", field: "last_comm_dt"},
-	{headerName: "등록일자", field: "reg_dt"}
+	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},
+	{headerName: "본부", field: "", width:100, cellStyle:{'text-align': "center"}},
+	{headerName: "지사", field: "branch_nm", width:100, cellStyle:{'text-align': "center"}},
+	{headerName: "계기타입", field: "meter_type", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "계기번호", field: "meter_serial", cellStyle:{'text-align': "center"}},
+	{headerName: "검침주기", field: "lp_period", cellStyle:{'text-align': "center"}},
+	{headerName: "통신상태", field: "device_status", cellStyle:{'text-align': "center"}},
+	{headerName: "마지막 검침 일시", field: "last_comm_dt"},
+	{headerName: "모뎀번호", field: "device_serial", width:120},
+	{headerName: "모뎀 최종통신일자", field: "last_comm_dt"},
+	{headerName: "모뎀 운영상태", field: "allow_yn", cellStyle:{'text-align': "center"}}
+	/* {headerName: "계약상태", field: ""},
+	{headerName: "고객번호", field: ""} */
 ];
 
 var initGrid = function() {
@@ -192,8 +214,16 @@ var initGrid = function() {
 };
 
 onRowClicked = function(event){
-	var device_id = event.data.device_id;
-	location.href = CONTEXT_PATH + "/deviceDetail?device_id="+device_id;
+	//선택된 row의 meter_id를 파라미터로 MeteringDetail.jsp를 팝업으로 연다.	
+	var selectedRows = dataGrid.getSelectedRow();
+    var selectedRowsString = '';
+    selectedRows.forEach( function(selectedRow, index) {
+    selectedRowsString = selectedRow.meter_serial;        
+    });
+    
+    // selectedRow.object_id를 form의 detail_object_id에 보냄.
+    $("#detail_meter_serial").val(selectedRowsString);
+    $("#detail_form").submit();
 }
 
 function ajaxSearchForm() {
@@ -201,7 +231,7 @@ function ajaxSearchForm() {
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxDeviceInfoList",
+           url         : COMMON_URL + "/ajaxMeterInfoList",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
@@ -225,43 +255,21 @@ function successResultHandler(data, status) {
 
 // device type
 function comboDeviceType() { 
-	var options = { 
-	           beforeSend  : showRequest,
-	           success     : successResultCombo,
-	           url         : COMMON_URL + "/ajaxDeviceInfoCombo",
-	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	           type        : "post", /* get, post */
-	           dataType    : "json", /* xml, html, script, json */
-	           data        : $("#search_form").serialize()
-	     };             
-	    
-	     $.ajax(options);
-}
-
-function successResultCombo(data, status) {
-	$.each(data, function(nm, combo) {
-		$('#'+nm).append(new Option("선택", ""));
-		$.each(data[nm], function(key, value){
-			$('#'+nm).append(new Option(value, key));
-		});
-	});
+     selectComboBox('device_type', 'MT');
 }
 
 function resetForm() {
-	$('#sdate').datepicker('setDate', null);
-	$('#edate').datepicker('setDate', null);
-	$('#lsdate').datepicker('setDate', null);
-	$('#ledate').datepicker('setDate', null);
-	$("#branch_id").val($("#target option:first").val());
-	$("#model_seq").val($("#target option:first").val());
-	$("#searchfield").val($("#target option:first").val());
-	$("#device_status").val($("#target option:first").val());
-	$("#searchquery").val("");
+	$('#sdate').val("");
+	$('#edate').val("");
+	$('#lsdate').val("");
+	$('#ledate').val("");
 }
+
 
 function init() {
 	
 	// init
+	//modified
 	initGrid();
 	
 	// form search
@@ -289,4 +297,3 @@ $('#datePicker .input-group.date').datepicker({
 </script>
 </body>
 </html>
-

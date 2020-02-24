@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nuri.kepco.fep.process.MDDataProcess;
 
-@Service
+//@Service
 public class KafkaReceiver {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaReceiver.class);

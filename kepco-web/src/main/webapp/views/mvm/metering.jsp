@@ -31,7 +31,7 @@
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
-<script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js?ver=00" charset="UTF-8"></script>
 <%-- <script src="<%=COMMON_PATH_JS%>/icheckbox.css"></script> --%>
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
 <link href="<%=COMMON_PATH_CSS%>/style.css?ver=1" rel="stylesheet">
@@ -174,14 +174,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "미터ID", field: "meter_id"},
-	{headerName: "미터시리얼", field: "meter_serial"},
-	{headerName: "검침일시", field: "read_dt"},
+	{headerName: "미터 시리얼", field: "meter_id"},
+	{headerName: "READ_DT", field: "read_dt"},
+   	{headerName: "구간검침값 (kWh)", 
+			   	field: "sect_meter_value", 
+			   	valueFormatter: numberFormatter,
+			   	cellStyle: { 'text-align': "right" }},
    	{headerName: "누적검침값 (kWh)",
 			   	field: "meter_value", 
 			   	valueFormatter: numberFormatter,
-			   	cellStyle: { 'text-align': "right" }},
-	{headerName: "등록일자", field: "reg_dt"}
+			   	cellStyle: { 'text-align': "right" }}, 
+	{headerName: "등록시간", field: "reg_dt"}
 ];
 
 
@@ -209,7 +212,7 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	($("#sdateView").val(), $("#edateView").val());
+	setSearchParam($("#sdateView").val(), $("#edateView").val());
 	
 	if( totalCnt == 0){
 		Swal.fire({
@@ -295,11 +298,20 @@ function init() {
 	// init
 	initGrid();
 	
+<<<<<<< HEAD
 	setSearchPeriod('today');
 	comboDeviceType();
 	
+=======
+>>>>>>> branch 'develop' of https://git-n.nuritelecom.com/scm/aimirpf/kepco-lwm2m-5.0.git
 	// form search
 	ajaxSearchForm();
+	
+	// setting combobox
+	comboDeviceType();
+	setSearchPeriod('today');
+	
+	//$("#limit").val($("#search_num option:selected").val());
 }
 	
 $(document).ready(function() {	

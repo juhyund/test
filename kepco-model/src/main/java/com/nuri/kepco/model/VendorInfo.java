@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class VendorInfo extends CommonObj {
 	
-	private String vendor_seq;
+	private int vendor_seq;
 	private String vendor_code;
 	private String vendor_nm;
 	private String remark;
@@ -17,3 +17,4 @@ public class VendorInfo extends CommonObj {
 	private String update_dt;
 
 }
+

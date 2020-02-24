@@ -10,8 +10,9 @@ public class RamUsageMonitor {
 	String deviceId;
 	String deviceSerial;
 	int ramUsage;
-	Date usageTime;
-
+	Date usageTime;	// usage 수신 시간
+	Date saveTime;	// 서버 저장 시간
+	
 	// 조회조건
 	private Date sdate;
 	private Date edate;
@@ -28,3 +29,4 @@ public class RamUsageMonitor {
 		return (this.page - 1) * this.row;
 	}
 }
+

@@ -26,9 +26,12 @@ public class DeviceInfo extends CommonObj {
 	private String branch_nm;
 	private String model_nm;
 	private String vendor_nm;
+	private String code_local_nm;
 	private String device_status;
+	private String security_mode;
 	private String last_comm_dt;
-	private String s_last;
-	private String e_last;
+	private String lsdate;
+	private String ledate;
 	
 }
+

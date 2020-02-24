@@ -5,16 +5,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aimir.util.TimeUtil;
 import com.nuri.kepco.fep.datatype.MDData;
 import com.nuri.kepco.fep.datatype.MeterType;
 import com.nuri.kepco.fep.datatype.MeterType.COMMTYPE;
 import com.nuri.kepco.fep.datatype.MeterType.DEVICEFLAG;
 import com.nuri.kepco.fep.datatype.MeterType.DEVICESTATUS;
 import com.nuri.kepco.fep.datatype.MeterType.DEVICETYPE;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE;
 import com.nuri.kepco.model.DeviceInfo;
-import com.nuri.kepco.model.DeviceModel;
 import com.nuri.kepco.model.DeviceStatus;
 import com.nuri.kepco.model.MeterInfo;
+import com.nuri.kepco.model.VendorInfo;
 import com.nuri.kepco.model.dao.DeviceInfoDAO;
 import com.nuri.kepco.model.dao.DeviceModelDAO;
 import com.nuri.kepco.model.dao.DeviceStatusDAO;
@@ -45,9 +47,10 @@ public abstract class AbstractMDSaver {
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
 
-	String modemTime;
 
-	protected void checkMeter(MDData mdData) {
+	String modemTime; // 서버가 모뎀으로부터 수신한 시간
+
+	protected int checkMeter(MDData mdData) {
 
 		int result = 0;
 		boolean isNewMeter = false;
@@ -75,8 +78,9 @@ public abstract class AbstractMDSaver {
 			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
 			meter.setDevice_id(deviceInfo.getDevice_id());
 
-			if (mdData.getBillingDate() != null) {
-				meter.setBilling_dt(mdData.getBillingDate());
+			// 정기검침일 (MeterEntry)
+			if (mdData.getBillingDay() != null) {
+				meter.setBilling_dt(mdData.getBillingDay()); 
 			}
 
 			if (mdData.getCosemDeviceName() != null) {
@@ -117,16 +121,68 @@ public abstract class AbstractMDSaver {
 
 			logger.debug(meter.getMeter_id());
 
-			updateDeviceStatus(meter, mdData);
+			updateDeviceStatus(meter, mdData.getMeterTime());
 
 			mdData.setMeterInfo(meter);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+		
+		return result;
+	}
+	
+	protected int checkMeter(MeterInfo meterInfo) {
+		int result = 0;
+		
+		try {
+			
+			meterInfo.setMeterModel(); // modelcd, vendorcd
+			meterInfo.setMeter_type(DLMSVARIABLE.METERTYPE.getMeterType(meterInfo.getModelCd()).getName());
+			meterInfo.setMeter_phase(DLMSVARIABLE.METERPHASE.getMeterPhase(meterInfo.getModelCd()).getName());
+			meterInfo.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
+			
+			// vendor info
+			int vendorSeq = getVendorSeqByCode(meterInfo.getVendorCd());
+			if(vendorSeq > 0) {
+				meterInfo.setVendor_seq(vendorSeq);
+			}
+					
+			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
+			if (meter == null) {
+				result += meterInfoDAO.insert(meterInfo);
+				
+			} else {
+				meterInfo.setMeter_id(meter.getMeter_id()); // meter id
+				result += meterInfoDAO.update(meterInfo);
+			}	
+			
+			updateDeviceStatus(meter, null);
+		
+		} catch (Exception e) {
+			logger.error("error", e);
+		}
+		
+		return result;
+	}
+	
+	private int getVendorSeqByCode(String vendorCode) {
+		
+		VendorInfo vendorInfo = null;
+		try {
+			vendorInfo = vendorInfoDAO.selectVendorByCode(vendorCode);
+			
+			if(vendorInfo != null) {
+				return vendorInfo.getVendor_seq();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
-	protected void checkDevice(String deviceSerial, String modemTime) {
+	protected int checkDevice(String deviceSerial, String modemTime) {
 
 		int result = 0;
 		boolean isNewDevice = false;
@@ -148,31 +204,43 @@ public abstract class AbstractMDSaver {
 			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
 
 			if (isNewDevice) {
-				deviceInfoDAO.insert(deviceInfo);
-				updateDeviceStatus(deviceInfo);
+				result = deviceInfoDAO.insert(deviceInfo);				
 			} else {
-				deviceInfoDAO.update(deviceInfo);
-				updateDeviceStatus(deviceInfo);
+				result = deviceInfoDAO.update(deviceInfo);
 			}
-
+			
+			updateDeviceStatus(deviceInfo);
 			this.deviceInfo = deviceInfo;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("error", e);
 		}
+		
+		return result;
 	}
-
-	protected void updateDeviceStatus(MeterInfo meterInfo, MDData mdData) {
+	
+	/**
+	 * updateDeviceStatus - meter 상태정보 업데이트
+	 * @param meterInfo
+	 * @param mdData
+	 */
+	protected void updateDeviceStatus(MeterInfo meterInfo, String meterTime) {
 
 		DeviceStatus param = new DeviceStatus();
 		param.setDevice_id(meterInfo.getMeter_id());
 
 		DeviceStatus deviceStatus = null;
+		
+		if(meterTime == null) {
+			// 현재시간
+			meterTime = TimeUtil.getCurrentTimeMilli();
+		}
 
 		try {
 
 			deviceStatus = deviceStatusDAO.selectOne(param);
+			
+			// todo last_comm_dt 통신시간 체크
 
 			if (deviceStatus == null) { // insert
 
@@ -180,7 +248,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.METER.getCode()); // meter
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
-				deviceStatus.setLast_comm_dt(mdData.getMeterTime()); // meter time
+				deviceStatus.setLast_comm_dt(meterTime); // meter time
 				deviceStatusDAO.insert(deviceStatus);
 
 			} else { // update
@@ -189,7 +257,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.METER.getCode()); // meter
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
-				deviceStatus.setLast_comm_dt(mdData.getMeterTime()); // meter time
+				deviceStatus.setLast_comm_dt(meterTime); // meter time
 				deviceStatusDAO.update(deviceStatus);
 			}
 
@@ -200,7 +268,7 @@ public abstract class AbstractMDSaver {
 	}
 
 	/**
-	 * updateDeviceStatus
+	 * updateDeviceStatus - 단말 상태 정보 업데이트
 	 * 
 	 * @param deviceInfo
 	 */
@@ -210,6 +278,11 @@ public abstract class AbstractMDSaver {
 		param.setDevice_id(deviceInfo.getDevice_id());
 
 		DeviceStatus deviceStatus = null;
+		
+		if(modemTime == null) {
+			// 현재시간
+			modemTime = TimeUtil.getCurrentTimeMilli();
+		}
 
 		try {
 
@@ -250,12 +323,17 @@ public abstract class AbstractMDSaver {
 	 * @param mrd
 	 * @return
 	 */
-	public String getBillingDate(String modemTime, String billingDay) {
+	public String getBillingDate(String meterTime, String billingDay) {
 		
 		if("".equals(billingDay) || billingDay == null) {
 			billingDay = "01";
 		}
 		
-		return modemTime.substring(0, 6) + billingDay + "000000";
+		if(billingDay.length() == 1) {
+			billingDay = "0" + billingDay;
+		}
+		
+		logger.debug("billingDay : {}", billingDay);
+		return meterTime.substring(0, 6) + billingDay + "0000"; // length - 12
 	}
 }
