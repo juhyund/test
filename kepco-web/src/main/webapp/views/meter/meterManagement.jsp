@@ -227,7 +227,6 @@ onRowClicked = function(event){
 }
 
 function ajaxSearchForm() {
-	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
     var options = { 
            beforeSend  : showRequest,
@@ -243,7 +242,6 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
 	if( totalCnt == 0){
 		Swal.fire({

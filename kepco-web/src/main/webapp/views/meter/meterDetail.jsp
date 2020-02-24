@@ -98,17 +98,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<th class="text-navy" scope="row">모뎀 번호 : </th>
 														<td id = "device_serial"></td>
 														<th class="text-navy" scope="row">운전 상태 : </th>
-														<td id = ""></td>
-														<th class="text-navy" scope="row">최종 총신 일시 : </th>
+														<td id = "device_status"></td>
+														<th class="text-navy" scope="row">최종 통신 일시 : </th>
 														<td id = "last_comm_dt"></td>
 														<th class="text-navy" scope="row">통신 방식 : </th>
-														<td id = ""></td>
+														<td id = "comm_type"></td>
 													</tr>
 													<tr>
 														<th class="text-navy" scope="row">통신사 : </th>
 														<td id = ""></td>
 														<th class="text-navy" scope="row">모뎀 아이피 : </th>
-														<td id = ""></td>
+														<td id = "ip"></td>
 														<th class="text-navy" scope="row">수신감도 레벨 : </th>
 														<td id = ""></td>
 														<th class="text-navy" scope="row"></th>
@@ -129,19 +129,19 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th class="text-navy" scope="row">운전 상태 : </th>
 													<td id = ""></td>
 													<th class="text-navy" scope="row">마지막 검침 일시 : </th>
-													<td id = ""></td>
+													<td id = "last_comm_dt"></td>
 													<th class="text-navy" scope="row">검침 주기 : </th>
-													<td id = ""></td>
+													<td id = "lp_period"></td>
 													<th class="text-navy" scope="row">계기 배수 : </th>
 													<td id = ""></td>
 												</tr>
 												<tr>
 													<th class="text-navy" scope="row">계기 타입 : </th>
-													<td id = ""></td>
+													<td id = "meter_type"></td>
 													<th class="text-navy" scope="row">프로그램 ID : </th>
-													<td id = ""></td>
+													<td id = "prog_id"></td>
 													<th class="text-navy" scope="row">프로그램 버전 : </th>
-													<td id = ""></td>
+													<td id = "prog_version"></td>
 													<th class="text-navy" scope="row">제조사 : </th>
 													<td id = ""></td>
 													<th class="text-navy" scope="row">자재 번호 : </th>
@@ -155,7 +155,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th class="text-navy" scope="row">계기 제조년월 : </th>
 													<td id = "reg_dt"></td>
 													<th class="text-navy" scope="row">선식구분 : </th>
-													<td id = ""></td>
+													<td id = "meter_phase"></td>
 													<th class="text-navy" scope="row">계량점전압 : </th>
 													<td id = ""></td>
 												</tr>
@@ -257,33 +257,34 @@ function showRequest() {
 function successResultHandler(data, status) {	
 	//로딩
 	
-	var device_serial = data.result[0].device_serial;
-	var meter_serial = data.result[0].meter_serial;
-	var reg_dt = data.result[0].reg_dt;
-/* 	var control_type = data.result[0].control_type;
-	var request_msg = data.result[0].request_msg;
-	var reg_id = data.result[0].reg_id;
-	var reg_dt = data.result[0].reg_dt;
-	var success_yn = data.result[0].success_yn;
-	var status_cd = data.result[0].status_cd;
-	var status_msg = data.result[0].status_msg;
-	var result_dt = data.result[0].result_dt;
-	var result_msg = data.result[0].result_msg; */
-
+	var device_serial = data.result.device_serial;
+	var meter_serial = data.result.meter_serial;
+	var reg_dt = data.result.reg_dt;
+ 	var last_comm_dt = data.result.last_comm_dt;
+	var lp_period = data.result.lp_period;	
+	var meter_type = data.result.meter_type;	
+	var prog_id = data.result.prog_id;
+	var prog_version = data.result.prog_version;	
+	var meter_phase = data.result.meter_phase;
+	
+	document.getElementById('device_serial').innerText=device_serial;
+	document.getElementById('last_comm_dt').innerText=last_comm_dt;
+	document.getElementById('meter_serial').innerText=meter_serial;
 	
 	$('#device_serial').text(device_serial);
+	$('#device_serial').html(device_serial);
+	$('#meter_serial').text(meter_serial);
+	$('#meter_serial').html(meter_serial);
+	
+	
 	$('#meter_serial').text(meter_serial);
 	$('#reg_dt').text(reg_dt);
-/* 	$('#control_type').text(control_type);
-	$('#request_msg').text(request_msg);
-	$('#reg_id').text(reg_id);
-	$('#reg_dt').text(reg_dt);
-	$('#success_yn').text(success_yn);
-	$('#status_cd').text(status_cd);
-	$('#status_msg').text(status_msg);
-	$('#result_dt').text(result_dt);
-	$('#result_msg').text(result_msg); */
-	
+ 	$('#last_comm_dt').text(last_comm_dt);
+	$('#lp_period').text(lp_period);
+	$('#meter_type').text(meter_type);	
+	$('#prog_id').text(prog_id);	
+	$('#prog_version').text(prog_version);	
+	$('#meter_phase').text(meter_phase);
 }
 
 function init() {
