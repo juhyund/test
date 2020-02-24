@@ -13,4 +13,6 @@ public interface MeterInfoService extends GenericService {
 	
 	int getMeterListCnt(Map<String, Object> param) throws Exception;
 	
+	JSONObject getMeterDetailInfo(String meter_serial) throws Exception;
+	
 }

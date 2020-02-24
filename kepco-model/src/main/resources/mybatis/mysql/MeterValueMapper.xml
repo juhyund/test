@@ -30,7 +30,7 @@
             AND mi.device_id = #{device_id}
         </if>
         <if test="meter_type != null and meter_type != ''" >     
-            AND mi.type_code = #{meter_type}
+            AND mi.meter_type = #{meter_type}
         </if>		
         
         </where>
@@ -256,22 +256,5 @@
 	      AND read_dt = #{read_dt} 
 	      AND channel = #{channel}
 	</update>
-	
-	<select id="selectLastValue" resultType="MeterValue" parameterType="MeterValue">
-	<![CDATA[	
-		SELECT 
-			meter_id
-			, read_dt
-			, channel
-			, meter_value
-			, sect_meter_value
-		 FROM EMI_METER_VALUE
-		WHERE meter_id = #{meter_id} 
-		  AND channel = #{channel}
-		  AND READ_DT < #{read_dt}
-		ORDER BY READ_DT DESC
-		LIMIT 1
-	]]>
-	</select>
-	
+
 </mapper>

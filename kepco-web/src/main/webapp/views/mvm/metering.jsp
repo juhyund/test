@@ -197,7 +197,7 @@ var initGrid = function() {
 var totalCnt = 0;
 
 function ajaxSearchForm() {
-	setSearchParam($("#sdateView").val(), $("#edateView").val());
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
     var options = { 
            beforeSend  : showRequest,
@@ -212,7 +212,7 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	setSearchParam($("#sdateView").val(), $("#edateView").val());
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
 	if( totalCnt == 0){
 		Swal.fire({

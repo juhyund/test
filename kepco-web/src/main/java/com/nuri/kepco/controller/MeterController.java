@@ -53,4 +53,24 @@ public class MeterController {
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(value = "/ajaxMeterDetailInfo")
+	public ResponseEntity<Object> ajaxMeterDetailInfo(HttpServletRequest request) {                
+		
+		JSONObject json = new JSONObject();
+		try {
+			String meter_serial = request.getParameter("meter_serial");
+			
+			JSONObject jarr = this.meterInfoService.getMeterDetailInfo(meter_serial);
+			
+			json.put("resultGrid", jarr);
+
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
 }

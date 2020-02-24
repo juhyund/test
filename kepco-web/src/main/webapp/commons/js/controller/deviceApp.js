@@ -9,7 +9,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 
         url: COMMON_URL + "/ajaxDeviceInfo",
         params : {"device_id" : $("#device_id").val()}
-    }).then(function resourceSuccessCallback(data, status, headers, config) {
+    }).then(function getInfo(data, status, headers, config) {
     	$scope.device_info = data.data.result;
 	}, function errorCallback(response) {
         alert("error");

@@ -83,9 +83,9 @@ function getTimeMilisec(str){
  * selectComboBox
  * </PRE>
  * @param   combo_id : 콤보box id
- * @param   code : 코드 아이디
+ * @param   code : 부모 코드(parent_code) 아이디
  */
-function selectComboBox(combo_id, code) {
+function selectComboBox(combo_id, parent_code) {
 	
     var options = { 
            	beforeSend  : showRequest,
@@ -93,14 +93,14 @@ function selectComboBox(combo_id, code) {
            		$('#'+combo_id).append(new Option("선택", ""));
            		$.each(data.result, function(i, combo) 
 				{  
-					$('#'+combo_id).append(new Option(combo.dcode_name, combo.dcode_id));
+					$('#'+combo_id).append(new Option(combo.code_nm, combo.code));
          		});
            },
            url         : COMMON_URL + "/ajaxCodeCombo",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
-           data        : {code_id: code}
+           data        : {parent_code: parent_code}
      };             
     
      $.ajax(options);
@@ -141,9 +141,25 @@ function setSearchPeriod(period){
  * 
  * @param  sdateView : 검색 시작일
  * @param  edateView : 검색 종료일 
- * @desr   yyyy/mm/dd --> yyyymmdd0000으로 변경
+ * @desr   yyyy/mm/dd --> yyyymmdd0000--으로 변경
  */
 function setSearchParam(sdateView, edateView){
+	//2019/12/12 --> 20191212000000으로 변경
+	var sdate = sdateView.split("/").join("")+"000000";
+	var edate = edateView.split("/").join("")+"235959";
+	
+	$("#sdate").val(sdate);
+	$("#edate").val(edate);
+}
+
+/**
+ * setSearchParam2
+ * 
+ * @param  sdateView : 검색 시작일
+ * @param  edateView : 검색 종료일 
+ * @desr   yyyy/mm/dd --> yyyymmdd0000으로 변경
+ */
+function setSearchParam2(sdateView, edateView){
 	//2019/12/12 --> 201912120000으로 변경
 	var sdate = sdateView.split("/").join("")+"0000";
 	var edate = edateView.split("/").join("")+"2359";
