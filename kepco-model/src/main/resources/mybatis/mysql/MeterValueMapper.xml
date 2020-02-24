@@ -30,7 +30,7 @@
             AND mi.device_id = #{device_id}
         </if>
         <if test="meter_type != null and meter_type != ''" >     
-            AND mi.type_code = #{meter_type}
+            AND mi.meter_type = #{meter_type}
         </if>		
         
         </where>
