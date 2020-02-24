@@ -296,6 +296,8 @@ function init() {
 	initGrid();
 	
 	setSearchPeriod('today');
+	comboDeviceType();
+	
 	// form search
 	ajaxSearchForm();
 }
