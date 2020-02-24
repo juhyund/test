@@ -6,6 +6,17 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	
 	$http({
         method: 'POST',
+
+        url: COMMON_URL + "/ajaxDeviceInfo",
+        params : {"device_id" : $("#device_id").val()}
+    }).then(function resourceSuccessCallback(data, status, headers, config) {
+    	$scope.device_info = data.data.result;
+	}, function errorCallback(response) {
+        alert("error");
+    });
+	
+	$http({
+        method: 'POST',
         url: COMMON_URL + "/ajaxDeviceObjectModelList",
         params : {"device_id" : $("#device_id").val()}
     }).then(successCallback, function errorCallback(response) {
