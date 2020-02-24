@@ -15,9 +15,7 @@ import org.eclipse.leshan.json.JsonRootObject;
 import org.eclipse.leshan.json.LwM2mJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
 import com.nuri.kepco.fep.datatype.MeterEntry.METERENTRY;
 import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.model.DeviceResource;
@@ -34,7 +32,7 @@ public class ObjectLinkDataParser extends DataParser {
 	private Map<Integer, MeterInfo> meterInfoList = null;
 
 	@Override
-	public void parser(String data) throws Exception {
+	public void parser(String data, String deviceId, String modemTime) throws Exception {
 
 		deviceResourceList = new ArrayList<DeviceResource>();
 

@@ -25,9 +25,13 @@
 <!-- angular -->
 <script src="<%=COMMON_PATH_JS%>/angular.min.js"></script>
 <script src="<%=COMMON_PATH_JS%>/angular-route.min.js"></script>
+<script src="<%=COMMON_PATH_JS%>/controller/deviceApp.js"></script>
 
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
+function goBack() {
+	window.history.back();
+}
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js"
@@ -48,14 +52,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active"><strong>단말정보 상세</strong>
+							<li class="breadcrumb-item active"><strong>단말 관리</strong>
 							</li>
 						</ol>
 					</div>
 				</div>
 				<!-- navigator -->
 				<div class="row">
-					<ul class="nav nav-tabs">
+					<ul class="nav nav-tabs" style="width: 100%;">
 						<li class="nav-item"><a class="nav-link active"
 							data-toggle="tab" href="#info">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -76,30 +80,211 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						value="<%=device_id%>">
 				</form>
 				<div class="row">
-					<div class="tab-content">
-						<div class="col-lg-10">
-							<h4 style="margin-top: 6px">단말상세정보</h4>
-						</div>
+					<div class="tab-content" style="width: 100%">
 						<div class="tab-pane fade show active" id="info">
-							<table class="table table-bordered white-bg">
-								<tbody>
+							<div class="col-lg-10">
+								<h4 style="margin-top: 6px">단말상세정보</h4>
+							</div>
+							<table class="table table-bordered white-bg" style="width: 100%">
+								<thead ng-controller="deviceCtrl">
 									<tr>
-										<td>단말ID</td>
-										<td></td>
-										<td>지역본부</td>
-										<td></td>
+										<th class="device-detail-head">단말ID</th>
+										<td class="device-detail-body">{{device_info.device_id}}</td>
+										<th class="device-detail-head">지역본부
+										</td>
+										<td class="device-detail-body">{{device_info.branch_nm}}</td>
 									</tr>
-								</tbody>
+									<tr>
+										<th class="device-detail-head">단말번호</th>
+										<td class="device-detail-body">{{device_info.device_serial}}</td>
+										<th class="device-detail-head">제조사
+										</td>
+										<td class="device-detail-body">{{device_info.vendor_nm}}</td>
+									</tr>
+									<tr>
+										<th class="device-detail-head">단말IP/PORT</th>
+										<td class="device-detail-body">{{device_info.ip}} /
+											{{device_info.port}}</td>
+										<th class="device-detail-head">모델명
+										</td>
+										<td class="device-detail-body">{{device_info.model_nm}}</td>
+									</tr>
+									<tr>
+										<th class="device-detail-head">하드웨어 버전</th>
+										<td class="device-detail-body">-</td>
+										<th class="device-detail-head">펌웨어 버전
+										</td>
+										<td class="device-detail-body">-</td>
+									</tr>
+									<tr>
+										<th class="device-detail-head">인증방식</th>
+										<td class="device-detail-body">{{device_info.security_mode}}</td>
+										<th class="device-detail-head">단말상태
+										</td>
+										<td class="device-detail-body">{{device_info.code_local_nm}}</td>
+									</tr>
+									<tr>
+										<th class="device-detail-head">최종통신일시</th>
+										<td class="device-detail-body">{{device_info.last_comm_dt}}</td>
+										<th class="device-detail-head">등록일시
+										</td>
+										<td class="device-detail-body">{{device_info.reg_dt}}</td>
+									</tr>
+									<tr>
+										<th class="device-detail-head">설명</th>
+										<td class="device-detail-body" colspan="3">-</td>
+									</tr>
+								</thead>
 							</table>
 
 						</div>
-						<div class="tab-pane fade" id="object">bbb</div>
+						<div class="tab-pane fade" id="object">
+							<div ng-repeat="object in objects">
+								<div class="row">
+									<div class="col-lg-10">
+										<h4 style="margin-top: 6px">오브젝트 정보</h4>
+									</div>
+									<div class="col-lg-12">
+										<div class="ibox">
+											<div class="ibox-title">
+												<h5>{{object.object_nm}} - {{object.object_id}} /
+													{{object.object_instance_id}}</h5>
+												<div class="ibox-tools">
+													<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+													</a>
+												</div>
+											</div>
+											<!-- ibox-content -->
+											<div class="ibox-content">
+												<div class="table-responsive">
+													<table class="table table-striped">
+														<thead>
+															<tr align="center">
+																<th width="100">리소스아이디</th>
+																<th style="text-align: left">리소스명</th>
+																<th width="150">리소스값</th>
+																<th width="150">단위</th>
+																<th width="150">Operation</th>
+																<th width="250">Observe 설정/해제</th>
+																<th width="250">값 변경</th>
+																<th width="80">속성설정</th>
+																<th width="80">실행</th>
+																<th width="250">제어상태</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr align="center"
+																ng-repeat="resource in object.resources">
+																<td>{{resource.resource_id}}</td>
+																<td align="left">{{resource.resource_nm}}
+																	{{resource.temp}}</td>
+																<td></td>
+																<td>{{resource.unit}}</td>
+																<td>
+																	<button ng-show="resource.operation.indexOf('R') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="read(resource);">Read</button>
+																	<button ng-show="resource.operation.indexOf('E') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="execute(resource);">Execute</button>
+																</td>
+																<td>
+																	<button ng-show="resource.operation.indexOf('R') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="observe(resource, 'Y');">Observe</button>
+																	<button ng-show="resource.operation.indexOf('R') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="observe(resource, 'N');">Cancel</button>
+																</td>
+																<td><input
+																	ng-show="resource.operation.indexOf('W') != -1"
+																	type="text" ng-model="newValue" name="newValue"
+																	style="width: 100px;">
+																	<button ng-show="resource.operation.indexOf('W') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="write(resource, newValue);">Write</button></td>
+																<td><button
+																		ng-show="resource.operation.indexOf('R') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="attribute(resource);">속성</button></td>
+																<td>{{resource.operation_method}}</td>
+																<td>{{resource.statusMsg}} {{resource.tid}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+
+											</div>
+											<!-- ibox-content -->
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+				<button class="btn btn-primary"
+					style="height: 50px; width: 50px; float: right;" type="button"
+					onclick="goBack();">
+					<i class="fa fa-caret-left"></i>
+				</button>
 				<!-- body -->
 			</div>
 		</div>
 	</div>
+
+	<!-- modal -->
+	<div class="modal bs-example-modal-sm" id="writeModal" tabindex="-1" role="dialog"
+	aria-labelledby="writeModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">				
+				<h4 class="modal-title" id="writeModalLabel"></h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">		
+			<form class="form-horizontal" role="form" method="post" id="form">	
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최소주기</label>
+					<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최대주기</label>
+					<div class="col-lg-9"><input type="text" name="pmax" id="pmax" placeholder="pmax" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최소값</label>
+					<div class="col-lg-9"><input type="text" name="lt" id="lt" placeholder="lt" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">최대값</label>
+					<div class="col-lg-9"><input type="text" name="gt" id="gt" placeholder="gt" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">간격</label>
+					<div class="col-lg-9"><input type="text" name="step" id="step" placeholder="step" class="form-control"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Notification</label>
+					<div class="col-lg-9">
+					<select class="form-control m-b" name="ntype" id="ntype">
+                        <option value="true">true</option>
+                        <option value="false">false</option>                        
+                    </select>
+					</div>
+				</div>	
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="writeSubmit">적용</button>
+			</div>
+		</form>
+		</div>
+	</div>
+	</div>
+	<!-- modal -->
 
 </body>
 </html>

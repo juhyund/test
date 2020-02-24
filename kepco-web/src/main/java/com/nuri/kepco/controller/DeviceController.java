@@ -112,6 +112,25 @@ public class DeviceController {
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
+
+	@RequestMapping(value = "/ajaxDeviceInfo")
+	public ResponseEntity<Object> ajaxDeviceInfo(HttpServletRequest request) {
+		
+		JSONObject json = new JSONObject();
+		try {
+			String deviceId = request.getParameter("device_id");
+
+			JSONObject info = this.deviceInfoService.getDeviceInfo(deviceId);
+
+			json.put("result", info);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
 	
 	@RequestMapping(value = "/ajaxDeviceObjectModelList")
 	public ResponseEntity<Object> ajaxDeviceObjectModelList(HttpServletRequest request) {

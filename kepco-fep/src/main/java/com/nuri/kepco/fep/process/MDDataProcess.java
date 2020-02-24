@@ -16,59 +16,89 @@ import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.fep.mddata.MeasurementData;
 
 @Service
-public class MDDataProcess implements ApplicationContextAware  {
-	
+public class MDDataProcess implements ApplicationContextAware {
+
 	private ApplicationContext applicationContext;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(MeasurementData.class);
-	
+
+	// method type
+	private static final String DATAPUSH = "DATAPUSH";
+	private static final String OBJECTLINK = "OBJECTLINK";
+	private static final String NOTIFICATION = "NOTIFICATION";
+
+	/**
+	 * process - queue로 부터 수신된 데이터를 처리한다.
+	 * 
+	 * @param message
+	 */
 	public void process(String message) {
-		
-		String parserClassName = "";
-		String saverClassName = "";
-		
+
 		Gson gson = new Gson();
-		
-		ResultMessage resultMessage = new ResultMessage();
-		resultMessage = gson.fromJson(message, ResultMessage.class);
-		String payload = resultMessage.getPayload();		
-		String deviceId = resultMessage.getDeviceId();
-		Date modemTime = resultMessage.getResultTime(); // 수신시간을 모뎀시간으로 저장한다.
-		String method = resultMessage.getMethod();
-		MeasurementData md = new MeasurementData();	
-		
+
 		try {
-			
+
+			ResultMessage resultMessage = new ResultMessage();
+			resultMessage = gson.fromJson(message, ResultMessage.class);
+
+			String payload = resultMessage.getPayload();
+			String deviceId = resultMessage.getDeviceId();
+			Date modemTime = resultMessage.getResultTime(); // 수신시간을 모뎀시간으로 저장한다.
+			String method = resultMessage.getMethod();
+
+			MeasurementData md = new MeasurementData();
+
 			LOG.debug("### deviceId : [{}] payload : [{}]", deviceId, payload);
-			LOG.debug("### deviceId : [{}] method : [{}]", deviceId, method);
-			
-			if("DATAPUSH".equals(method)) {				
-				parserClassName = "com.nuri.kepco.fep.parser.KepcoMDDataParser";
-				saverClassName = "kepcoMDDataSaver";				
-			} else if ("OBJECTLINK".equals(method)) {				
-				parserClassName = "com.nuri.kepco.fep.parser.ObjectLinkDataParser";
-				saverClassName = "objectLinkDataSaver";				
-			}  else if ("NOTIFICATION".equals(method)) {				
-				parserClassName = "com.nuri.kepco.fep.parser.NotifyDataParser";
-				saverClassName = "notifyDataSaver";
-			}
-			
-			LOG.debug("parserClassName : {}", parserClassName);
-			LOG.debug("saverClassName : {}", saverClassName);
-			
-			if(!"".equals(saverClassName)) {
-				
-				AbstractMDSaver saver = (AbstractMDSaver)applicationContext.getBean(saverClassName);
+			LOG.debug("### deviceId : [{}] method : [{}] modemTime : [{}] ", deviceId, method, modemTime);
+
+			String parserClassName = getParserClassName(method);
+			String saverClassName = getSaverClassName(method);
+
+			if (!"".equals(saverClassName)) {
+
+				AbstractMDSaver saver = (AbstractMDSaver) applicationContext.getBean(saverClassName);
+
 				md.setDeviceId(deviceId);
 				md.setModemTime(modemTime);
 				md.setMeterDataParser(parserClassName);
-				md.decode(payload);			
-				saver.save(md);	
+				md.decode(payload);
+
+				saver.save(md);
 			}
-			
+
 		} catch (Exception e) {
 			LOG.error("error", e);
 		}
+	}
+
+	public String getSaverClassName(String method) {
+
+		String saverClassName = "";
+
+		if (DATAPUSH.equals(method)) {
+			saverClassName = "kepcoMDDataSaver";
+		} else if (OBJECTLINK.equals(method)) {
+			saverClassName = "objectLinkDataSaver";
+		} else if (NOTIFICATION.equals(method)) {
+			saverClassName = "notifyDataSaver";
+		}
+
+		return saverClassName;
+	}
+
+	public String getParserClassName(String method) {
+
+		String parserClassName = "";
+
+		if (DATAPUSH.equals(method)) {
+			parserClassName = "com.nuri.kepco.fep.parser.KepcoMDDataParser";
+		} else if (OBJECTLINK.equals(method)) {
+			parserClassName = "com.nuri.kepco.fep.parser.ObjectLinkDataParser";
+		} else if (NOTIFICATION.equals(method)) {
+			parserClassName = "com.nuri.kepco.fep.parser.NotifyDataParser";
+		}
+
+		return parserClassName;
 	}
 
 	@Override

@@ -103,7 +103,7 @@
 		UPDATE EMI_DEVICE_STATUS SET
 			device_flag = #{device_flag}
 			, device_status = #{device_status}
-			, last_comm_dt = DATE_FORMAT(#{last_comm_dt},'${prop.dt}')
+			<if test="last_comm_dt != null" > , last_comm_dt = DATE_FORMAT(#{last_comm_dt},'${prop.dt}') </if>
 			, last_renw_dt = now()			
 		WHERE device_id = #{device_id}
 	</update>
