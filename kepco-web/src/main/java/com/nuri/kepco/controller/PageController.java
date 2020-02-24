@@ -55,4 +55,9 @@ public class PageController {
 	public String meter() throws Exception {
 		return "meter/meterManagement";
 	}
+	
+	@RequestMapping("/meterDetail")
+	public String meterDetail() throws Exception {
+		return "meter/meterDetail";
+	}
 }
