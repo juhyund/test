@@ -190,17 +190,36 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
+	{headerName: "검침일", field: "billing_dt"},
 	{headerName: "미터 시리얼", field: "meter_id"},
-	{headerName: "READ_DT", field: "read_dt"},
-   	{headerName: "구간검침값 (kWh)", 
-			   	field: "sect_meter_value", 
-			   	valueFormatter: numberFormatter,
-			   	cellStyle: { 'text-align': "right" }},
-   	{headerName: "누적검침값 (kWh)",
-			   	field: "meter_value", 
-			   	valueFormatter: numberFormatter,
-			   	cellStyle: { 'text-align': "right" }}, 
-	{headerName: "등록시간", field: "reg_dt"}
+	{headerName: "본부", field: "branch_nm"},
+	{headerName: "지사", field: "branch_nm"},
+	{headerName: "계기타입", field: "meter_type"},
+	{headerName: "계기번호", field: "meter_serial"},
+	{headerName: "모뎀 번호", field: "device_serial"},
+	
+	{headerName: "전체", 
+	   	field: "lagging_imp_tot", 
+	   	valueFormatter: numberFormatter,
+	   	cellStyle: { 'text-align': "right" }},
+   	{headerName: "rate1", 
+	   	field: "lagging_imp_rate1", 
+	   	valueFormatter: numberFormatter,
+	   	cellStyle: { 'text-align': "right" }}, 
+	{headerName: "rate2", 
+	   	field: "lagging_imp_rate2", 
+	   	valueFormatter: numberFormatter,
+	   	cellStyle: { 'text-align': "right" }},
+   	{headerName: "rate3", 
+	   	field: "lagging_imp_rate3", 
+	   	valueFormatter: numberFormatter,
+	   	cellStyle: { 'text-align': "right" }},   
+	{headerName: "rate4", 
+	   	field: "lagging_imp_rate4", 
+	   	valueFormatter: numberFormatter,
+	   	cellStyle: { 'text-align': "right" }},
+ 
+	{headerName: "저장일시", field: "reg_dt"}
 ];
 
 
