@@ -56,10 +56,10 @@ public class ObjectLinkDataParser extends DataParser {
 				LwM2mPath path = new LwM2mPath(resourcePath);
 				DeviceResource resource = new DeviceResource();
 				resource.setResource_path(resourcePath);
-				resource.setObject_id(path.getObjectId());
-				resource.setObject_instance_id(path.getObjectInstanceId());
-				resource.setResource_id(path.getResourceId());
-				resource.setResource_instance_id(path.getResourceInstanceId());
+				resource.setObject_id(String.valueOf(path.getObjectId()));
+				resource.setObject_instance_id(String.valueOf(path.getObjectInstanceId()));
+				resource.setResource_id(String.valueOf(path.getResourceId()));
+				resource.setResource_instance_id(String.valueOf(path.getResourceInstanceId()));
 				resource.setResource_val(e.getResourceValue().toString());
 				resource.setReg_id("system");
 				resource.setUpdate_id("system");
