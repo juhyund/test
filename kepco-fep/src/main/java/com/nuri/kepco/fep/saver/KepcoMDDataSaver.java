@@ -155,16 +155,19 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				
 				try {
 					
-					LOG.debug("METER_ID : {}", meterInfo.getMeter_id());
-					meterBilling.setMeter_id(meterInfo.getMeter_id());
+					String billingDate = mdData.getBillingDate();
 					
-					LOG.debug("meter time : {}" , mdData.getMeterTime());
-										
-					String billingDate = getBillingDate(mdData.getMeterTime(), meterInfo.getBilling_dt());
-					
-					if(meterBilling.getBilling_dt() == null || !"".equals(billingDate)) {
-						meterBilling.setBilling_dt(billingDate); // 정기검침일자
+					if(billingDate == null) {
+						billingDate = getBillingDate(mdData.getModemTime(), meterInfo.getBilling_dt());
 					}
+					
+					LOG.debug("[saveMeterBillingImport] meter billing day : {}", meterInfo.getBilling_dt());
+					LOG.debug("[saveMeterBillingImport] METER_ID : {}" , meterInfo.getMeter_id());
+					LOG.debug("[saveMeterBillingImport] MODEM TIME : {}" , mdData.getModemTime());
+					LOG.debug("[saveMeterBillingImport] BILLING DATE : {} " , mdData.getBillingDate());
+					
+					meterBilling.setMeter_id(meterInfo.getMeter_id());					
+					meterBilling.setBilling_dt(billingDate); // 정기검침일자
 					
 					result += meterBillingDAO.insertImport(meterBilling);
 					
@@ -199,10 +202,10 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 						billingDate = getBillingDate(mdData.getModemTime(), meterInfo.getBilling_dt());
 					}
 					
-					LOG.debug("meter billing day : {}", meterInfo.getBilling_dt());
-					LOG.debug("METER_ID : {}" , meterInfo.getMeter_id());
-					LOG.debug("MODEM TIME : {}" , mdData.getModemTime());
-					LOG.debug("BILLING DATE : {} " , mdData.getBillingDate());
+					LOG.debug("[saveMeterBillingExport] meter billing day : {}", meterInfo.getBilling_dt());
+					LOG.debug("[saveMeterBillingExport] METER_ID : {}" , meterInfo.getMeter_id());
+					LOG.debug("[saveMeterBillingExport] MODEM TIME : {}" , mdData.getModemTime());
+					LOG.debug("[saveMeterBillingExport] BILLING DATE : {} " , mdData.getBillingDate());
 					
 					meterBilling.setMeter_id(meterInfo.getMeter_id());					
 					meterBilling.setBilling_dt(billingDate); // 정기검침일자
