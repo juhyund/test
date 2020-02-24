@@ -9660,3 +9660,13 @@ body.md-skin {
 .form-group-end {
 	margin-bottom: 1px;
 }
+
+.device-detail-head {
+	width: 13%;
+}
+
+.device-detail-body {
+	width: 37%;
+	background-color: #FFFFFF !important;
+}
+

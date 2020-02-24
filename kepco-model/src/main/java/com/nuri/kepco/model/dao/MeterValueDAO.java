@@ -15,12 +15,13 @@ public interface MeterValueDAO extends GenericDAO<MeterValue> {
 	
 	int getMeterValueCount(MeterValue param)throws Exception;
 	
-	List<Map<String, Object>> getMeterValueDetail(MeterValue param);
+	List<MeterValue> getMeterValueDetail(MeterValue param);
 	
-	List<Map<String, Object>> selectMeterInfo(MeterValue param);
+	List<MeterValue> selectMeterInfo(MeterValue param);
 	 
-	List<Map<String, Object>> selectMeterChannel(MeterValue param);
+	List<MeterValue> selectMeterChannel(MeterValue param);
 	
 	MeterValue selectLastValue(MeterValue param);
 	
 }
+

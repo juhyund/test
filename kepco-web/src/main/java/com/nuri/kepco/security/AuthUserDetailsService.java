@@ -1,7 +1,6 @@
 package com.nuri.kepco.security;
 
 import org.json.simple.JSONObject;
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +57,10 @@ public class AuthUserDetailsService implements UserDetailsService {
 		}
 		
 		UserDetails userDetails = null;
-		try {
-			userDetails = new SecurityUser(user, role, company);
-		} catch (JSONException e) {
-			logger.error(e.toString(), e);
-		}
+		userDetails = new SecurityUser(user, role, company);
 		
 		return userDetails;
 	}
 
 }
+
