@@ -72,23 +72,44 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<tr class="table-border">
 								<td height="80">
 									<div class="form-group row">
-										<label class="col-sm-2 col-form-label text-align">검침 기간</label>
-										<div class="col-sm-2 btn-group">
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('today')">오늘</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('weekly')">주간</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('montly')">월간</button>
-			                            </div>
-										
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
+										<div class="col-lg-3">
+											<select class="form-control" name="branch_id" id="branch_id"></select>
+										</div>
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지사</label>
+										<div class="col-lg-3">
+											<select class="form-control" name="branch_id" id="branch_id"></select>
+										</div>
 										<label class="col-lg-1 col-form-label">미터 ID</label>
 										<div class="col-lg-3">
 											<input type="text" id="meter_id" name="meter_id" value="" class="form-control">
 										</div>
 									</div>
+								
+
 									<div class="form-group row">
-										<!-- <label class="col-sm-1 col-form-label"></label> -->
-										<div class="col-sm-4" id="datePicker">
-											<div class="input-group date" style="width: 48%; float: left;">
-												<input type="hidden" id="sdate" name="sdate" value=""> 
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">미터타입</label>
+										<div class="col-lg-3">
+											<select class="form-control" name="meter_type"	id="meter_type"></select>
+										</div> 
+										<label class="col-lg-1 col-form-label"
+											style="padding-left: 10px;">계기 번호</label>
+										<div class="col-lg-3">
+											<input type="text" id="meter_serial" name="meter_serial" value="" class="form-control">
+										</div>
+										<label class="col-lg-1 col-form-label"
+											style="padding-left: 10px;">모뎀 번호</label>
+										<div class="col-lg-3">
+											<input type="text" id="device_serial" name="device_serial" value="" class="form-control">
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label class="col-sm-1 col-form-label">검침기간</label>
+										<div class="col-lg-3" id="datePicker">
+											<div class="input-group date"
+												style="width: 48%; float: left;">
+												<input type="hidden" class="form-control" id="sdate" name="sdate" value="">
 												<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
@@ -96,24 +117,19 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											</div>
 											<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 											<div class="input-group date" style="width: 48%;">
-												<input type="hidden" id="edate" name="edate" value=""> 
+												<input type="hidden" class="form-control"  id="edate" name="edate" value=""> 
 												<input type="text" class="form-control" id="edateView" name="edateView" value="">
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
 												</span>
 											</div>
 										</div>
-										
-										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">단말 ID</label>
-										<div class="col-lg-3">
-											<input type="text" id="device_id" name="device_id" value="" class="form-control">
-										</div>
-										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">미터타입</label>
-										<div class="col-lg-3">
-											<select class="form-control" name="meter_type"	id="meter_type"></select>
-										</div> 
-									</div>
+										<label class="col-lg-1 col-form-label"style="padding-left: 10px;"></label>
+										<div class="col-lg-3 btn-group">
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('today')">오늘</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('weekly')">주간</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('montly')">월간</button>
+			                            </div>
 									</div>
 								</td>
 								<td width="180" height="80" style="text-align: right">
@@ -240,7 +256,7 @@ function excelDownload() {
 }
 
 onRowClicked = function(event){
-	//선택된 row의 meter_id를 파라미터로 MeteringDetail.jsp를 팝업으로 연다.
+	//선택된 row의 meter_id를 파라미터로 BillingDetail.jsp를 팝업으로 연다.
 	
 	var selectedRows = dataGrid.getSelectedRow();
     var selectedRowsString = '';
@@ -248,13 +264,13 @@ onRowClicked = function(event){
     	selectedRowsString = selectedRow.meter_id;
     });
     
-    showDetailMeterValue(selectedRowsString);
+    showDetailMeterBilling(selectedRowsString);
     
 }
 
 
 var winObj;
-function showDetailMeterValue(meter_id){ 
+function showDetailMeterBilling(meter_id){ 
 	var opts="width=900, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
 
 	if(winObj)
