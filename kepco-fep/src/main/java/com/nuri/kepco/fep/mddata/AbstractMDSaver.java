@@ -47,6 +47,7 @@ public abstract class AbstractMDSaver {
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
 
+
 	String modemTime; // 서버가 모뎀으로부터 수신한 시간
 
 	protected int checkMeter(MDData mdData) {

@@ -158,5 +158,4 @@ public class ObjectLinkDataParser extends DataParser {
 
 		return strDate;
 	}
-
 }

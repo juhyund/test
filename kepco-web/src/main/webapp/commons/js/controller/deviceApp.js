@@ -215,4 +215,5 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        resource.statusMsg = "전송실패";	    	
 	    });
     };
+
 });

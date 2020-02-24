@@ -98,5 +98,5 @@ public class KepcoMDDataParser extends DataParser {
 	public Map<Integer, byte[]> getMeterData() {
 		return meterData;
 	}
-	
+
 }

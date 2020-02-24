@@ -106,5 +106,4 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 
 		return result;
 	}
-
 }
