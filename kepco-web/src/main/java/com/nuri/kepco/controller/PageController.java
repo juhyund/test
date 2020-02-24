@@ -40,6 +40,10 @@ public class PageController {
 	public String metering() throws Exception {
 		return "mvm/metering";
 	}
+	@RequestMapping("/billing")
+	public String billing() throws Exception {
+		return "mvm/billing";
+	}
 	
 	@RequestMapping("/NMS") 
 	public String NMS() throws Exception {

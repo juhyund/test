@@ -40,15 +40,11 @@ public class MeterValueController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			logger.info("\n\n ### ajaxMeterValue : param ### \n"+param+"\n\n");
-			
 			int cnt = this.meterValueService.getMeterValueCount(param);
 			JSONArray jarr = this.meterValueService.getMeterValue(param);
 			
 			json.put("totalCount", cnt);
 			json.put("resultGrid", jarr);
-			
-			logger.info("\n\n ### ajaxMeterValue--> result : jarr ### \n"+jarr+"\n\n");
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
@@ -81,16 +77,10 @@ public class MeterValueController {
 				}
 			}
 
-			//logger.info("\n\n ### ajaxMeterValueDetail : param ### \n"+param+"\n\n");
-
 			List<Map<String, Object>> channels = this.meterValueService.selectMeterChannel(param);
-			
 			param.put("channelList", channels);
 			
-			logger.info("\n\n ### ajaxMeterValueDetail : param ### \n"+param+"\n\n");
-			
 			List<Map<String, Object>> meterValueDetail = this.meterValueService.getMeterValueDetail(param);
-			
 			json.put("resultGrid", meterValueDetail);
 
 		} catch (Exception e) {
@@ -119,9 +109,7 @@ public class MeterValueController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			logger.info("\n\n ### ajaxMeterInfoSummary : param ### \n"+param+"\n\n");
 			List<Map<String, Object>> meterInfo = this.meterValueService.selectMeterInfo(param);
-			logger.info("\n\n ### ajaxMeterInfoSummary--> result : jarr ### \n"+meterInfo+"\n\n");
 			
 			json.put("resultGrid", meterInfo);
 			
@@ -154,13 +142,9 @@ public class MeterValueController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			logger.info("\n\n ### ajaxChannelList : param ### \n"+param+"\n\n");
-			
 			List<Map<String, Object>> channelList = this.meterValueService.selectMeterChannel(param);
 			
 			json.put("resultGrid", channelList);
-			
-			logger.info("\n\n ### ajaxChannelList--> result : channelList ### \n"+channelList+"\n\n");
 
 
 		} catch (Exception e) {

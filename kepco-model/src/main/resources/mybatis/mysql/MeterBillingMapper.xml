@@ -11,12 +11,24 @@
 
 	<sql id="base_where_list">
 		<where>
+		<!-- 본부,지사 검색 -->
 		<if test="meter_id != null" >     
             AND a.meter_id = #{meter_id}
         </if>
-        
-        <if test="sdate != null and edate != null " >     
+        <if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
             AND a.billing_dt between #{sdate} AND #{edate}
+        </if>
+        <if test="meter_type != null and meter_type != ''" >     
+            AND a.meter_type = #{meter_type}
+        </if>
+        <if test="device_serial != null and device_serial != ''" >     
+            AND a.device_serial = #{device_serial}
+        </if>
+        <if test="billing_dt != null and billing_dt != ''" >     
+            AND a.billing_dt = #{billing_dt}
+        </if>
+        <if test="meter_serial != null and meter_serial != ''" >     
+            AND a.meter_serial = #{meter_serial}
         </if>
         
 		<if test="searchfield != null and searchquery != null " >
