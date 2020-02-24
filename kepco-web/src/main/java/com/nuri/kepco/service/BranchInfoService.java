@@ -1,5 +1,8 @@
 package com.nuri.kepco.service;
 
-public interface BranchInfoService extends GenericService {
+import org.json.simple.JSONArray;
 
+public interface BranchInfoService extends GenericService {
+	JSONArray selectParent() throws Exception;
+	
 }

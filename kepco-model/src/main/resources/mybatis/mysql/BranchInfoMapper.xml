@@ -14,7 +14,6 @@
 		<if test="branch_id != null and code != ''" >     
             AND a.branch_id = #{branch_id}
         </if>
-        
         <if test="branch_parent_id != null and branch_parent_id != ''" >     
             AND a.branch_parent_id = #{branch_parent_id}
         </if>
@@ -82,7 +81,16 @@
 		FROM EMI_BRANCH_INFO a				
 		WHERE branch_id = #{branch_id}
 	</select>
-	
+
+	<select id="selectParent" resultType="branchInfo">	
+		SELECT 
+			branch_id
+			, branch_nm
+		FROM 
+			EMI_BRANCH_INFO a	
+		WHERE
+			branch_parent_id IS NULL;
+	</select>
 	<insert id="insert" parameterType="branchInfo">     	
 		INSERT INTO EMI_BRANCH_INFO (
 			branch_id

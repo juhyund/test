@@ -72,7 +72,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="form-group row">
 														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="branch_id" id="branch_id"></select>
+															<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
+															<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+																<option value=''>선택</option>
+															</select>
 														</div>
 														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
 														<div class="col-lg-3">
@@ -101,7 +104,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
 														<div class="col-lg-3">
 														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;"></select>
-															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; display: inline;">
+															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 														</div>
 														
 														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
@@ -252,6 +255,7 @@ function resetForm() {
 	$('#edate').datepicker('setDate', null);
 	$('#lsdate').datepicker('setDate', null);
 	$('#ledate').datepicker('setDate', null);
+	$("#branch_parent_id").val($("#target option:first").val());
 	$("#branch_id").val($("#target option:first").val());
 	$("#model_seq").val($("#target option:first").val());
 	$("#searchfield").val($("#target option:first").val());
@@ -274,6 +278,25 @@ function init() {
 $(document).ready(function() {	
 	init();
 });
+
+function changeParent() {
+	var sel_obj = document.getElementById('branch_id');
+    for(var i=0; i<sel_obj.options.length; i++) sel_obj.options[i] = null;
+    sel_obj.options.length = 0;
+
+	var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/ajaxBranchCombo",
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	    
+	     $.ajax(options);
+}
+
 
 </script>
 

@@ -104,7 +104,7 @@ var CommonGrid = {
             onRowClicked :rowClickEvent,
             // animateRows: true,
             domLayout: height,
-           /* getRowStyle: function (param) { // row style 지정.
+           getRowStyle: function (param) { // row style 지정.
                 if (param.node.rowPinned) { 
                     return {'font-weight': 'bold', background: '#dddddd'};
                 }
@@ -115,7 +115,7 @@ var CommonGrid = {
                     return 30;
                 }
                 return 30;
-            },*/
+            },
             onGridReady: function(params) {
             	if(autoResizable){
             		params.api.sizeColumnsToFit();
