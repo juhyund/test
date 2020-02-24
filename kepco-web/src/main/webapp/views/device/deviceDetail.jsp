@@ -111,10 +111,10 @@ function goBack() {
 									</tr>
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
-										<td class="device-detail-body">-</td>
+										<td class="device-detail-body">{{device_info.hw_version}}</td>
 										<th class="device-detail-head">펌웨어 버전
 										</td>
-										<td class="device-detail-body">-</td>
+										<td class="device-detail-body">{{device_info.fw_version}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">인증방식</th>
@@ -132,7 +132,7 @@ function goBack() {
 									</tr>
 									<tr>
 										<th class="device-detail-head">설명</th>
-										<td class="device-detail-body" colspan="3">-</td>
+										<td class="device-detail-body" colspan="3">{{device_info.remark}}</td>
 									</tr>
 								</thead>
 							</table>

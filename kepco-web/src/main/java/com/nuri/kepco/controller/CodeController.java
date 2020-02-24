@@ -40,11 +40,7 @@ public class CodeController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			logger.info("\n\n ### ajaxselectCombo : param ### \n"+param+"\n\n");
-			
 			result = this.allCodeService.selectCombo(param);
-			
-			logger.info("\n\n ### ajaxselectCombo--> result : result ### \n"+result+"\n\n");
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);

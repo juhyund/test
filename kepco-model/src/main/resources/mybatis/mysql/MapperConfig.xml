@@ -17,6 +17,8 @@
 		<typeAlias alias="branchInfo" type="com.nuri.kepco.model.BranchInfo"/>
 		<typeAlias alias="compInfo" type="com.nuri.kepco.model.CompInfo"/>      		
 		<typeAlias alias="deviceAttr" type="com.nuri.kepco.model.DeviceAttr"/>      		
+		<typeAlias alias="deviceFw" type="com.nuri.kepco.model.DeviceFw"/>      		
+		<typeAlias alias="deviceFwHistory" type="com.nuri.kepco.model.DeviceFwHistory"/>      		
 		<typeAlias alias="deviceInfo" type="com.nuri.kepco.model.DeviceInfo"/>      		
 		<typeAlias alias="deviceModel" type="com.nuri.kepco.model.DeviceModel"/>
 		<typeAlias alias="deviceResource" type="com.nuri.kepco.model.DeviceResource"/>
@@ -42,6 +44,8 @@
 		<mapper resource="mybatis/mysql/BranchInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/CompInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceAttrMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceFwMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceFwHistoryMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceModelMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceStatusMapper.xml" />

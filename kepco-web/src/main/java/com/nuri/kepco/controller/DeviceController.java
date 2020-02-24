@@ -46,7 +46,7 @@ public class DeviceController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String[] commStr = { "branch_nm", "vendor_nm", "device_status", "lsdate", "ledate" };
+			String[] commStr = { "branch_parent_id", "branch_id", "model_seq", "device_status", "lsdate", "ledate" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
@@ -80,7 +80,7 @@ public class DeviceController {
 			JSONObject branchInfo = new JSONObject();
 			for(int i = 0 ; i < bInfo.size() ; i++){
 				JSONObject obj = (JSONObject) bInfo.get(i);
-				branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
+				branchInfo.put(obj.get("branch_parent_id"), obj.get("branch_nm"));
 			}
 			
 			JSONObject deviceModel = new JSONObject();
@@ -99,7 +99,7 @@ public class DeviceController {
 			searchfield.put("device_serial", "단말 번호");
 			//search.put("model_seq", "단말 관리 번호");
 			
-			json.put("branch_id", branchInfo);
+			json.put("branch_parent_id", branchInfo);
 			json.put("model_seq", deviceModel);
 			json.put("device_status", deviceStat);
 			json.put("searchfield", searchfield);
@@ -113,6 +113,34 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 
+	@RequestMapping(value = "/ajaxBranchCombo")
+	public ResponseEntity<Object> ajaxBranchCombo(HttpServletRequest request) {                
+		
+		JSONObject json = new JSONObject();
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			JSONObject branchInfo = new JSONObject();			
+			if(!"".equals(request.getParameter("branch_parent_id"))) {
+				param.put("branch_parent_id", request.getParameter("branch_parent_id"));
+				JSONArray bInfo = this.branchInfoService.selectList(param);
+
+				for(int i = 0 ; i < bInfo.size() ; i++){
+					JSONObject obj = (JSONObject) bInfo.get(i);
+					branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
+				}
+			}
+
+			json.put("branch_id", branchInfo);
+
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
 	@RequestMapping(value = "/ajaxDeviceInfo")
 	public ResponseEntity<Object> ajaxDeviceInfo(HttpServletRequest request) {
 		

@@ -62,4 +62,11 @@ public class BranchInfoServiceImpl implements BranchInfoService {
 
 		return this.branchInfoDAO.update(branchInfo);
 	}
+
+	@Override
+	public JSONArray selectParent() throws Exception {
+		List<BranchInfo> list = this.branchInfoDAO.selectParent();
+		
+		return ConversionUtil.getJSONArrayByModel(list);
+	}
 }

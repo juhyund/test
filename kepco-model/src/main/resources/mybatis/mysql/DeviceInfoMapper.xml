@@ -17,7 +17,10 @@
 		<if test="service_id != null" >     
             AND a.service_id = #{service_id}
         </if>
-		<if test="branch_id != null" >     
+		<if test="branch_parent_id != null" >     
+            AND d.branch_parent_id = #{branch_parent_id}
+        </if>
+        <if test="branch_id != null" >     
             AND a.branch_id = #{branch_id}
         </if>
         <if test="model_seq != null" >     
@@ -81,8 +84,11 @@
 			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
 			, INET_NTOA(ip) as ip
 			, a.port
+			, a.fw_version
+			, a.hw_version
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.remark
 			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -112,8 +118,11 @@
 			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
 			, INET_NTOA(ip) as ip
 			, a.port
+			, a.fw_version
+			, a.hw_version
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.remark
 			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -139,8 +148,11 @@
 			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
 			, INET_NTOA(ip) as ip
 			, a.port
+			, a.fw_version
+			, a.hw_version
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.remark
 			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -168,7 +180,10 @@
 			, device_type
 			, ip
 			, port
+			, fw_version
+			, hw_version
 			, allow_yn			
+			, remark
 			, reg_id
 			, reg_dt			
 		) VALUES (
@@ -182,7 +197,10 @@
 			, #{device_type}
 			, INET_ATON(#{ip})
 			, #{port}
+			, #{fw_version}
+			, #{hw_version}
 			, #{allow_yn}			
+			, #{remark}
 			, #{reg_id}
 			, now()			
 		)
@@ -199,7 +217,10 @@
 			, device_type = #{device_type}
 			, ip = INET_ATON(#{ip})
 			, port = #{port}
+			, fw_version = #{fw_version}
+			, hw_version = #{hw_version}
 			, allow_yn = #{allow_yn}			
+			, remark = #{remark}			
 		WHERE device_id = #{device_id}
 	</update>
 	
@@ -251,9 +272,12 @@
 			, e.vendor_nm
 			, a.ip
 			, a.port
+			, a.fw_version
+			, a.hw_version
 			, b.model_nm
 			, g.security_mode
 			, f.code_local_nm
+			, a.remark
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
 		FROM
