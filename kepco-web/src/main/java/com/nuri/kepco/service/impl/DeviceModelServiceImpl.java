@@ -62,5 +62,4 @@ public class DeviceModelServiceImpl implements DeviceModelService {
 
 		return this.deviceModelDAO.update(deviceModel);
 	}
-
 }

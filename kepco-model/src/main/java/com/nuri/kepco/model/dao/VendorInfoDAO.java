@@ -11,3 +11,4 @@ public interface VendorInfoDAO extends GenericDAO<VendorInfo> {
 	
 	VendorInfo selectVendorByCode(String vendor_code) throws Exception;
 }
+

@@ -17,3 +17,4 @@ public interface DeviceInfoDAO extends GenericDAO<DeviceInfo> {
 	
 	DeviceInfo getDeviceInfo(String deviceId) throws Exception;
 }
+

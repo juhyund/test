@@ -58,3 +58,4 @@ public class MeterInfo extends CommonObj {
 	}
 
 }
+

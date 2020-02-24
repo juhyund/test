@@ -34,3 +34,4 @@ public class DeviceInfo extends CommonObj {
 	private String ledate;
 	
 }
+

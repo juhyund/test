@@ -73,5 +73,4 @@ public class MeterInfoServiceImpl implements MeterInfoService {
 
 		return this.meterInfoDAO.getMeterListCnt(meterInfo);
 	}
-	
 }

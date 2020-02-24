@@ -29,3 +29,4 @@ public class CpuUsageMonitor {
 		return (this.page - 1) * this.row;
 	}
 }
+

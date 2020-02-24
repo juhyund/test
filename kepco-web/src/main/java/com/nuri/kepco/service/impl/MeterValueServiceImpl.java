@@ -113,6 +113,5 @@ public class MeterValueServiceImpl implements MeterValueService {
 		return null;
 	}
 	
-	
 
 }

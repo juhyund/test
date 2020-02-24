@@ -15,3 +15,4 @@ public interface DeviceInfoService extends GenericService {
 	
 	JSONObject getDeviceInfo(String deviceId) throws Exception;
 }
+

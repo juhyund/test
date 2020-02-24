@@ -17,3 +17,4 @@ public class VendorInfo extends CommonObj {
 	private String update_dt;
 
 }
+

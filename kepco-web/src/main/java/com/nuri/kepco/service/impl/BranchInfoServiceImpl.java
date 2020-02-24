@@ -62,5 +62,4 @@ public class BranchInfoServiceImpl implements BranchInfoService {
 
 		return this.branchInfoDAO.update(branchInfo);
 	}
-
 }
