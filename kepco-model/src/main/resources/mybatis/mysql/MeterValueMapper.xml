@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!--***********************************
 * @Copyright : nuritelecom
@@ -256,5 +257,5 @@
 	      AND read_dt = #{read_dt} 
 	      AND channel = #{channel}
 	</update>
-	
+
 </mapper>
