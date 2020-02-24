@@ -220,7 +220,7 @@ function initDate(){
 	var initSdate = $("#sdateView").val();
 	var initEdate = $("#edateView").val();
 	
-	setSearchParam(initSdate,initEdate);
+	setSearchParam2(initSdate,initEdate);
 }
 
 var columnDefs = [
@@ -236,7 +236,7 @@ function useChannelList(data, status) {
 	for(i=0;i<channel_cnt;i++){
 		//channelName[i]에 channel_idx가 i+1인 값이 들어감. 
 		channelName[i] = data.resultGrid[i].channel_name;
-		columnDefs.push({headerName: channelName[i], field: "c"+(i+1)+"_sect_metervalue",valueFormatter: numberFormatter,
+		columnDefs.push({headerName: channelName[i], field: "c"+(i+1)+"_metervalue",valueFormatter: numberFormatter,
 		cellStyle: { 'text-align': "right" }});
 	}
 	
@@ -282,7 +282,7 @@ function ajaxChannelList() {
 }
 
 function ajaxSearchForm() {
-	setSearchParam($("#sdateView").val(), $("#edateView").val());
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 
     var options = { 
            beforeSend  : showRequest,
@@ -304,7 +304,7 @@ function resetForm(){
 };
 
 function excelDownload() {
-	setSearchParam($("#sdateView").val(), $("#edateView").val());
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
 	 $('#search_form').attr('action', "/ewsn-app/downloadMeterValueDetail");
 	 $('#search_form').attr('method',"GET");
@@ -441,13 +441,13 @@ function loadChart(data, status){
 	
 	function createSeries(data) {
 		 var series = [];
-		 var channelData = [[],[],[],[],[]];
+		 var channelData = [[],[],[],[],[],[],[],[],[]];
 		 
 			 //데이터 저장 (각 채널의 데이터 배열에 저장)
 			 data.resultGrid.forEach(function(row){
 				for(var i=0; i<channel_cnt; i++){
 					var point = [];
-					var pointData = "row.c"+(i+1)+"_sect_metervalue";
+					var pointData = "row.c"+(i+1)+"_metervalue";
 					
 					point.push(getTimeMilisec(row.read_dt_int.toString()));
 					point.push(eval(pointData));

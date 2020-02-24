@@ -154,9 +154,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									</table>
 
 								</form>
-								<form name="detail_form" id="detail_form" method="get" action="meter/meterDetail">
-									<input type="hidden" id="detail_meter_serial" name="detail_meter_serial" class="form-control">
-								</form>
 								<div>
 									<!-- page option -->
 									<div class="row m-t-n-n" style="margin:-1px"  >
@@ -214,16 +211,8 @@ var initGrid = function() {
 };
 
 onRowClicked = function(event){
-	//선택된 row의 meter_id를 파라미터로 MeteringDetail.jsp를 팝업으로 연다.	
-	var selectedRows = dataGrid.getSelectedRow();
-    var selectedRowsString = '';
-    selectedRows.forEach( function(selectedRow, index) {
-    selectedRowsString = selectedRow.meter_serial;        
-    });
-    
-    // selectedRow.object_id를 form의 detail_object_id에 보냄.
-    $("#detail_meter_serial").val(selectedRowsString);
-    $("#detail_form").submit();
+	var meter_serial = event.data.meter_serial;
+	location.href = CONTEXT_PATH + "/meterDetail?meter_serial="+meter_serial;
 }
 
 function ajaxSearchForm() {

@@ -2,7 +2,6 @@ package com.nuri.kepco.controller;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
@@ -76,21 +75,23 @@ public class MeterValueController {
 		try {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 
-			/*for(String key : commStr) {
+			for(String key : commStr) {
 				if(request.getParameterMap().containsKey(key)) {
 					param.put(key, request.getParameter(key));	
 				}
-			}*/
+			}
 
-			//logger.info("\n\n ### ajaxMeterValue : param ### \n"+param+"\n\n");
+			//logger.info("\n\n ### ajaxMeterValueDetail : param ### \n"+param+"\n\n");
 
 			List<Map<String, Object>> channels = this.meterValueService.selectMeterChannel(param);
 			
 			param.put("channelList", channels);
 			
-			JSONArray jarr1 = this.meterValueService.getMeterValueDetail(param);
+			logger.info("\n\n ### ajaxMeterValueDetail : param ### \n"+param+"\n\n");
 			
-			json.put("resultGrid", jarr1);
+			List<Map<String, Object>> meterValueDetail = this.meterValueService.getMeterValueDetail(param);
+			
+			json.put("resultGrid", meterValueDetail);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -109,15 +110,21 @@ public class MeterValueController {
 	 * @param request
 	 * @return
 	 */
-	/*@RequestMapping(value = "/ajaxMeterInfoSummary")
+	@RequestMapping(value = "/ajaxMeterInfoSummary")
 	public ResponseEntity<Object> ajaxMeterInfoSummary(HttpServletRequest request) {
 
 		JSONObject json = new JSONObject();
 
 		try {
-			result = this.meterValueService.selectMeterInfo(param);
-
-			json.put("resultGrid", result.getResultgrid());
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			logger.info("\n\n ### ajaxMeterInfoSummary : param ### \n"+param+"\n\n");
+			List<Map<String, Object>> meterInfo = this.meterValueService.selectMeterInfo(param);
+			logger.info("\n\n ### ajaxMeterInfoSummary--> result : jarr ### \n"+meterInfo+"\n\n");
+			
+			json.put("resultGrid", meterInfo);
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,25 +136,32 @@ public class MeterValueController {
 	}
 	
 	
-	*//**
+	/**
 	 * ajaxChannelList
 	 * 
 	 * @desc 
 	 * @param meter_id
 	 * @param request
 	 * @return
-	 *//*
+	 */
 	
 	@RequestMapping(value = "/ajaxChannelList")
-	public ResponseEntity<Object> ajaxChannelList(@ModelAttribute MeterValue param, HttpServletRequest request) {
-		
-		List<Map<String, Object>> result;
+	public ResponseEntity<Object> ajaxChannelList(HttpServletRequest request) {
 		
 		JSONObject json = new JSONObject();
 		try {
-			result = this.meterValueService.selectMeterChannel(param);
+			
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			logger.info("\n\n ### ajaxChannelList : param ### \n"+param+"\n\n");
+			
+			List<Map<String, Object>> channelList = this.meterValueService.selectMeterChannel(param);
+			
+			json.put("resultGrid", channelList);
+			
+			logger.info("\n\n ### ajaxChannelList--> result : channelList ### \n"+channelList+"\n\n");
 
-			json.put("resultGrid", result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,7 +172,7 @@ public class MeterValueController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
-public ResponseEntity<Object> ajaxExceldown(@ModelAttribute MeterValue param, HttpServletRequest request) {
+/*public ResponseEntity<Object> ajaxExceldown(@ModelAttribute MeterValue param, HttpServletRequest request) {
 		
 		List<Map<String, Object>> result;
 		
@@ -234,8 +248,8 @@ public ResponseEntity<Object> ajaxExceldown(@ModelAttribute MeterValue param, Ht
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
-	}
-	*/
+	}*/
+	
 	@RequestMapping(value = "/meteringDetail")
 	public String meteringDetail(
 			@ModelAttribute(value="detail_meter_id") String meter_id,
