@@ -73,4 +73,10 @@ public class MeterInfoServiceImpl implements MeterInfoService {
 
 		return this.meterInfoDAO.getMeterListCnt(meterInfo);
 	}
+
+	@Override
+	public JSONObject getMeterDetailInfo(String meter_serial) throws Exception {
+		MeterInfo meterInfo = meterInfoDAO.getMeterDetailInfo(meter_serial);
+		return ConversionUtil.getJSONObjectByModel(meterInfo);
+	}
 }
