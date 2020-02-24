@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nuri.kepco.service.DeviceInfoService;
@@ -113,6 +112,25 @@ public class DeviceController {
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
+
+	@RequestMapping(value = "/ajaxDeviceInfo")
+	public ResponseEntity<Object> ajaxDeviceInfo(HttpServletRequest request) {
+		
+		JSONObject json = new JSONObject();
+		try {
+			String deviceId = request.getParameter("device_id");
+
+			JSONObject info = this.deviceInfoService.getDeviceInfo(deviceId);
+
+			json.put("result", info);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
 	
 	@RequestMapping(value = "/ajaxDeviceObjectModelList")
 	public ResponseEntity<Object> ajaxDeviceObjectModelList(HttpServletRequest request) {
@@ -120,7 +138,7 @@ public class DeviceController {
 		JSONObject json = new JSONObject();
 		try {
 			Map<String, Object> param = new HashMap<String, Object>();
-			String[] commStr = { "device_id", "vendor_nm", "device_status", "lsdate", "ledate" };
+			String[] commStr = { "vendor_nm", "device_status", "lsdate", "ledate" };
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
 			param.put("device_id", request.getParameter("device_id"));
@@ -137,4 +155,29 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value = "/ajaxDeviceResourceModelList")
+	public ResponseEntity<Object> ajaxDeviceResourceModelList(HttpServletRequest request) {
+		
+		JSONObject json = new JSONObject();
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			String[] commStr = { "device_id", "object_id" };
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			param.put("device_id", request.getParameter("device_id"));
+			param.put("object_id", request.getParameter("object_id"));
+
+			JSONArray jarr = this.deviceResourceService.selectList(param);
+
+			json.put("result", jarr);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
 }
+

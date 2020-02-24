@@ -298,12 +298,11 @@ function init() {
 	// init
 	initGrid();
 	
+	setSearchPeriod('today');
+	comboDeviceType();
+	
 	// form search
 	ajaxSearchForm();
-	
-	// setting combobox
-	comboDeviceType();
-	setSearchPeriod('today');
 	
 	//$("#limit").val($("#search_num option:selected").val());
 }

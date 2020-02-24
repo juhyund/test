@@ -19,7 +19,10 @@
         </if>
         <if test="channel != null and channel != ''" >     
             AND mv.channel = #{channel}
-        </if>       
+        </if> 
+        <if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
+            AND mv.read_dt between #{sdate} AND #{edate}
+        </if>    
 		<if test="searchfield != null and searchquery != null " >
 			AND ${searchfield} like concat(#{searchquery},'%')
 		</if>
@@ -81,20 +84,22 @@
 		WHERE object_id = #{object_id}
 	</select>
 	
-	<!-- 검침메뉴 메인 그리드 -->
+	<!-- 검침 메뉴 메인 그리드  -->
 	<select id="getMeterValue" resultType="MeterValue" parameterType="MeterValue">
 		SELECT 
 			a.meter_id,
-			DATE_FORMAT(a.read_dt,'${prop.dt}') AS read_dt,
+			a.meter_serial,
+			DATE_FORMAT(CONCAT(a.read_dt,'00'), '${prop.small.dt}') AS read_dt,
 			d.code_nm, meter_type, 
 			a.meter_value,
 			DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 		FROM (
-			SELECT mv.meter_id, mv.read_dt, mv.channel, mv.meter_value, mv.sect_meter_value, mv.reg_dt, mi.meter_type, mi.device_id
+			SELECT mv.meter_id, mv.read_dt, mv.channel, mv.meter_value, mv.sect_meter_value, mv.reg_dt, mi.meter_type, mi.device_id, mi.meter_serial
 			FROM EMI_METER_INFO AS mi
 			LEFT JOIN EMI_METER_VALUE AS mv
 			ON mi.meter_id = mv.meter_id
 			<include refid="base_where_list" />
+			AND mv.channel = 'CH001'
 		) AS a
 		JOIN EMI_ALL_CODE AS d
 		ON a.meter_type= d.code
@@ -112,12 +117,13 @@
 			LEFT JOIN EMI_METER_VALUE AS mv
 			ON mi.meter_id = mv.meter_id
 			<include refid="base_where_list" />
+			AND mv.channel = 'CH001'
 		) AS a;
 	</select>
 	
 	
 	<!-- 검침메뉴 상세창의 미터 정보-->
-	<select id="selectMeterInfo" resultType="MeterValue" parameterType="MeterValue">
+	<select id="selectMeterInfo" resultType="java.util.Map" parameterType="MeterValue">
 		SELECT 
 			a.meter_id,
 			a.device_id,
@@ -132,24 +138,26 @@
 				
 			FROM emi_METER_INFO AS mi
 			LEFT JOIN emi_device_status AS ds
-			ON mi.meter_id = ds.device_id
+			ON mi.device_id = ds.device_id
 			WHERE mi.meter_id = #{meter_id}
 		) AS a
 		JOIN emi_ALL_CODE AS d
 		ON a.meter_type = d.code;
 	</select>
 	
-	<select id="selectMeterChannel" resultType="MeterValue" parameterType="MeterValue">	
+	<!-- 특정 미터의 가용 채널 리스트-->
+	<select id="selectMeterChannel" resultType="java.util.Map" parameterType="MeterValue">	
 		SELECT a.channel channel_code,
 			d.code_NM channel_name,
-			a.channel_idx channel_idx, a.meter_type
+			a.channel_idx channel_idx,
+			a.meter_type
 		FROM (
 		
 			SELECT DISTINCT c.CHANNEL , c.channel_idx, mi.meter_type
 			FROM EMI_METER_INFO AS mi
 			LEFT JOIN EMI_CHANNEL_CONFIG AS c
 			ON mi.meter_type = c.meter_type
-			WHERE mi.meter_type = #{meter_id}
+			WHERE mi.meter_id = #{meter_id}
 		
 		) AS a
 		JOIN EMI_ALL_CODE AS d
@@ -158,10 +166,10 @@
 	</select>
 	
 	<!-- 검침메뉴 상세창의 그리드+차트 -->
-	<select id="getMeterValueDetail" resultType="MeterValue" parameterType="MeterValue">
+	<select id="getMeterValueDetail" resultType="java.util.Map" parameterType="MeterValue">
 		SELECT
 		    meter_id
-		    ,DATE_FORMAT(CONCAT(T.read_dt),'${prop.dt}') AS read_dt
+		    , DATE_FORMAT(CONCAT(T.read_dt,'00'), '${prop.small.dt}') AS read_dt 
 		    ,T.read_dt AS read_dt_int
 		    
 		<foreach item="item" collection="channelList" >
@@ -186,8 +194,18 @@
 				FROM EMI_METER_INFO AS mi
 				LEFT JOIN EMI_CHANNEL_CONFIG AS c
 				ON mi.meter_type = c.meter_type
-				<include refid="base_where_list" />
+				<where>
+					<if test="meter_id != null and meter_id != ''" >     
+			            AND mi.meter_id = #{meter_id}
+			        </if>
+		        </where>
 			)
+			<if test="meter_id != null and meter_id != ''" >     
+			    AND a.meter_id = #{meter_id}
+			</if>
+			<if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
+            	AND a.read_dt between #{sdate} AND #{edate}
+        	</if>  
 			<include refid="order_by_list" />	
 		) T
 		GROUP BY meter_id , read_dt

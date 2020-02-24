@@ -24,3 +24,4 @@ public interface MeterValueDAO extends GenericDAO<MeterValue> {
 	MeterValue selectLastValue(MeterValue param);
 	
 }
+

@@ -22,3 +22,4 @@ public interface MeterValueService extends GenericService {
 	
 	public Map<String, String> excelMeterValueDetail(Map<String, Object> param) throws Exception;
 }
+

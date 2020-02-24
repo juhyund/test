@@ -67,7 +67,7 @@ public class MeasurementData implements IMeasurementData {
 	}
 
 	public void decode(String data) throws Exception {
-		this.parser.parser(data);
+		this.parser.parser(data, deviceId, modemTime);
 	}
 
 }

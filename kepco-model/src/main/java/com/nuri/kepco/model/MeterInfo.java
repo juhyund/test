@@ -38,8 +38,24 @@ public class MeterInfo extends CommonObj {
 	
 	private String allow_yn;
 	private String device_serial;
-	private String vendor_seq;
+	private int vendor_seq;
 	private String device_status;
 	private String last_comm_dt;
+	
+	private String vendorCd;
+	private String modelCd;
+	
+	/**
+	 * 미터 모델 정보
+	 * @param meterSerial
+	 */
+	public void setMeterModel() {
+		
+		if(meter_serial != null) {
+			this.vendorCd = meter_serial.substring(0, 2);
+			this.modelCd = meter_serial.substring(2, 4);
+		}
+	}
 
 }
+

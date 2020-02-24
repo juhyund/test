@@ -72,3 +72,4 @@ public class DeviceResourceServiceImpl implements DeviceResourceService {
 		return ConversionUtil.getJSONArrayByModel(list);
 	}
 }
+

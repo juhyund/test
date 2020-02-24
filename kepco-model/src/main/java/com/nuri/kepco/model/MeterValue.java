@@ -23,3 +23,4 @@ public class MeterValue extends CommonObj {
 	private List<Map<String, Object>> channelList = new ArrayList<Map<String, Object>>();
 	
 }
+
