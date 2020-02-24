@@ -89,7 +89,7 @@
 		SELECT 
 			a.meter_id,
 			a.meter_serial,
-			DATE_FORMAT(CONCAT(a.read_dt),'${prop.small.dt}') AS read_dt,
+			DATE_FORMAT(CONCAT(a.read_dt,'00'), '${prop.small.dt}') AS read_dt,
 			d.code_nm, meter_type, 
 			a.meter_value,
 			DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
@@ -169,7 +169,7 @@
 	<select id="getMeterValueDetail" resultType="java.util.Map" parameterType="MeterValue">
 		SELECT
 		    meter_id
-		    ,DATE_FORMAT(CONCAT(T.read_dt),'${prop.small.dt}') AS read_dt
+		    , DATE_FORMAT(CONCAT(T.read_dt,'00'), '${prop.small.dt}') AS read_dt 
 		    ,T.read_dt AS read_dt_int
 		    
 		<foreach item="item" collection="channelList" >
