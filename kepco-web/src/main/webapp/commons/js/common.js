@@ -141,12 +141,12 @@ function setSearchPeriod(period){
  * 
  * @param  sdateView : 검색 시작일
  * @param  edateView : 검색 종료일 
- * @desr   yyyy/mm/dd --> yyyymmdd000000으로 변경
+ * @desr   yyyy/mm/dd --> yyyymmdd0000으로 변경
  */
 function setSearchParam(sdateView, edateView){
-	//2019/12/12 --> 20191212000000으로 변경
-	var sdate = sdateView.split("/").join("")+"000000";
-	var edate = edateView.split("/").join("")+"235959";
+	//2019/12/12 --> 201912120000으로 변경
+	var sdate = sdateView.split("/").join("")+"0000";
+	var edate = edateView.split("/").join("")+"2359";
 	
 	$("#sdate").val(sdate);
 	$("#edate").val(edate);

@@ -298,18 +298,11 @@ function init() {
 	// init
 	initGrid();
 	
-<<<<<<< HEAD
 	setSearchPeriod('today');
 	comboDeviceType();
 	
-=======
->>>>>>> branch 'develop' of https://git-n.nuritelecom.com/scm/aimirpf/kepco-lwm2m-5.0.git
 	// form search
 	ajaxSearchForm();
-	
-	// setting combobox
-	comboDeviceType();
-	setSearchPeriod('today');
 	
 	//$("#limit").val($("#search_num option:selected").val());
 }
