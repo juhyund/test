@@ -82,7 +82,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                             <div role="tabpanel" id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
 									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+									<div id="modemGrid" style="height:400px;" class="ag-theme-balham"></div>
+									<div id="deviceGrid" style="height:400px;" class="ag-theme-balham"></div>
                                 </div>
                             </div>
                             <div role="tabpanel" id="tab-2" class="tab-pane">
@@ -144,12 +145,12 @@ var columnDefs = [
 	{headerName: "비고", field: "descr", width:250}
 ];
 
-/* var initGrid = function() {
+var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500);    
     dataGrid.makeGrid();
     dataGrid.showNoRows();
 };
-*/ 
+ 
 function ajaxSearchForm() {
 
     var options = { 
