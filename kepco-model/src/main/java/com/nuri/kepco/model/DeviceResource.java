@@ -20,6 +20,10 @@ public class DeviceResource extends CommonObj {
 	private String update_dt;
 	
 	private String object_nm;
+	private String resource_nm;
+	private String operation;
 	private int instances;
+	private int mandatory;
+	private String unit;
 	private String descr;
 }

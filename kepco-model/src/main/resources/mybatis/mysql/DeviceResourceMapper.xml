@@ -192,30 +192,38 @@
 		</where>
         GROUP BY a.device_id, a.object_id
     </select>
-    <!-- 
-    <select id="getResourceModelList" resultType="java.util.Map" parameterType="DeviceResource">  
+    <select id="getResourceModelList" resultType="deviceResource" parameterType="deviceResource">  
         SELECT 
         	a.device_id
         	, a.object_id
         	, b.object_name
+        	, c.object_nm
         	, a.object_instance_id
         	, a.resource_id
         	, b.resource_name
+        	, b.resource_nm
         	, a.resource_instance_id
         	, b.operation
         	, b.instance
+        	, b.instances
         	, b.mandatory
         	, b.type
+        	, a.resource_val
         	, b.unit
         FROM EWSN_DEVICE_RESOURCE a 
         INNER JOIN EWSN_LWM2M_RESOURCE b ON ( a.object_id = b.object_id AND a.resource_id = b.resource_id )
         WHERE b.OBJECT_FLAG = 'R'
+        FROM EMI_DEVICE_RESOURCE a 
+        INNER JOIN EMI_RESOURCE_MODEL b ON ( a.object_id = b.object_id AND a.resource_id = b.resource_id )
+        INNER JOIN EMI_OBJECT_MODEL c ON ( a.object_id = c.object_id )
+        
+        <where> 
         <if test="device_id != null" >     
           AND a.device_id = #{device_id}
         </if>
         <if test="object_id != null" >     
           AND a.object_id = #{object_id}
-        </if>       
+        </if>
+        </where>       
     </select>
-	 -->
 </mapper>

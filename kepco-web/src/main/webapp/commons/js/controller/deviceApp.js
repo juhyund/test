@@ -9,7 +9,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         url: COMMON_URL + "/ajaxDeviceInfo",
         params : {"device_id" : $("#device_id").val()}
     }).then(function resourceSuccessCallback(data, status, headers, config) {
-    	console.log(data.data.result);
     	$scope.device_info = data.data.result;
 	}, function errorCallback(response) {
         alert("error");
@@ -34,7 +33,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        }).then(function resourceSuccessCallback(data, status, headers, config) {
 	        	// resources
 	        	item.resources = data.data.result;	
-	        	console.log(data.data.result);
 	        	$scope.objects[index] = item;
 	    	}, function errorCallback(response) {
 	        	console.log("error");

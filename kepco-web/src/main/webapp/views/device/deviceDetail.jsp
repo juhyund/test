@@ -177,7 +177,7 @@ function goBack() {
 																ng-repeat="resource in object.resources">
 																<td>{{resource.resource_id}}</td>
 																<td align="left">{{resource.resource_nm}}
-																	{{resource.temp}}</td>
+																	{{resource.resource_val}}</td>
 																<td></td>
 																<td>{{resource.unit}}</td>
 																<td>
