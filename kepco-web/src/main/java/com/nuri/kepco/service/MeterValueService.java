@@ -12,11 +12,11 @@ public interface MeterValueService extends GenericService {
 	
 	int getMeterValueCount(Map<String, Object> param) throws Exception;
 
-	JSONArray getMeterValueDetail(Map<String, Object> param) throws Exception;
+	List<Map<String, Object>> getMeterValueDetail(Map<String, Object> param) throws Exception;
 
-	JSONArray selectMeterInfo(Map<String, Object> param) throws Exception;
+	List<Map<String, Object>> selectMeterInfo(Map<String, Object> param) throws Exception;
 
-	JSONArray selectMeterChannel(Map<String, Object> param) throws Exception;
+	List<Map<String, Object>> selectMeterChannel(Map<String, Object> param) throws Exception;
 	
 	public Map<String, String> excelMeterValue(Map<String, Object> param) throws Exception;
 	

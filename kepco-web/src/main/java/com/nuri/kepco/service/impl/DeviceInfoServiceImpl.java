@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.model.dao.DeviceInfoDAO;
 import com.nuri.kepco.service.DeviceInfoService;
@@ -71,12 +73,12 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 	}
 
 	@Override
-	public JSONArray getDeviceList(Map<String, Object> param) throws Exception {
+	public org.json.simple.JSONArray getDeviceList(Map<String, Object> param) throws Exception {
 		DeviceInfo deviceInfo = new DeviceInfo();
 		ConversionUtil.getModelByMap(deviceInfo, param);
 		List<DeviceInfo> list = this.deviceInfoDAO.getDeviceList(deviceInfo);
 
-		return ConversionUtil.getJSONArrayByModel(list, deviceInfo.getStart());
+		return ConversionUtil.getJSONArrayByModel(list);
 	}
 
 	@Override
@@ -85,13 +87,6 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		ConversionUtil.getModelByMap(deviceInfo, param);
 
 		return this.deviceInfoDAO.getDeviceListCnt(deviceInfo);
-	}
-
-	@Override
-	public JSONObject getDeviceInfo(String deviceId) throws Exception {
-		DeviceInfo deviceInfo = this.deviceInfoDAO.getDeviceInfo(deviceId);
-
-		return ConversionUtil.getJSONObjectByModel(deviceInfo);
 	}
 	
 }

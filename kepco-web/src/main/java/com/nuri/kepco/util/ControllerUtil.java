@@ -17,20 +17,16 @@ public class ControllerUtil {
 	
 	public static Map<String, Object> getCommonParam(HttpServletRequest request) {
 		Map<String, Object> param = new HashMap<String, Object>();
+		
 		for(String key : commStr) {
 			if(validator(request, key)) {
-				String val = request.getParameter(key);
-				if(key.indexOf("date") > 0) {
-					val = val.replace("/", "");
-				}
-				param.put(key, val);	
+				param.put(key, request.getParameter(key));	
 			}
 		}
 		
 		for(String key : commInt) {
 			if(validator(request, key)) {
-				String val = request.getParameter(key);
-				param.put(key, Integer.parseInt(val.trim()));	
+				param.put(key, Integer.parseInt(request.getParameter(key)));	
 			}
 		}
 		
@@ -40,11 +36,7 @@ public class ControllerUtil {
 	public static void getCustomParam(HttpServletRequest request, String[] commStr, Map<String, Object> param) {
 		for(String key : commStr) {
 			if(validator(request, key)) {
-				String val = request.getParameter(key);
-				if(key.indexOf("date") > 0) {
-					val = val.replace("/", "");
-				}
-				param.put(key, val);
+				param.put(key, request.getParameter(key).trim());
 			}
 		}
 	}
@@ -58,5 +50,4 @@ public class ControllerUtil {
 		
 		return false;
 	}
-	
 }

@@ -10,8 +10,7 @@ public class CpuUsageMonitor {
 	String deviceId;
 	String deviceSerial;
 	int cpuUsage;
-	Date usageTime; // usage 수신 시간
-	Date saveTime; // 서버 저장 시간
+	Date usageTime;
 	
 	// 조회조건
 	private Date sdate;

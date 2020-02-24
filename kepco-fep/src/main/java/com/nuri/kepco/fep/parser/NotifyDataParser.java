@@ -10,11 +10,13 @@ import org.eclipse.leshan.json.JsonRootObject;
 import org.eclipse.leshan.json.LwM2mJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
 
+@Service
 public class NotifyDataParser extends DataParser {
 
 	private static final Logger LOG = LoggerFactory.getLogger(NotifyDataParser.class);
@@ -27,7 +29,7 @@ public class NotifyDataParser extends DataParser {
 	List<RamUsageMonitor> ramUsageList = null;
 	
 	@Override
-	public void parser(String data, String deviceId, String modemTime) throws Exception {
+	public void parser(String data) throws Exception {
 		
 		cpuUsageList = new ArrayList<CpuUsageMonitor>();
 		ramUsageList = new ArrayList<RamUsageMonitor>();
@@ -65,7 +67,7 @@ public class NotifyDataParser extends DataParser {
 			}
 			
 		} catch (Exception e) {
-			LOG.error("error", e);
+			LOG.error(e.toString());
 		}
 	}
 	

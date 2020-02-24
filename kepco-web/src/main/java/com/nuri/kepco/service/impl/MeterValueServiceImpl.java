@@ -76,29 +76,31 @@ public class MeterValueServiceImpl implements MeterValueService {
 
 	@Override
 	public JSONArray getMeterValueDetail(Map<String, Object> param) throws Exception {
-		List<Map<String, Object>> channels = (List<Map<String, Object>>) param.get("channelList");
 		MeterValue meterValue = new MeterValue();
+		ConversionUtil.getModelByMap(meterValue, param);
+		
+		List<Map<String, Object>> channels = this.meterValueDAO.selectMeterChannel(meterValue);
 		meterValue.setChannelList(channels);
 		
-		List<MeterValue> list = this.meterValueDAO.selectList(meterValue);
-		
-		return ConversionUtil.getJSONArrayByModel(list, meterValue.getStart());
+		List<Map<String, Object>> list = this.meterValueDAO.getMeterValueDetail(meterValue);
+		return ConversionUtil.getJSONArrayByModel(list);
 	}
 
 	@Override
 	public JSONArray selectMeterInfo(Map<String, Object> param) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		MeterValue meterValue = new MeterValue();
+		ConversionUtil.getModelByMap(meterValue, param);
+		List<Map<String, Object>> list = this.meterValueDAO.selectMeterInfo(meterValue);
+
+		return ConversionUtil.getJSONArrayByModel(list);
 	}
 
 	@Override
 	public JSONArray selectMeterChannel(Map<String, Object> param) throws Exception {
 		MeterValue meterValue = new MeterValue();
 		ConversionUtil.getModelByMap(meterValue, param);
-		//meterValueDAO.sel
-		List<MeterValue> list = new ArrayList<MeterValue>();
-		
-		return ConversionUtil.getJSONArrayByModel(list, meterValue.getStart());
+		List<Map<String, Object>>list =  this.meterValueDAO.selectMeterChannel(meterValue);
+		return ConversionUtil.getJSONArrayByModel(list);
 	}
 
 	@Override

@@ -16,10 +16,8 @@ public class MDData {
 	String meterID;
 	String meterOid;
 	String meterModel; // 미터 모델
-	String meterType; // 미터 타입
-	String billingDay; // 정기검침일(monthly billing date)
-	String billingDate; // 정기검침일자 (정기검침데이터 포함)
-	
+	String meterType; // 미터 타입	
+	String billingDate; // 정기검침일
 	String vendorCd; // vendor
 	String meterPhase;
 	

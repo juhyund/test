@@ -33,17 +33,23 @@
             AND a.allow_yn = #{allow_yn}
         </if>
 		<if test="searchfield != null and searchquery != null " >
-			AND a.${searchfield} like concat(#{searchquery},'%')
+			AND ${searchfield} like concat(#{searchquery},'%')
 		</if>
 		<!-- DeviceInfoList -->		
+		<if test="branch_nm != null" >     
+            AND d.branch_nm = #{branch_nm}
+        </if>
+		<if test="vendor_nm != null" >     
+            AND e.vendor_nm = #{vendor_nm}
+        </if>
 		<if test="device_status != null" >     
-            AND c.device_status = #{device_status}
+            AND b.device_status = #{device_status}
         </if>
 		<if test="sdate != null and edate != null">
 			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="lsdate != null and ledate != null">
-			AND c.last_comm_dt between date_format(concat(#{lsdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{ledate},'235959'), '%Y-%m-%d %H:%i:%s')
+		<if test="s_last != null and e_last != null">
+			AND c.last_comm_dt between date_format(concat(#{s_last},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{e_last},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
 		
 		</where>
@@ -205,22 +211,20 @@
 	
 	<select id="getDeviceList" resultType="deviceInfo" parameterType="deviceInfo">	
 		SELECT
-			a.device_id
-			, a.device_serial
+			a.device_serial
 			, d.branch_nm
 			, b.model_nm
 			, e.vendor_nm
-			, f.code_local_nm
+			, c.device_status
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
 		FROM
-			EMI_DEVICE_INFO a
-			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
-			LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
-			LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
-			LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
-			LEFT OUTER JOIN EMI_ALL_CODE f ON c.device_status = f.code
-			
+		EMI_DEVICE_INFO a
+		LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
+		LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
+		LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
+		LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
+		
 		<include refid="base_where_list" />	
 		
 		<include refid="order_by_list" />	
@@ -233,39 +237,13 @@
 		SELECT
 			 COUNT(*) co
 		FROM
-			EMI_DEVICE_INFO a
-			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
-			LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
-			LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
-			LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
-			LEFT OUTER JOIN EMI_ALL_CODE f ON c.device_status = f.code
-
+		EMI_DEVICE_INFO a
+		LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
+		LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
+		LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
+		LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
+		
 		<include refid="base_where_list" />	
-	</select>
-	
-	<select id="getDeviceInfo" resultType="deviceInfo" parameterType="java.lang.String">	
-		SELECT
-			a.device_id
-			, d.branch_nm
-			, a.device_serial
-			, e.vendor_nm
-			, a.ip
-			, a.port
-			, b.model_nm
-			, g.security_mode
-			, f.code_local_nm
-			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
-		FROM
-			EMI_DEVICE_INFO a
-			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
-			LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
-			LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
-			LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
-			LEFT OUTER JOIN EMI_ALL_CODE f ON c.device_status = f.code
-			LEFT OUTER JOIN EMI_DEVICE_SECURITY g ON a.device_id = g.device_id
-		WHERE 
-			a.device_id = #{device_id}
 	</select>
 	
 </mapper>
