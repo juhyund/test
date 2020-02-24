@@ -46,14 +46,16 @@
 
 	<select id="selectList" resultType="vendorInfo" parameterType="vendorInfo">	
 		SELECT 
-			vendor_seq
-			, vendor_code
-			, vendor_nm
-			, remark
+			object_id
+			, object_nm
+			, instances
+			, mandatory
+			, object_urn
+			, descr
 			, reg_id
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt  
 			, update_id
-			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS dest_dt	
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS dest_dt
 		FROM EMI_VENDOR_INFO a	
 			
 		<include refid="base_where_list" />
@@ -111,33 +113,5 @@
 			, update_dt = now()
 		WHERE vendor_seq = #{vendor_seq}
 	</update>
-	
-	<select id="selectByVendorCode" resultType="vendorInfo" parameterType="String">	
-		SELECT 
-			vendor_seq
-			, vendor_code
-			, vendor_nm
-			, remark
-			, reg_id
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
-			, update_id
-			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS dest_dt	
-		FROM EMI_VENDOR_INFO a	
-		WHERE vendor_code = #{vendor_code}
-	</select>
-	
-	<select id="selectByVendorName" resultType="vendorInfo" parameterType="String">	
-		SELECT 
-			vendor_seq
-			, vendor_code
-			, vendor_nm
-			, remark
-			, reg_id
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
-			, update_id
-			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS dest_dt	
-		FROM EMI_VENDOR_INFO a	
-		WHERE vendor_nm = #{vendor_nm}
-	</select>
 	
 </mapper>

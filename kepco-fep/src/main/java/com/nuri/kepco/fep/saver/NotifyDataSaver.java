@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
-import com.nuri.kepco.fep.parser.KepcoDLMSParser;
+import com.nuri.kepco.fep.parser.KepcoMDDataParser;
 import com.nuri.kepco.fep.parser.NotifyDataParser;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
@@ -19,7 +19,7 @@ import com.nuri.kepco.mongo.model.dao.RamUsageMonitorDAO;
 @Service
 public class NotifyDataSaver extends AbstractMDSaver {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(KepcoDLMSParser.class);
+	private static final Logger LOG = LoggerFactory.getLogger(KepcoMDDataParser.class);
 	
 	@Autowired
 	CpuUsageMonitorDAO cpuUsageMonitorDAO;
@@ -67,7 +67,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			result = cpuUsageList.size();
 			
 		} catch (Exception e) {
-			LOG.error("error", e);
+			LOG.error(e.toString());
 			result = -1;
 		}
 		
@@ -92,7 +92,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			result = ramUsageList.size();
 			
 		} catch (Exception e) {
-			LOG.error("error", e);
+			LOG.error(e.toString());
 			result = -1;
 		}
 		return result;

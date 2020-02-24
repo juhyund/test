@@ -2,7 +2,6 @@ package com.nuri.kepco.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nuri.kepco.model.common.OrderByMap;
 
 public class ConversionUtil {
 
@@ -33,19 +31,6 @@ public class ConversionUtil {
 				logger.error(e.toString(), e);
 			}
 		}
-		
-		if(param.containsKey("sort") && param.containsKey("dir")) {
-			try {
-				List<OrderByMap> orderByList = new ArrayList<OrderByMap>();
-				orderByList.add(new OrderByMap((String)param.get("sort"), (String)param.get("dir")));
-				Method method;
-				method = scls.getMethod("setOrderByMap", List.class);
-				method.invoke(o, orderByList);
-			} catch (Exception e) {
-				logger.error(e.toString(), e);
-			}
-		}
-		
 		
 		Class<?> cls = o.getClass();
 		for (Field f : cls.getDeclaredFields()) {
@@ -78,17 +63,10 @@ public class ConversionUtil {
 	}
 	
 	public static JSONArray getJSONArrayByModel(List<?> list) {
-		return getJSONArrayByModel(list, 0);
-	}
-	
-	public static JSONArray getJSONArrayByModel(List<?> list, int start) {
 		JSONArray jsonarr = new JSONArray();
-		int idx = (start + 1);
 		try {
 			for(Object o : list) {
-				JSONObject json = getJSONObjectByModel(o);
-				json.put("no", idx++);
-				jsonarr.add(json);
+				jsonarr.add(getJSONObjectByModel(o));
 			}
 		} catch (Exception e) {
 			logger.error(e.toString(), e);
