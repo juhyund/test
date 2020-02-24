@@ -70,7 +70,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					
 				<div class="row m-b-md ">
 					<div class="col-lg-6">
-                    <div class="tabs-container">
+                    <div class="tabs-container" style=width:200%;>
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a class="nav-link active" data-toggle="tab" href="#tab-1">기본정보</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-2">미터 설정 읽기/설정</a></li>
@@ -81,9 +81,70 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                         <div class="tab-content">
                             <div role="tabpanel" id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-									<!-- grid -->
-									<div id="modemGrid" style="height:400px;" class="ag-theme-balham"></div>
-									<div id="deviceGrid" style="height:400px;" class="ag-theme-balham"></div>
+                                	<table class="table text-center m-t">
+										<tbody>
+											<tr>
+												<th class="text-navy" scope="row">모뎀 번호 : </th>
+												<td id = "device_serial"></td>
+												<th class="text-navy" scope="row">운전 상태 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">최종 총신 일시 : </th>
+												<td id = "last_comm_dt"></td>
+												<th class="text-navy" scope="row">통신 방식 : </th>
+												<td id = ""></td>
+											</tr>
+											<tr>
+												<th class="text-navy" scope="row">통신사 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">모뎀 아이피 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">수신감도 레벨 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row"></th>
+												<td id = ""></td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="table text-center m-t">
+										<tbody>
+											<tr>
+												<th class="text-navy" scope="row">계기번호 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">운전 상태 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">마지막 검침 일시 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">검침 주기 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">계기 배수 : </th>
+												<td id = ""></td>
+											</tr>
+											<tr>
+												<th class="text-navy" scope="row">계기 타입 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">프로그램 ID : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">프로그램 버전 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">제조사 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">자재 번호 : </th>
+												<td id = ""></td>
+											</tr>
+											<tr>
+												<th class="text-navy" scope="row">인입주전주번호 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">계기 소유 구분 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">계기 제조년월 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">선식구분 : </th>
+												<td id = ""></td>
+												<th class="text-navy" scope="row">계량점전압 : </th>
+												<td id = ""></td>
+											</tr>
+									</tbody>
+									</table>
                                 </div>
                             </div>
                             <div role="tabpanel" id="tab-2" class="tab-pane">
@@ -114,7 +175,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                    		 </div>
                 	</div>
 				<form name="control_detail_form" id="control_detail_form" method="post">
-					<input type="hidden" id="control_seq" name="control_seq" value="${control_seq}" class="form-control">
+					<input type="hidden" id="meter_serial" name="meter_serial" value="${meter_serial}" class="form-control">
 				</form>
 				</div>
 				<!--  end : summary_area  -->
@@ -133,6 +194,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 
 <script type="text/javascript" charset="utf-8">	
+var meter_serial = $(meter_serial);alert(getUrlValue("meter_serial"));alert($('#meter_serial').val());
 
 //specify the columns  
 var columnDefs = [
@@ -156,11 +218,11 @@ function ajaxSearchForm() {
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxDeviceControlListDetail",
+           url         : COMMON_URL + "/ajaxMeterDetailInfo",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
-           data        : $("#control_detail_form").serialize()
+           data        : meter_serial
      };             
     
      $.ajax(options);
@@ -207,16 +269,10 @@ function successResultHandler(data, status) {
 	$('#result_msg').text(result_msg);
 	
 }
-var meter_serial = event.data.meter_serial;
 
 function init() {
-	
-	// initGrid
-	var initGrid = function() {
-	    dataGrid = new DataGrid('grid', columnDefs, true, 500);    
-	    dataGrid.makeGrid();
-	    dataGrid.showNoRows();
-	};
+	// init
+	meter_serial = $("#meter_serial").val();
 	
 	// form search
 	ajaxSearchForm();
