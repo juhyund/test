@@ -115,24 +115,55 @@ function selectComboBox(combo_id, parent_code) {
 function setSearchPeriod(period){ 
 	var settingDate = new Date();
 	var today = new Date();	
+	var settingEndDate;
 	
 	switch(period){
-		case 'today':
+		case 'today': //오늘
 			$( "#sdateView" ).datepicker( "setDate", today);
 			$( "#edateView" ).datepicker( "setDate", today);
 			break;
 			
-		case 'weekly':
-			settingDate.setDate(settingDate.getDate()-7);
+		case 'weekly': //7일전부터
+			settingDate.setDate(today.getDate()-7);
 			$( "#sdateView" ).datepicker( "setDate", settingDate);
 			$( "#edateView" ).datepicker( "setDate", today);
 			break;
 			
-		case 'montly':
-			settingDate.setMonth(settingDate.getMonth()-1);
+		case 'montly': //한달전부터
+			settingDate.setMonth(today.getMonth()-1);
 			$( "#sdateView" ).datepicker( "setDate", settingDate);
 			$( "#edateView" ).datepicker( "setDate", today);
 			break;
+			
+		case 'thisMonth': //이번달 1일~오늘
+			settingDate.setMonth(today.getMonth());
+			settingDate.setDate(1);
+			$( "#sdateView" ).datepicker( "setDate", settingDate);
+			$( "#edateView" ).datepicker( "setDate", today);
+			break;	
+		
+		case 'lastMonth': //저번달 1일~말일
+			settingDate.setMonth(today.getMonth()-1);
+			settingDate.setDate(1);
+			$( "#sdateView" ).datepicker( "setDate", settingDate);
+			
+			settingEndDate = settingDate;
+			settingEndDate.setMonth(settingDate.getMonth()+1);
+			settingEndDate.setDate(settingDate.getDate()-1);
+			$( "#edateView" ).datepicker( "setDate", settingEndDate);
+			break;
+		
+		case 'twoMonthsAgo': //2개월전 1일~말일
+			settingDate.setMonth(today.getMonth()-2);
+			settingDate.setDate(1);
+			$( "#sdateView" ).datepicker( "setDate", settingDate);
+			
+			settingEndDate = settingDate;
+			settingEndDate.setMonth(settingDate.getMonth()+1);
+			settingEndDate.setDate(settingDate.getDate()-1);
+			$( "#edateView" ).datepicker( "setDate", settingEndDate);
+			break;
+			
 	}
 }
 

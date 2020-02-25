@@ -112,7 +112,7 @@
 		WHERE vendor_seq = #{vendor_seq}
 	</update>
 	
-	<select id="selectByVendorCode" resultType="vendorInfo" parameterType="String">	
+	<select id="selectVendorByCode" resultType="vendorInfo" parameterType="String">	
 		SELECT 
 			vendor_seq
 			, vendor_code
@@ -126,7 +126,7 @@
 		WHERE vendor_code = #{vendor_code}
 	</select>
 	
-	<select id="selectByVendorName" resultType="vendorInfo" parameterType="String">	
+	<select id="selectVendorByName" resultType="vendorInfo" parameterType="String">	
 		SELECT 
 			vendor_seq
 			, vendor_code

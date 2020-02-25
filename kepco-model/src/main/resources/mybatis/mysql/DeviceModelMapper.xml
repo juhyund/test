@@ -89,6 +89,19 @@
 		WHERE model_nm = #{model_nm}
 	</select>
 	
+	<select id="selectModelByVendorCode" resultType="deviceModel" parameterType="java.lang.String">	
+		SELECT 	
+			a.model_seq
+			, a.model_nm
+			, a.vendor_seq
+			, a.reg_id
+			, a.update_id
+		FROM EMI_DEVICE_MODEL a 
+		INNER JOIN EMI_VENDOR_INFO b ON (a.vendor_seq = b.vendor_seq)
+		WHERE b.vendor_code = #{vendor_code}
+		ORDER BY a.model_seq
+	</select>
+	
 	<insert id="insert" parameterType="deviceModel">     	
 		INSERT INTO EMI_DEVICE_MODEL (			
 			model_nm

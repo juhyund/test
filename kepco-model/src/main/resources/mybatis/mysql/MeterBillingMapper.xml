@@ -11,10 +11,6 @@
 
 	<sql id="base_where_list">
 		<where>
-		<!-- 본부,지사 검색 -->
-		<if test="meter_id != null" >     
-            AND a.meter_id = #{meter_id}
-        </if>
         <if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
             AND a.billing_dt between #{sdate} AND #{edate}
         </if>
@@ -30,7 +26,9 @@
         <if test="meter_serial != null and meter_serial != ''" >     
             AND mi.meter_serial = #{meter_serial}
         </if>
-        
+        <if test="branch_id != null and branch_id != ''" >     
+            AND b.branch_id = #{branch_id}
+        </if>
 		<if test="searchfield != null and searchquery != null " >
 			AND ${searchfield} like concat(#{searchquery},'%')
 		</if>
@@ -63,10 +61,10 @@
 			a. meter_id
 			, meter_serial
 			, b.branch_nm
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = b.branch_parent_id) AS parent_branch_nm
 			, meter_serial
-			, meter_type
+			, ifnull(fnc_get_code_nm(mi.meter_type),'') as meter_type
 			, device_serial
-			, mi.billing_dt
 			, DATE_FORMAT(CONCAT(a.billing_dt,'00'),'${prop.small.dt}') AS billing_dt
 			, active_imp_tot			, apprent_imp_tot			, lead_imp_tot			, lagging_imp_tot			, pf_imp_tot
 			, active_imp_rate1			, apprent_imp_rate1			, lead_imp_rate1		, lagging_imp_rate1			, pf_imp_rate1	
