@@ -33,12 +33,12 @@ public class BranchController {
 		JSONObject json = new JSONObject();
 		try {
 			Map<String, Object> param = new HashMap<String, Object>();
-			JSONArray bInfo = this.branchInfoService.selectList(param);
+			JSONArray bInfo = this.branchInfoService.selectParent();
 			
 			JSONObject branchInfo = new JSONObject();
 			for(int i = 0 ; i < bInfo.size() ; i++){
 				JSONObject obj = (JSONObject) bInfo.get(i);
-				branchInfo.put(obj.get("branch_parent_id"), obj.get("branch_nm"));
+				branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
 			}
 			
 			json.put("branch_parent_id", branchInfo);
@@ -59,14 +59,12 @@ public class BranchController {
 		try {
 			Map<String, Object> param = new HashMap<String, Object>();
 			JSONObject branchInfo = new JSONObject();			
-			if(!"".equals(request.getParameter("branch_parent_id"))) {
-				param.put("branch_parent_id", request.getParameter("branch_parent_id"));
-				JSONArray bInfo = this.branchInfoService.selectList(param);
+			param.put("branch_parent_id", request.getParameter("branch_parent_id"));
+			JSONArray bInfo = this.branchInfoService.selectList(param);
 
-				for(int i = 0 ; i < bInfo.size() ; i++){
-					JSONObject obj = (JSONObject) bInfo.get(i);
-					branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
-				}
+			for(int i = 0 ; i < bInfo.size() ; i++){
+				JSONObject obj = (JSONObject) bInfo.get(i);
+				branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
 			}
 
 			json.put("branch_id", branchInfo);

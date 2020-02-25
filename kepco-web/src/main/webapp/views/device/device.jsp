@@ -258,6 +258,8 @@ function successResultCombo(data, status) {
 	$.each(data, function(nm, combo) {
 		$('#'+nm).append(new Option("선택", ""));
 		$.each(data[nm], function(key, value){
+			console.log("key: " + key);
+			console.log("value: " + value);
 			$('#'+nm).append(new Option(value, key));
 		});
 	});
