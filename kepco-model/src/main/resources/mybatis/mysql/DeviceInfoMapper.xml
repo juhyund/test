@@ -268,9 +268,11 @@
 	<select id="getDeviceInfo" resultType="deviceInfo" parameterType="java.lang.String">	
 		SELECT
 			a.device_id
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = d.branch_parent_id) AS parent_branch_nm
 			, d.branch_nm
 			, a.device_serial
 			, e.vendor_nm
+			, a.device_oid
 			, a.ip
 			, a.port
 			, a.fw_version

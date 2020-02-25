@@ -101,7 +101,7 @@ public class MeterBillingController {
 	
 	@RequestMapping(value = "/billingDetail")
 	public String meteringDetail(
-			@ModelAttribute(value="detail_meter_id") String meter_id,
+			@ModelAttribute(value="meter_id") String meter_id,
 			@ModelAttribute(value="sdate") String sdate,
 			@ModelAttribute(value="edate") String edate,
 			Model model) {

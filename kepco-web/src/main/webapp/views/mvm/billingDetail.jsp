@@ -62,7 +62,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">정기검침 >상세정보 </h3>
+	<h3 style="margin-top:6px">정기검침 > 상세정보 </h3>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
@@ -169,24 +169,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</table>
 					<input type="hidden" id="meter_id" name="meter_id" value="${meter_id}" class="form-control">
 				</form>
-							
 				
-			  	<!-- <div class="text-center" style="padding-bottom:15px">
-					<button class="btn btn-primary " type="button"><i class="fa fa-search"></i>&nbsp;&nbsp;<span class="bold">검색</span></button>
-					<button class="btn btn-primary " type="button"><i class="fa fa-undo"></i>&nbsp;&nbsp;<span class="bold">새로고침</span></button>
-				</div>  -->       
-				<div>
-					<div class="ibox "  style="width:100%";>                      
-	                    <div class="ibox-content text-center" style="min-height: 300px; overflow: hidden;">
-	                    <center>
-	                    <div id="chartContainer" style="min-width: 310px; height: 300px; margin: 0 auto"></div>	
-	                    </center>                        
-	                    
-                    </div>
-					<div id="grid" style="height:500px;" class="ag-theme-balham"></div>
-					<div class="col-sm-12" style="text-align:center"> 
-			        </div>
-			   </div>
+				
+				
+				
 			              
 			</div>
 		</div>
@@ -199,8 +185,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script type="text/javascript" charset="utf-8">	
 //var meter_id = $('#detail_meter_id').val();// ${meterId};
-var channelName = new Array();
-var channel_cnt = 0;
 
 $(document).ready(function() {	
 	init();
@@ -345,133 +329,6 @@ function loadMeterInfo(data, status) {
 	$('#meter_type').text(meter_type);
 	$('#last_comm_dt').text(last_comm_dt);
 }
-
-function loadChart(data, status){
-	var format = '{value: %m/%e %H:%M}';
-
-	var chartOptions = {
-		  chart: {
-		    scrollablePlotArea: {
-		      minWidth: 700
-		    },
-		    zoomType: "x"
-		  },
-
-		  title: {
-		    text: ''
-		  },
-		  xAxis: {
-				type: 'datetime',
-				labels: {
-					format: format,
-					overflow: 'justify'
-					
-				},
-				//minTickInterval: interval,
-				ordinal: false //this sets the fixed time formats 
-			
-			}, 
-
-		  yAxis: [{ // left y axis
-		    title: {
-		      text: null
-		    },
-		    labels: {
-		      align: 'left',
-		      x: 3,
-		      y: 16,
-		      format: '{value:.,0f}'
-		    },
-		    showFirstLabel: false
-		  }/* , { // right y axis
-		    linkedTo: 0,
-		    gridLineWidth: 0,
-		    opposite: true,
-		    title: {
-		      text: null
-		    },
-		    labels: {
-		      align: 'right',
-		      x: -3,
-		      y: 16,
-		      format: '{value:.,0f}'
-		    },
-		    showFirstLabel: false
-		  } */],
-		  lang: {
-		        noData: "No data to Display"
-		  },
-		  legend: {
-		    align: 'center',
-		    verticalAlign: 'bottom',
-		    borderWidth: 0
-		  },
-	 
-		  tooltip: {
-		    shared: true
-		  },
-
-		  plotOptions: {
-		    series: {
-		      cursor: 'pointer',
-		      point: {
-		        events: {
-		          click: function (e) {
-		            hs.htmlExpand(null, {
-		              pageOrigin: {
-		                x: e.pageX || e.clientX,
-		                y: e.pageY || e.clientY
-		              },
-		              headingText: this.series.name,
-		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
-		                this.y ,
-		              width: 200
-		            });
-		          }
-		        }
-		      }/* ,
-		      marker: {
-		        lineWidth: 1
-		      } */
-		    }
-		  },
-		  series: createSeries(data)
-		};
-	
-	
-	function createSeries(data) {
-		 var series = [];
-		 var channelData = [[],[],[],[],[],[],[],[],[]];
-		 
-			 //데이터 저장 (각 채널의 데이터 배열에 저장)
-			 data.resultGrid.forEach(function(row){
-				for(var i=0; i<channel_cnt; i++){
-					var point = [];
-					var pointData = "row.c"+(i+1)+"_metervalue";
-					
-					point.push(getTimeMilisec(row.read_dt_int.toString()));
-					point.push(eval(pointData));
-					
-					channelData[i].push(point);
-				}
-			 })
-			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
-			  for(var i=0; i<channel_cnt; i++){
-				 series.push({
-					 name : channelName[i],
-					 data : channelData[i]
-				 });
-			  }	
-			
-		  return series;
-	}
-	//highcharts 로딩
-	Highcharts.chart('chartContainer', chartOptions);
-	
-}
-
-
-
 
 </script>
 

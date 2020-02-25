@@ -174,12 +174,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "미터 시리얼", field: "meter_id"},
-	{headerName: "READ_DT", field: "read_dt"},
-   	{headerName: "구간검침값 (kWh)", 
-			   	field: "sect_meter_value", 
-			   	valueFormatter: numberFormatter,
-			   	cellStyle: { 'text-align': "right" }},
+	{headerName: "미터 시리얼", field: "meter_serial"},
+	{headerName: "미터 타입", field: "meter_type"},
+	{headerName: "검침일시", field: "read_dt"},
    	{headerName: "누적검침값 (kWh)",
 			   	field: "meter_value", 
 			   	valueFormatter: numberFormatter,
