@@ -90,7 +90,8 @@
 			a.meter_id,
 			a.meter_serial,
 			DATE_FORMAT(CONCAT(a.read_dt,'00'), '${prop.small.dt}') AS read_dt,
-			d.code_nm, meter_type, 
+			d.code_nm, 
+			ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type,
 			a.meter_value,
 			DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 		FROM (
@@ -148,7 +149,7 @@
 	<!-- 특정 미터의 가용 채널 리스트-->
 	<select id="selectMeterChannel" resultType="java.util.Map" parameterType="MeterValue">	
 		SELECT a.channel channel_code,
-			d.code_NM channel_name,
+			d.code_local_NM channel_name,
 			a.channel_idx channel_idx,
 			a.meter_type
 		FROM (

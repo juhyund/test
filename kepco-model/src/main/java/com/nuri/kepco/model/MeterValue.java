@@ -21,6 +21,7 @@ public class MeterValue extends CommonObj {
 	private String meter_type;
 	
 	private List<Map<String, Object>> channelList = new ArrayList<Map<String, Object>>();
+	private String meter_serial;
 	
 }
 
