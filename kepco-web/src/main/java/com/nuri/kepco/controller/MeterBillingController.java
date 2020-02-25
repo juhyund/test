@@ -34,7 +34,7 @@ public class MeterBillingController {
 	private BranchInfoService branchInfoService;
 	
 	
-	private String[] commStr = { "meter_serial", "device_serial","meter_type","branch_nm"};
+	private String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id",};
 	
 	@RequestMapping(value = "/ajaxMeterBilling")
 	public ResponseEntity<Object> ajaxMeterBilling(HttpServletRequest request) {                
@@ -43,7 +43,9 @@ public class MeterBillingController {
 		try {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
-			logger.info("\n\n -----------ajaxMeterBilling --------- \n param = "+param+"\n");
+			
+			param.put("sort", "billing_dt");
+			param.put("dir", "DESC");
 			
 			int cnt = this.meterBillingService.selectCount(param);
 			JSONArray jarr = this.meterBillingService.selectList(param);
@@ -51,8 +53,6 @@ public class MeterBillingController {
 			json.put("totalCount", cnt);
 			json.put("resultGrid", jarr);
 			
-			logger.info("\n\n -----------ajaxMeterBilling --------- \n개수"+cnt+"jarr= "+jarr+"\n" );
-
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
 		}
