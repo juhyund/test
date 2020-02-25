@@ -14,6 +14,8 @@ public class MeterInfo extends CommonObj {
 	private String energy_type_code;
 	private String meter_phase;
 	private String branch_id;
+	private String parent_branch_nm;
+	private String branch_nm;
 	private String model_seq;
 	private String ip;
 	private String port;

@@ -260,6 +260,7 @@
 	<select id="getMeterList" resultType="meterInfo" parameterType="meterInfo">	
 		SELECT 
 			b.device_serial
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = br.branch_parent_id) AS parent_branch_nm
 			, br.branch_nm
 			, a.meter_serial
 			, b.allow_yn
@@ -313,8 +314,22 @@
 		LEFT OUTER JOIN EMI_DEVICE_STATUS D ON (A.METER_ID = D.DEVICE_ID AND DEVICE_FLAG = 'M')
 		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
 		LEFT OUTER JOIN EMI_DEVICE_MODEL MO ON B.MODEL_SEQ = MO.MODEL_SEQ
-		
-		<include refid="base_where_list" />	
+		WHERE 1=1
+		<if test="meter_type != null" >     
+            AND a.meter_type = #{meter_type}
+        </if>
+        <if test="meter_serial != null" >     
+            AND a.meter_serial = #{meter_serial}
+        </if>
+        <if test="device_serial != null" >     
+            AND b.device_serial = #{device_serial}
+        </if>
+		<if test="device_status != null" > 	
+			AND D.DEVICE_STATUS = #{device_status}
+		</if>
+		<if test="sdate != null and edate != null">
+			AND d.last_comm_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>		
 	</select>
 	
 	<select id="getMeterDetailInfo" resultType="meterInfo" parameterType="meterInfo">
