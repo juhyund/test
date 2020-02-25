@@ -189,8 +189,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "단말번호", field: "device_serial"},
-	{headerName: "지사 명", field: "parent_branch_nm"},
-	{headerName: "지사 상세", field: "branch_nm"},
+	{headerName: "본부", field: "parent_branch_nm"},
+	{headerName: "지사", field: "branch_nm"},
 	{headerName: "단말모뎀", field: "model_nm"},
 	{headerName: "제조사", field: "vendor_nm"},
 	{headerName: "단말상태", field: "code_local_nm"},
@@ -238,11 +238,8 @@ function successResultHandler(data, status) {
 
 // device type
 function comboDeviceType() {
-	console.log("1");
 	var combo = [ 'ajaxParentBranchCombo', 'ajaxDeviceModelCombo' ];
-	console.log("12");
 	for (var i = 0; i < combo.length; i++) {
-		console.log(combo[i]);
 		var options = { 
 	           beforeSend  : showRequest,
 	           success     : successResultCombo,
@@ -261,6 +258,8 @@ function successResultCombo(data, status) {
 	$.each(data, function(nm, combo) {
 		$('#'+nm).append(new Option("선택", ""));
 		$.each(data[nm], function(key, value){
+			console.log("key: " + key);
+			console.log("value: " + value);
 			$('#'+nm).append(new Option(value, key));
 		});
 	});
