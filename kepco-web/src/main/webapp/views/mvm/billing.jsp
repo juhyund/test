@@ -31,7 +31,7 @@
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
-<script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js?ver" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js" charset="UTF-8"></script>
 <%-- <script src="<%=COMMON_PATH_JS%>/icheckbox.css"></script> --%>
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
 <link href="<%=COMMON_PATH_CSS%>/style.css?ver=1" rel="stylesheet">
@@ -299,31 +299,12 @@ function excelDownload() {
 } */
 
 onRowClicked = function(event){
-	//선택된 row의 meter_id를 파라미터로 BillingDetail.jsp를 팝업으로 연다.
-	
-	var selectedRows = dataGrid.getSelectedRow();
-    var selectedRowsString = '';
-    selectedRows.forEach( function(selectedRow, index) {
-    	selectedRowsString = selectedRow.meter_id;
-    });
-    
-    showDetailMeterBilling(selectedRowsString);
-    
-}
-
-
-var winObj;
-function showDetailMeterBilling(meter_id){ 
-	var opts="width=900, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
-
-	if(winObj)
-        winObj.close();
-	
-	var param = "?detail_meter_id="+meter_id;
+	var meter_id = event.data.meter_id;
+	var param = "?meter_id="+meter_id;
 	param += "&sdate="+$("#sdateView").val();
 	param += "&edate="+$("#edateView").val();
 	
-    winObj = window.open(COMMON_URL+"/billingDetail"+param, "", opts);
+	// location.href = CONTEXT_PATH + "/billingDetail"+param;
 }
 
 function resetForm(){

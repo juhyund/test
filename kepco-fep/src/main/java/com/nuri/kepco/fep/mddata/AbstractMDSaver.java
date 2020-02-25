@@ -52,6 +52,9 @@ public abstract class AbstractMDSaver {
 	
 	@Value("${unknown.model.name:UNKNOWN}")
 	private String unknownModelName;
+	
+	@Value("${default.branch.id:9999}")
+	private String defaultBranchId;
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
 
@@ -136,7 +139,10 @@ public abstract class AbstractMDSaver {
 				meter.setModel_seq(getModelSeqByName(unknownModelName)); 
 			}
 
-			if (isNewMeter) {
+			if (isNewMeter) {				
+				// default branch id
+				deviceInfo.setBranch_id(defaultBranchId);
+				
 				// insert
 				result = meterInfoDAO.insert(meter);
 			} else {
@@ -185,12 +191,13 @@ public abstract class AbstractMDSaver {
 			
 			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
 			if (meter == null) {				
-				result += meterInfoDAO.insert(meterInfo);
-				
+				// default branch id
+				deviceInfo.setBranch_id(defaultBranchId);
+				result += meterInfoDAO.insert(meterInfo);				
 			} else {
 				meterInfo.setMeter_id(meter.getMeter_id()); // meter id
 				result += meterInfoDAO.update(meterInfo);
-			}	
+			}
 			
 			updateDeviceStatus(meter, null);
 		
@@ -274,7 +281,8 @@ public abstract class AbstractMDSaver {
 				DeviceModel deviceModel = deviceModelDAO.selectModelByName(model_nm);
 				if(deviceModel != null) {
 					deviceInfo.setModel_seq(deviceModel.getModel_seq());
-				}
+				}				
+				deviceInfo.setBranch_id(defaultBranchId);
 				result = deviceInfoDAO.insert(deviceInfo);				
 			} else {
 				result = deviceInfoDAO.update(deviceInfo);

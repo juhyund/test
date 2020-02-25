@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
-<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=00"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=22"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script>
@@ -62,7 +62,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">검침 데이터 조회 :상세정보 </h3>
+	<h3 style="margin-top:6px">검침 데이터 조회 > 상세정보 </h3>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
