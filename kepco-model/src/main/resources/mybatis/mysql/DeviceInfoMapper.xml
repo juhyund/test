@@ -209,18 +209,18 @@
     <update id="update" parameterType="deviceInfo">
 		UPDATE EMI_DEVICE_INFO SET
 			device_serial = #{device_serial}
-			, service_id = #{service_id}
-			, branch_id = #{branch_id}
-			, model_seq = #{model_seq}
-			, device_oid = #{device_oid}
-			, comm_type = #{comm_type}
-			, device_type = #{device_type}
-			, ip = INET_ATON(#{ip})
-			, port = #{port}
-			, fw_version = #{fw_version}
-			, hw_version = #{hw_version}
-			, allow_yn = #{allow_yn}			
-			, remark = #{remark}			
+			<if test="service_id != null" > , service_id = #{service_id}</if>
+			<if test="branch_id != null" > , branch_id = #{branch_id}</if>
+			<if test="model_seq != null" > , model_seq = #{model_seq}</if>
+			<if test="device_oid != null" > , device_oid = #{device_oid}</if>
+			<if test="comm_type != null" > , comm_type = #{comm_type}</if>
+			<if test="device_type != null" > , device_type = #{device_type}</if>
+			<if test="ip != null" > , ip = INET_ATON(#{ip})</if>
+			<if test="port != null" > , port = #{port}</if>
+			<if test="fw_version != null" > , fw_version = #{fw_version}</if>
+			<if test="hw_version != null" > , hw_version = #{hw_version}</if>
+			<if test="allow_yn != null" > , allow_yn = #{allow_yn}</if>			
+			<if test="remark != null" > , remark = #{remark}</if>	
 		WHERE device_id = #{device_id}
 	</update>
 	
