@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class DeviceModel extends CommonObj {
 
-	private String model_seq;
+	private Integer model_seq;
 	private String model_nm;
-	private String vendor_seq;
+	private Integer vendor_seq;
 	private String reg_id;
 	private String reg_dt;
 	private String update_id;

@@ -11,7 +11,7 @@ public class DeviceInfo extends CommonObj {
 	private String device_serial;
 	private String service_id;
 	private String branch_id;
-	private String model_seq;
+	private Integer model_seq;
 	private String device_oid;
 	private String comm_type;
 	private String device_type;

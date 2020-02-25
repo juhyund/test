@@ -290,7 +290,7 @@
 			, ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type
 			, ifnull(fnc_get_code_nm(a.meter_phase),'') as meter_phase
 			, date_format(substr(billing_dt,1,8), '%y-%m-%d') as billing_dt
-			, ifnull(lp_period,'') as lp_period
+			, lp_period
 			, ifnull(cosem_device_name,'') as cosem_device_name 	
 			, date_format(a.reg_dt, '%y-%m-%d %h:%i:%s')   as reg_dt
 		    <!-- , ifnull(date_format(DS.last_comm_dt, '%y-%m-%d %h:%i:%s'),'')   as last_comm_dt -->

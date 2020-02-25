@@ -3,6 +3,7 @@ package com.nuri.kepco.fep.mddata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.aimir.util.TimeUtil;
@@ -14,6 +15,7 @@ import com.nuri.kepco.fep.datatype.MeterType.DEVICESTATUS;
 import com.nuri.kepco.fep.datatype.MeterType.DEVICETYPE;
 import com.nuri.kepco.fep.parser.DLMSVARIABLE;
 import com.nuri.kepco.model.DeviceInfo;
+import com.nuri.kepco.model.DeviceModel;
 import com.nuri.kepco.model.DeviceStatus;
 import com.nuri.kepco.model.MeterInfo;
 import com.nuri.kepco.model.VendorInfo;
@@ -44,6 +46,12 @@ public abstract class AbstractMDSaver {
 	DeviceInfoDAO deviceInfoDAO;
 
 	private DeviceInfo deviceInfo;
+	
+	@Value("${device.model.name}")
+	private String defaultModelName;
+	
+	@Value("${unknown.model.name:UNKNOWN}")
+	private String unknownModelName;
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
 
@@ -65,7 +73,7 @@ public abstract class AbstractMDSaver {
 			}
 			String meterType = mdData.getMeterType();
 			String meterPhase = mdData.getMeterPhase();
-
+			
 			// meter type
 			if (!"".equals(meterType) && meterType != null) {
 				meter.setMeter_type(meterType);
@@ -75,6 +83,7 @@ public abstract class AbstractMDSaver {
 
 			meter.setMeter_phase(meterPhase);
 			meter.setMeter_serial(mdData.getMeterID());
+			meter.setMeterModel(); // serial vendorCd, modelCd 
 			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
 			meter.setDevice_id(deviceInfo.getDevice_id());
 
@@ -110,11 +119,21 @@ public abstract class AbstractMDSaver {
 
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
+			logger.debug("meter.getVendorCd() : {}", meter.getVendorCd());
 			
 			// vendor info
 			int vendorSeq = getVendorSeqByCode(meter.getVendorCd());
-			if(vendorSeq > 0) {
+			if(vendorSeq > 0) {			
 				meter.setVendor_seq(vendorSeq);
+			}
+			
+			// model info
+			int model_seq = getModelSeqByVendorCode(meter.getVendorCd());			
+			if(model_seq > 0) {
+				meter.setModel_seq(model_seq);
+			} else {
+				// 없다면 default
+				meter.setModel_seq(getModelSeqByName(unknownModelName)); 
 			}
 
 			if (isNewMeter) {
@@ -139,6 +158,7 @@ public abstract class AbstractMDSaver {
 	}
 	
 	protected int checkMeter(MeterInfo meterInfo) {
+		
 		int result = 0;
 		
 		try {
@@ -152,10 +172,19 @@ public abstract class AbstractMDSaver {
 			int vendorSeq = getVendorSeqByCode(meterInfo.getVendorCd());
 			if(vendorSeq > 0) {
 				meterInfo.setVendor_seq(vendorSeq);
+			}		
+			
+			// model info
+			int model_seq = getModelSeqByVendorCode(meterInfo.getVendorCd());			
+			if(model_seq > 0) {
+				meterInfo.setModel_seq(model_seq);
+			} else {
+				// 없다면 default
+				meterInfo.setModel_seq(getModelSeqByName(unknownModelName)); 
 			}
-					
+			
 			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
-			if (meter == null) {
+			if (meter == null) {				
 				result += meterInfoDAO.insert(meterInfo);
 				
 			} else {
@@ -187,6 +216,36 @@ public abstract class AbstractMDSaver {
 		}
 		return -1;
 	}
+	
+	private Integer getModelSeqByVendorCode(String vendorCode) {
+		
+		DeviceModel deviceInfo = null;
+		try {
+			deviceInfo = deviceModelDAO.selectModelByVendorCode(vendorCode);			
+			if(deviceInfo != null) {
+				return deviceInfo.getModel_seq();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	private Integer getModelSeqByName(String modelName) {
+		
+		DeviceModel deviceInfo = null;
+		try {
+			deviceInfo = deviceModelDAO.selectModelByName(modelName);			
+			if(deviceInfo != null) {
+				return deviceInfo.getModel_seq();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 	protected int checkDevice(String deviceSerial, String modemTime) {
 
@@ -209,7 +268,13 @@ public abstract class AbstractMDSaver {
 			deviceInfo.setAllow_yn("1");
 			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
 
-			if (isNewDevice) {
+			if (isNewDevice) {				
+				// model을 default로 저장
+				String model_nm = defaultModelName;
+				DeviceModel deviceModel = deviceModelDAO.selectModelByName(model_nm);
+				if(deviceModel != null) {
+					deviceInfo.setModel_seq(deviceModel.getModel_seq());
+				}
 				result = deviceInfoDAO.insert(deviceInfo);				
 			} else {
 				result = deviceInfoDAO.update(deviceInfo);
