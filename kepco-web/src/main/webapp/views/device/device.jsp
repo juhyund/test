@@ -65,91 +65,91 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<form name="search_form" id="search_form" method="post">
 								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
 								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-									<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
-										<tbody>
-											<tr class="table-border">
-												<td height="80">
-													<div class="form-group row">
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
-														<div class="col-lg-3">
-															<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
-															<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
-																<option value=''>선택</option>
-															</select>
+								<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
+									<tbody>
+										<tr class="table-border">
+											<td height="80">
+												<div class="form-group row">
+													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
+													<div class="col-lg-3">
+														<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
+														<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+															<option value=''>선택</option>
+														</select>
+													</div>
+													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+													<div class="col-lg-3">
+														<select class="form-control" name="model_seq" id="model_seq"></select>
+													</div>
+													<label class="col-sm-1 col-form-label">등록일자</label>
+													<div class="col-sm-3" id="datePicker">
+														<div class="input-group date"
+															style="width: 48%; float: left;">
+															<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
+															<span class="input-group-addon" style="list-style: none;">
+																<i class="fa fa-calendar"></i>
+															</span>
 														</div>
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="model_seq" id="model_seq"></select>
-														</div>
-														<label class="col-sm-1 col-form-label">등록일자</label>
-														<div class="col-sm-3" id="datePicker">
-															<div class="input-group date"
-																style="width: 48%; float: left;">
-																<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
-															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
-															<div class="input-group date" style="width: 48%;">
-																<input type="text" class="form-control"  id="edate" name="edate" value=""> 
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
+														<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+														<div class="input-group date" style="width: 48%;">
+															<input type="text" class="form-control"  id="edate" name="edate" value=""> 
+															<span class="input-group-addon" style="list-style: none;">
+																<i class="fa fa-calendar"></i>
+															</span>
 														</div>
 													</div>
+												</div>
 
-													<div class="form-group form-group-end row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
-																<option value=''>선택</option>
-																<option value='device_id'>단말ID</option>
-																<option value='device_serial'>단말 번호</option>
-															</select>
-															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+												<div class="form-group form-group-end row">
+													<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+													<div class="col-lg-3">
+														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
+															<option value=''>선택</option>
+															<option value='device_id'>단말ID</option>
+															<option value='device_serial'>단말 번호</option>
+														</select>
+														<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+													</div>
+													
+													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
+													<div class="col-lg-3">
+														<select class="form-control" name="device_status" id="device_status">
+															<option value=''>선택</option>
+															<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
+															<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
+															<% }%>
+														</select>
+													</div>
+													
+													<label class="col-sm-1 col-form-label">통신일자</label>
+													<div class="col-sm-3" id="datePicker">
+														<div class="input-group date" style="width: 48%; float: left;">
+															<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
+															<span class="input-group-addon" style="list-style: none;">
+																<i class="fa fa-calendar"></i>
+															</span>
 														</div>
-														
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="device_status" id="device_status">
-																<option value=''>선택</option>
-																<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
-																<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
-																<% }%>
-															</select>
-														</div>
-														
-														<label class="col-sm-1 col-form-label">통신일자</label>
-														<div class="col-sm-3" id="datePicker">
-															<div class="input-group date" style="width: 48%; float: left;">
-																<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
-															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
-															<div class="input-group date" style="width: 48%;">
-																<input type="text" class="form-control"  id="ledate" name="ledate" value=""> 
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
+														<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+														<div class="input-group date" style="width: 48%;">
+															<input type="text" class="form-control"  id="ledate" name="ledate" value=""> 
+															<span class="input-group-addon" style="list-style: none;">
+																<i class="fa fa-calendar"></i>
+															</span>
 														</div>
 													</div>
-												</td>
-												<td width="180" height="80" style="text-align: right">
-													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
-														<i class="fa fa-search"></i>
-													</button>
-													<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
-														<i class="fa fa-undo"></i>
-													</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+												</div>
+											</td>
+											<td width="180" height="80" style="text-align: right">
+												<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
+													<i class="fa fa-search"></i>
+												</button>
+												<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
+													<i class="fa fa-undo"></i>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 
 								</form>
 								<div>
@@ -258,8 +258,6 @@ function successResultCombo(data, status) {
 	$.each(data, function(nm, combo) {
 		$('#'+nm).append(new Option("선택", ""));
 		$.each(data[nm], function(key, value){
-			console.log("key: " + key);
-			console.log("value: " + value);
 			$('#'+nm).append(new Option(value, key));
 		});
 	});
