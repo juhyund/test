@@ -8,5 +8,7 @@ import com.nuri.kepco.model.DeviceModel;
 public interface DeviceModelDAO extends GenericDAO<DeviceModel> {
 	
 	DeviceModel selectModelByName(String model_nm) throws Exception;
+	
+	DeviceModel selectModelByVendorCode(String vendor_seq) throws Exception;
 
 }
