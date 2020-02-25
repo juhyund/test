@@ -143,11 +143,20 @@ public class DeviceController {
 		JSONObject json = new JSONObject();
 		try {
 			Map<String, Object> param = new HashMap<String, Object>();
-			String[] commStr = { "device_id", "object_id" };
+			String[] commStr = { "device_id", "object_id", "instances" };
 			ControllerUtil.getCustomParam(request, commStr, param);
-			
-			param.put("device_id", request.getParameter("device_id"));
-			param.put("object_id", request.getParameter("object_id"));
+			/*
+			String searchfield = request.getParameter("searchfield");
+			String searchquery = request.getParameter("searchquery");
+			if("object_id".equals(searchfield)) {
+				param.put("object_id", searchquery);
+			} else if (!"".equals(searchfield)){
+				param.put("searchfield", searchfield);
+				param.put("searchquery", searchquery);
+			}
+			*/
+			//param.put("device_id", request.getParameter("device_id"));
+			//param.put("object_id", request.getParameter("object_id"));
 
 			JSONArray jarr = this.deviceResourceService.getResourceModelList(param);
 

@@ -81,9 +81,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a class="nav-link active" data-toggle="tab" href="#tab-1">기본정보</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-2">미터 설정 읽기/설정</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-3">OBIS 제어</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-4">TOU설정 조회</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-5">제어이력</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-3">검침스케줄 읽기/설정</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-5">TOU설정 조회</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-6">제어이력</a></li>
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" id="tab-1" class="tab-pane active">
@@ -183,6 +184,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                                 </div>
                             </div>
                             <div role="tabpanel" id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+									<!-- grid -->
+									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" id="tab-6" class="tab-pane">
                                 <div class="panel-body">
 									<!-- grid -->
 									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>

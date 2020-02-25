@@ -32,6 +32,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 function goBack() {
 	window.history.back();
 }
+
+function resetForm() {
+	$("#searchfield").val($("#target option:first").val());
+	$("#searchquery").val("");
+	$("#instances").val("");
+}
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js"
@@ -76,58 +82,50 @@ function goBack() {
 
 				<!-- body -->
 				<form name="search_form" id="search_form" method="post">
-					<input type=hidden name="device_id" id="device_id"
-						value="<%=device_id%>">
-				</form>
+				<input type=hidden name="device_id" id="device_id" value="<%=device_id%>">
 				<div class="row">
 					<div class="tab-content" style="width: 100%">
-						<div class="tab-pane fade show active" id="info">
+						<div class="tab-pane fade show active" id="info" ng-init="deviceInfo()">
 							<div class="col-lg-10">
 								<h4 style="margin-top: 6px">단말상세정보</h4>
 							</div>
 							<table class="table table-bordered white-bg" style="width: 100%">
-								<thead ng-controller="deviceCtrl">
+								<thead>
 									<tr>
 										<th class="device-detail-head">단말ID</th>
 										<td class="device-detail-body">{{device_info.device_id}}</td>
-										<th class="device-detail-head">지역본부
-										</td>
-										<td class="device-detail-body">{{device_info.branch_nm}}</td>
+										<th class="device-detail-head">지역본부</th>
+										<td class="device-detail-body">{{device_info.parent_branch_nm}} {{device_info.branch_nm}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">단말번호</th>
 										<td class="device-detail-body">{{device_info.device_serial}}</td>
-										<th class="device-detail-head">제조사
-										</td>
+										<th class="device-detail-head">제조사</th>
 										<td class="device-detail-body">{{device_info.vendor_nm}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">단말IP/PORT</th>
 										<td class="device-detail-body">{{device_info.ip}} /
 											{{device_info.port}}</td>
-										<th class="device-detail-head">모델명
-										</td>
+										<th class="device-detail-head">모델명</th>
 										<td class="device-detail-body">{{device_info.model_nm}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
 										<td class="device-detail-body">{{device_info.hw_version}}</td>
-										<th class="device-detail-head">펌웨어 버전
-										</td>
+										<th class="device-detail-head">펌웨어 버전</th>
 										<td class="device-detail-body">{{device_info.fw_version}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">인증방식</th>
 										<td class="device-detail-body">{{device_info.security_mode}}</td>
-										<th class="device-detail-head">단말상태
-										</td>
+										<th class="device-detail-head">단말상태</th>
 										<td class="device-detail-body">{{device_info.code_local_nm}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">최종통신일시</th>
 										<td class="device-detail-body">{{device_info.last_comm_dt}}</td>
-										<th class="device-detail-head">등록일시
-										</td>
+										<th class="device-detail-head">등록일시</th>
 										<td class="device-detail-body">{{device_info.reg_dt}}</td>
 									</tr>
 									<tr>
@@ -138,23 +136,75 @@ function goBack() {
 							</table>
 
 						</div>
-						<div class="tab-pane fade" id="object">
+						<div class="tab-pane fade" id="object" ng-init="objectModel()">
 							<div class="col-lg-10">
 								<h4 style="margin-top: 6px">오브젝트 정보</h4>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="ibox-title" style="border: 0px #f3f3f4; background-color: #f3f3f4">
+										<h5 style="margin-top: 6px; margin-right: 50px">단말 ID : {{device_info.device_id}}</h>
+										<h5 style="margin-top: 6px; margin-right: 50px">OID : {{device_info.device_oid}}</h>
+										<h5 style="margin-top: 6px; margin-right: 50px">제조사 : {{device_info.vendor_nm}}</h>
+										<h5 style="margin-top: 6px">모델 : {{device_info.model_nm}}</h>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="ibox-content" style="background-color: #e7eaec">
+										<table style="height: 100%; width: 100%; border: 0px #e7eaec">
+											<tbody>
+												<tr width="100%" >
+													<td width="90%">
+														<div class="form-group row">
+															<label class="col-lg-1 col-form-label" style="padding-left: 10px; font-weight: bold;">검색</label>
+															<div class="col-lg-5">
+																<select class="form-control" name="searchfield" id="searchfield" style="width: 30%; display: inline-block;">
+																	<option value=''>선택</option>
+																	<option value='object_id'>오브젝트 ID</option>
+																	<option value='object_nm'>오브젝트 명</option>
+																</select>
+																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+															</div>
+															<label class="col-lg-1 col-form-label" style="padding-left: 10px; font-weight: bold;">인스턴스</label>
+															<div class="col-lg-5">
+																<input type="text" class="form-control" name="instances" id="instances" style="width: 100%; height: 33px; vertical-align: top; display: inline;">
+															</div>
+														</div>
+		
+													</td>
+													<td width="120" style="text-align: right">
+														<button class="btn btn-primary" style="height: 40px; width: 40px" type="button" ng-click="objectModel()">
+															<i class="fa fa-search"></i>
+														</button>
+														<button class="btn btn-warning" style="height: 40px; width: 40px" type="button" onclick="resetForm();">
+															<i class="fa fa-undo"></i>
+														</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 							<div ng-repeat="object in objects">
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="ibox">
 											<div class="ibox-title">
-												<h5>{{object.object_nm}} - {{object.object_id}} /
-													{{object.object_instance_id}}</h5>
+												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 명  : {{object.object_nm}}</h>
+												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 ID : {{object.object_id}}</h>
+												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 인스턴스 : {{object.object_instance_id}}</h>
+												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 1">인스턴스 : Single</h>
+												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 0">인스턴스 : Multiple</h>
+												<h5 style="margin-top: 6px; margin-right: 50px">설명 : {{object.descr}}</h>
 												<div class="ibox-tools">
-													<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+													<a class="collapse-link" data-toggle="collapse" href={{resource.resource_id}} role="button" aria-expanded="false" aria-controls='{{resource.resource_id}}'>
+														<i class="fa fa-chevron-up"></i>
 													</a>
 												</div>
 											</div>
 											<!-- ibox-content -->
+											<!-- div class="ibox-content collapse" data-toggle="collapse" id='{{resource.resource_id}}' -->
 											<div class="ibox-content">
 												<div class="table-responsive">
 													<table class="table table-striped">
@@ -162,14 +212,14 @@ function goBack() {
 															<tr align="center">
 																<th width="100">리소스아이디</th>
 																<th style="text-align: left">리소스명</th>
-																<th width="150">리소스값</th>
-																<th width="150">단위</th>
 																<th width="150">Operation</th>
 																<th width="250">Observe 설정/해제</th>
 																<th width="250">값 변경</th>
 																<th width="80">속성설정</th>
 																<th width="80">실행</th>
 																<th width="250">제어상태</th>
+																<th width="150">리소스값</th>
+																<th width="150">단위</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -177,8 +227,6 @@ function goBack() {
 																ng-repeat="resource in object.resources">
 																<td>{{resource.resource_id}}</td>
 																<td align="left">{{resource.resource_nm}}</td>
-																<td>{{resource.resource_val}}</td>
-																<td>{{resource.unit}}</td>
 																<td>
 																	<button ng-show="resource.operation.indexOf('R') != -1"
 																		class="btn btn-primary btn-xs" type="button"
@@ -208,6 +256,8 @@ function goBack() {
 																		ng-click="attribute(resource);">속성</button></td>
 																<td>{{resource.operation_method}}</td>
 																<td>{{resource.statusMsg}} {{resource.tid}}</td>
+																<td>{{resource.resource_val}}</td>
+																<td>{{resource.unit}}</td>
 															</tr>
 														</tbody>
 													</table>
@@ -223,6 +273,7 @@ function goBack() {
 						</div>
 					</div>
 				</div>
+				</form>
 				<button class="btn btn-primary"
 					style="height: 50px; width: 50px; float: right;" type="button"
 					onclick="goBack();">
