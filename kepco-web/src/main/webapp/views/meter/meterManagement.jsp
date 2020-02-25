@@ -192,10 +192,11 @@ var columnDefs = [
 	{headerName: "계기번호", field: "meter_serial", cellStyle:{'text-align': "center"}},
 	{headerName: "검침주기", field: "lp_period", cellStyle:{'text-align': "center"}},
 	{headerName: "통신상태", field: "device_status", cellStyle:{'text-align': "center"}},
+	{headerName: "제조사", field: "vendor_nm"},
 	{headerName: "마지막 검침 일시", field: "last_comm_dt"},
 	{headerName: "모뎀번호", field: "device_serial", width:120},
 	{headerName: "모뎀 최종통신일자", field: "last_comm_dt"},
-	{headerName: "모뎀 운영상태", field: "allow_yn", cellStyle:{'text-align': "center"}}
+	{headerName: "인가여부", field: "allow_yn", cellStyle:{'text-align': "center"}}
 	/* {headerName: "계약상태", field: ""},
 	{headerName: "고객번호", field: ""} */
 ];
@@ -320,6 +321,20 @@ function showRequest() {
 function successResultHandler(data, status) {	
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
+	
+	//allow_yn 변환
+	$.each( data, function(index, item) {
+		if(index == 'resultGrid'){
+			for(var i=0; i<item.length; i++){
+				if(item[i].allow_yn == 1){
+					data.resultGrid[i].allow_yn = '인가'
+				}else if(item[i].allow_yn == 2){
+					data.resultGrid[i].allow_yn = '비인가'
+				}
+			}
+		}
+		
+	});
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
