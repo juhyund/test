@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page import="com.nuri.kepco.config.CodeConstants" %>
 <%@ include file="/commons/common_define.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -103,13 +103,22 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="form-group form-group-end row">
 														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
 														<div class="col-lg-3">
-														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;"></select>
+															<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
+																<option value=''>선택</option>
+																<option value='device_id'>단말ID</option>
+																<option value='device_serial'>단말 번호</option>
+															</select>
 															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 														</div>
 														
 														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="device_status" id="device_status"></select>
+															<select class="form-control" name="device_status" id="device_status">
+																<option value=''>선택</option>
+																<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
+																<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
+																<% }%>
+															</select>
 														</div>
 														
 														<label class="col-sm-1 col-form-label">통신일자</label>
@@ -180,7 +189,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "단말번호", field: "device_serial"},
-	{headerName: "지역번호", field: "branch_nm", width:250},
+	{headerName: "지사 명", field: "parent_branch_nm"},
+	{headerName: "지사 상세", field: "branch_nm"},
 	{headerName: "단말모뎀", field: "model_nm"},
 	{headerName: "제조사", field: "vendor_nm"},
 	{headerName: "단말상태", field: "code_local_nm"},
@@ -227,18 +237,24 @@ function successResultHandler(data, status) {
 }
 
 // device type
-function comboDeviceType() { 
-	var options = { 
+function comboDeviceType() {
+	console.log("1");
+	var combo = [ 'ajaxParentBranchCombo', 'ajaxDeviceModelCombo' ];
+	console.log("12");
+	for (var i = 0; i < combo.length; i++) {
+		console.log(combo[i]);
+		var options = { 
 	           beforeSend  : showRequest,
 	           success     : successResultCombo,
-	           url         : COMMON_URL + "/ajaxDeviceInfoCombo",
+	           url         : COMMON_URL + "/" + combo[i],
 	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 	           type        : "post", /* get, post */
 	           dataType    : "json", /* xml, html, script, json */
 	           data        : $("#search_form").serialize()
 	     };             
-	    
 	     $.ajax(options);
+	}
+	
 }
 
 function successResultCombo(data, status) {

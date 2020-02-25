@@ -228,6 +228,7 @@
 		SELECT
 			a.device_id
 			, a.device_serial
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = d.branch_parent_id) AS parent_branch_nm
 			, d.branch_nm
 			, b.model_nm
 			, e.vendor_nm
