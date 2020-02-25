@@ -34,7 +34,6 @@ public class CodeController {
 	
 	@RequestMapping(value = "/ajaxCodeCombo")
 	public ResponseEntity<Object> ajaxCodeCombo(HttpServletRequest request) {                
-		
 		List<Map<String, Object>> result = null;
 		try {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);

@@ -119,7 +119,9 @@ public class DLMSVARIABLE {
     	GT3P4W100A("45","MT004"), // 3상 4선식 100(10)A
     	GT1P2W5A("26","MT004"), // 단상 2선식 5A
     	GT3P4W5A("46","MT004"), // 3상 4선식 5A
-    	AET1P2W50A("19","MT003"); // 단상 2선식 50(5)A_contactor내장
+    	AET1P2W50A("19","MT003"), // 단상 2선식 50(5)A_contactor내장
+    	STYPE("34","MT001"), // STYPE
+    	UNKNOWN("99","MT006");
     	        
         private String code;
         private String name;
@@ -154,7 +156,9 @@ public class DLMSVARIABLE {
     	GT3P4W100A("45","MP005"), // 3상 4선식 100(10)A
     	GT1P2W5A("26","MP002"), // 단상 2선식 5A
     	GT3P4W5A("46","MP005"), // 3상 4선식 5A
-    	AET1P2W50A("19","MP002"); // 단상 2선식 50(5)A_contactor내장
+    	AET1P2W50A("19","MP002"), // 단상 2선식 50(5)A_contactor내장
+    	STYPE("34","MP005"), // STYPE
+    	UNKNOWN("99","MP001");
     	        
         private String code;
         private String name;

@@ -20,18 +20,18 @@
 <!-- Data picker -->
 <script src="<%=COMMON_PATH_JS%>/bootstrap-datepicker.js"></script>
 
-<link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css">
+<link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css?ver=0">
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
-<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=0qs"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
-<script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js?ver=00" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js?ver" charset="UTF-8"></script>
 <%-- <script src="<%=COMMON_PATH_JS%>/icheckbox.css"></script> --%>
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
 <link href="<%=COMMON_PATH_CSS%>/style.css?ver=1" rel="stylesheet">
@@ -74,37 +74,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div class="form-group row">
 										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 										<div class="col-lg-3">
-											<select class="form-control" name="branch_id" id="branch_id"></select>
+											<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
+											<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+												<option value=''>선택</option>
+											</select>
 										</div>
-										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지사</label>
-										<div class="col-lg-3">
-											<select class="form-control" name="branch_id" id="branch_id"></select>
-										</div>
-										<label class="col-lg-1 col-form-label">미터 ID</label>
-										<div class="col-lg-3">
-											<input type="text" id="meter_id" name="meter_id" value="" class="form-control">
-										</div>
-									</div>
-								
-
-									<div class="form-group row">
-										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">미터타입</label>
-										<div class="col-lg-3">
-											<select class="form-control" name="meter_type"	id="meter_type"></select>
-										</div> 
-										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">계기 번호</label>
-										<div class="col-lg-3">
-											<input type="text" id="meter_serial" name="meter_serial" value="" class="form-control">
-										</div>
-										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">모뎀 번호</label>
-										<div class="col-lg-3">
-											<input type="text" id="device_serial" name="device_serial" value="" class="form-control">
-										</div>
-									</div>
-									
-									<div class="form-group row">
 										<label class="col-sm-1 col-form-label">검침기간</label>
 										<div class="col-lg-3" id="datePicker">
 											<div class="input-group date"
@@ -126,11 +100,40 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 										<label class="col-lg-1 col-form-label"style="padding-left: 10px;"></label>
 										<div class="col-lg-3 btn-group">
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('today')">오늘</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('weekly')">주간</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('montly')">월간</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('thisMonth')">이번달</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('lastMonth')">저번달</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('twoMonthsAgo')">전전월</button>
 			                            </div>
 									</div>
+									<div class="form-group row">
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">계기타입</label>
+										<div class="col-lg-3">
+											<select class="form-control" name="meter_type"	id="meter_type"></select>
+										</div> 
+										<label class="col-lg-1 col-form-label"
+											style="padding-left: 10px;">계기 번호</label>
+										<div class="col-lg-3">
+											<input type="text" id="meter_serial" name="meter_serial" value="" class="form-control">
+										</div>
+										<label class="col-lg-1 col-form-label"
+											style="padding-left: 10px;">모뎀 번호</label>
+										<div class="col-lg-3">
+											<input type="text" id="device_serial" name="device_serial" value="" class="form-control">
+										</div>
+									</div>
+									<!--
+									<div class="form-group row">
+										
+										 <label class="col-lg-1 col-form-label">정기 검침일</label>
+										<div class="col-lg-3">
+											<select class="form-control" name="billing_dt"	id="billing_dt" type="number">
+												<option value=1 selected>1</option>
+												<option value=5 >5</option>
+												<option value=10 >10</option>
+												<option value=15 >15</option>
+											</select>	
+										</div> 
+									</div>-->
 								</td>
 								<td width="180" height="80" style="text-align: right">
 									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
@@ -189,37 +192,59 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:80},
-	{headerName: "검침일", field: "billing_dt"},
-	{headerName: "미터 시리얼", field: "meter_id"},
-	{headerName: "본부", field: "branch_nm"},
+	{headerName: "번호", field: "no", width:100},
+	{headerName: "검침일", field: "billing_dt", width:300},
+	{headerName: "미터 시리얼", field: "meter_id", width:270},
+	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
-	{headerName: "계기타입", field: "meter_type"},
-	{headerName: "계기번호", field: "meter_serial"},
-	{headerName: "모뎀 번호", field: "device_serial"},
-	
-	{headerName: "전체", 
-	   	field: "lagging_imp_tot", 
-	   	valueFormatter: numberFormatter,
-	   	cellStyle: { 'text-align': "right" }},
-   	{headerName: "rate1", 
-	   	field: "lagging_imp_rate1", 
-	   	valueFormatter: numberFormatter,
-	   	cellStyle: { 'text-align': "right" }}, 
-	{headerName: "rate2", 
-	   	field: "lagging_imp_rate2", 
-	   	valueFormatter: numberFormatter,
-	   	cellStyle: { 'text-align': "right" }},
-   	{headerName: "rate3", 
-	   	field: "lagging_imp_rate3", 
-	   	valueFormatter: numberFormatter,
-	   	cellStyle: { 'text-align': "right" }},   
-	{headerName: "rate4", 
-	   	field: "lagging_imp_rate4", 
-	   	valueFormatter: numberFormatter,
-	   	cellStyle: { 'text-align': "right" }},
- 
-	{headerName: "저장일시", field: "reg_dt"}
+	{headerName: "계기타입", field: "meter_type", width:230},
+	{headerName: "계기번호", field: "meter_serial", width:250},
+	{headerName: "모뎀 번호", field: "device_serial", width:250},
+	{headerName: '순방향 유효전력',
+       children: [{headerName: "전체", 
+					   	field: "active_imp_tot", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }},
+				   	{headerName: "T1", 
+					   	field: "active_imp_rate1", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }}, 
+					{headerName: "T2", 
+					   	field: "active_imp_rate2", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }}, 
+				   	{headerName: "T3", 
+					   	field: "active_imp_rate3", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }},   
+					{headerName: "T4", 
+					   	field: "active_imp_rate4", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }}]
+	},
+	{headerName: '역방향 유효전력',
+       children: [{headerName: "전체", 
+					   	field: "active_exp_tot", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }},
+				   	{headerName: "T1", 
+					   	field: "active_exp_rate1", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }}, 
+					{headerName: "T2", 
+					   	field: "active_exp_rate2", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }},
+				   	{headerName: "T3", 
+					   	field: "active_exp_rate3", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }},   
+					{headerName: "T4", 
+					   	field: "active_exp_rate4", 
+					   	valueFormatter: numberFormatter,
+					   	cellStyle: { 'text-align': "right" }}]
+		},
+	{headerName: "저장일시", field: "reg_dt", width:300}
 ];
 
 
@@ -244,7 +269,7 @@ function ajaxSearchForm() {
            data        : $("#search_form").serialize()
      };             
      $.ajax(options);
-}
+}/* 
 
 function excelDownload() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
@@ -267,12 +292,11 @@ function excelDownload() {
 			position: 'center',
 			icon: 'info',
 			text: 'excel 생성중',
-			showConfirmButton: false,
+			showConfirmButton: false
 				timer: 1500
 		});
 	}
-
-}
+} */
 
 onRowClicked = function(event){
 	//선택된 row의 meter_id를 파라미터로 BillingDetail.jsp를 팝업으로 연다.
@@ -304,7 +328,7 @@ function showDetailMeterBilling(meter_id){
 
 function resetForm(){
 	$("#search_form")[0].reset();
-	setSearchPeriod('today');
+	setSearchPeriod("thisMonth");
 	$("#grid-page").hide();
 };
 
@@ -326,6 +350,48 @@ function successResultHandler(data, status) {
 //device type
 function comboDeviceType() { 
      selectComboBox('meter_type', 'MT');
+     
+     var combo = [ 'ajaxParentBranchCombo'];
+ 	for (var i = 0; i < combo.length; i++) {
+ 		var options = { 
+ 	           beforeSend  : showRequest,
+ 	           success     : successResultCombo,
+ 	           url         : COMMON_URL + "/" + combo[i],
+ 	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+ 	           type        : "post", /* get, post */
+ 	           dataType    : "json", /* xml, html, script, json */
+ 	           data        : $("#search_form").serialize()
+ 	     };             
+ 	     $.ajax(options);
+ 	}
+}
+
+function changeParent() {
+	var sel_obj = document.getElementById('branch_id');
+    for(var i=0; i<sel_obj.options.length; i++) sel_obj.options[i] = null;
+    sel_obj.options.length = 0;
+
+	var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/ajaxBranchCombo",
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	    
+	     $.ajax(options);
+}
+function successResultCombo(data, status) {
+	$.each(data, function(nm, combo) {
+		$('#'+nm).append(new Option("선택", ""));
+		$.each(data[nm], function(key, value){
+			console.log("key: " + key);
+			console.log("value: " + value);
+			$('#'+nm).append(new Option(value, key));
+		});
+	});
 }
 
 function init() {
@@ -333,7 +399,7 @@ function init() {
 	// init
 	initGrid();
 	
-	setSearchPeriod('today');
+	setSearchPeriod('thisMonth');
 	comboDeviceType();
 	
 	// form search
