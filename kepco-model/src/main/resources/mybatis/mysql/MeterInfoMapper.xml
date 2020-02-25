@@ -220,6 +220,7 @@
 			, lp_period
 			, pcon
 			, net_metering
+			, vendor_seq
 			, reg_dt
 		) VALUES (
 			  #{meter_id}
@@ -246,6 +247,7 @@
 			, #{lp_period}
 			, #{pcon}
 			, #{net_metering}
+			, #{vendor_seq}
 			, now()
 		)
     </insert>
@@ -275,6 +277,7 @@
 			<if test="lp_period != null" >, lp_period = #{lp_period}</if>
 			<if test="pcon != null" >, pcon = #{pcon}</if>
 			<if test="net_metering != null" >, net_metering = #{net_metering}</if>
+			<if test="vendor_seq != null" >, vendor_seq = #{vendor_seq}</if>
 		WHERE meter_id = #{meter_id}
 	</update>
 	

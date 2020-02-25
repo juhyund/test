@@ -59,7 +59,7 @@
 		<mapper resource="mybatis/mysql/UserGroupMapper.xml" />
 		<mapper resource="mybatis/mysql/UserInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/UserLoginMapper.xml" />
-		<mapper resource="mybatis/mysql/VendorMapper.xml" />
+		<mapper resource="mybatis/mysql/VendorInfoMapper.xml" />
 		
 	</mappers>
 
