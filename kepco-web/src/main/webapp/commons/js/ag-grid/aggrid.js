@@ -278,9 +278,15 @@ function numberFormatter(params) {
 }
 
 function formatNumber(number) {
+	//소수점 네자리까지 표현
+	return number.toString();
+}
+
+function formatNumberComma(number) {
     // puts commas into the number eg 1000 goes to 1,000.
     return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
+
 
 
 

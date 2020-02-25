@@ -2433,3 +2433,7 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
    justify-content: center;
    font-weight: bold;
 }
+.ag-header-group-cell-label{
+   justify-content: center;
+   font-weight: bold;
+}

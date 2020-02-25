@@ -73,25 +73,21 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">지역본부</label>
 														<div class="col-lg-3">
-															<select class="form-control" name=""
-																id="central_nm"></select>
+															<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
+															<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+																<option value=''>선택</option>
+															</select>
 														</div>
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">지사</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="branch_nm"
-																id="branch_nm"></select>
-														</div>
-													</div>
-
-													<div class="form-group form-group-end row">
+														
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">계기타입</label>
 														<div class="col-lg-3">
 															<select class="form-control" name="meter_type"
 																id="meter_type"></select>
 														</div>
-														
+													</div>
+
+													<div class="form-group row">												
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">계기번호</label>
 														<div class="col-lg-3">
@@ -190,7 +186,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},
-	{headerName: "본부", field: "", width:100, cellStyle:{'text-align': "center"}},
+	{headerName: "본부", field: "parent_branch_nm", width:100, cellStyle:{'text-align': "center"}},
 	{headerName: "지사", field: "branch_nm", width:100, cellStyle:{'text-align': "center"}},
 	{headerName: "계기타입", field: "meter_type", width:150, cellStyle:{'text-align': "center"}},
 	{headerName: "계기번호", field: "meter_serial", cellStyle:{'text-align': "center"}},
@@ -206,13 +202,60 @@ var columnDefs = [
 
 // init selectComboBox
 //device type
-function comboDeviceType() { 
+function comboMeterType() { 
      selectComboBox('meter_type', 'MT');
 }
 
-//device type
+//device status
 function comboDeviceStatus() { 
      selectComboBox('device_status', 'CT');
+}
+
+// branch
+function comboBranch() {
+	console.log("1");
+	var combo = [ 'ajaxParentBranchCombo'];
+	for (var i = 0; i < combo.length; i++) {
+		console.log(combo[i]);
+		var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/" + combo[i],
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	     $.ajax(options);
+	}
+	
+}
+
+function changeParent() {
+	var sel_obj = document.getElementById('branch_id');
+    for(var i=0; i<sel_obj.options.length; i++) sel_obj.options[i] = null;
+    sel_obj.options.length = 0;
+
+	var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/ajaxBranchCombo",
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	    
+	     $.ajax(options);
+}
+
+function successResultCombo(data, status) {
+	$.each(data, function(nm, combo) {
+		$('#'+nm).append(new Option("선택", ""));
+		$.each(data[nm], function(key, value){
+			$('#'+nm).append(new Option(value, key));
+		});
+	});
 }
 
 var initGrid = function() {
@@ -221,6 +264,7 @@ var initGrid = function() {
     dataGrid.showNoRows();
 };
 
+// grid row click
 onRowClicked = function(event){
 	var meter_serial = event.data.meter_serial;
 	location.href = CONTEXT_PATH + "/meterDetail?meter_serial="+meter_serial;
@@ -286,6 +330,12 @@ function resetForm() {
 	$('#edate').val("");
 	$('#lsdate').val("");
 	$('#ledate').val("");
+	$("#branch_parent_id").val($("#target option:first").val());
+	$("#branch_id").val($("#target option:first").val());
+	$("#meter_type").val($("#target option:first").val());
+	$("#device_status").val($("#target option:first").val());
+	$("#meter_serial").val("");
+	$("#device_serial").val("");
 }
 
 
@@ -293,8 +343,9 @@ function init() {
 	
 	// init
 	// combo
-	comboDeviceType();
-	comboDeviceStatus()
+	comboMeterType();
+	comboDeviceStatus();
+	comboBranch();
 	
 	// Grid
 	initGrid();

@@ -211,18 +211,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 
 <script type="text/javascript" charset="utf-8">	
-//var meter_serial = $('#_meter_serial').val();
-
-//specify the columns  
-var columnDefs = [
-	{headerName: "번호", field: "no", width:80},
-	{headerName: "리소스 ID", field: "resource_id"},
-	{headerName: "리소스 명", field: "resource_name"},
-	{headerName: "인스턴스구분", field: "instance"},
-	{headerName: "필수", field: "mandatory"},
-	{headerName: "데이터 타입", field: "type"},
-	{headerName: "비고", field: "descr", width:250}
-];
 
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500);    
@@ -255,7 +243,6 @@ function showRequest() {
 }
 
 function successResultHandler(data, status) {	
-	//로딩
 	
 	var device_serial = data.result.device_serial;
 	var meter_serial = data.result.meter_serial;
@@ -267,16 +254,7 @@ function successResultHandler(data, status) {
 	var prog_version = data.result.prog_version;	
 	var meter_phase = data.result.meter_phase;
 	
-	document.getElementById('device_serial').innerText=device_serial;
-	document.getElementById('last_comm_dt').innerText=last_comm_dt;
-	document.getElementById('meter_serial').innerText=meter_serial;
-	
 	$('#device_serial').text(device_serial);
-	$('#device_serial').html(device_serial);
-	$('#meter_serial').text(meter_serial);
-	$('#meter_serial').html(meter_serial);
-	
-	
 	$('#meter_serial').text(meter_serial);
 	$('#reg_dt').text(reg_dt);
  	$('#last_comm_dt').text(last_comm_dt);
