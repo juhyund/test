@@ -14,6 +14,8 @@ public interface MeterInfoDAO extends GenericDAO<MeterInfo> {
 	List<MeterInfo> getMeterList(MeterInfo meterInfo);
 
 	int getMeterListCnt(MeterInfo meterInfo);
+
+	MeterInfo getMeterDetailInfo(String meterSerial);
 	
 }
 

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page import="com.nuri.kepco.config.CodeConstants" %>
 <%@ include file="/commons/common_define.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -72,7 +72,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="form-group row">
 														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="branch_id" id="branch_id"></select>
+															<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
+															<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+																<option value=''>선택</option>
+															</select>
 														</div>
 														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
 														<div class="col-lg-3">
@@ -100,13 +103,22 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="form-group form-group-end row">
 														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
 														<div class="col-lg-3">
-														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;"></select>
-															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; display: inline;">
+															<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
+																<option value=''>선택</option>
+																<option value='device_id'>단말ID</option>
+																<option value='device_serial'>단말 번호</option>
+															</select>
+															<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 														</div>
 														
 														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="device_status" id="device_status"></select>
+															<select class="form-control" name="device_status" id="device_status">
+																<option value=''>선택</option>
+																<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
+																<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
+																<% }%>
+															</select>
 														</div>
 														
 														<label class="col-sm-1 col-form-label">통신일자</label>
@@ -177,7 +189,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "단말번호", field: "device_serial"},
-	{headerName: "지역번호", field: "branch_nm", width:250},
+	{headerName: "본부", field: "parent_branch_nm"},
+	{headerName: "지사", field: "branch_nm"},
 	{headerName: "단말모뎀", field: "model_nm"},
 	{headerName: "제조사", field: "vendor_nm"},
 	{headerName: "단말상태", field: "code_local_nm"},
@@ -224,24 +237,29 @@ function successResultHandler(data, status) {
 }
 
 // device type
-function comboDeviceType() { 
-	var options = { 
+function comboDeviceType() {
+	var combo = [ 'ajaxParentBranchCombo', 'ajaxDeviceModelCombo' ];
+	for (var i = 0; i < combo.length; i++) {
+		var options = { 
 	           beforeSend  : showRequest,
 	           success     : successResultCombo,
-	           url         : COMMON_URL + "/ajaxDeviceInfoCombo",
+	           url         : COMMON_URL + "/" + combo[i],
 	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 	           type        : "post", /* get, post */
 	           dataType    : "json", /* xml, html, script, json */
 	           data        : $("#search_form").serialize()
 	     };             
-	    
 	     $.ajax(options);
+	}
+	
 }
 
 function successResultCombo(data, status) {
 	$.each(data, function(nm, combo) {
 		$('#'+nm).append(new Option("선택", ""));
 		$.each(data[nm], function(key, value){
+			console.log("key: " + key);
+			console.log("value: " + value);
 			$('#'+nm).append(new Option(value, key));
 		});
 	});
@@ -252,6 +270,7 @@ function resetForm() {
 	$('#edate').datepicker('setDate', null);
 	$('#lsdate').datepicker('setDate', null);
 	$('#ledate').datepicker('setDate', null);
+	$("#branch_parent_id").val($("#target option:first").val());
 	$("#branch_id").val($("#target option:first").val());
 	$("#model_seq").val($("#target option:first").val());
 	$("#searchfield").val($("#target option:first").val());
@@ -274,6 +293,25 @@ function init() {
 $(document).ready(function() {	
 	init();
 });
+
+function changeParent() {
+	var sel_obj = document.getElementById('branch_id');
+    for(var i=0; i<sel_obj.options.length; i++) sel_obj.options[i] = null;
+    sel_obj.options.length = 0;
+
+	var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/ajaxBranchCombo",
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	    
+	     $.ajax(options);
+}
+
 
 </script>
 

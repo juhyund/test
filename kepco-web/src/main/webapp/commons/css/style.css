@@ -4729,6 +4729,7 @@ body.body-small .footer.fixed {
   border-top: 1px solid #e7eaec;
   line-height: 1.42857;
   padding: 8px;
+  text-align: left;
   vertical-align: top;
 }
 /* PANELS */
@@ -9662,6 +9663,7 @@ body.md-skin {
 }
 
 .device-detail-head {
+	font-weight: bold;
 	width: 13%;
 }
 

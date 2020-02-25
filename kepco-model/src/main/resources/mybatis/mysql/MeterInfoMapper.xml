@@ -28,7 +28,16 @@
         </if>
         <if test="model_seq != null" >     
             AND a.model_seq = #{model_seq}
-        </if>       
+        </if>
+        <if test="meter_type != null" >     
+            AND a.meter_type = #{meter_type}
+        </if>
+        <if test="meter_serial != null" >     
+            AND a.meter_serial = #{meter_serial}
+        </if>
+        <if test="sdate != null and edate != null">
+			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>       
 		<if test="searchfield != null and searchquery != null " >
 			AND ${searchfield} like concat(#{searchquery},'%')
 		</if>
@@ -251,9 +260,9 @@
 	<select id="getMeterList" resultType="meterInfo" parameterType="meterInfo">	
 		SELECT 
 			b.device_serial
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = br.branch_parent_id) AS parent_branch_nm
 			, br.branch_nm
 			, a.meter_serial
-			, b.device_serial
 			, b.allow_yn
 			, mo.model_nm
 			, mo.vendor_seq
@@ -275,9 +284,22 @@
 		LEFT OUTER JOIN EMI_DEVICE_STATUS D ON (A.METER_ID = D.DEVICE_ID AND DEVICE_FLAG = 'M')
 		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
 		LEFT OUTER JOIN EMI_DEVICE_MODEL MO ON B.MODEL_SEQ = MO.MODEL_SEQ
-		
-		<include refid="base_where_list" />	
-		
+		WHERE 1=1
+		<if test="meter_type != null" >     
+            AND a.meter_type = #{meter_type}
+        </if>
+        <if test="meter_serial != null" >     
+            AND a.meter_serial = #{meter_serial}
+        </if>
+        <if test="device_serial != null" >     
+            AND b.device_serial = #{device_serial}
+        </if>
+		<if test="device_status != null" > 	
+			AND D.DEVICE_STATUS = #{device_status}
+		</if>
+		<if test="sdate != null and edate != null">
+			AND d.last_comm_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>			
 		<include refid="order_by_list" />	
 		
 		<include refid="query_limit" />
@@ -290,10 +312,52 @@
 		FROM EMI_METER_INFO A 
 		INNER JOIN EMI_DEVICE_INFO B ON (A.DEVICE_ID = B.DEVICE_ID)
 		LEFT OUTER JOIN EMI_DEVICE_STATUS D ON (A.METER_ID = D.DEVICE_ID AND DEVICE_FLAG = 'M')
-		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON B.BRANCH_ID = BR.BRANCH_ID
+		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
 		LEFT OUTER JOIN EMI_DEVICE_MODEL MO ON B.MODEL_SEQ = MO.MODEL_SEQ
-		
-		<include refid="base_where_list" />	
+		WHERE 1=1
+		<if test="meter_type != null" >     
+            AND a.meter_type = #{meter_type}
+        </if>
+        <if test="meter_serial != null" >     
+            AND a.meter_serial = #{meter_serial}
+        </if>
+        <if test="device_serial != null" >     
+            AND b.device_serial = #{device_serial}
+        </if>
+		<if test="device_status != null" > 	
+			AND D.DEVICE_STATUS = #{device_status}
+		</if>
+		<if test="sdate != null and edate != null">
+			AND d.last_comm_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>		
 	</select>
 	
+	<select id="getMeterDetailInfo" resultType="meterInfo" parameterType="meterInfo">
+		SELECT 
+			b.device_serial
+			, br.branch_nm
+			, a.meter_serial
+			, b.allow_yn
+			, mo.model_nm
+			, mo.vendor_seq
+			, ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type
+			, ifnull(fnc_get_code_nm(a.meter_phase),'') as meter_phase
+			, ifnull(fnc_get_code_nm(a.prog_id),'') as prog_id
+			, ifnull(fnc_get_code_nm(a.prog_version),'') as prog_version
+			, date_format(substr(billing_dt,1,8), '%y-%m-%d') as billing_dt
+			, ifnull(lp_period,'') as lp_period
+			, ifnull(cosem_device_name,'') as cosem_device_name 	
+			, date_format(a.reg_dt, '%y-%m-%d %h:%i:%s')   as reg_dt
+			, ifnull(date_format(d.last_renw_dt, '%y-%m-%d %h:%i:%s'),'')   as last_renw_dt			
+			, d.device_status
+			, DATE_FORMAT(d.last_comm_dt,'${prop.dt}') AS last_comm_dt
+			, b.COMM_TYPE
+			, b.IP			
+		FROM EMI_METER_INFO A 
+		INNER JOIN EMI_DEVICE_INFO B ON (A.DEVICE_ID = B.DEVICE_ID)
+		LEFT OUTER JOIN EMI_DEVICE_STATUS D ON (A.METER_ID = D.DEVICE_ID AND DEVICE_FLAG = 'M')
+		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
+		LEFT OUTER JOIN EMI_DEVICE_MODEL MO ON B.MODEL_SEQ = MO.MODEL_SEQ
+		WHERE A.METER_SERIAL = #{meter_serial}
+	</select>
 </mapper>

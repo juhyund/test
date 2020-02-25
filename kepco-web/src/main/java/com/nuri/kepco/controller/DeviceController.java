@@ -46,7 +46,7 @@ public class DeviceController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String[] commStr = { "branch_nm", "vendor_nm", "device_status", "lsdate", "ledate" };
+			String[] commStr = { "branch_parent_id", "branch_id", "model_seq", "device_status", "lsdate", "ledate" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
@@ -68,20 +68,13 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/ajaxDeviceInfoCombo")
-	public ResponseEntity<Object> ajaxDeviceInfoCombo(HttpServletRequest request) {                
+	@RequestMapping(value = "/ajaxDeviceModelCombo")
+	public ResponseEntity<Object> ajaxDeviceModelCombo(HttpServletRequest request) {                
 		
 		JSONObject json = new JSONObject();
 		try {
 			Map<String, Object> param = new HashMap<String, Object>();
-			JSONArray bInfo = this.branchInfoService.selectList(param);
 			JSONArray dModel = this.deviceModelService.selectList(param);
-			
-			JSONObject branchInfo = new JSONObject();
-			for(int i = 0 ; i < bInfo.size() ; i++){
-				JSONObject obj = (JSONObject) bInfo.get(i);
-				branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
-			}
 			
 			JSONObject deviceModel = new JSONObject();
 			for(int i = 0 ; i < dModel.size() ; i++){
@@ -89,20 +82,7 @@ public class DeviceController {
 				deviceModel.put(obj.get("model_seq"), obj.get("model_nm"));
 			}
 			
-			JSONObject deviceStat = new JSONObject();
-			for(DEVICE_STAT ds : DEVICE_STAT.values()){
-				deviceStat.put(ds.getDcodeId(), ds.getDescr());
-			}
-			
-			JSONObject searchfield = new JSONObject();
-			searchfield.put("device_id", "단말ID");
-			searchfield.put("device_serial", "단말 번호");
-			//search.put("model_seq", "단말 관리 번호");
-			
-			json.put("branch_id", branchInfo);
 			json.put("model_seq", deviceModel);
-			json.put("device_status", deviceStat);
-			json.put("searchfield", searchfield);
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
@@ -113,6 +93,8 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 
+	
+	
 	@RequestMapping(value = "/ajaxDeviceInfo")
 	public ResponseEntity<Object> ajaxDeviceInfo(HttpServletRequest request) {
 		
@@ -167,7 +149,7 @@ public class DeviceController {
 			param.put("device_id", request.getParameter("device_id"));
 			param.put("object_id", request.getParameter("object_id"));
 
-			JSONArray jarr = this.deviceResourceService.selectList(param);
+			JSONArray jarr = this.deviceResourceService.getResourceModelList(param);
 
 			json.put("result", jarr);
 		} catch (Exception e) {

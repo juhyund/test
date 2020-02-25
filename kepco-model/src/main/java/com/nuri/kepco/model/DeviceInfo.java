@@ -17,12 +17,17 @@ public class DeviceInfo extends CommonObj {
 	private String device_type;
 	private String ip;
 	private String port;
+	private String fw_version;
+	private String hw_version;
 	private String allow_yn;
 	private String init_reg_dt;
+	private String remark;
 	private String reg_id;
 	private String reg_dt;
 	private String dest_dt;
 	
+	private String branch_parent_id;
+	private String parent_branch_nm;
 	private String branch_nm;
 	private String model_nm;
 	private String vendor_nm;

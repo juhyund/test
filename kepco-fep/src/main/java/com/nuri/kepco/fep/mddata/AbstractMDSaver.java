@@ -110,6 +110,12 @@ public abstract class AbstractMDSaver {
 
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
+			
+			// vendor info
+			int vendorSeq = getVendorSeqByCode(meter.getVendorCd());
+			if(vendorSeq > 0) {
+				meter.setVendor_seq(vendorSeq);
+			}
 
 			if (isNewMeter) {
 				// insert

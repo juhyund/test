@@ -15,5 +15,6 @@ public interface DeviceResourceDAO extends GenericDAO<DeviceResource> {
 	
 	List<DeviceResource> getObjectModelList(DeviceResource param);
 
+	List<DeviceResource> getResourceModelList(DeviceResource param);
 }
 
