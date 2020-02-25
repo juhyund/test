@@ -82,8 +82,6 @@ public class KepcoDLMSParser {
 		DataUtil.convertEndian(true, DCNT);
 		int dcnt = DataUtil.getIntTo2Byte(DCNT); // 계기당 전송될 OBIS(/31011/x/112) 개수
 
-		
-
 		mdData.setMeterID(meterID); // MeterID 
 		mdData.setModemTime(modemTime); // 해당미터 검침 값 수신시 모뎀시간
 		
@@ -528,8 +526,18 @@ public class KepcoDLMSParser {
 		DLMSVARIABLE.METERTYPE type = DLMSVARIABLE.METERTYPE.getMeterType(modelCd);
 		DLMSVARIABLE.METERPHASE phase = DLMSVARIABLE.METERPHASE.getMeterPhase(modelCd);
 		
-		mdData.setMeterType(type.getName());
-		mdData.setMeterPhase(phase.getName());
+		if(type != null) {
+			mdData.setMeterType(type.getName());
+		} else {
+			mdData.setMeterType(DLMSVARIABLE.METERTYPE.UNKNOWN.getName());
+		}
+		
+		if(phase != null) {
+			mdData.setMeterPhase(phase.getName());
+		} else {
+			mdData.setMeterPhase(DLMSVARIABLE.METERPHASE.UNKNOWN.getName());
+		}
+		
 		mdData.setVendorCd(vendorCd);
 	}
 
