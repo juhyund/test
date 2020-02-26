@@ -272,10 +272,42 @@ public class DLMSTable {
 				break;
 			}
 			break;
-		case RELAY_CLASS:
-			break;
-		case MBUS_CLIENT_CLASS:
-			break;
+		case EXTEND_REGISTER:
+			if (attr == null)
+				break;
+			switch (attr) {
+			case REGISTER_ATTR02: // data
+				try {
+					if (obis == OBIS.ETYPE_BILLING && dlmsTags.size() != 0) {
+						if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.UINT32) {
+							ret.put(OBIS.ETYPE_BILLING.getName(), dlmsTags.get(0).getValue());
+							LOG.debug("ETYPE_BILLING : {}", ret.get(OBIS.ETYPE_BILLING.getName()));
+						}
+					}
+				} catch (Exception e) {
+					LOG.error("ERROR", e);
+				}
+				break;
+			case REGISTER_ATTR05: // 날짜
+				try {
+					if (obis == OBIS.ETYPE_BILLING && dlmsTags.size() != 0) {
+						byte[] data = dlmsTags.get(0).getOCTET().getValue();
+						if (data.length == 12) {
+							try {
+								String str = getDateTime(data);
+								ret.put(OBIS.ETYPE_BILLING.getName() + "-date", str);
+								LOG.debug("ETYPE_BILLING DATE: {}", ret.get(OBIS.ETYPE_BILLING.getName() + "-date"));
+							} catch (Exception e) {
+								LOG.warn("Exception : {}", e);
+							}
+						}
+					}
+				} catch (Exception e) {
+					LOG.error("ERROR", e);
+				}
+				break;
+			}			
+			break;		
 		default:
 			break;
 		}
@@ -348,7 +380,7 @@ public class DLMSTable {
 				break;
 			case BILLING_REVERSE:
 				getOBIS_CODE_BILLING_REVERSE_PROFILE(map, dataName, tag);
-				break;
+				break;			
 			}
 
 		} catch (Exception e) {
