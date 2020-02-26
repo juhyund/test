@@ -112,7 +112,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 														
 														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">최종통신 일자</label>
+															style="padding-left: 10px;">검침 일시</label>
 														<div class="col-sm-4" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
 																<input type="hidden" id="sdate" name="sdate" value=""> 
@@ -190,7 +190,7 @@ var columnDefs = [
 	{headerName: "지사", field: "branch_nm", width:100, cellStyle:{'text-align': "center"}},
 	{headerName: "계기타입", field: "meter_type", width:150, cellStyle:{'text-align': "center"}},
 	{headerName: "계기번호", field: "meter_serial", cellStyle:{'text-align': "center"}},
-	{headerName: "검침주기", field: "lp_period", cellStyle:{'text-align': "center"}},
+	{headerName: "검침주기(분)", field: "lp_period", cellStyle:{'text-align': "center"}},
 	{headerName: "통신상태", field: "device_status", cellStyle:{'text-align': "center"}},
 	{headerName: "제조사", field: "vendor_nm"},
 	{headerName: "마지막 검침 일시", field: "last_comm_dt"},
@@ -209,7 +209,7 @@ function comboMeterType() {
 
 //device status
 function comboDeviceStatus() { 
-     selectComboBox('device_status', 'CT');
+     selectComboBox('device_status', 'DS');
 }
 
 // branch

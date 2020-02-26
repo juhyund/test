@@ -25,7 +25,7 @@ import com.nuri.kepco.util.ControllerUtil;
 @Controller
 public class CodeController {
 	
-	Logger logger = LoggerFactory.getLogger(MeterValueController.class);
+	Logger logger = LoggerFactory.getLogger(CodeController.class);
 
 	@Autowired
 	private AllCodeService allCodeService;
