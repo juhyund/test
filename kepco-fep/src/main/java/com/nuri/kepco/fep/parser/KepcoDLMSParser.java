@@ -203,6 +203,15 @@ public class KepcoDLMSParser {
 						break;
 					}
 				}
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.ETYPE_BILLING) {// ETYPE 정기검침
+				for (int cnt = 0;; cnt++) {
+					obisCode = dlms.getDlmsHeader().getObis().getCode() + "-" + cnt;
+					LOG.debug("obisCode : " + obisCode);
+					if (!result.containsKey(obisCode)) {
+						result.put(obisCode, dlmsData);
+						break;
+					}
+				}
 			} else if (dlmsData != null && !dlmsData.isEmpty()) {
 				result.put(obisCode, dlmsData);
 			}
@@ -218,9 +227,11 @@ public class KepcoDLMSParser {
 		// 정기검침은 정기검침일에 생성된 데이터이다.		
 		List<MeterBilling> billingImport = setBillingImportData();
 		List<MeterBilling> billingExport = setBillingExportData();
+		List<MeterBilling> etypeBillingImport = setEtypeBillingImportData(); // etype 정기검침
 		
 		mdData.setBillingImportData(billingImport);
 		mdData.setBillingExportData(billingExport);
+		mdData.setETypeBillingImportData(etypeBillingImport);
 	}		
 	
 	public void setMeterInfo() {
@@ -376,13 +387,8 @@ public class KepcoDLMSParser {
 							chValue = ((Long) value).doubleValue();
 						else if (value instanceof Float)
 							chValue = ((Float) value).doubleValue();
-
-						// 단상 2선식 40(10)A & CHANNEL2 번 결선체결확인인 경우를 제외하고 단위 설정
-						LOG.debug("meterType [" + meterType + "] : [" + DLMSVARIABLE.METERTYPE.ET1P2W40A.getName()
-								+ "]");
-						if (!meterType.equals(DLMSVARIABLE.METERTYPE.ET1P2W40A.getName())) {
-							chValue = (chValue) * 0.001;
-						}
+						
+						chValue = (chValue) * 0.001;
 
 						lp = new LPData();
 						lp.setRead_dt(read_dt);
@@ -741,5 +747,69 @@ public class KepcoDLMSParser {
 		}
 		
 		return null;
+	}
+	
+	public List<MeterBilling> setEtypeBillingImportData() {
+		
+		List<MeterBilling> billingList = new ArrayList<MeterBilling>();
+		Map<String, Object> map = null;
+		String billingDate = "";
+		Double billingValue = null;
+		
+		try {				
+			for (int i = 0; i < result.size(); i++) {
+				
+				if (!result.containsKey(OBIS.ETYPE_BILLING.getCode() + "-" + i))
+					break;
+
+				if (result.containsKey(OBIS.ETYPE_BILLING.getCode() + "-" + i)) {
+					map = (Map<String, Object>) result.get(OBIS.ETYPE_BILLING.getCode() + "-" + i);
+				}
+
+				if (map == null) {
+					break;
+				}
+				
+				if (map.get(OBIS.ETYPE_BILLING.getName() + "-date") != null) {				
+					
+					Object obj = map.get(OBIS.ETYPE_BILLING.getName() + "-date");
+					if (obj != null)
+						billingDate = (String) obj;
+						LOG.debug("ETYPE_BILLING_DATE[" + (String) obj + "]");				
+				}			
+							
+				if (map.get(OBIS.ETYPE_BILLING.getName()) != null) {		
+					Object value = null;
+					Double chValue = 0.0;
+					
+					value = map.get(OBIS.ETYPE_BILLING.getName());				
+					if (value instanceof OCTET)
+						chValue = (double) DataUtil.getLongToBytes(((OCTET) value).getValue());
+					else if (value instanceof Long)
+						chValue = ((Long) value).doubleValue();
+					else if (value instanceof Float)
+						chValue = ((Float) value).doubleValue();
+					
+					billingValue = chValue;
+					LOG.debug("ETYPE_BILLING_VALUE[" + chValue + "]");			
+				}				
+			}
+			
+			if(billingValue != null) {
+				
+				MeterBilling billingImport = new MeterBilling();
+
+				billingImport.setMeter_id(meterID);
+				billingImport.setBilling_dt(billingDate);
+				billingImport.setActive_imp_tot(billingValue * 0.001);
+				
+				billingList.add(billingImport);
+			}
+						
+		} catch (Exception e) {
+			LOG.error("error", e);
+		}
+		
+		return billingList;
 	}
 }

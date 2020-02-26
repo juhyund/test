@@ -36,6 +36,8 @@ public class DLMSVARIABLE {
         BILLING_DATE("010000010200", "Monthly Billing Date"),	// 검침일자
         BILLING("000062010100", "Billing"),	// billing 0000620101VZ
         BILLING_REVERSE("000062010300", "Billing"),	// billing 역방향 0000620103VZ
+        
+        ETYPE_BILLING("010101080001", "EtypeBilling"), // ETYPE 정기검침
             	
         HW_VER("00002A0000FF", "METER VERSION");	// COSEM 계기 식별자
     
@@ -287,6 +289,7 @@ public class DLMSVARIABLE {
         REGISTER_ATTR02(2),        // value
         REGISTER_ATTR03(3),        // scalar unit
         REGISTER_ATTR04(4),        // status
+        REGISTER_ATTR05(5),        // 
         PROFILE_GENERIC_ATTR04(4),        // value
         PROFILE_GENERIC_ATTR02(2), // buffer
         PROFILE_GENERIC_ATTR03(3),	// capture object (for SAT)
