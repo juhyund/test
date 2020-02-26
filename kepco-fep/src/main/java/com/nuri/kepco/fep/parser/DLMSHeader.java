@@ -79,6 +79,10 @@ public class DLMSHeader {
 				this.attr = DLMS_CLASS_ATTR.REGISTER_ATTR02;
 			else if (attr == DLMS_CLASS_ATTR.REGISTER_ATTR03.getAttr())
 				this.attr = DLMS_CLASS_ATTR.REGISTER_ATTR03;
+			else if (attr == DLMS_CLASS_ATTR.REGISTER_ATTR04.getAttr())
+				this.attr = DLMS_CLASS_ATTR.REGISTER_ATTR04;
+			else if (attr == DLMS_CLASS_ATTR.REGISTER_ATTR05.getAttr())
+				this.attr = DLMS_CLASS_ATTR.REGISTER_ATTR05;
 			break;
 		case PROFILE_GENERIC:
 			if (attr == DLMS_CLASS_ATTR.PROFILE_GENERIC_ATTR02.getAttr())

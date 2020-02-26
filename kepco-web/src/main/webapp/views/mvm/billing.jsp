@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
-<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=0qs"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=5"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script>
@@ -304,7 +304,7 @@ onRowClicked = function(event){
 	param += "&sdate="+$("#sdateView").val();
 	param += "&edate="+$("#edateView").val();
 	
-	// location.href = CONTEXT_PATH + "/billingDetail"+param;
+	location.href = CONTEXT_PATH + "/billingDetail"+param;
 }
 
 function resetForm(){
