@@ -274,23 +274,24 @@ var onRowClicked = function (event) {
  * 사용법 : columnDefs생성 시  적용.
  */
 function numberFormatter(params) {
-	if(isNaN(params.value)){
-		return formatNaN(params.value);
-	}else{
-		return formatNumber(params.value);
+	if(!params.value){ //"", null, undefined, 0, NaN 인 경우
+			return formatNaN(params.value);	
 	}
-	return 0;
+	return formatNumber(params.value);
 }
 
 function formatNumber(number) {
 	//소수점 네자리까지 표현
 	return number.toString();
 }
-function formatNaN(NaN) {
-	//소수점 네자리까지 표현
+
+function formatNaN(number) {
+	//"", null, undefined, 0, NaN 인 경우
+	 if(number == '0'){
+		return "0.0000";
+	}
 	return "";
 }
-
 
 function formatNumberComma(number) {
     // puts commas into the number eg 1000 goes to 1,000.

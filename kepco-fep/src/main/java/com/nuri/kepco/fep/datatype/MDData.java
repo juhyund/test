@@ -39,4 +39,6 @@ public class MDData {
 	List<MeterBilling> billingImportData;
 	
 	List<MeterBilling> billingExportData;
+	
+	List<MeterBilling> eTypeBillingImportData;
 }

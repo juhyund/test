@@ -76,6 +76,10 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 					// 3. save meterBillingExport					
 					int result3 = saveMeterBillingExport(mdData);
 					LOG.debug("## SAVE meterBillingExport - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result3);
+					
+					// 4. save meterEtypeBillingExport					
+					int result4 = saveEtypeMeterBillingImport(mdData);
+					LOG.debug("## SAVE meterEtypeBillingExport - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result4);
 				}
 			}
 		}
@@ -217,6 +221,38 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				}
 			}
 		}
+		return result;
+	}
+	
+	
+	/**
+	 * 순방향 정기검침 (ETYPE)
+	 * @param mdData
+	 * @return
+	 */
+	public int saveEtypeMeterBillingImport(MDData mdData) {
+		
+		int result = 0;		
+		List<MeterBilling> meterBillings = mdData.getETypeBillingImportData();
+		
+		if(meterBillings != null) {
+			
+			MeterInfo meterInfo = mdData.getMeterInfo();
+			
+			for (MeterBilling meterBilling : meterBillings) {
+				
+				try {				
+					
+					meterBilling.setMeter_id(meterInfo.getMeter_id());			
+					
+					result += meterBillingDAO.insertImport(meterBilling);
+					
+				} catch (Exception e) {
+					LOG.error("error", e);
+				}
+			}			
+		}
+		
 		return result;
 	}
 	

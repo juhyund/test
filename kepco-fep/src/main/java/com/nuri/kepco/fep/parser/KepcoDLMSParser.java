@@ -203,6 +203,15 @@ public class KepcoDLMSParser {
 						break;
 					}
 				}
+			} else if (dlms.getDlmsHeader().getObis() == DLMSVARIABLE.OBIS.ETYPE_BILLING) {// ETYPE 정기검침
+				for (int cnt = 0;; cnt++) {
+					obisCode = dlms.getDlmsHeader().getObis().getCode() + "-" + cnt;
+					LOG.debug("obisCode : " + obisCode);
+					if (!result.containsKey(obisCode)) {
+						result.put(obisCode, dlmsData);
+						break;
+					}
+				}
 			} else if (dlmsData != null && !dlmsData.isEmpty()) {
 				result.put(obisCode, dlmsData);
 			}
@@ -218,9 +227,11 @@ public class KepcoDLMSParser {
 		// 정기검침은 정기검침일에 생성된 데이터이다.		
 		List<MeterBilling> billingImport = setBillingImportData();
 		List<MeterBilling> billingExport = setBillingExportData();
+		List<MeterBilling> etypeBillingImport = setEtypeBillingImportData(); // etype 정기검침
 		
 		mdData.setBillingImportData(billingImport);
 		mdData.setBillingExportData(billingExport);
+		mdData.setETypeBillingImportData(etypeBillingImport);
 	}		
 	
 	public void setMeterInfo() {
@@ -280,6 +291,8 @@ public class KepcoDLMSParser {
 			map = (Map<String, Object>) result.get(OBIS.ACTIVEPOWER_CONSTANT.getCode());
 			if (map != null) {
 				Object obj = map.get(OBIS.ACTIVEPOWER_CONSTANT.getName());
+				
+				LOG.debug("ACTIVEPOWER_CONSTANT : {} ", Hex.encode(String.valueOf(obj)));
 				if (obj != null)
 					acon = Double.parseDouble(String.valueOf(obj));
 				LOG.debug("ACON[" + acon + "]");
@@ -376,13 +389,8 @@ public class KepcoDLMSParser {
 							chValue = ((Long) value).doubleValue();
 						else if (value instanceof Float)
 							chValue = ((Float) value).doubleValue();
-
-						// 단상 2선식 40(10)A & CHANNEL2 번 결선체결확인인 경우를 제외하고 단위 설정
-						LOG.debug("meterType [" + meterType + "] : [" + DLMSVARIABLE.METERTYPE.ET1P2W40A.getName()
-								+ "]");
-						if (!meterType.equals(DLMSVARIABLE.METERTYPE.ET1P2W40A.getName())) {
-							chValue = (chValue) * 0.001;
-						}
+						
+						chValue = (chValue) * 0.001;
 
 						lp = new LPData();
 						lp.setRead_dt(read_dt);
@@ -538,6 +546,9 @@ public class KepcoDLMSParser {
 			mdData.setMeterPhase(DLMSVARIABLE.METERPHASE.UNKNOWN.getName());
 		}
 		
+		LOG.debug("METER TYPE : {}", mdData.getMeterType());
+		LOG.debug("METER PHASE : {}", mdData.getMeterPhase());
+		
 		mdData.setVendorCd(vendorCd);
 	}
 
@@ -603,41 +614,71 @@ public class KepcoDLMSParser {
 
 						billing[j] = chValue;
 					}
-
-					MeterBilling billingImport = new MeterBilling();
-					billingImport.setMeter_id(meterID);
-					billingImport.setBilling_dt(billingDate);
-					billingImport.setActive_imp_tot(billing[0] * 0.001);
-					billingImport.setApprent_imp_tot(billing[1] * 0.001);
-					billingImport.setLead_imp_tot(billing[2] * 0.001);
-					billingImport.setLagging_imp_tot(billing[3] * 0.001);
-					billingImport.setPf_imp_tot(billing[4]);
-
-					billingImport.setActive_imp_rate1(billing[5] * 0.001);
-					billingImport.setApprent_imp_rate1(billing[6] * 0.001);
-					billingImport.setLead_imp_rate1(billing[7] * 0.001);
-					billingImport.setLagging_imp_rate1(billing[8] * 0.001);
-					billingImport.setPf_imp_rate1(billing[9]);
-
-					billingImport.setActive_imp_rate2(billing[10] * 0.001);
-					billingImport.setApprent_imp_rate2(billing[11] * 0.001);
-					billingImport.setLead_imp_rate2(billing[12] * 0.001);
-					billingImport.setLagging_imp_rate2(billing[13] * 0.001);
-					billingImport.setPf_imp_rate2(billing[14]);
-
-					billingImport.setActive_imp_rate3(billing[15] * 0.001);
-					billingImport.setApprent_imp_rate3(billing[16] * 0.001);
-					billingImport.setLead_imp_rate3(billing[17] * 0.001);
-					billingImport.setLagging_imp_rate3(billing[18] * 0.001);
-					billingImport.setPf_imp_rate3(billing[19]);
-
-					billingImport.setActive_imp_rate4(billing[20] * 0.001);
-					billingImport.setApprent_imp_rate4(billing[21] * 0.001);
-					billingImport.setLead_imp_rate4(billing[22] * 0.001);
-					billingImport.setLagging_imp_rate4(billing[23] * 0.001);
-					billingImport.setPf_imp_rate4(billing[24]);
 					
-					billingList.add(billingImport);
+					if(mdData.getMeterType().equals(DLMSVARIABLE.METERTYPECODE.STYPE.getCode())) {
+						
+						LOG.debug("BillingDate : {}",  billingDate);
+						MeterBilling billingImport = new MeterBilling();
+						billingImport.setMeter_id(meterID);
+						billingImport.setBilling_dt(billingDate);
+						
+						// total
+						billingImport.setActive_imp_tot(billing[0] * 0.001); // 순방향 유효
+						billingImport.setLagging_imp_tot(billing[1] * 0.001); // 지상 무효
+						billingImport.setPf_imp_tot(billing[2]); // 역률
+						// tariff1
+						billingImport.setActive_imp_rate1(billing[3] * 0.001); // 순방향 유효
+						billingImport.setLagging_imp_rate1(billing[4] * 0.001); // 지상 무효
+						billingImport.setPf_imp_rate1(billing[5]); // 역률
+						
+						// tariff2
+						billingImport.setActive_imp_rate2(billing[6] * 0.001);	// 순방향 유효					
+						billingImport.setLagging_imp_rate2(billing[7] * 0.001); // 지상 무효
+						billingImport.setPf_imp_rate2(billing[8]); // 역률
+						
+						// tariff3
+						billingImport.setActive_imp_rate3(billing[9] * 0.001); // 순방향 유효	
+						billingImport.setLagging_imp_rate3(billing[10] * 0.001); // 지상 무효
+						billingImport.setPf_imp_rate3(billing[11]); // 역률
+
+						billingList.add(billingImport);
+						
+					} else {
+						MeterBilling billingImport = new MeterBilling();
+						billingImport.setMeter_id(meterID);
+						billingImport.setBilling_dt(billingDate);
+						billingImport.setActive_imp_tot(billing[0] * 0.001);
+						billingImport.setApprent_imp_tot(billing[1] * 0.001);
+						billingImport.setLead_imp_tot(billing[2] * 0.001);
+						billingImport.setLagging_imp_tot(billing[3] * 0.001);
+						billingImport.setPf_imp_tot(billing[4]);
+
+						billingImport.setActive_imp_rate1(billing[5] * 0.001);
+						billingImport.setApprent_imp_rate1(billing[6] * 0.001);
+						billingImport.setLead_imp_rate1(billing[7] * 0.001);
+						billingImport.setLagging_imp_rate1(billing[8] * 0.001);
+						billingImport.setPf_imp_rate1(billing[9]);
+
+						billingImport.setActive_imp_rate2(billing[10] * 0.001);
+						billingImport.setApprent_imp_rate2(billing[11] * 0.001);
+						billingImport.setLead_imp_rate2(billing[12] * 0.001);
+						billingImport.setLagging_imp_rate2(billing[13] * 0.001);
+						billingImport.setPf_imp_rate2(billing[14]);
+
+						billingImport.setActive_imp_rate3(billing[15] * 0.001);
+						billingImport.setApprent_imp_rate3(billing[16] * 0.001);
+						billingImport.setLead_imp_rate3(billing[17] * 0.001);
+						billingImport.setLagging_imp_rate3(billing[18] * 0.001);
+						billingImport.setPf_imp_rate3(billing[19]);
+
+						billingImport.setActive_imp_rate4(billing[20] * 0.001);
+						billingImport.setApprent_imp_rate4(billing[21] * 0.001);
+						billingImport.setLead_imp_rate4(billing[22] * 0.001);
+						billingImport.setLagging_imp_rate4(billing[23] * 0.001);
+						billingImport.setPf_imp_rate4(billing[24]);
+						
+						billingList.add(billingImport);
+					}
 					
 					cnt++;
 
@@ -741,5 +782,69 @@ public class KepcoDLMSParser {
 		}
 		
 		return null;
+	}
+	
+	public List<MeterBilling> setEtypeBillingImportData() {
+		
+		List<MeterBilling> billingList = new ArrayList<MeterBilling>();
+		Map<String, Object> map = null;
+		String billingDate = "";
+		Double billingValue = null;
+		
+		try {				
+			for (int i = 0; i < result.size(); i++) {
+				
+				if (!result.containsKey(OBIS.ETYPE_BILLING.getCode() + "-" + i))
+					break;
+
+				if (result.containsKey(OBIS.ETYPE_BILLING.getCode() + "-" + i)) {
+					map = (Map<String, Object>) result.get(OBIS.ETYPE_BILLING.getCode() + "-" + i);
+				}
+
+				if (map == null) {
+					break;
+				}
+				
+				if (map.get(OBIS.ETYPE_BILLING.getName() + "-date") != null) {				
+					
+					Object obj = map.get(OBIS.ETYPE_BILLING.getName() + "-date");
+					if (obj != null)
+						billingDate = (String) obj;
+						LOG.debug("ETYPE_BILLING_DATE[" + (String) obj + "]");				
+				}			
+							
+				if (map.get(OBIS.ETYPE_BILLING.getName()) != null) {		
+					Object value = null;
+					Double chValue = 0.0;
+					
+					value = map.get(OBIS.ETYPE_BILLING.getName());				
+					if (value instanceof OCTET)
+						chValue = (double) DataUtil.getLongToBytes(((OCTET) value).getValue());
+					else if (value instanceof Long)
+						chValue = ((Long) value).doubleValue();
+					else if (value instanceof Float)
+						chValue = ((Float) value).doubleValue();
+					
+					billingValue = chValue;
+					LOG.debug("ETYPE_BILLING_VALUE[" + chValue + "]");			
+				}				
+			}
+			
+			if(billingValue != null) {
+				
+				MeterBilling billingImport = new MeterBilling();
+
+				billingImport.setMeter_id(meterID);
+				billingImport.setBilling_dt(billingDate);
+				billingImport.setActive_imp_tot(billingValue * 0.001);
+				
+				billingList.add(billingImport);
+			}
+						
+		} catch (Exception e) {
+			LOG.error("error", e);
+		}
+		
+		return billingList;
 	}
 }
