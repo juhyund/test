@@ -27,6 +27,13 @@
 <script src="<%=COMMON_PATH_JS%>/angular-route.min.js"></script>
 <script src="<%=COMMON_PATH_JS%>/controller/deviceApp.js"></script>
 
+
+<link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css">
+<link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
+
+<script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
+
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 function goBack() {
@@ -38,6 +45,61 @@ function resetForm() {
 	$("#searchquery").val("");
 	$("#instances").val("");
 }
+
+//specify the columns
+var columnDefs = [
+	{headerName: "번호", field: "no", width:100, menuTabs:[]},
+	{headerName: "생성일자", field: "reg_dt", menuTabs:[]},
+	{headerName: "파일명", field: "fw_nm", menuTabs:[]},
+	{headerName: "패키지 명", field: "fw_file_nm", menuTabs:[]},
+	{headerName: "패키지 버전", field: "fw_version", menuTabs:[]}
+];
+
+var initGrid = function() {
+  dataGrid = new DataGrid('grid', columnDefs, true, 500);    
+  dataGrid.makeGrid();
+  dataGrid.showNoRows();
+};
+
+onRowClicked = function(event){
+	var device_id = event.data.device_id;
+	
+}
+
+function ajaxSearchForm() {
+	initGrid();
+  var options = { 
+         beforeSend  : showRequest,
+         success     : successResultHandler,
+         url         : COMMON_URL + "/ajaxDeviceFWList",
+         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+         type        : "post", /* get, post */
+         dataType    : "json", /* xml, html, script, json */
+         data        : $("#search_form").serialize()
+   };             
+  
+   $.ajax(options);
+}
+
+function successResultHandler(data, status) {	
+	var dataPerPage = $("#limit").val();
+	var currentPage = $("#page").val();
+	
+	dataGrid.setData(data.resultGrid);
+	gridPage(data.totalCount, dataPerPage, 10, currentPage);
+}
+function showRequest() {
+	// $("#loading").show();
+}
+
+
+function fwListModal() {
+	ajaxSearchForm();
+	$('#writeSubmit').unbind();
+    $('#fwListModal').modal('show');
+	
+};
+
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js"
@@ -210,16 +272,16 @@ function resetForm() {
 													<table class="table table-striped">
 														<thead>
 															<tr align="center">
-																<th width="100">리소스아이디</th>
+																<th width="100">리소스 ID</th>
 																<th style="text-align: left">리소스명</th>
-																<th width="150">Operation</th>
-																<th width="250">Observe 설정/해제</th>
-																<th width="250">값 변경</th>
-																<th width="80">속성설정</th>
-																<th width="80">실행</th>
-																<th width="250">제어상태</th>
 																<th width="150">리소스값</th>
 																<th width="150">단위</th>
+																<th width="150">Operation</th>
+																<th width="80">속성설정</th>
+																<th width="250">Observe 설정/해제</th>
+																<th width="250">값 변경</th>
+																<th width="80">실행</th>
+																<th width="250">제어상태</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -227,6 +289,8 @@ function resetForm() {
 																ng-repeat="resource in object.resources">
 																<td>{{resource.resource_id}}</td>
 																<td align="left">{{resource.resource_nm}}</td>
+																<td>{{resource.resource_val}}</td>
+																<td>{{resource.unit}}</td>
 																<td>
 																	<button ng-show="resource.operation.indexOf('R') != -1"
 																		class="btn btn-primary btn-xs" type="button"
@@ -234,6 +298,16 @@ function resetForm() {
 																	<button ng-show="resource.operation.indexOf('E') != -1"
 																		class="btn btn-primary btn-xs" type="button"
 																		ng-click="execute(resource);">Execute</button>
+																</td>
+																<td>
+																	<!-- button
+																		ng-show="resource.operation.indexOf('R') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="attribute(resource);">속성</button -->
+																	<button
+																		ng-show="resource.operation.indexOf('R') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		onclick="fwListModal()">속성</button>
 																</td>
 																<td>
 																	<button ng-show="resource.operation.indexOf('R') != -1"
@@ -250,14 +324,9 @@ function resetForm() {
 																	<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
 																		ng-click="write(resource, newValue);">Write</button></td>
-																<td><button
-																		ng-show="resource.operation.indexOf('R') != -1"
-																		class="btn btn-primary btn-xs" type="button"
-																		ng-click="attribute(resource);">속성</button></td>
 																<td>{{resource.operation_method}}</td>
 																<td>{{resource.statusMsg}} {{resource.tid}}</td>
-																<td>{{resource.resource_val}}</td>
-																<td>{{resource.unit}}</td>
+																
 															</tr>
 														</tbody>
 													</table>
@@ -335,6 +404,69 @@ function resetForm() {
 	</div>
 	</div>
 	<!-- modal -->
-
+	
+	<!-- modal -->
+	<div class="modal bs-example-modal-sm" id="fwListModal" tabindex="-1" role="dialog"
+	aria-labelledby="fwListModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">				
+				<h4 class="modal-title">펌웨어 파일 목록</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">		
+			<form class="form-horizontal" role="form" method="post" id="form">
+				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
+				<div>
+					<div class="ibox-content" style="background-color: #e7eaec">
+						<table style="height: 100%; width: 100%; border: 0px #e7eaec">
+							<tbody>
+								<tr width="100%" >
+									<td width="75%">
+										<div class="form-group row">
+											<div class="col-lg-6">
+												<input type="text" placeholder="패키지 명" class="form-control" name="fw_nm" id="fw_nm" style="height: 35px; display: inline;">
+											</div>
+											<div class="col-lg-6">
+												<input type="text" placeholder="패키지 버전" class="form-control" name="fw_version" id="fw_version" style="height: 35px; display: inline;">
+											</div>
+										</div>
+									</td>
+									<td width="25%" style="text-align: right">
+										<button class="btn btn-primary" style="height: 35px; width: 40px" type="button" ng-click="objectModel()">
+											<i class="fa fa-search"></i>
+										</button>
+										<button class="btn btn-warning" style="height: 35px; width: 40px" type="button" onclick="resetForm();">
+											<i class="fa fa-upload"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			
+				<!-- grid -->
+				<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+				
+				<!-- grid pagination -->
+				<center>
+				<div id="grid-page" style ="display:none;" class="m-t-sm">
+					<ul id="pagination" class="pagination"></ul>
+				</div>
+				</center>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="writeSubmit">모뎀전송</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</form>
+		</div>
+	</div>
+	</div>
+	<!-- modal -->
+	
 </body>
 </html>
