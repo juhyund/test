@@ -544,6 +544,9 @@ public class KepcoDLMSParser {
 			mdData.setMeterPhase(DLMSVARIABLE.METERPHASE.UNKNOWN.getName());
 		}
 		
+		LOG.debug("METER TYPE : {}", mdData.getMeterType());
+		LOG.debug("METER PHASE : {}", mdData.getMeterPhase());
+		
 		mdData.setVendorCd(vendorCd);
 	}
 
