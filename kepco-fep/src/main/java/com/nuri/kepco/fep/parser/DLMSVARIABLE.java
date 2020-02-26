@@ -112,6 +112,38 @@ public class DLMSVARIABLE {
         }
     }
     
+    public enum METERTYPECODE {
+    	
+    	STYPE("MT001","MT001"),	
+    	ETYPE("MT002","MT002"),	
+    	EATYPE("MT003","MT003"),
+    	GTYPE("MT004","MT004"),
+    	SECTYPE("MT005","MT005"), 
+    	UNKNOWN("MT006","MT006");
+    	        
+        private String code;
+        private String name;
+        
+        METERTYPECODE(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+        
+        public String getCode() {
+            return this.code;
+        }
+        
+        public String getName() {
+            return this.name;
+        }
+        
+        public static METERTYPECODE getMeterType(String code) {
+            for (METERTYPECODE metertype : values()) {
+                if (metertype.getCode().equals(code)) return metertype;
+            }
+            return null;
+        }
+    }
     
     public enum METERTYPE {
     	

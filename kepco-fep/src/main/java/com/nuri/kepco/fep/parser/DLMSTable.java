@@ -165,13 +165,50 @@ public class DLMSTable {
 			switch (attr) {
 			case REGISTER_ATTR02: // value
 				if (obis == OBIS.ACTIVEPOWER_CONSTANT && dlmsTags.size() != 0) {
-					ret.put(OBIS.ACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					
+					if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.OctetString) {
+						// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+						// 강제로 형변환
+						try {
+							ret.put(OBIS.ACTIVEPOWER_CONSTANT.getName(), new Float(DataUtil.getFloat(dlmsTags.get(0).getData(), 0)));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						ret.put(OBIS.ACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					}					
 				}
 				if (obis == OBIS.REACTIVEPOWER_CONSTANT && dlmsTags.size() != 0) {
-					ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.OctetString) {
+						// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+						// 강제로 형변환
+						try {
+							ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), new Float(DataUtil.getFloat(dlmsTags.get(0).getData(), 0)));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					}	
+					
 				}
 				if (obis == OBIS.APPRENTPOWER_CONSTANT && dlmsTags.size() != 0) {
-					ret.put(OBIS.APPRENTPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+					// 강제로 형변환
+					if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.OctetString) {
+						// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+						// 강제로 형변환
+						try {
+							ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), new Float(DataUtil.getFloat(dlmsTags.get(0).getData(), 0)));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					}					
 				}
 				if (obis == OBIS.LP_INTERVAL && dlmsTags.size() != 0) {
 					ret.put(OBIS.LP_INTERVAL.getName(), dlmsTags.get(0).getValue());

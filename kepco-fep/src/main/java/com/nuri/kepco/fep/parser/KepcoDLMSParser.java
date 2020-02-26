@@ -291,6 +291,8 @@ public class KepcoDLMSParser {
 			map = (Map<String, Object>) result.get(OBIS.ACTIVEPOWER_CONSTANT.getCode());
 			if (map != null) {
 				Object obj = map.get(OBIS.ACTIVEPOWER_CONSTANT.getName());
+				
+				LOG.debug("ACTIVEPOWER_CONSTANT : {} ", Hex.encode(String.valueOf(obj)));
 				if (obj != null)
 					acon = Double.parseDouble(String.valueOf(obj));
 				LOG.debug("ACON[" + acon + "]");
@@ -612,41 +614,69 @@ public class KepcoDLMSParser {
 
 						billing[j] = chValue;
 					}
-
-					MeterBilling billingImport = new MeterBilling();
-					billingImport.setMeter_id(meterID);
-					billingImport.setBilling_dt(billingDate);
-					billingImport.setActive_imp_tot(billing[0] * 0.001);
-					billingImport.setApprent_imp_tot(billing[1] * 0.001);
-					billingImport.setLead_imp_tot(billing[2] * 0.001);
-					billingImport.setLagging_imp_tot(billing[3] * 0.001);
-					billingImport.setPf_imp_tot(billing[4]);
-
-					billingImport.setActive_imp_rate1(billing[5] * 0.001);
-					billingImport.setApprent_imp_rate1(billing[6] * 0.001);
-					billingImport.setLead_imp_rate1(billing[7] * 0.001);
-					billingImport.setLagging_imp_rate1(billing[8] * 0.001);
-					billingImport.setPf_imp_rate1(billing[9]);
-
-					billingImport.setActive_imp_rate2(billing[10] * 0.001);
-					billingImport.setApprent_imp_rate2(billing[11] * 0.001);
-					billingImport.setLead_imp_rate2(billing[12] * 0.001);
-					billingImport.setLagging_imp_rate2(billing[13] * 0.001);
-					billingImport.setPf_imp_rate2(billing[14]);
-
-					billingImport.setActive_imp_rate3(billing[15] * 0.001);
-					billingImport.setApprent_imp_rate3(billing[16] * 0.001);
-					billingImport.setLead_imp_rate3(billing[17] * 0.001);
-					billingImport.setLagging_imp_rate3(billing[18] * 0.001);
-					billingImport.setPf_imp_rate3(billing[19]);
-
-					billingImport.setActive_imp_rate4(billing[20] * 0.001);
-					billingImport.setApprent_imp_rate4(billing[21] * 0.001);
-					billingImport.setLead_imp_rate4(billing[22] * 0.001);
-					billingImport.setLagging_imp_rate4(billing[23] * 0.001);
-					billingImport.setPf_imp_rate4(billing[24]);
 					
-					billingList.add(billingImport);
+					if(mdData.getMeterType().equals(DLMSVARIABLE.METERTYPECODE.STYPE.getCode())) {
+						
+						// 표준형 frame에 평균역률 항목이 (OctetString) 으로 올라오기 때문에
+						// 정확한 값인지 확인 할 수 없으므로 저장하지 않는다.
+						MeterBilling billingImport = new MeterBilling();
+						billingImport.setMeter_id(meterID);
+						billingImport.setBilling_dt(billingDate);
+						
+						// total
+						billingImport.setActive_imp_tot(billing[0] * 0.001); // 순방향 유효
+						billingImport.setLagging_imp_tot(billing[1] * 0.001); // 지상 무효
+						
+						// tariff1
+						billingImport.setActive_imp_rate1(billing[2] * 0.001); // 순방향 유효
+						billingImport.setLagging_imp_rate1(billing[3] * 0.001); // 지상 무효
+						
+						// tariff2
+						billingImport.setActive_imp_rate2(billing[4] * 0.001);	// 순방향 유효					
+						billingImport.setLagging_imp_rate2(billing[5] * 0.001); // 지상 무효
+						
+						// tariff3
+						billingImport.setActive_imp_rate3(billing[6] * 0.001); // 순방향 유효	
+						billingImport.setLagging_imp_rate3(billing[7] * 0.001); // 지상 무효
+
+						billingList.add(billingImport);
+						
+					} else {
+						MeterBilling billingImport = new MeterBilling();
+						billingImport.setMeter_id(meterID);
+						billingImport.setBilling_dt(billingDate);
+						billingImport.setActive_imp_tot(billing[0] * 0.001);
+						billingImport.setApprent_imp_tot(billing[1] * 0.001);
+						billingImport.setLead_imp_tot(billing[2] * 0.001);
+						billingImport.setLagging_imp_tot(billing[3] * 0.001);
+						billingImport.setPf_imp_tot(billing[4]);
+
+						billingImport.setActive_imp_rate1(billing[5] * 0.001);
+						billingImport.setApprent_imp_rate1(billing[6] * 0.001);
+						billingImport.setLead_imp_rate1(billing[7] * 0.001);
+						billingImport.setLagging_imp_rate1(billing[8] * 0.001);
+						billingImport.setPf_imp_rate1(billing[9]);
+
+						billingImport.setActive_imp_rate2(billing[10] * 0.001);
+						billingImport.setApprent_imp_rate2(billing[11] * 0.001);
+						billingImport.setLead_imp_rate2(billing[12] * 0.001);
+						billingImport.setLagging_imp_rate2(billing[13] * 0.001);
+						billingImport.setPf_imp_rate2(billing[14]);
+
+						billingImport.setActive_imp_rate3(billing[15] * 0.001);
+						billingImport.setApprent_imp_rate3(billing[16] * 0.001);
+						billingImport.setLead_imp_rate3(billing[17] * 0.001);
+						billingImport.setLagging_imp_rate3(billing[18] * 0.001);
+						billingImport.setPf_imp_rate3(billing[19]);
+
+						billingImport.setActive_imp_rate4(billing[20] * 0.001);
+						billingImport.setApprent_imp_rate4(billing[21] * 0.001);
+						billingImport.setLead_imp_rate4(billing[22] * 0.001);
+						billingImport.setLagging_imp_rate4(billing[23] * 0.001);
+						billingImport.setPf_imp_rate4(billing[24]);
+						
+						billingList.add(billingImport);
+					}
 					
 					cnt++;
 
