@@ -617,8 +617,7 @@ public class KepcoDLMSParser {
 					
 					if(mdData.getMeterType().equals(DLMSVARIABLE.METERTYPECODE.STYPE.getCode())) {
 						
-						// 표준형 frame에 평균역률 항목이 (OctetString) 으로 올라오기 때문에
-						// 정확한 값인지 확인 할 수 없으므로 저장하지 않는다.
+						LOG.debug("BillingDate : {}",  billingDate);
 						MeterBilling billingImport = new MeterBilling();
 						billingImport.setMeter_id(meterID);
 						billingImport.setBilling_dt(billingDate);
@@ -626,18 +625,21 @@ public class KepcoDLMSParser {
 						// total
 						billingImport.setActive_imp_tot(billing[0] * 0.001); // 순방향 유효
 						billingImport.setLagging_imp_tot(billing[1] * 0.001); // 지상 무효
-						
+						billingImport.setPf_imp_tot(billing[2]); // 역률
 						// tariff1
-						billingImport.setActive_imp_rate1(billing[2] * 0.001); // 순방향 유효
-						billingImport.setLagging_imp_rate1(billing[3] * 0.001); // 지상 무효
+						billingImport.setActive_imp_rate1(billing[3] * 0.001); // 순방향 유효
+						billingImport.setLagging_imp_rate1(billing[4] * 0.001); // 지상 무효
+						billingImport.setPf_imp_rate1(billing[5]); // 역률
 						
 						// tariff2
-						billingImport.setActive_imp_rate2(billing[4] * 0.001);	// 순방향 유효					
-						billingImport.setLagging_imp_rate2(billing[5] * 0.001); // 지상 무효
+						billingImport.setActive_imp_rate2(billing[6] * 0.001);	// 순방향 유효					
+						billingImport.setLagging_imp_rate2(billing[7] * 0.001); // 지상 무효
+						billingImport.setPf_imp_rate2(billing[8]); // 역률
 						
 						// tariff3
-						billingImport.setActive_imp_rate3(billing[6] * 0.001); // 순방향 유효	
-						billingImport.setLagging_imp_rate3(billing[7] * 0.001); // 지상 무효
+						billingImport.setActive_imp_rate3(billing[9] * 0.001); // 순방향 유효	
+						billingImport.setLagging_imp_rate3(billing[10] * 0.001); // 지상 무효
+						billingImport.setPf_imp_rate3(billing[11]); // 역률
 
 						billingList.add(billingImport);
 						

@@ -374,8 +374,16 @@ public class DLMSTable {
 						channelIndex = 1;
 					} else {
 						if (tag.getTag().equals(DLMS_TAG_TYPE.OctetString)) { // Date
-							// name = "DateTime";
-							name = "DateTime";
+							
+							// Stype은 float을 OctetString으로 준다.
+							// length가 4라면 Date형이 아니므로 float 형으로 처리한다.
+							if(tag.getLength() == 4) { 							
+								name = "Channel[" + channelIndex + "]";
+								channelIndex++;
+							} else {
+								// name = "DateTime";
+								name = "DateTime";
+							}
 						} else if (tag.getTag().equals(DLMS_TAG_TYPE.UINT32)) { // Channel
 							name = "Channel[" + channelIndex + "]";
 							channelIndex++;
@@ -485,8 +493,20 @@ public class DLMSTable {
 		for (int cnt = 0;; cnt++) {
 			key = dataName + "-" + cnt;
 			if (!map.containsKey(key)) {
-				LOG.debug("DATA_NAME[" + key + "] VALUE[" + tag.getValue() + "]");
-				map.put(key, tag.getValue());
+				
+				if(tag.getTag().equals(DLMS_TAG_TYPE.OctetString)) {
+					
+					if(tag.getLength() == 4) {						
+						LOG.debug("DATA_NAME[" + key + "] VALUE[" + new Float(DataUtil.getFloat(tag.getData(), 0)) + "]");
+						map.put(key, new Float(DataUtil.getFloat(tag.getData(), 0)));
+					}
+					
+				} else {
+					LOG.debug("DATA_NAME[" + key + "] VALUE[" + tag.getValue() + "]");
+					map.put(key, tag.getValue());
+				}
+				
+				
 				break;
 			}
 		}
