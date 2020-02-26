@@ -304,7 +304,7 @@ onRowClicked = function(event){
 	param += "&sdate="+$("#sdateView").val();
 	param += "&edate="+$("#edateView").val();
 	
-	// location.href = CONTEXT_PATH + "/billingDetail"+param;
+	location.href = CONTEXT_PATH + "/billingDetail"+param;
 }
 
 function resetForm(){
