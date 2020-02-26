@@ -14,7 +14,7 @@
   top: 1px;
   display: inline-block;
   font-family: 'MalgunGothic';
-  font-style: normal;
+  font-style: normal
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
@@ -9671,4 +9671,10 @@ body.md-skin {
 	width: 37%;
 	background-color: #FFFFFF !important;
 }
-
+.billing-detail-table th{
+	text-align: center !important;
+}
+.billing-detail-table td{
+	background-color: #FFFFFF !important;
+	text-align: right !important;
+}
