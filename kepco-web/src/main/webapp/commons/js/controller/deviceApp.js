@@ -2,8 +2,6 @@ var deviceApp = angular.module('deviceApp', []);
 
 deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	
-	$scope.objects = {};
-	
 	$scope.deviceInfo = function () {
 		$http({
 	        method: 'POST',
@@ -18,10 +16,16 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	};
 	
 	$scope.objectModel = function () {
+		$scope.objects = {};
 		$http({
 	        method: 'POST',
 	        url: COMMON_URL + "/ajaxDeviceObjectModelList",
-	        params : { "device_id" : $("#device_id").val() }
+	        params : { 
+	        	"device_id" : $("#device_id").val(), 
+	        	"searchfield" : $("#searchfield").val(),
+            	"searchquery" : $("#searchquery").val(),
+            	"instances" : $("#instances").val()	
+	        }
 	    }).then(successCallback, function errorCallback(response) {
 	        alert("error");
 	    });
@@ -33,13 +37,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	$http({
 	            method: 'POST',
 	            url: COMMON_URL + "/ajaxDeviceResourceModelList",
-	            params : {
-	            	"device_id" : $("#device_id").val(), 
-	            	"object_id" : item.object_id,
-	            	"searchfield" : $("#searchfield").val(),
-	            	"searchquery" : $("#searchquery").val(),
-	            	"instances" : $("#instances").val()
-            	}
+	            params : { "device_id" : $("#device_id").val(), "object_id" : item.object_id }
 	    	
 	        }).then(function resourceSuccessCallback(data, status, headers, config) {
 	        	// resources

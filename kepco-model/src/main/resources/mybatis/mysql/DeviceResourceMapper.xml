@@ -172,25 +172,29 @@
 	
 	<select id="getObjectModelList" resultType="deviceResource" parameterType="deviceResource">  
         SELECT 
-        	a.device_id
-        	, c.object_nm
+        	c.device_id
+        	, a.object_nm
         	, a.object_id
-        	, a.object_instance_id
-        	, c.instances
+        	, c.object_instance_id
+        	, a.instances
         	, b.descr
-        FROM EMI_DEVICE_RESOURCE a 
-        LEFT OUTER JOIN EMI_RESOURCE_MODEL b ON a.object_id = b.object_id AND a.resource_id = b.resource_id
-        LEFT OUTER JOIN EMI_OBJECT_MODEL c ON a.object_id = c.object_id
+        FROM 
+        EMI_OBJECT_MODEL a 
+        LEFT OUTER JOIN EMI_RESOURCE_MODEL b ON a.object_id = b.object_id
+        LEFT OUTER JOIN EMI_DEVICE_RESOURCE c ON a.object_id = c.object_id AND b.resource_id = c.resource_id
         
         <where>
 		<if test="device_id != null" >     
-            AND a.device_id = #{device_id}
+            AND c.device_id = #{device_id}
         </if>
-        <if test="object_nm != null" >     
-            AND c.object_nm = #{object_nm}
-        </if>
+        <if test="searchfield != null and searchquery != null " >
+			AND a.${searchfield} like concat(#{searchquery},'%')
+		</if>
+        <if test="instances != -1" >
+			AND a.instances = #{instances}
+		</if>
 		</where>
-        GROUP BY a.device_id, a.object_id
+        GROUP BY c.device_id, c.object_id
     </select>
     <select id="getResourceModelList" resultType="deviceResource" parameterType="deviceResource">  
 		SELECT 
@@ -213,12 +217,6 @@
         <if test="object_id != null and searchfield == null">     
 			AND a.object_id = #{object_id}
         </if>
-        <if test="searchfield != null and searchquery != null " >
-			AND a.${searchfield} like concat(#{searchquery},'%')
-		</if>
-        <if test="instances != null" >
-			AND a.instances = #{instances}
-		</if>
         </where>
     </select>
 

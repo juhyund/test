@@ -22,7 +22,7 @@ public class DeviceResource extends CommonObj {
 	private String object_nm;
 	private String resource_nm;
 	private String operation;
-	private int instances;
+	private int instances = -1;
 	private int mandatory;
 	private String unit;
 	private String descr;

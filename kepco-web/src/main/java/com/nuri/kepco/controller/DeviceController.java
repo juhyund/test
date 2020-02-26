@@ -93,8 +93,6 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 
-	
-	
 	@RequestMapping(value = "/ajaxDeviceInfo")
 	public ResponseEntity<Object> ajaxDeviceInfo(HttpServletRequest request) {
 		
@@ -119,11 +117,9 @@ public class DeviceController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			Map<String, Object> param = new HashMap<String, Object>();
-			String[] commStr = { "vendor_nm", "device_status", "lsdate", "ledate" };
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			String[] commStr = { "device_id", "instances" };
 			ControllerUtil.getCustomParam(request, commStr, param);
-			
-			param.put("device_id", request.getParameter("device_id"));
 
 			JSONArray jarr = this.deviceResourceService.getObjectModelList(param);
 
@@ -143,20 +139,8 @@ public class DeviceController {
 		JSONObject json = new JSONObject();
 		try {
 			Map<String, Object> param = new HashMap<String, Object>();
-			String[] commStr = { "device_id", "object_id", "instances" };
-			ControllerUtil.getCustomParam(request, commStr, param);
-			/*
-			String searchfield = request.getParameter("searchfield");
-			String searchquery = request.getParameter("searchquery");
-			if("object_id".equals(searchfield)) {
-				param.put("object_id", searchquery);
-			} else if (!"".equals(searchfield)){
-				param.put("searchfield", searchfield);
-				param.put("searchquery", searchquery);
-			}
-			*/
-			//param.put("device_id", request.getParameter("device_id"));
-			//param.put("object_id", request.getParameter("object_id"));
+			param.put("device_id", request.getParameter("device_id"));
+			param.put("object_id", request.getParameter("object_id"));
 
 			JSONArray jarr = this.deviceResourceService.getResourceModelList(param);
 

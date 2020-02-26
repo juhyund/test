@@ -23,7 +23,7 @@ public class MeterController {
 	
 	Logger logger = LoggerFactory.getLogger(MeterController.class);
 
-	private String[] commStr = { "branch_nm", "vendor_nm", "device_status", "lsdate", "ledate" };
+	private String[] commStr = { "branch_parent_id", "branch_id", "meter_type", "meter_serial", "device_serial", "device_status", "sdate", "edate" };
 	
 	@Autowired
 	private MeterInfoService meterInfoService;
@@ -36,7 +36,7 @@ public class MeterController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			param.put("sort", "reg_dt");
+			param.put("sort", "last_comm_dt");
 			param.put("dir", "DESC");
 			
 			int cnt = this.meterInfoService.getMeterListCnt(param);
