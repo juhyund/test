@@ -52,6 +52,11 @@ public class PageController {
 		return "device/NMS";
 	}
 	
+	@RequestMapping("/NMSDetail") 
+	public String NMSDetail() throws Exception {
+		return "device/NMSDetail";
+	}
+	
 	@RequestMapping("/deviceControl")
 	public String deviceControl() throws Exception {
 		return "device/deviceControl";
@@ -66,5 +71,10 @@ public class PageController {
 	public String meterDetail(@ModelAttribute(value="meter_serial") String meter_serial, Model model) throws Exception {
 		model.addAttribute("meter_serial", meter_serial);
 		return "meter/meterDetail";
+	}
+	
+	@RequestMapping("/controlHistory")
+	public String controlHistory() throws Exception {
+		return "history/controlHistory";
 	}
 }

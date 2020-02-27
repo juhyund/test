@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page import="com.nuri.kepco.config.CodeConstants" %>
 <%@ include file="/commons/common_define.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -65,45 +66,90 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<form name="search_form" id="search_form" method="post">
 				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
 				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-					<table class="table table-borderless" style="height: 100%; "
-						style="margin-bottom: 7px;" border="1">
-						<tbody >
-							<tr class="table-border">
-								<td height="80">
-									<div class="form-group row">
-										<label class="col-lg-1 col-form-label">단말 ID</label>
-										<div class="col-lg-3">
-											<input type="text" id="device_id" name="device_id" value="" class="form-control">
+				<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
+					<tbody>
+						<tr class="table-border">
+							<td height="80">
+								<div class="form-group row">
+									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
+									<div class="col-lg-3">
+										<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
+										<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+											<option value=''>선택</option>
+										</select>
+									</div>
+									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+									<div class="col-lg-3">
+										<select class="form-control" name="model_seq" id="model_seq"></select>
+									</div>
+									<label class="col-sm-1 col-form-label">검색일자</label>
+									<div class="col-sm-3" id="datePicker">
+										<div class="input-group date" style="width: 48%; float: left;">
+											<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
+											<span class="input-group-addon" style="list-style: none;">
+												<i class="fa fa-calendar"></i>
+											</span>
 										</div>
-										<label class="col-lg-1 col-form-label">단말타입</label>
-										<div class="col-lg-3">
-											<select class="form-control" name="device_type"	id="device_type" type="number">
-												<option value=0>(데이터 확인 후  변경 예정)</option>
-												<option value=1 >GW </option>
-												<option value=2 >DEVICE</option>
-											</select>	
+										<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+										<div class="input-group date" style="width: 48%;">
+											<input type="text" class="form-control"  id="edate" name="edate" value=""> 
+											<span class="input-group-addon" style="list-style: none;">
+												<i class="fa fa-calendar"></i>
+											</span>
 										</div>
 									</div>
-									
-									<div class="form-group row">
-										<label class="col-lg-1 col-form-label">IP 주소</label>
-										<div class="col-lg-3">
-											<input type="text" id="ip_addr_str" name="ip_addr_str" class="form-control">
+								</div>
+
+								<div class="form-group form-group-end row">
+									<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+									<div class="col-lg-3">
+										<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
+											<option value=''>선택</option>
+											<option value='deviceId'>단말ID</option>
+											<option value='deviceSerial'>단말 번호</option>
+										</select>
+										<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+									</div>
+													
+									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
+									<div class="col-lg-3">
+										<select class="form-control" name="device_status" id="device_status">
+											<option value=''>선택</option>
+												<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
+											<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
+												<% }%>
+										</select>
+									</div>
+													
+									<label class="col-sm-1 col-form-label">통신일자</label>
+									<div class="col-sm-3" id="datePicker">
+										<div class="input-group date" style="width: 48%; float: left;">
+											<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
+											<span class="input-group-addon" style="list-style: none;">
+												<i class="fa fa-calendar"></i>
+											</span>
+										</div>
+										<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+										<div class="input-group date" style="width: 48%;">
+											<input type="text" class="form-control"  id="ledate" name="ledate" value=""> 
+											<span class="input-group-addon" style="list-style: none;">
+												<i class="fa fa-calendar"></i>
+											</span>
 										</div>
 									</div>
-								</td>
-								<td width="180" height="80" style="text-align: right">
-									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
-										<i class="fa fa-search"></i>
-									</button>
-									<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
-										<i class="fa fa-undo"></i>
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-			
+								</div>
+							</td>
+							<td width="180" height="80" style="text-align: right">
+								<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
+									<i class="fa fa-search"></i>
+								</button>
+								<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
+									<i class="fa fa-undo"></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>	
 				</form>
 				<form name="detail_form" id="detail_form" method="get" action="deviceControlDetail">
 					<input type="hidden" id="detail_control_seq" name="detail_control_seq" class="form-control">
@@ -147,16 +193,61 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "단말 ID", field: "device_id"},
-	{headerName: "단말타입", field: "device_type"},
-	{headerName: "Network Bearer", field: "network_bearer"},
-	{headerName: "무선신호세기", field: "radio_signal_strength"},
-	{headerName: "IP 주소", field: "ip_addr"},
-	{headerName: "라우터IP 주소", field: "router_ip_addr"},
-	{headerName: "Link Quality", field: "link_quality"},
-	{headerName: "최종 통신일자", field: "last_comm_date"}
+	{headerName: "단말 번호", field: "deviceSerial"},
+	{headerName: "지역본부", field: ""},
+	{headerName: "단말상태", field: "device_status"},
+	{headerName: "CPU", field: ""},
+	{headerName: "Memory", field: ""},
+	{headerName: "RSRP(dBm)", field: ""},
+	{headerName: "RSRQ(dB)", field: ""},
+	{headerName: "최종 통신일자", field: "last_comm_date"},
+	{headerName: "등록일자", field: ""}
 ];
 
+//device type
+function comboDeviceType() {
+	var combo = [ 'ajaxParentBranchCombo', 'ajaxDeviceModelCombo' ];
+	for (var i = 0; i < combo.length; i++) {
+		var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/" + combo[i],
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	     $.ajax(options);
+	}
+	
+}
+
+function successResultCombo(data, status) {
+	$.each(data, function(nm, combo) {
+		$('#'+nm).append(new Option("선택", ""));
+		$.each(data[nm], function(key, value){
+			$('#'+nm).append(new Option(value, key));
+		});
+	});
+}
+
+function changeParent() {
+	var sel_obj = document.getElementById('branch_id');
+    for(var i=0; i<sel_obj.options.length; i++) sel_obj.options[i] = null;
+    sel_obj.options.length = 0;
+
+	var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/ajaxBranchCombo",
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	    
+	     $.ajax(options);
+}
 
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500, true);    
@@ -249,8 +340,11 @@ function init() {
 	// init
 	initGrid();
 	
+	// combo
+	comboDeviceType();
+	
 	// form search
-	ajaxSearchForm();
+	ajaxSearchForm();		
 	
 	//$("#limit").val($("#search_num option:selected").val());
 }

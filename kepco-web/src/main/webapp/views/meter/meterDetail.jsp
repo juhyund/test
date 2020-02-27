@@ -251,7 +251,7 @@ function showRequest() {
 
 function successResultHandler(data, status) {	
 	
-	var device_serial = data.result.device_serial;
+	/* var device_serial = data.result.device_serial;
 	var meter_serial = data.result.meter_serial;
 	var reg_dt = data.result.reg_dt;
  	var last_comm_dt = data.result.last_comm_dt;
@@ -262,19 +262,19 @@ function successResultHandler(data, status) {
 	var meter_phase = data.result.meter_phase;
 	var ip = data.result.ip;
 	var vendor_nm = data.result.vendor_nm;
-	var comm_type = data.result.comm_type;
+	var comm_type = data.result.comm_type; */
 	
-	$('#device_serial').text(device_serial);
-	$('#meter_serial').text(meter_serial);
-	$('#reg_dt').text(reg_dt);
- 	$('#last_comm_dt').text(last_comm_dt);
-	$('#lp_period').text(lp_period);
-	$('#meter_type').text(meter_type);	
-	$('#prog_id').text(prog_id);	
-	$('#prog_version').text(prog_version);	
-	$('#meter_phase').text(meter_phase);
-	$('#ip').text(ip);
-	$('#vendor_nm').text(vendor_nm);
+	$('#device_serial').text(data.result.device_serial);
+	$('#meter_serial').text(data.result.meter_serial);
+	$('#reg_dt').text(data.result.reg_dt);
+ 	$('#last_comm_dt').text(data.result.last_comm_dt);
+	$('#lp_period').text(data.result.lp_period);
+	$('#meter_type').text(data.result.meter_type);	
+	$('#prog_id').text(data.result.prog_id);	
+	$('#prog_version').text(data.result.prog_version);	
+	$('#meter_phase').text(data.result.meter_phase);
+	$('#ip').text(data.result.ip);
+	$('#vendor_nm').text(data.result.vendor_nm);
 	$('#comm_type').text(data.result.comm_type);
 }
 
