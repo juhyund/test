@@ -109,6 +109,7 @@
 			, lp_period
 			, pcon
 			, net_metering
+			, avg_power_period
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, DATE_FORMAT(a.ins_dt,'${prop.dt}') AS ins_dt
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -148,6 +149,7 @@
 			, lp_period
 			, pcon
 			, net_metering
+			, avg_power_period
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, DATE_FORMAT(a.ins_dt,'${prop.dt}') AS ins_dt
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -181,6 +183,7 @@
 			, lp_period
 			, pcon
 			, net_metering
+			, avg_power_period
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, DATE_FORMAT(a.ins_dt,'${prop.dt}') AS ins_dt
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
@@ -220,6 +223,7 @@
 			, lp_period
 			, pcon
 			, net_metering
+			, avg_power_period
 			, vendor_seq
 			, reg_dt
 		) VALUES (
@@ -247,6 +251,7 @@
 			, #{lp_period}
 			, #{pcon}
 			, #{net_metering}
+			, #{avg_power_period}
 			, #{vendor_seq}
 			, now()
 		)
@@ -277,7 +282,8 @@
 			<if test="lp_period != null" >, lp_period = #{lp_period}</if>
 			<if test="pcon != null" >, pcon = #{pcon}</if>
 			<if test="net_metering != null" >, net_metering = #{net_metering}</if>
-			<if test="vendor_seq != null" >, vendor_seq = #{vendor_seq}</if>
+			<if test="avg_power_period != null" >, avg_power_period = #{avg_power_period}</if>
+			<if test="vendor_seq != null" >, vendor_seq = #{vendor_seq}</if>			
 		WHERE meter_id = #{meter_id}
 	</update>
 	
