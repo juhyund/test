@@ -96,6 +96,8 @@
 		SELECT 
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -157,6 +159,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -212,6 +216,8 @@
 		) VALUES (
 			 #{meter_id}
 			, #{billing_dt}
+			, #{mtime}
+			, #{itime}
 			, #{active_imp_tot}
 			, #{apprent_imp_tot}
 			, #{lead_imp_tot}
@@ -271,6 +277,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -301,6 +309,8 @@
 		) VALUES (
 			 #{meter_id}
 			, #{billing_dt}
+			, #{mtime}
+			, #{itime}
 			, #{active_imp_tot}
 			, #{apprent_imp_tot}
 			, #{lead_imp_tot}
@@ -354,7 +364,9 @@
 		, apprent_imp_rate4 			=  #{apprent_imp_rate4}
 		, lead_imp_rate4    			=  #{lead_imp_rate4}   
 		, lagging_imp_rate4 			=  #{lagging_imp_rate4}
-		, pf_imp_rate4		  			=  #{pf_imp_rate4}			
+		, pf_imp_rate4		  			=  #{pf_imp_rate4}
+		, mtime							=  #{mtime}
+		, itime							=  #{itime}	
 		, update_dt         			=  now()               
     </insert>
     
@@ -362,6 +374,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_exp_tot
 			, apprent_exp_tot
 			, lead_exp_tot
@@ -392,6 +406,8 @@
 		) VALUES (
 			 #{meter_id}
 			, #{billing_dt}
+			, #{mtime}
+			, #{itime}
 			, #{active_exp_tot}
 			, #{apprent_exp_tot}
 			, #{lead_exp_tot}
@@ -445,7 +461,9 @@
 		, apprent_exp_rate4   = #{apprent_exp_rate4}
 		, lead_exp_rate4      = #{lead_exp_rate4}   
 		, lagging_exp_rate4   = #{lagging_exp_rate4}
-		, pf_exp_rate4        = #{pf_exp_rate4}         
+		, pf_exp_rate4        = #{pf_exp_rate4}
+		, mtime				  = #{mtime}
+		, itime				  = #{itime}	         
 		, update_dt           = now()
     </insert>
     
@@ -453,6 +471,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -509,6 +529,8 @@
 		<foreach collection="list" item="list" index="index" open="(" separator="),("  close=")">
 			 #{list.meter_id}
 			, #{list.billing_dt}
+			, #{list.mtime}
+			, #{list.itime}
 			, #{list.active_imp_tot}
 			, #{list.apprent_imp_tot}
 			, #{list.lead_imp_tot}

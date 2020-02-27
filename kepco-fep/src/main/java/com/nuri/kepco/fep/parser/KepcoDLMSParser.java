@@ -407,7 +407,7 @@ public class KepcoDLMSParser {
 					lp.setRead_dt(read_dt);
 					lp.setChannel(CHANNEL.CH1.getCode());
 					lp.setValue(chValue);
-
+					
 					lpDataList.add(lp);
 
 					value = lpMap.get("Channel[2]" + "-" + cnt);
@@ -597,10 +597,12 @@ public class KepcoDLMSParser {
 			appender = (i == 0) ? "20" : "";
 			
 			if (i != 3) {				
-				strBCDTime.append(appender + Util.frontAppendNStr('0', Integer.toHexString(bcdTime[i]), 2));
+				int b = bcdTime[i];
+//				strBCDTime.append(appender + Util.frontAppendNStr('0', Integer.toHexString(bcdTime[i]), 2));
+				strBCDTime.append(appender + Util.frontAppendNStr('0', String.valueOf(b), 2));
 			}
 		}
-
+		
 		return strBCDTime.toString();
 	}
 	
@@ -619,8 +621,6 @@ public class KepcoDLMSParser {
 					lpMap = (Map<String, Object>) result.get(OBIS.BILLING.getCode() + "-" + i);
 				}
 				
-				LOG.debug("lpMap : {}", lpMap);
-
 				if (lpMap == null) {
 					break;
 				}
@@ -644,8 +644,6 @@ public class KepcoDLMSParser {
 							chValue = ((Float) value).doubleValue();
 
 						billing[j] = chValue;
-						
-						LOG.debug("billing :{} ", billing[j]);
 					}
 					
 					if(mdData.getMeterType().equals(DLMSVARIABLE.METERTYPECODE.STYPE.getCode())) {
@@ -654,6 +652,8 @@ public class KepcoDLMSParser {
 						MeterBilling billingImport = new MeterBilling();
 						billingImport.setMeter_id(meterID);
 						billingImport.setBilling_dt(billingDate);
+						billingImport.setMtime(meterTime); // 미터타임
+						billingImport.setItime(modemTime); // 모뎀타임
 						
 						// total
 						billingImport.setActive_imp_tot(billing[0] * 0.001); // 순방향 유효
@@ -678,8 +678,12 @@ public class KepcoDLMSParser {
 						
 					} else {
 						MeterBilling billingImport = new MeterBilling();
+						
 						billingImport.setMeter_id(meterID);
 						billingImport.setBilling_dt(billingDate);
+						billingImport.setMtime(meterTime); // 미터타임
+						billingImport.setItime(modemTime); // 모뎀타임
+						
 						billingImport.setActive_imp_tot(billing[0] * 0.001);
 						billingImport.setApprent_imp_tot(billing[1] * 0.001);
 						billingImport.setLead_imp_tot(billing[2] * 0.001);
@@ -755,7 +759,7 @@ public class KepcoDLMSParser {
 
 					for (int j = 0; j < 25; j++) {
 
-						value = lpMap.get("Channel[" + j + 1 + "]" + "-" + cnt);
+						value = lpMap.get("Channel[" + (j + 1) + "]" + "-" + cnt);
 
 						if (value instanceof OCTET)
 							chValue = (double) DataUtil.getLongToBytes(((OCTET) value).getValue());
@@ -771,6 +775,9 @@ public class KepcoDLMSParser {
 
 					billingImport.setMeter_id(meterID);
 					billingImport.setBilling_dt(billingDate);
+					billingImport.setMtime(meterTime); // 미터타임
+					billingImport.setItime(modemTime); // 모뎀타임
+					
 					billingImport.setActive_exp_tot(billing[0] * 0.001);
 					billingImport.setApprent_exp_tot(billing[1] * 0.001);
 					billingImport.setLead_exp_tot(billing[2] * 0.001);
