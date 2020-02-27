@@ -69,4 +69,7 @@ public class MeterBilling extends CommonObj {
 	private String branch_nm;
 	private String parent_branch_nm;
 	private String billing_dt_int;
+	
+	private String mtime;
+	private String itime;
 }
