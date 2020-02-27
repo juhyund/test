@@ -64,15 +64,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">검침 데이터 조회 > 상세정보 </h3>
 </div>
-<div class="col-lg-2" >
-	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
-		</ol>
-	</div>						
+					
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -91,7 +83,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 	                        </div>
 	                	</div>
 	                </div>
-	                <div class=" gray-bg m-r-n-sm"   style="width:88%"> 
+	                <div class=" gray-bg m-r-n-sm"   style="width:90%"> 
 	                
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>

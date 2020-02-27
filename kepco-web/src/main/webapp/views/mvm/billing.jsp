@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
-<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=5"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=6"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script>
@@ -45,17 +45,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">정기검침 데이터 조회</h3>
-</div>
-<div class="col-lg-2" >
-	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
-		</ol>
-	</div>						
+</div>					
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -194,7 +184,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100},
 	{headerName: "검침일", field: "billing_dt", width:300},
-	{headerName: "미터 시리얼", field: "meter_id", width:270},
+	{headerName: "미터 시리얼", field: "meter_serial", width:270},
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
 	{headerName: "계기타입", field: "meter_type", width:230},
@@ -300,7 +290,10 @@ function excelDownload() {
 
 onRowClicked = function(event){
 	var meter_id = event.data.meter_id;
+	var billing_dt = event.data.billing_dt_int;
+	
 	var param = "?meter_id="+meter_id;
+	param += "&billing_dt="+billing_dt;
 	param += "&sdate="+$("#sdateView").val();
 	param += "&edate="+$("#edateView").val();
 	
@@ -368,8 +361,6 @@ function successResultCombo(data, status) {
 	$.each(data, function(nm, combo) {
 		$('#'+nm).append(new Option("선택", ""));
 		$.each(data[nm], function(key, value){
-			console.log("key: " + key);
-			console.log("value: " + value);
 			$('#'+nm).append(new Option(value, key));
 		});
 	});
