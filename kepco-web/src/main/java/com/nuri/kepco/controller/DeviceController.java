@@ -1,7 +1,6 @@
 package com.nuri.kepco.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nuri.kepco.service.DeviceInfoService;
 import com.nuri.kepco.service.DeviceResourceService;
-import com.nuri.kepco.config.CodeConstants.DEVICE_STAT;
-import com.nuri.kepco.service.BranchInfoService;
 import com.nuri.kepco.service.DeviceModelService;
 import com.nuri.kepco.util.ControllerUtil;
 
@@ -34,9 +31,6 @@ public class DeviceController {
 
 	@Autowired
 	private DeviceResourceService deviceResourceService;
-	
-	@Autowired
-	private BranchInfoService branchInfoService;
 	
 	@Autowired
 	private DeviceModelService deviceModelService;

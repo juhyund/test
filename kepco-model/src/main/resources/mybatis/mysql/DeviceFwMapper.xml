@@ -4,17 +4,14 @@
 
 	<sql id="base_where_list">
 		<where>
-		<if test="fw_id != null" >     
-            AND a.fw_id = #{fw_id}
-        </if>
 		<if test="fw_nm != null" >     
-            AND a.fw_nm = #{fw_nm}
+            AND a.fw_nm = like concat(#{fw_nm},'%')
         </if>
         <if test="fw_file_nm != null" >     
             AND a.fw_file_nm = #{fw_file_nm}
         </if>
-        <if test="fw_version != null" >     
-            AND a.fw_version = #{fw_version}
+        <if test="fw_version != null" >
+     	    AND a.fw_version = like concat(#{fw_version},'%')     
         </if>
         <if test="fw_file_path != null" >     
             AND a.fw_file_path = #{fw_file_path}
@@ -27,9 +24,6 @@
         </if>
         <if test="remark != null" >     
             AND a.remark = #{remark}
-        </if>
-        <if test="use_yn != null" >     
-            AND a.use_yn = #{use_yn}
         </if>
         <if test="reg_id != null" >     
             AND a.reg_id = #{reg_id}

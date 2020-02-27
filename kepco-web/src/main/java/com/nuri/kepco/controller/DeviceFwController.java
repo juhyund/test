@@ -16,32 +16,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.nuri.kepco.service.BranchInfoService;
+import com.nuri.kepco.service.DeviceFwService;
+import com.nuri.kepco.util.ControllerUtil;
 
 @Controller
-public class BranchController {
+public class DeviceFwController {
 	
-	Logger logger = LoggerFactory.getLogger(BranchController.class);
+	Logger logger = LoggerFactory.getLogger(DeviceFwController.class);
 
 	@Autowired
-	private BranchInfoService branchInfoService;
+	private DeviceFwService deviceFwService;
 	
 	
-	@RequestMapping(value = "/ajaxParentBranchCombo")
-	public ResponseEntity<Object> ajaxDeviceInfoCombo(HttpServletRequest request) {                
+	@RequestMapping(value = "/ajaxDeviceFWList")
+	public ResponseEntity<Object> ajaxDeviceFWList(HttpServletRequest request) {                
 		
 		JSONObject json = new JSONObject();
 		try {
+			String[] commStr = { "fw_nm", "fw_version" };
 			Map<String, Object> param = new HashMap<String, Object>();
-			JSONArray bInfo = this.branchInfoService.selectParent();
+			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			JSONObject branchInfo = new JSONObject();
-			for(int i = 0 ; i < bInfo.size() ; i++){
-				JSONObject obj = (JSONObject) bInfo.get(i);
-				branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
-			}
+			int cnt = this.deviceFwService.selectCount(param);
+			JSONArray jarr = this.deviceFwService.selectList(param);
 			
-			json.put("branch_parent_id", branchInfo);
+			json.put("totalCount", cnt);
+			json.put("resultGrid", jarr);
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
@@ -52,7 +52,7 @@ public class BranchController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/ajaxBranchCombo")
+	@RequestMapping(value = "/ajaxDeviceFWUpload")
 	public ResponseEntity<Object> ajaxBranchCombo(HttpServletRequest request) {                
 		
 		JSONObject json = new JSONObject();
@@ -60,13 +60,7 @@ public class BranchController {
 			Map<String, Object> param = new HashMap<String, Object>();
 			JSONObject branchInfo = new JSONObject();			
 			param.put("branch_parent_id", request.getParameter("branch_parent_id"));
-			JSONArray bInfo = this.branchInfoService.selectList(param);
-
-			for(int i = 0 ; i < bInfo.size() ; i++){
-				JSONObject obj = (JSONObject) bInfo.get(i);
-				branchInfo.put(obj.get("branch_id"), obj.get("branch_nm"));
-			}
-
+			//path - /home/lwm2m/files/firmwares/{버전}/{파일}
 			json.put("branch_id", branchInfo);
 
 		} catch (Exception e) {
