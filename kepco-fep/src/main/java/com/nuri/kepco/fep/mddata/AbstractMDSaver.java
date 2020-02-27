@@ -119,6 +119,10 @@ public abstract class AbstractMDSaver {
 			if (mdData.getNetMetering() != null) {
 				meter.setNet_metering(mdData.getNetMetering());
 			}
+			
+			if(mdData.getAvgPowerPeriod() != null) {
+				meter.setAvg_power_period(mdData.getAvgPowerPeriod());
+			}
 
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);

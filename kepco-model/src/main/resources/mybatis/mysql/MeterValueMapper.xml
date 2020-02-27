@@ -58,6 +58,8 @@
 		SELECT 
 			meter_id
 			, read_dt
+			, mtime
+			, itime
 			, channel
 			, meter_value
 			, sect_meter_value
@@ -181,11 +183,12 @@
 			SELECT 
 				a.meter_id,
 				a.read_dt,
+				a.mtime,
+				a.itime,
 				a.CHANNEL,
 				d.code_nm using_channel,
 				a.meter_value,
-				a.reg_dt
-				
+				a.reg_dt				
 			FROM EMI_METER_VALUE a
 			JOIN EMI_ALL_CODE AS d
 			ON a.channel = d.code
@@ -217,12 +220,16 @@
 		INSERT INTO EMI_METER_VALUE (
 			meter_id
 			, read_dt
+			, mtime
+			, itime
 			, channel
 			, meter_value
 			, sect_meter_value
 		) VALUES (
 			  #{meter_id}
 			, #{read_dt}
+			, #{mtime}
+			, #{itime}
 			, #{channel}
 			, #{meter_value}
 			, #{sect_meter_value}
@@ -233,6 +240,8 @@
 		INSERT INTO EMI_METER_VALUE (
 			meter_id
 			, read_dt
+			, mtime
+			, itime
 			, channel
 			, meter_value
 			, sect_meter_value
@@ -241,6 +250,8 @@
 		<foreach collection="list" item="list" index="index" open="(" separator="),("  close=")">
 			#{list.meter_id}
 			, #{list.read_dt}
+			, #{list.mtime}
+			, #{list.itime}
 			, #{list.channel}
 			, #{list.meter_value}
 			, #{list.sect_meter_value}			
@@ -253,6 +264,8 @@
 		UPDATE EMI_METER_VALUE SET			
 			meter_value = #{meter_value}
 			, sect_meter_value = #{sect_meter_value}
+			, mtime = #{mtime}
+			, itime = #{itime}
 		WHERE meter_id = #{meter_id} 
 	      AND read_dt = #{read_dt} 
 	      AND channel = #{channel}
@@ -266,6 +279,8 @@
 			, channel
 			, meter_value
 			, sect_meter_value
+			, mtime
+			, itime
 		 FROM EMI_METER_VALUE
 		WHERE meter_id = #{meter_id} 
 		  AND channel = #{channel}

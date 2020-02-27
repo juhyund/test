@@ -1899,3 +1899,23 @@ function popupDeliveryTrack(invoice_no, cop)
 	}			
 
 }
+
+/**
+ * 포매팅 추가 (프로토타입 추가)
+ * @param param
+ * @descr 천 단위 표현(,) 및 소수점 표현(param째 자리까지 표현 )
+ * @returns
+ */
+function formatNumber(value, n){
+	  if(typeof value =="number"){
+	    return value.format(n);
+	  }else{
+	    return "";
+	  }
+	}
+
+Number.prototype.format = function(n){
+  var reg = /\B(?=(\d{3})+(?!\d))/g;
+  var strNum = this.toFixed(Math.max(0, ~~n)).replace(reg,',');
+  return strNum.split(".")[0] + "." + strNum.split(".")[1].replace(/,/gi,'');
+}

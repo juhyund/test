@@ -20,8 +20,8 @@
         <if test="device_serial != null and device_serial != ''" >     
             AND device_serial = #{device_serial}
         </if>
-        <if test="billing_dt != null and billing_dt != ''" >     
-            AND mi.billing_dt = #{billing_dt}
+        <if test="billing_dt != null and billing_dt != ''" >
+            AND a.billing_dt = #{billing_dt}
         </if>
         <if test="meter_serial != null and meter_serial != ''" >     
             AND mi.meter_serial = #{meter_serial}
@@ -66,6 +66,7 @@
 			, ifnull(fnc_get_code_nm(mi.meter_type),'') as meter_type
 			, device_serial
 			, DATE_FORMAT(CONCAT(a.billing_dt,'00'),'${prop.small.dt}') AS billing_dt
+			, a.billing_dt AS billing_dt_int
 			, active_imp_tot			, apprent_imp_tot			, lead_imp_tot			, lagging_imp_tot			, pf_imp_tot
 			, active_imp_rate1			, apprent_imp_rate1			, lead_imp_rate1		, lagging_imp_rate1			, pf_imp_rate1	
 			, active_imp_rate2			, apprent_imp_rate2			, lead_imp_rate2		, lagging_imp_rate2			, pf_imp_rate2
@@ -95,6 +96,8 @@
 		SELECT 
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -156,6 +159,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -211,6 +216,8 @@
 		) VALUES (
 			 #{meter_id}
 			, #{billing_dt}
+			, #{mtime}
+			, #{itime}
 			, #{active_imp_tot}
 			, #{apprent_imp_tot}
 			, #{lead_imp_tot}
@@ -270,6 +277,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -300,6 +309,8 @@
 		) VALUES (
 			 #{meter_id}
 			, #{billing_dt}
+			, #{mtime}
+			, #{itime}
 			, #{active_imp_tot}
 			, #{apprent_imp_tot}
 			, #{lead_imp_tot}
@@ -353,7 +364,9 @@
 		, apprent_imp_rate4 			=  #{apprent_imp_rate4}
 		, lead_imp_rate4    			=  #{lead_imp_rate4}   
 		, lagging_imp_rate4 			=  #{lagging_imp_rate4}
-		, pf_imp_rate4		  			=  #{pf_imp_rate4}			
+		, pf_imp_rate4		  			=  #{pf_imp_rate4}
+		, mtime							=  #{mtime}
+		, itime							=  #{itime}	
 		, update_dt         			=  now()               
     </insert>
     
@@ -361,6 +374,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_exp_tot
 			, apprent_exp_tot
 			, lead_exp_tot
@@ -391,6 +406,8 @@
 		) VALUES (
 			 #{meter_id}
 			, #{billing_dt}
+			, #{mtime}
+			, #{itime}
 			, #{active_exp_tot}
 			, #{apprent_exp_tot}
 			, #{lead_exp_tot}
@@ -444,7 +461,9 @@
 		, apprent_exp_rate4   = #{apprent_exp_rate4}
 		, lead_exp_rate4      = #{lead_exp_rate4}   
 		, lagging_exp_rate4   = #{lagging_exp_rate4}
-		, pf_exp_rate4        = #{pf_exp_rate4}         
+		, pf_exp_rate4        = #{pf_exp_rate4}
+		, mtime				  = #{mtime}
+		, itime				  = #{itime}	         
 		, update_dt           = now()
     </insert>
     
@@ -452,6 +471,8 @@
 		INSERT INTO EMI_METER_BILLING (
 			meter_id
 			, billing_dt
+			, mtime
+			, itime
 			, active_imp_tot
 			, apprent_imp_tot
 			, lead_imp_tot
@@ -508,6 +529,8 @@
 		<foreach collection="list" item="list" index="index" open="(" separator="),("  close=")">
 			 #{list.meter_id}
 			, #{list.billing_dt}
+			, #{list.mtime}
+			, #{list.itime}
 			, #{list.active_imp_tot}
 			, #{list.apprent_imp_tot}
 			, #{list.lead_imp_tot}

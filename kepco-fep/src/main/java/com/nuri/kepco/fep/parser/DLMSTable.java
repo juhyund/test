@@ -157,6 +157,14 @@ public class DLMSTable {
 						}
 					}
 				}
+				if (obis == OBIS.NET_METERING && dlmsTags.size() != 0) {
+					
+					byte[] data = dlmsTags.get(0).getOCTET().getValue();
+					
+					if(data.length >= 3) {
+						ret.put(OBIS.NET_METERING.getName(), DataUtil.getIntToByte(data[2]));
+					}
+				}
 			default:
 				break;
 			}
@@ -212,6 +220,10 @@ public class DLMSTable {
 				}
 				if (obis == OBIS.LP_INTERVAL && dlmsTags.size() != 0) {
 					ret.put(OBIS.LP_INTERVAL.getName(), dlmsTags.get(0).getValue());
+				}
+				
+				if (obis == OBIS.AVG_POWER_PERIOD && dlmsTags.size() != 0) {
+					ret.put(OBIS.AVG_POWER_PERIOD.getName(), dlmsTags.get(0).getValue());
 				}
 				break;
 			case REGISTER_ATTR03: // scaler_unit
