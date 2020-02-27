@@ -34,7 +34,7 @@ public class MeterBillingController {
 	private BranchInfoService branchInfoService;
 	
 	
-	private String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id","billing_dt"};
+	private String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id","billing_dt","itime","mtime"};
 	
 	@RequestMapping(value = "/ajaxMeterBilling")
 	public ResponseEntity<Object> ajaxMeterBilling(HttpServletRequest request) {                

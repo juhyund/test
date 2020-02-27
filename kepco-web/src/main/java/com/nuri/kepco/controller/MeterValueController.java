@@ -30,7 +30,7 @@ public class MeterValueController {
 	@Autowired
 	private MeterValueService meterValueService;
 	
-	private String[] commStr = { "meter_id","meter_serial", "device_serial","meter_type","branch_id"};
+	private String[] commStr = { "meter_id","meter_serial", "device_serial","meter_type","branch_id","itime","mtime"};
 	
 	@RequestMapping(value = "/ajaxMeterValue")
 	public ResponseEntity<Object> ajaxMeterValue(HttpServletRequest request) {                
@@ -40,7 +40,6 @@ public class MeterValueController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			logger.info("\n-----ajaxMeterValue--------------------\nparam :"+param);
 			int cnt = this.meterValueService.getMeterValueCount(param);
 			JSONArray jarr = this.meterValueService.getMeterValue(param);
 			

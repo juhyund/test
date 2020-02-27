@@ -5,13 +5,13 @@
 	<sql id="base_where_list">
 		<where>
 		<if test="fw_nm != null" >     
-            AND a.fw_nm = like concat(#{fw_nm},'%')
+            AND a.fw_nm = #{fw_nm}
         </if>
-        <if test="fw_file_nm != null" >     
-            AND a.fw_file_nm = #{fw_file_nm}
+        <if test="fw_file_nm != null" >
+        	AND a.fw_file_nm like concat('%', #{fw_file_nm},'%')
         </if>
         <if test="fw_version != null" >
-     	    AND a.fw_version = like concat(#{fw_version},'%')     
+     	    AND a.fw_version like concat('%', #{fw_version},'%')
         </if>
         <if test="fw_file_path != null" >     
             AND a.fw_file_path = #{fw_file_path}
@@ -73,7 +73,7 @@
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, update_id
 			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
-		FROM EMI_DEVICE_FW a	
+		FROM EMI_DEVICE_FW a
 			
 		<include refid="base_where_list" />
 		
@@ -102,10 +102,9 @@
 		WHERE fw_id = #{fw_id}
 	</select>
 	
-	<insert id="insert" parameterType="deviceFw">     	
+	<insert id="insert" parameterType="deviceFw" useGeneratedKeys="true" keyProperty="fw_id">     	
 		INSERT INTO EMI_DEVICE_FW (			
-			fw_id
-			, fw_nm
+			fw_nm
 			, fw_file_nm
 			, fw_version
 			, fw_file_path
@@ -116,8 +115,7 @@
 			, reg_id
 			, reg_dt
 		) VALUES (			  
-			#{fw_id}
-			, #{fw_nm}
+			#{fw_nm}
 			, #{fw_file_nm}
 			, #{fw_version}
 			, #{fw_file_path}
