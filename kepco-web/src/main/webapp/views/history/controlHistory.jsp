@@ -70,13 +70,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">지역본부</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
 														<div class="col-lg-3">
-															<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
-															<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+															<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 																<option value=''>선택</option>
+																<option value='deviceId'>단말ID</option>
+																<option value='deviceSerial'>단말 번호</option>
 															</select>
+															<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 														</div>
 														
 														<label class="col-lg-1 col-form-label"
@@ -87,22 +88,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 													</div>
 
-													<div class="form-group row">												
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">계기번호</label>
-														<div class="col-lg-3">
-															<input class="form-control" name="meter_serial"
-																id="meter_serial"></input>
-														</div>
-														
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">모뎀번호</label>
-														<div class="col-lg-3">
-															<input class="form-control" name="device_serial"
-																id="device_serial"></input>
-														</div>
-													</div>
-													
 													<div class="form-group form-group-end row">
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">통신상태</label>
@@ -185,21 +170,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},
-	/* {headerName: "본부", field: "parent_branch_nm", width:100, cellStyle:{'text-align': "center"}},
-	{headerName: "지사", field: "branch_nm", width:100, cellStyle:{'text-align': "center"}}, */
-	{headerName: "이벤트 시간", field: ""},
-	{headerName: "제어종류", field: ""},
-	{headerName: "계기타입", field: "meter_type", width:150, cellStyle:{'text-align': "center"}},
-	{headerName: "계기번호", field: "meter_serial", cellStyle:{'text-align': "center"}},
-	/* {headerName: "검침주기(분)", field: "lp_period", cellStyle:{'text-align': "center"}}, */
-	{headerName: "모뎀번호", field: "device_serial", width:120},
-	{headerName: "운영자", field: ""},
-	{headerName: "통신상태", field: "device_status", cellStyle:{'text-align': "center"}}
-	/* {headerName: "제조사", field: "vendor_nm"}, */
-	/* {headerName: "마지막 검침 일시", field: "last_comm_dt"}, */	
-	/* {headerName: "모뎀 최종통신일자", field: "last_comm_dt"}, */
-	/* {headerName: "인가여부", field: "allow_yn", cellStyle:{'text-align': "center"}} */	
+	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
+	{headerName: "리소스 경로", field: ""},
+	{headerName: "오브젝트명", field: ""},
+	{headerName: "리소스명", field: "", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "제어항목", field: "", cellStyle:{'text-align': "center"}},
+	{headerName: "제어결과", field: "", width:120},
+	{headerName: "트랜잭션ID", field: ""},
+	{headerName: "제어 전송 일시", field: ""},
+	{headerName: "제어 완료 일시", field: ""},
+	{headerName: "요청자", field: "", cellStyle:{'text-align': "center"}}		
 ];
 
 // init selectComboBox
