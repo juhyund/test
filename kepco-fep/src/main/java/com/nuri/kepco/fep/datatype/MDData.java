@@ -30,7 +30,8 @@ public class MDData {
 	String itime;
 	String mtime;
 	Integer lpPeriod;
-	Integer netMetering;
+	Integer netMetering; // 양방향
+	Integer avgPowerPeriod; // 평균전압전류주기
 		
 	MeterInfo meterInfo;
 	

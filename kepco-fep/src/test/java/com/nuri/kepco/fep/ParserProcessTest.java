@@ -24,10 +24,23 @@ public class ParserProcessTest {
 //		String json = "{\"deviceId\":\"LeshanClientDemo\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"E842FACFB5CC83D9\",\"mid\":\"44648\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxNzEwMTQ0OTYgARcFFAZQBQA\\u003d\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkAgcFAgEb/4AAAAAAKgAA/wABAgASCRBETVAgMTcxMTEzQSAgIDExAQEACAT/AAMCAAIRDwAADwAA/wAWBAARAQECAgkEAAAA/wkF////E/8BAQADAP8AAwIABRdEegAA\\\"}]}\"}\n";
 		
 		// LP SAMPLE
-//		String json = "{\"deviceId\":\"LeshanClientDemo\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"24724587C932D1A9\",\"mid\":\"20123\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxOTAyMDQyNjEgARcFFAZQAQA\\u003d\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AQBjAQD/AAcCADsGAAAAIgYAAAACBgAAAAAGAAAAKAkMB+QCBwUGMAAAgAAABBgMAAAGAAAAAAYAAAAABgAAAAAGAAAAAA\\u003d\\u003d\\\"}]}\"}";
+//		String json = "{\"deviceId\":\"LeshanClientDemo\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"24724587C932D1A9\",\"mid\":\"20123\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjYyNTAwMDgyNzgH5AIXBxAuAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AQBjAQD/AAcCACcGAAAAAAYAAAAABgAAAAAGAAAAAAkMB+QCFwcQLQD//lyzBBgcAAQ=\\\"}]}\"}";
 		
 		// 
-		String json = "{\"deviceId\":\"LeshanClientDemo\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQyNTAwNzkzNDggARcFFAZQAAA\\u003d\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkAgcFBwQBRYAAAAAAYgEDKQAHAgB9BgAAAAAGAAAAAAYAAAAABgAAAAAXv4AAAAYAAAAABgAAAAAGAAAAAAYAAAAAF7+AAAAGAAAAAAYAAAAABgAAAAAGAAAAABe/gAAABgAAAAAGAAAAAAYAAAAABgAAAAAXv4AAAAYAAAAABgAAAAAGAAAAAAYAAAAAF7+AAAA\\u003d\\\"}]}\"}";
+//		String json = "{\"deviceId\":\"LeshanClientDemo\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQyNTAwNzkzNDgH5AIWBgACAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkAhYGAAIqUoAAAAEAAAECLQABAgAOCQwH5AIUBAYFHv+AAAAAAGIBAy0ABwIAfQYAAAAABgAAAAAGAAAAAAYAAAAAF7+AAAAGAAAAAAYAAAAABgAAAAAGAAAAABe/gAAABgAAAAAGAAAAAAYAAAAABgAAAAAXv4AAAAYAAAAABgAAAAAGAAAAAAYAAAAAF7+AAAAGAAAAAAYAAAAABgAAAAAGAAAAABe/gAAA\\\"}]}\"}";
+		
+		
+//		String json = "{\"deviceId\":\"StypeTest\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MDkzNDAwMDI3MDYUAhkCERENAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AQBjAQD/AAcCAB0SAAASAAASAAASAAAJDAfkAhn/EQ8A/4AAAAQBAg==\\\"}]}\"}";
+		
+		// etype 정기검침
+//		String json = "{\"deviceId\":\"Aging1\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjAwMTQ4MDcgMQ==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjYxNzA3MTEwNzUUAhoDDwEfAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkAhoDDwEe/4AAAAEBAQgAAQAEBQAOCQwH0AEPBgAAAP8CHAIBAQEIAAEABAIABQYABTeV\\\"}]}\"}";
+		
+		// 24140000904
+//		String json = "{\"deviceId\":\"24140000904\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxNDAwMDA5MDQUAhoDABg2BAA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkAhoDCR0q//3kAAAAKgAA/wABAgASCRBETVAtMTEwN3h4QSAgICAgAQEACAT/AAMCAAIRDwAADwAA/wAWBAARAQECAgkEAAAA/wkF////Af8BAQADAP8AAwIABgkERPoAAAEBAAMB/wADAgAGCQRE+gAA\\\"}]}\"}";
+		
+		
+		// 24140000904
+		String json = "{\"deviceId\":\"LeshanClientDemo\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxNDAwMDA5MDQUAhoDCBM5AQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkAhoDERgv//3kAAAAAQAA/wAIAgAOCQwH5AIaAxEYMP/95AAAAGIBAf8ABwIAQAYAAMXMBgAAAAAJBD+AAAAGAADFzAYAAAAACQQ/gAAABgAAAAAGAAAAAAkEAAAAAAYAAAAABgAAAAAJBAAAAAA=\\\"}]}\"}";
 		
 		process.process(json);
 
