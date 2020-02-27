@@ -339,22 +339,25 @@
 			, DM.vendor_seq
 			, ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type
 			, ifnull(fnc_get_code_nm(a.meter_phase),'') as meter_phase
+			, ifnull(fnc_get_code_nm(DI.comm_type),'') as comm_type
 			, ifnull(fnc_get_code_nm(a.prog_id),'') as prog_id
 			, ifnull(fnc_get_code_nm(a.prog_version),'') as prog_version
 			, date_format(substr(billing_dt,1,8), '%y-%m-%d') as billing_dt
-			, ifnull(lp_period,'') as lp_period
+			, lp_period
 			, ifnull(cosem_device_name,'') as cosem_device_name 	
 			, date_format(a.reg_dt, '%y-%m-%d %h:%i:%s')   as reg_dt
 			, ifnull(date_format(DS.last_renw_dt, '%y-%m-%d %h:%i:%s'),'')   as last_renw_dt			
+			, IFNULL(DATE_FORMAT(DS.last_comm_dt, '%y-%m-%d %h:%i:%s'),'')   AS last_comm_dt
 			, DS.device_status
-			, DATE_FORMAT(DS.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, DI.COMM_TYPE
-			, DI.IP			
+			, DI.IP
+			, VI.vendor_nm			
 		FROM EMI_METER_INFO A 
 		INNER JOIN EMI_DEVICE_INFO DI ON (A.DEVICE_ID = DI.DEVICE_ID)
 		LEFT OUTER JOIN EMI_DEVICE_STATUS DS ON (A.METER_ID = DS.DEVICE_ID AND DEVICE_FLAG = 'M')
 		LEFT OUTER JOIN EMI_DEVICE_MODEL DM ON DI.MODEL_SEQ = DM.MODEL_SEQ
 		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
+		LEFT OUTER JOIN EMI_VENDOR_INFO VI ON DM.VENDOR_SEQ = VI.VENDOR_SEQ
 		WHERE A.METER_SERIAL = #{meter_serial}
 	</select>
 </mapper>

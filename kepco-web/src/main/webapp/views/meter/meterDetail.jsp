@@ -144,7 +144,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th class="text-navy" scope="row">프로그램 버전 : </th>
 													<td id = "prog_version"></td>
 													<th class="text-navy" scope="row">제조사 : </th>
-													<td id = ""></td>
+													<td id = "vendor_nm"></td>
 													<th class="text-navy" scope="row">자재 번호 : </th>
 													<td id = ""></td>
 												</tr>
@@ -260,6 +260,9 @@ function successResultHandler(data, status) {
 	var prog_id = data.result.prog_id;
 	var prog_version = data.result.prog_version;	
 	var meter_phase = data.result.meter_phase;
+	var ip = data.result.ip;
+	var vendor_nm = data.result.vendor_nm;
+	var comm_type = data.result.comm_type;
 	
 	$('#device_serial').text(device_serial);
 	$('#meter_serial').text(meter_serial);
@@ -270,6 +273,9 @@ function successResultHandler(data, status) {
 	$('#prog_id').text(prog_id);	
 	$('#prog_version').text(prog_version);	
 	$('#meter_phase').text(meter_phase);
+	$('#ip').text(ip);
+	$('#vendor_nm').text(vendor_nm);
+	$('#comm_type').text(data.result.comm_type);
 }
 
 function init() {
