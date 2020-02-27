@@ -36,7 +36,7 @@ public class DeviceFwServiceImpl implements DeviceFwService {
 		ConversionUtil.getModelByMap(deviceFw, param);
 		List<DeviceFw> list = this.deviceFwDAO.selectList(deviceFw);
 		
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list, deviceFw.getStart());
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class DeviceFwServiceImpl implements DeviceFwService {
 	public int insert(Map<String, Object> param) throws Exception {
 		DeviceFw deviceFw = new DeviceFw();
 		ConversionUtil.getModelByMap(deviceFw, param);
-
+		
 		return this.deviceFwDAO.insert(deviceFw);
 	}
 

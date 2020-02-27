@@ -100,7 +100,7 @@ public class CodeConstants {
 	@Getter 
 	public enum USE_YN {
 		Y(1),
-		N(2);
+		N(0);
 		
 		private int code;
 		USE_YN(int code) {
