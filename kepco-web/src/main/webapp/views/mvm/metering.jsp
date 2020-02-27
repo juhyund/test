@@ -90,8 +90,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 										<label class="col-lg-1 col-form-label"style="padding-left: 10px;"></label>
 										<div class="col-lg-3 btn-group">
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('thisMonth')">이번달</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('lastMonth')">저번달</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('thisMonth')">당월</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('lastMonth')">전월</button>
 											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('twoMonthsAgo')">전전월</button>
 			                            </div>
 									</div>

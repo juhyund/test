@@ -192,7 +192,8 @@
 		    meter_id
 		    , DATE_FORMAT(CONCAT(T.read_dt,'00'), '${prop.small.dt}') AS read_dt 
 		    ,T.read_dt AS read_dt_int
-		    
+		    ,T.itime
+			,T.mtime
 		<foreach item="item" collection="channelList" >
 			, SUM(CASE WHEN T.channel = '${item.channel_code}' THEN meter_value END) AS c${item.channel_idx}_metervalue
 		</foreach>
@@ -206,7 +207,7 @@
 				a.CHANNEL,
 				d.code_nm using_channel,
 				a.meter_value,
-				a.reg_dt				
+				a.reg_dt
 			FROM EMI_METER_VALUE a
 			JOIN EMI_ALL_CODE AS d
 			ON a.channel = d.code

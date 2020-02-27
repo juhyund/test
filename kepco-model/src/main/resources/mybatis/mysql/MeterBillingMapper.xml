@@ -79,6 +79,8 @@
 			, active_exp_rate4			, apprent_exp_rate4			, lead_exp_rate4		, lagging_exp_rate4			, pf_exp_rate4
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+			, a.itime
+			, a.mtime
 		FROM EMI_METER_BILLING a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)

@@ -93,6 +93,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<thead>
 												<tr class="text-navy">
 													<th>검침일</th>
+													<th>모뎀시간</th>
+													<th>미터시간</th>
 													<th>(본부)지사 </th>
 													<th>계기타입</th>
 													<th>계기번호</th>
@@ -102,6 +104,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tbody>
 												<tr>
 													<td><h3 id = "billing_dt"></h3></td>
+													<td><h3 id = "itime"></h3></td>
+													<td><h3 id = "mtime"></h3></td>
 													<td><h3 id = "parent_branch_nm"></h3><h3 id = "branch_nm"></h3></td>
 													<td><h3 id = "meter_type"></h3></td>
 													<td><h3 id = "meter_serial"></h3></td>
@@ -354,6 +358,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			var branch_nm = "("+data.resultGrid[0].parent_branch_nm+")"+data.resultGrid[0].branch_nm;
 			
 			$('#billing_dt'		).text(data.resultGrid[0].billing_dt);
+			$('#mtime'			).text(data.resultGrid[0].mtime);
+			$('#itime'			).text(data.resultGrid[0].itime);
 			$('#branch_nm'		).text(branch_nm);
 			$('#meter_type'		).text(data.resultGrid[0].meter_type);
 			$('#meter_serial'	).text(data.resultGrid[0].meter_serial);
