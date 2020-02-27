@@ -272,33 +272,13 @@ var onRowClicked = function (event) {
 /*
  * formatter
  * 사용법 : columnDefs생성 시  적용.
+ * 
  */
 function numberFormatter(params) {
-	if(!params.value){ //"", null, undefined, 0, NaN 인 경우
-			return formatNaN(params.value);	
-	}
-	return formatNumber(params.value);
+	if(typeof params.value =="number"){
+	    return params.value.format(4);
+	  }else{
+	    return "";
+	  }
 }
-
-function formatNumber(number) {
-	//소수점 네자리까지 표현
-	return number.toString();
-}
-
-function formatNaN(number) {
-	//"", null, undefined, 0, NaN 인 경우
-	 if(number == '0'){
-		return "0.0000";
-	}
-	return "";
-}
-
-function formatNumberComma(number) {
-    // puts commas into the number eg 1000 goes to 1,000.
-    return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-}
-
-
-
-
 

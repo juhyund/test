@@ -37,7 +37,7 @@
 	        </ul>
 	    </li>
 	    <li>
-	        <a href="<%=COMMON_URL%>/user" target="contentsFrame">
+	        <a href="<%=COMMON_URL%>/controlHistory" target="contentsFrame">
 	        	<i class="fa fa-users"></i> <span class="nav-label">제어이력</span> 
 	        </a>
 	    </li>

@@ -5,13 +5,12 @@ import com.nuri.kepco.model.common.CommonObj;
 import lombok.Data;
 
 @Data
-public class MeterInfo extends CommonObj {
+public class NMSInfo extends CommonObj {
 	
 	private String meter_id;
 	private String meter_serial;
 	private String device_id;
 	private String meter_type;
-	private String comm_type;	
 	private String energy_type_code;
 	private String meter_phase;
 	private String branch_parent_id;
@@ -51,18 +50,6 @@ public class MeterInfo extends CommonObj {
 	
 	private String vendorCd;	
 	private String modelCd;
-	
-	/**
-	 * 미터 모델 정보
-	 * @param meterSerial
-	 */
-	public void setMeterModel() {
-		
-		if(meter_serial != null) {
-			this.vendorCd = meter_serial.substring(0, 2);
-			this.modelCd = meter_serial.substring(2, 4);
-		}
-	}
 
 }
 

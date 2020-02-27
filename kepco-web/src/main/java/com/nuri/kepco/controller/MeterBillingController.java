@@ -34,7 +34,7 @@ public class MeterBillingController {
 	private BranchInfoService branchInfoService;
 	
 	
-	private String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id",};
+	private String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id","billing_dt"};
 	
 	@RequestMapping(value = "/ajaxMeterBilling")
 	public ResponseEntity<Object> ajaxMeterBilling(HttpServletRequest request) {                
@@ -102,11 +102,13 @@ public class MeterBillingController {
 	@RequestMapping(value = "/billingDetail")
 	public String meteringDetail(
 			@ModelAttribute(value="meter_id") String meter_id,
+			@ModelAttribute(value="billing_dt") String billing_dt,
 			@ModelAttribute(value="sdate") String sdate,
 			@ModelAttribute(value="edate") String edate,
 			Model model) {
 
 		model.addAttribute("meter_id", meter_id);
+		model.addAttribute("billing_dt", billing_dt);
 		model.addAttribute("sdate", sdate);
 		model.addAttribute("edate", edate);
 		
