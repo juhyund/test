@@ -52,6 +52,8 @@ public class MeterInfo extends CommonObj {
 	private String vendorCd;	
 	private String modelCd;
 	
+	private int avg_power_period;
+	
 	/**
 	 * 미터 모델 정보
 	 * @param meterSerial

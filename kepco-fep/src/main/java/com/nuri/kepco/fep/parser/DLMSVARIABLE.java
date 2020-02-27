@@ -38,6 +38,10 @@ public class DLMSVARIABLE {
         BILLING_REVERSE("000062010300", "Billing"),	// billing 역방향 0000620103VZ
         
         ETYPE_BILLING("010101080001", "EtypeBilling"), // ETYPE 정기검침
+        
+        NET_METERING("010000F200FF", "Net Metering"), // 01 - 역방향 /00 - 순방향 양방향
+        
+        AVG_POWER_PERIOD("010080000CFF", "AveragePowerPeriod"), // 평균전압전류주기
             	
         HW_VER("00002A0000FF", "METER VERSION");	// COSEM 계기 식별자
     
