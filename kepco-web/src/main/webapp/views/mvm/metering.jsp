@@ -46,16 +46,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">검침데이터 조회</h3>
 </div>
-<div class="col-lg-2" >
-	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
-		</ol>
-	</div>						
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -72,23 +62,18 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<tr class="table-border">
 								<td height="80">
 									<div class="form-group row">
-										<label class="col-sm-2 col-form-label text-align">검침 기간</label>
-										<div class="col-sm-2 btn-group">
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('today')">오늘</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('weekly')">주간</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('montly')">월간</button>
-			                            </div>
-										
-										<label class="col-lg-1 col-form-label">미터 ID</label>
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 										<div class="col-lg-3">
-											<input type="text" id="meter_id" name="meter_id" value="" class="form-control">
+											<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
+											<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+												<option value=''>선택</option>
+											</select>
 										</div>
-									</div>
-									<div class="form-group row">
-										<!-- <label class="col-sm-1 col-form-label"></label> -->
-										<div class="col-sm-4" id="datePicker">
-											<div class="input-group date" style="width: 48%; float: left;">
-												<input type="hidden" id="sdate" name="sdate" value=""> 
+										<label class="col-sm-1 col-form-label">검침기간</label>
+										<div class="col-lg-3" id="datePicker">
+											<div class="input-group date"
+												style="width: 48%; float: left;">
+												<input type="hidden" class="form-control" id="sdate" name="sdate" value="">
 												<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
@@ -96,23 +81,34 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											</div>
 											<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 											<div class="input-group date" style="width: 48%;">
-												<input type="hidden" id="edate" name="edate" value=""> 
+												<input type="hidden" class="form-control"  id="edate" name="edate" value=""> 
 												<input type="text" class="form-control" id="edateView" name="edateView" value="">
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
 												</span>
 											</div>
 										</div>
-										
-										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">단말 ID</label>
-										<div class="col-lg-3">
-											<input type="text" id="device_id" name="device_id" value="" class="form-control">
-										</div>
-										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">미터타입</label>
+										<label class="col-lg-1 col-form-label"style="padding-left: 10px;"></label>
+										<div class="col-lg-3 btn-group">
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('thisMonth')">당월</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('lastMonth')">전월</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('twoMonthsAgo')">전전월</button>
+			                            </div>
+									</div>
+									<div class="form-group row">
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">계기 타입</label>
 										<div class="col-lg-3">
 											<select class="form-control" name="meter_type"	id="meter_type"></select>
 										</div> 
+										<label class="col-lg-1 col-form-label">계기번호</label>
+										<div class="col-lg-3">
+											<input type="text" id="meter_serial" name="meter_serial" value="" class="form-control">
+										</div>
+										<label class="col-lg-1 col-form-label"
+											style="padding-left: 10px;">모뎀 번호 </label>
+										<div class="col-lg-3">
+											<input type="text" id="device_serial" name="device_serial" value="" class="form-control">
+										</div>
 									</div>
 									</div>
 								</td>
@@ -168,20 +164,25 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 </div>	
 </div>
-
 <script type="text/javascript" charset="utf-8">	
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:80},
-	{headerName: "미터 시리얼", field: "meter_serial"},
-	{headerName: "미터 타입", field: "meter_type"},
-	{headerName: "검침일시", field: "read_dt"},
-   	{headerName: "누적검침값 (kWh)",
+	{headerName: "번호", 		field: "no", 				width:50,	suppressSizeToFit: true},
+	{headerName: "검침일", 	field: "read_dt",			width:200},
+	{headerName: "미터 시리얼", field: "meter_serial",		width:100},
+	{headerName: "본부", 	  	field: "parent_branch_nm", 	width:200},
+	{headerName: "지사", 		field: "branch_nm",			width:100},
+	{headerName: "계기타입", 	field: "meter_type", 		width:100},
+	{headerName: "계기번호", 	field: "meter_serial", 		width:100},
+	{headerName: "모뎀 번호", 	field: "device_serial", 	width:200},
+   	{headerName: "누적검침값 (kWh)", width:100,	
 			   	field: "meter_value", 
+			   	suppressSizeToFit: true,
 			   	valueFormatter: numberFormatter,
 			   	cellStyle: { 'text-align': "right" }}, 
-	{headerName: "등록시간", field: "reg_dt"}
+
+	{headerName: "등록시간", field: "reg_dt",	width:200}
 ];
 
 
@@ -189,6 +190,7 @@ var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500, true);    
     dataGrid.makeGrid();
     dataGrid.showNoRows();
+    dataGrid.autoSizeAll();
 };
 
 var totalCnt = 0;
@@ -252,7 +254,7 @@ onRowClicked = function(event){
 
 var winObj;
 function showDetailMeterValue(meter_id){ 
-	var opts="width=900, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
+	var opts="width=1200, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
 
 	if(winObj)
         winObj.close();
@@ -288,8 +290,48 @@ function successResultHandler(data, status) {
 //device type
 function comboDeviceType() { 
      selectComboBox('meter_type', 'MT');
+     
+     var combo = [ 'ajaxParentBranchCombo'];
+ 	for (var i = 0; i < combo.length; i++) {
+ 		var options = { 
+ 	           beforeSend  : showRequest,
+ 	           success     : successResultCombo,
+ 	           url         : COMMON_URL + "/" + combo[i],
+ 	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+ 	           type        : "post", /* get, post */
+ 	           dataType    : "json", /* xml, html, script, json */
+ 	           data        : $("#search_form").serialize()
+ 	     };             
+ 	     $.ajax(options);
+ 	}
 }
 
+function changeParent() {
+	var sel_obj = document.getElementById('branch_id');
+    for(var i=0; i<sel_obj.options.length; i++) sel_obj.options[i] = null;
+    sel_obj.options.length = 0;
+
+	var options = { 
+	           beforeSend  : showRequest,
+	           success     : successResultCombo,
+	           url         : COMMON_URL + "/ajaxBranchCombo",
+	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	           type        : "post", /* get, post */
+	           dataType    : "json", /* xml, html, script, json */
+	           data        : $("#search_form").serialize()
+	     };             
+	    
+	     $.ajax(options);
+}
+
+function successResultCombo(data, status) {
+	$.each(data, function(nm, combo) {
+		$('#'+nm).append(new Option("선택", ""));
+		$.each(data[nm], function(key, value){
+			$('#'+nm).append(new Option(value, key));
+		});
+	});
+}
 function init() {
 	
 	// init
@@ -300,9 +342,8 @@ function init() {
 	
 	// form search
 	ajaxSearchForm();
-	
-	//$("#limit").val($("#search_num option:selected").val());
 }
+
 	
 $(document).ready(function() {	
 	init();

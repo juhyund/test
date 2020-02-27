@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
-<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=5"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=6"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script>
@@ -45,17 +45,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">정기검침 데이터 조회</h3>
-</div>
-<div class="col-lg-2" >
-	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
-		</ol>
-	</div>						
+</div>					
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -100,8 +90,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 										<label class="col-lg-1 col-form-label"style="padding-left: 10px;"></label>
 										<div class="col-lg-3 btn-group">
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('thisMonth')">이번달</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('lastMonth')">저번달</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('thisMonth')">당월</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('lastMonth')">전월</button>
 											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('twoMonthsAgo')">전전월</button>
 			                            </div>
 									</div>
@@ -192,59 +182,70 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:100},
-	{headerName: "검침일", field: "billing_dt", width:300},
-	{headerName: "미터 시리얼", field: "meter_id", width:270},
-	{headerName: "본부", field: "parent_branch_nm"},
-	{headerName: "지사", field: "branch_nm"},
-	{headerName: "계기타입", field: "meter_type", width:230},
-	{headerName: "계기번호", field: "meter_serial", width:250},
-	{headerName: "모뎀 번호", field: "device_serial", width:250},
+	{headerName: "번호", 		field: "no", 			width:50,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "검침일", 	field: "billing_dt",	width:100,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "미터 시리얼", field: "meter_serial",	width:100,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "본부", 	  	 field: "parent_branch_nm", width:100,suppressSizeToFit: true},
+	{headerName: "지사", 		field: "branch_nm",		width:100,	suppressSizeToFit: true},
+	{headerName: "계기타입", 	field: "meter_type", 	width:100,	suppressSizeToFit: true},
+	{headerName: "계기번호", 	field: "meter_serial", 	width:100,	suppressSizeToFit: true},
+	{headerName: "모뎀 번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
 	{headerName: '순방향 유효전력',
-       children: [{headerName: "전체", 
+       children: [{headerName: "전체",  width:100, 
+    	   				suppressSizeToFit: true,
 					   	field: "active_imp_tot", 
 					   	valueFormatter: numberFormatter,
 					   	cellStyle: { 'text-align': "right" }},
-				   	{headerName: "T1", 
+				   	{headerName: "T1", width:100, 
+	    	   			suppressSizeToFit: true,
 					   	field: "active_imp_rate1", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}, 
-					{headerName: "T2", 
+					{headerName: "T2", width:100,
 					   	field: "active_imp_rate2", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}, 
-				   	{headerName: "T3", 
+				   	{headerName: "T3", width:100,
 					   	field: "active_imp_rate3", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }},   
-					{headerName: "T4", 
+					{headerName: "T4", width:100,
 					   	field: "active_imp_rate4", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}]
 	},
 	{headerName: '역방향 유효전력',
-       children: [{headerName: "전체", 
+       children: [{headerName: "전체", width:100,
 					   	field: "active_exp_tot", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }},
-				   	{headerName: "T1", 
+				   	{headerName: "T1", width:100,
 					   	field: "active_exp_rate1", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}, 
-					{headerName: "T2", 
+					{headerName: "T2", width:100,
 					   	field: "active_exp_rate2", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }},
-				   	{headerName: "T3", 
+				   	{headerName: "T3", width:100,
 					   	field: "active_exp_rate3", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }},   
-					{headerName: "T4", 
+				   	{headerName: "T4", width:100,
 					   	field: "active_exp_rate4", 
-					   	valueFormatter: numberFormatter,
+					   	valueFormatter: numberFormatter, 
+	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}]
 		},
-	{headerName: "저장일시", field: "reg_dt", width:300}
+	{headerName: "저장일시", field: "reg_dt", width:200, suppressSizeToFit: true}
 ];
 
 
@@ -252,6 +253,7 @@ var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500, true);    
     dataGrid.makeGrid();
     dataGrid.showNoRows();
+    dataGrid.autoSizeAll();
 };
 
 var totalCnt = 0;
@@ -300,7 +302,10 @@ function excelDownload() {
 
 onRowClicked = function(event){
 	var meter_id = event.data.meter_id;
+	var billing_dt = event.data.billing_dt_int;
+	
 	var param = "?meter_id="+meter_id;
+	param += "&billing_dt="+billing_dt;
 	param += "&sdate="+$("#sdateView").val();
 	param += "&edate="+$("#edateView").val();
 	
@@ -324,7 +329,7 @@ function successResultHandler(data, status) {
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
-	
+	dataGrid.autoSizeAll();
 	totalCnt = data.totalCount;
 }
 
@@ -368,8 +373,6 @@ function successResultCombo(data, status) {
 	$.each(data, function(nm, combo) {
 		$('#'+nm).append(new Option("선택", ""));
 		$.each(data[nm], function(key, value){
-			console.log("key: " + key);
-			console.log("value: " + value);
 			$('#'+nm).append(new Option(value, key));
 		});
 	});
@@ -379,14 +382,11 @@ function init() {
 	
 	// init
 	initGrid();
-	
 	setSearchPeriod('thisMonth');
 	comboDeviceType();
 	
 	// form search
 	ajaxSearchForm();
-	
-	//$("#limit").val($("#search_num option:selected").val());
 }
 	
 $(document).ready(function() {	

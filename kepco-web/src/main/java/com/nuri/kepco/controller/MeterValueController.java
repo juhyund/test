@@ -30,7 +30,7 @@ public class MeterValueController {
 	@Autowired
 	private MeterValueService meterValueService;
 	
-	private String[] commStr = { "meter_id", "device_id","meter_type"};
+	private String[] commStr = { "meter_id","meter_serial", "device_serial","meter_type","branch_id","itime","mtime"};
 	
 	@RequestMapping(value = "/ajaxMeterValue")
 	public ResponseEntity<Object> ajaxMeterValue(HttpServletRequest request) {                

@@ -28,7 +28,8 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
 <style>
   div .ibox-title {
-		background-color: #dee2e6;
+		/* background-color: #dee2e6; */
+		background-color: #5fa4ef47;
 	}
   table th.text-navy {
   	color: #676a6c !important;
@@ -94,23 +95,33 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 	                                		<h5>모뎀 정보</h5>
 	                                	</div>
 		                                	<table class="table text-center">
+		                                		<colgroup>
+										            <col width="10%" />
+										            <col width="14%" />
+										            <col width="12%" />
+										            <col width="14%" />
+										            <col width="12%" />
+										            <col width="14%" />
+										            <col width="12%" />
+										            <col width="12%" />
+												</colgroup>
 												<tbody>
 													<tr>
-														<th class="text-navy" scope="row">모뎀 번호 : </th>
+														<th class="text-navy" scope="row">모뎀 번호:</th>
 														<td id = "device_serial"></td>
-														<th class="text-navy" scope="row">운전 상태 : </th>
+														<th class="text-navy" scope="row">운전 상태:</th>
 														<td id = "device_status"></td>
-														<th class="text-navy" scope="row">최종 통신 일시 : </th>
+														<th class="text-navy" scope="row">최종 통신 일시:</th>
 														<td id = "last_comm_dt"></td>
-														<th class="text-navy" scope="row">통신 방식 : </th>
+														<th class="text-navy" scope="row">통신 방식:</th>
 														<td id = "comm_type"></td>
 													</tr>
 													<tr>
-														<th class="text-navy" scope="row">통신사 : </th>
+														<th class="text-navy" scope="row">통신사:</th>
 														<td id = ""></td>
-														<th class="text-navy" scope="row">모뎀 아이피 : </th>
+														<th class="text-navy" scope="row">모뎀 아이피:</th>
 														<td id = "ip"></td>
-														<th class="text-navy" scope="row">수신감도 레벨 : </th>
+														<th class="text-navy" scope="row">수신감도 레벨:</th>
 														<td id = ""></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
@@ -123,44 +134,56 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 	                                		<h5>계기 정보</h5>
 	                                	</div>
 										<table class="table text-center">
+											 <colgroup>
+									            <col width="7%" />
+									            <col width="10%" />
+									            <col width="12%" />
+									            <col width="10%" />
+									            <col width="12%" />
+									            <col width="8%" />
+									            <col width="13%" />
+									            <col width="10%" />
+									            <col width="10%" />
+									            <col width="8%" />
+											</colgroup>
 											<tbody>
 												<tr>
-													<th class="text-navy" scope="row">계기번호 : </th>
+													<th class="text-navy" scope="row">계기번호:</th>
 													<td id = "meter_serial"></td>
-													<th class="text-navy" scope="row">운전 상태 : </th>
-													<td id = ""></td>
-													<th class="text-navy" scope="row">마지막 검침 일시 : </th>
+													<th class="text-navy" scope="row">COSEM:</th>
+													<td id = "cosem_device_name"></td>
+													<th class="text-navy" scope="row">마지막 검침 일시:</th>
 													<td id = "last_comm_dt"></td>
-													<th class="text-navy" scope="row">검침 주기 : </th>
+													<th class="text-navy" scope="row">검침 주기:</th>
 													<td id = "lp_period"></td>
-													<th class="text-navy" scope="row">계기 배수 : </th>
-													<td id = ""></td>
+													<th class="text-navy" scope="row">계기 시간:</th>
+													<td id = "mtime"></td>
 												</tr>
 												<tr>
-													<th class="text-navy" scope="row">계기 타입 : </th>
+													<th class="text-navy" scope="row">계기 타입:</th>
 													<td id = "meter_type"></td>
-													<th class="text-navy" scope="row">프로그램 ID : </th>
-													<td id = "prog_id"></td>
-													<th class="text-navy" scope="row">프로그램 버전 : </th>
-													<td id = "prog_version"></td>
-													<th class="text-navy" scope="row">제조사 : </th>
-													<td id = "vendor_nm"></td>
-													<th class="text-navy" scope="row">자재 번호 : </th>
-													<td id = ""></td>
+													<th class="text-navy" scope="row">유효전력량 계기정수:</th>
+													<td id = "acon"></td>
+													<th class="text-navy" scope="row">무효전력량 계기정수:</th>
+													<td id = "rcon"></td>
+													<th class="text-navy" scope="row">피상전력량 계기정수:</th>
+													<td id = "pcon"></td>
+													<th class="text-navy" scope="row">정기검침일자:</th>
+													<td id = "billing_dt"></td>
 												</tr>
 												<tr>
-													<th class="text-navy" scope="row">인입주전주번호 : </th>
-													<td id = ""></td>
-													<th class="text-navy" scope="row">계기 소유 구분 : </th>
-													<td id = ""></td>
-													<th class="text-navy" scope="row">계기 제조년월 : </th>
-													<td id = "reg_dt"></td>
-													<th class="text-navy" scope="row">선식구분 : </th>
+													<th class="text-navy" scope="row">제조사:</th>
+													<td id = "vendor_nm"></td>
+													<th class="text-navy" scope="row">양방향계량수행:</th>
+													<td id = "net_metering"></td>
+													<th class="text-navy" scope="row">평균전압전류주기:</th>
+													<td id = "avg_power_period"></td>
+													<th class="text-navy" scope="row">선식구분:</th>
 													<td id = "meter_phase"></td>
-													<th class="text-navy" scope="row">계량점전압 : </th>
-													<td id = ""></td>
+													<th class="text-navy" scope="row">계기프로그램버전:</th>
+													<td id = "prog_version"></td>
 												</tr>
-										</tbody>
+											</tbody>
 										</table>
 									</div>
                                 </div>
@@ -251,7 +274,7 @@ function showRequest() {
 
 function successResultHandler(data, status) {	
 	
-	var device_serial = data.result.device_serial;
+	/* var device_serial = data.result.device_serial;
 	var meter_serial = data.result.meter_serial;
 	var reg_dt = data.result.reg_dt;
  	var last_comm_dt = data.result.last_comm_dt;
@@ -262,20 +285,31 @@ function successResultHandler(data, status) {
 	var meter_phase = data.result.meter_phase;
 	var ip = data.result.ip;
 	var vendor_nm = data.result.vendor_nm;
-	var comm_type = data.result.comm_type;
+	var comm_type = data.result.comm_type; */
 	
-	$('#device_serial').text(device_serial);
-	$('#meter_serial').text(meter_serial);
-	$('#reg_dt').text(reg_dt);
- 	$('#last_comm_dt').text(last_comm_dt);
-	$('#lp_period').text(lp_period);
-	$('#meter_type').text(meter_type);	
-	$('#prog_id').text(prog_id);	
-	$('#prog_version').text(prog_version);	
-	$('#meter_phase').text(meter_phase);
-	$('#ip').text(ip);
-	$('#vendor_nm').text(vendor_nm);
+	$('#device_serial').text(data.result.device_serial);
+	$('#meter_serial').text(data.result.meter_serial);
+	$('#reg_dt').text(data.result.reg_dt);
+ 	$('#last_comm_dt').text(data.result.last_comm_dt);
+	$('#lp_period').text(data.result.lp_period);
+	$('#meter_type').text(data.result.meter_type);	
+	$('#prog_id').text(data.result.prog_id);	
+	$('#prog_version').text(data.result.prog_version);	
+	$('#meter_phase').text(data.result.meter_phase);
+	$('#ip').text(data.result.ip);
+	$('#vendor_nm').text(data.result.vendor_nm);
 	$('#comm_type').text(data.result.comm_type);
+	
+	$('#cosem_device_name').text(data.result.cosem_device_name);
+	$('#acon').text(data.result.acon);
+	$('#rcon').text(data.result.rcon);
+	$('#pcon').text(data.result.pcon);
+	$('#billing_dt').text(data.result.billing_dt);
+	$('#itime').text(data.result.itime);
+	$('#mtime').text(data.result.mtime);
+	$('#net_metering').text(data.result.net_metering);
+	$('#avg_power_period').text(data.result.avg_power_period);
+	
 }
 
 function init() {

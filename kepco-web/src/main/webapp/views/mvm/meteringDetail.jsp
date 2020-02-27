@@ -64,15 +64,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">검침 데이터 조회 > 상세정보 </h3>
 </div>
-<div class="col-lg-2" >
-	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
-		</ol>
-	</div>						
+					
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -91,7 +83,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 	                        </div>
 	                	</div>
 	                </div>
-	                <div class=" gray-bg m-r-n-sm"   style="width:88%"> 
+	                <div class=" gray-bg m-r-n-sm"   style="width:90%"> 
 	                
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
@@ -119,22 +111,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<table class="table table-borderless"  style="width: 100%; margin-bottom: 7px;" border="1" >
 						<tbody>
 							<tr class="table-border">
-								<td height="80">
+								<td>
 									<div class="form-group row">
-										<label class="col-sm-3 col-form-label ">검침기간</label>
-										<div class="col-sm-4 btn-group">
-											<button type="button" class="btn btn-outline btn-primary" clicked onclick="setSearchPeriod('today')">오늘</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('weekly')">주간</button>
-											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('montly')">월간</button>
-			                            </div>
-			                            <label class="col-sm-2 col-form-label">단말 ID</label>
-										<div class="col-sm-3">
-											<input type="text" id="device_id" name="device_id" value="" class="form-control">
-										</div>
-								</div>
-									<div class="form-group form-group-end row">    
-										<!-- <label class="col-sm-2 col-form-label"></label> -->
-										<div class="col-sm-6" id="datePicker">
+										<label class="col-sm-2 col-form-label ">검침기간</label>
+			                            <div class="col-sm-6" id="datePicker">
 											<div class="input-group date" style="width: 48%; float: left;">
 												<input type="hidden" id="sdate" name="sdate" value=""> 
 												<input type="text" class="form-control" id="sdateView" name="sdateView" value="${sdate}">
@@ -151,9 +131,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</span>
 											</div>
 										</div>
+										<div class="col-sm-4 btn-group">
+											<button type="button" class="btn btn-outline btn-primary" clicked onclick="setSearchPeriod('today')">오늘</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('weekly')">주간</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('montly')">월간</button>
+			                            </div>
 									</div>
 								</td>
-								<td width="180" height="80" style="text-align: right">
+								<td width="180" style="text-align: right">
 									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
 										<i class="fa fa-search"></i>
 									</button>
@@ -225,8 +210,10 @@ function initDate(){
 
 var columnDefs = [
 //specify the columns  
-	{headerName: "번호", field: "no", width:80},
-	{headerName: "검침일시", field: "read_dt"}]
+	{headerName: "번호",		field: "no",		width:50,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "검침일시", 	field: "read_dt",	width:100,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "모뎀시간 ", 	field: "itime",		width:100,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "미터시간", 	field: "mtime",		width:100,	suppressSizeToFit: true, pinned:"left"}	]
 	
 	
 function useChannelList(data, status) {
@@ -236,21 +223,24 @@ function useChannelList(data, status) {
 	for(i=0;i<channel_cnt;i++){
 		//channelName[i]에 channel_idx가 i+1인 값이 들어감. 
 		channelName[i] = data.resultGrid[i].channel_name;
-		columnDefs.push({headerName: channelName[i], field: "c"+(i+1)+"_metervalue",valueFormatter: numberFormatter,
-		cellStyle: { 'text-align': "right" }});
+		columnDefs.push({headerName: channelName[i], 
+						field: "c"+(i+1)+"_metervalue",
+						valueFormatter: numberFormatter,
+						width:70, 	
+						suppressSizeToFit: true,
+						cellStyle: { 'text-align': "right" }});
 	}
 	
 	//grid로딩
 	initGrid();
-	ajaxSearchForm();
+	ajaxSearchForm();su
 }
 
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500);    
     dataGrid.makeGrid();
     dataGrid.showNoRows();
-    
-    var init
+    dataGrid.autoSizeAll();
 };
 
 function ajaxMeterInfoSummary() {
@@ -327,6 +317,7 @@ function showRequest() {
 function successResultHandler(data, status) {	
 	//grid에 데이터 로딩 
 	dataGrid.setData(data.resultGrid);
+	dataGrid.autoSizeAll();
 	//chart에 데이터 로딩
 	loadChart(data, status);
 }
