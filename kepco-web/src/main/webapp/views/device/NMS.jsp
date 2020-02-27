@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">Connectivity Monitoring</h3>
+	<h3 style="margin-top:6px">Device Monitoring</h3>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
