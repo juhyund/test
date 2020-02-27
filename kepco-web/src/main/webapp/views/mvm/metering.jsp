@@ -46,16 +46,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">검침데이터 조회</h3>
 </div>
-<div class="col-lg-2" >
-	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
-		</ol>
-	</div>						
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -252,7 +242,7 @@ onRowClicked = function(event){
 
 var winObj;
 function showDetailMeterValue(meter_id){ 
-	var opts="width=900, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
+	var opts="width=1200, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
 
 	if(winObj)
         winObj.close();
