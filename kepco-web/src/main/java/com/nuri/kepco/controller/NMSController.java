@@ -27,7 +27,7 @@ public class NMSController {
 	
 	Logger logger = LoggerFactory.getLogger(NMSController.class);
 
-	private String[] commStr = {"deviceId", "deviceSerial", "sdate", "edate"};
+	private String[] commStr = {"deviceId", "deviceSerial", "sdate", "edate", "data_per_page"};
 	
 	@Autowired
 	private NMSInfoService nmsInfoService;
