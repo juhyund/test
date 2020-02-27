@@ -26,13 +26,15 @@
 		<if test="searchfield != null and searchquery != null " >
 			AND ${searchfield} like concat(#{searchquery},'%')
 		</if>
-		<if test="device_id != null and device_id != ''" >     
-            AND mi.device_id = #{device_id}
+		<if test="device_serial != null and device_serial != ''" >     
+            AND d.device_serial = #{device_serial}
         </if>
         <if test="meter_type != null and meter_type != ''" >     
             AND mi.meter_type = #{meter_type}
-        </if>		
-        
+        </if>
+        <if test="meter_serial != null and meter_serial != ''" >     
+            AND mi.meter_serial = #{meter_serial}
+        </if>
         </where>
 	</sql>
 	
@@ -95,17 +97,27 @@
 			d.code_nm, 
 			ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type,
 			a.meter_value,
-			DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			a.device_serial,
+			DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt,
+			b.branch_nm,
+			(SELECT branch_nm FROM emi_branch_info WHERE branch_id = b.branch_parent_id) AS parent_branch_nm
 		FROM (
-			SELECT mv.meter_id, mv.read_dt, mv.channel, mv.meter_value, mv.sect_meter_value, mv.reg_dt, mi.meter_type, mi.device_id, mi.meter_serial
+			SELECT mv.meter_id, mi.branch_id, mv.read_dt, mv.channel, 
+			mv.meter_value, mv.sect_meter_value, mv.reg_dt, mi.meter_type,
+			mi.device_id, mi.meter_serial, d.device_serial
 			FROM EMI_METER_INFO AS mi
-			LEFT JOIN EMI_METER_VALUE AS mv
-			ON mi.meter_id = mv.meter_id
+			LEFT JOIN EMI_METER_VALUE AS mv	ON mi.meter_id = mv.meter_id
+			LEFT JOIN EMI_DEVICE_INFO AS d	ON mi.device_id = d.device_id
 			<include refid="base_where_list" />
 			AND mv.channel = 'CH001'
 		) AS a
-		JOIN EMI_ALL_CODE AS d
-		ON a.meter_type= d.code
+		JOIN EMI_ALL_CODE AS d ON a.meter_type= d.code
+		INNER JOIN emi_branch_info b ON (b.branch_id = a.branch_id)
+		<where>
+			<if test="branch_id != null and branch_id != ''" >     
+            	AND b.branch_id = #{branch_id}
+        	</if> 
+		</where>
 		<include refid="order_by_list" />
 		<include refid="query_limit" />
 		
@@ -115,13 +127,19 @@
 	<select id="getMeterValueCount" resultType="java.lang.Integer" parameterType="MeterValue">
 		SELECT COUNT(*) 
 		FROM (
-			SELECT mv.meter_id, mv.read_dt, mv.channel, mv.meter_value, mv.reg_dt, mi.meter_type
+			SELECT mv.meter_id, mv.read_dt, mv.channel, mv.meter_value, mv.reg_dt, mi.meter_type, mi.branch_id
 			FROM EMI_METER_INFO AS mi
-			LEFT JOIN EMI_METER_VALUE AS mv
-			ON mi.meter_id = mv.meter_id
+			LEFT JOIN EMI_METER_VALUE AS mv ON mi.meter_id = mv.meter_id
+			LEFT JOIN EMI_DEVICE_INFO AS d	ON mi.device_id = d.device_id
 			<include refid="base_where_list" />
 			AND mv.channel = 'CH001'
-		) AS a;
+		) AS a
+		INNER JOIN emi_branch_info b ON (b.branch_id = a.branch_id)
+		<where>
+			<if test="branch_id != null and branch_id != ''" >     
+            	AND b.branch_id = #{branch_id}
+        	</if> 
+		</where>
 	</select>
 	
 	

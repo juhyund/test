@@ -71,7 +71,6 @@ var DataGrid = function(gridDivId, columnDefs, autoResizable, height, useRowClic
 	this.getSelectedRow = function(){
 		return _this.gridOpts.api.getSelectedRows();
 	};
-	
 };
 /**
  *  공통 그리드 option
@@ -102,6 +101,7 @@ var CommonGrid = {
             enableRangeSelection: true,
             suppressRowClickSelection: suppressRowClickSelection,
             onRowClicked :rowClickEvent,
+            suppressHorizontalScroll: false,
             // animateRows: true,
             domLayout: height,
            getRowStyle: function (param) { // row style 지정.

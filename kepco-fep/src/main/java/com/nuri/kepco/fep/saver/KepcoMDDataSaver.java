@@ -111,10 +111,10 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 			lp.setChannel(lpData.getChannel());
 			lp.setMeter_value(lpData.getValue());
 			
-			if(mdData.getMeterTime() != null && "".equals(mdData.getMeterTime())) {
+			if(mdData.getMeterTime() != null && !"".equals(mdData.getMeterTime())) {
 				lp.setMtime(mdData.getMeterTime()); // meter time
 			}
-			if(mdData.getModemTime() != null && "".equals(mdData.getModemTime())) {
+			if(mdData.getModemTime() != null && !"".equals(mdData.getModemTime())) {
 				lp.setItime(mdData.getModemTime());
 			}
 			

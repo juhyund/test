@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">Connectivity Monitoring</h3>
+	<h3 style="margin-top:6px">Device Monitoring</h3>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
@@ -82,22 +82,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div class="col-lg-3">
 										<select class="form-control" name="model_seq" id="model_seq"></select>
 									</div>
-									<label class="col-sm-1 col-form-label">검색일자</label>
-									<div class="col-sm-3" id="datePicker">
-										<div class="input-group date" style="width: 48%; float: left;">
-											<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
-											<span class="input-group-addon" style="list-style: none;">
-												<i class="fa fa-calendar"></i>
-											</span>
-										</div>
-										<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
-										<div class="input-group date" style="width: 48%;">
-											<input type="text" class="form-control"  id="edate" name="edate" value=""> 
-											<span class="input-group-addon" style="list-style: none;">
-												<i class="fa fa-calendar"></i>
-											</span>
-										</div>
-									</div>
 								</div>
 
 								<div class="form-group form-group-end row">
@@ -121,7 +105,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</select>
 									</div>
 													
-									<label class="col-sm-1 col-form-label">통신일자</label>
+									<label class="col-sm-1 col-form-label">검색 일자</label>
 									<div class="col-sm-3" id="datePicker">
 										<div class="input-group date" style="width: 48%; float: left;">
 											<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
@@ -197,10 +181,11 @@ var columnDefs = [
 	{headerName: "지역본부", field: ""},
 	{headerName: "단말상태", field: "device_status"},
 	{headerName: "CPU", field: ""},
-	{headerName: "Memory", field: ""},
+	{headerName: "Memory", field: "ramUsage"},
 	{headerName: "RSRP(dBm)", field: ""},
 	{headerName: "RSRQ(dB)", field: ""},
-	{headerName: "최종 통신일자", field: "last_comm_date"},
+	{headerName: "SNR(dB)", field: ""},
+	{headerName: "최종 통신일자", field: "usageTime"},
 	{headerName: "등록일자", field: ""}
 ];
 
@@ -329,9 +314,10 @@ function showRequest() {
 
 function successResultHandler(data, status) {
 	var dataPerPage = $("#limit").val();
+	var currentPage = $("#page").val();
 	
 	dataGrid.setData(data.resultGrid);
-	gridPage(data.totalCount, dataPerPage, 10, 1);
+	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }
 
 
