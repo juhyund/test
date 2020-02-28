@@ -182,23 +182,17 @@ function goBack() {
 							<div ng-repeat="object in objects">
 								<div class="row">
 									<div class="col-lg-12">
-										<div class="ibox">
-											<div class="ibox-title">
+										<div class="ibox" style="margin-bottom: 0px">
+											<div class="ibox-title collapse-link" style="cursor: pointer" data-toggle="collapse" href="\#{{object.object_id}}">
 												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 명  : {{object.object_nm}}</h>
 												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 ID : {{object.object_id}}</h>
-												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 인스턴스 : {{object.object_instance_id}}</h>
+												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 인스턴스 : {{object.instances}}</h>
 												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 1">인스턴스 : Single</h>
 												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 0">인스턴스 : Multiple</h>
 												<h5 style="margin-top: 6px; margin-right: 50px">설명 : {{object.descr}}</h>
-												<div class="ibox-tools">
-													<a class="collapse-link" data-toggle="collapse" href={{resource.resource_id}} role="button" aria-expanded="false" aria-controls='{{resource.resource_id}}'>
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
 											</div>
 											<!-- ibox-content -->
-											<!-- div class="ibox-content collapse" data-toggle="collapse" id='{{resource.resource_id}}' -->
-											<div class="ibox-content">
+											<div class="ibox-content collapse" id="{{object.object_id}}">
 												<div class="table-responsive">
 													<table class="table table-striped">
 														<thead>

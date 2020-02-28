@@ -2,13 +2,24 @@ package com.nuri.kepco.mongo.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Data;
 
 @Data
+@Document(collection="ConnectivityMonitor")
 public class ConnectivityMonitor {
 	
+	@Id
+	private String id;
+	
+	String branchId; // branch id
+	String branchNm; // branch name
 	String deviceId;
 	String deviceSerial;
+	String deviceStatus;
+	String deviceStatusNm;
 	int rsrp;	// Radio Signal Strength
 	int rsrq;	// Link Quality
 	String ipAddress;	// 모뎀의 IP 주소 (IPv6)

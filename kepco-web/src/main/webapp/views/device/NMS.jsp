@@ -180,11 +180,11 @@ var columnDefs = [
 	{headerName: "단말 번호", field: "deviceSerial"},
 	{headerName: "지역본부", field: ""},
 	{headerName: "단말상태", field: "device_status"},
-	{headerName: "CPU", field: ""},
+	{headerName: "CPU", field: "cpuUsage"},
 	{headerName: "Memory", field: "ramUsage"},
-	{headerName: "RSRP(dBm)", field: ""},
-	{headerName: "RSRQ(dB)", field: ""},
-	{headerName: "SNR(dB)", field: ""},
+	{headerName: "RSRP(dBm)", field: "rsrp"},
+	{headerName: "RSRQ(dB)", field: "rsrq"},
+	{headerName: "SNR(dB)", field: "ssnr"},
 	{headerName: "최종 통신일자", field: "usageTime"},
 	{headerName: "등록일자", field: ""}
 ];
@@ -273,23 +273,12 @@ function ajaxExcelDownload() {
      $.ajax(options);
 }
 
+//grid row click
 onRowClicked = function(event){
-	//선택된 row의 meter_id를 파라미터로 MeteringDetail.jsp를 팝업으로 연다.
-	
-	var selectedRows = dataGrid.getSelectedRow();
-    var selectedRowsString = '';
-    selectedRows.forEach( function(selectedRow, index) {
-        if (index!==0) {
-            selectedRowsString += ', ';
-        }
-        selectedRowsString += selectedRow.control_seq;
-    });
-    
-    // selectedRow.object_id를 form의 detail_object_id에 보냄.
-    $("#detail_control_seq").val(selectedRowsString);
-    $("#detail_form").submit();
-    
+	var deviceSerial = event.data.deviceSerial;
+	location.href = CONTEXT_PATH + "/NMSDetail?deviceSerial="+deviceSerial;
 }
+
 /* 
 var winObj;
 function showDetailWindow(device_id){ 

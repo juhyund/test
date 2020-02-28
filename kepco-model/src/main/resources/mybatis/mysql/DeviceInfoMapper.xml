@@ -94,6 +94,7 @@
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, b.device_status
+			, FNC_GET_CODE_NM(a.device_status) as device_status_nm
 		FROM EMI_DEVICE_INFO a	
 		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
 		<include refid="base_where_list" />
