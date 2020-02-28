@@ -150,8 +150,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												<tr>
 													<th class="text-navy" scope="row">계기번호:</th>
 													<td id = "meter_serial"></td>
-													<th class="text-navy" scope="row">COSEM:</th>
-													<td id = "cosem_device_name"></td>
 													<th class="text-navy" scope="row">마지막 검침 일시:</th>
 													<td id = "last_comm_dt"></td>
 													<th class="text-navy" scope="row">검침 주기:</th>
@@ -168,8 +166,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "rcon"></td>
 													<th class="text-navy" scope="row">피상전력량 계기정수:</th>
 													<td id = "pcon"></td>
-													<th class="text-navy" scope="row">정기검침일자:</th>
-													<td id = "billing_dt"></td>
 												</tr>
 												<tr>
 													<th class="text-navy" scope="row">제조사:</th>
@@ -178,10 +174,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "net_metering"></td>
 													<th class="text-navy" scope="row">평균전압전류주기:</th>
 													<td id = "avg_power_period"></td>
-													<th class="text-navy" scope="row">선식구분:</th>
-													<td id = "meter_phase"></td>
 													<th class="text-navy" scope="row">계기프로그램버전:</th>
 													<td id = "prog_version"></td>
+												</tr>
+												<tr>
+													<th class="text-navy" scope="row">COSEM:</th>
+													<td id = "cosem_device_name"></td>
+													<th class="text-navy" scope="row">정기검침일자:</th>
+													<td id = "billing_dt"></td>
+													<th class="text-navy" scope="row">선식구분:</th>
+													<td id = "meter_phase" colspan="3"></td>
 												</tr>
 											</tbody>
 										</table>
