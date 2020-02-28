@@ -18,7 +18,7 @@ public class CpuUsageMonitor {
 	private String branchNm; // branch name
 	private String deviceId;
 	private String deviceSerial;
-	private int cpuUsage;
+	private Integer cpuUsage;
 	private String deviceStatus; // 단말상태
 	private String deviceStatusNm;
 	private String usageTime; // usage 수신 시간(통신일자)

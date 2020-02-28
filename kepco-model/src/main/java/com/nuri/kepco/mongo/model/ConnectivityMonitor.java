@@ -20,13 +20,13 @@ public class ConnectivityMonitor {
 	String deviceSerial;
 	String deviceStatus;
 	String deviceStatusNm;
-	int rsrp;	// Radio Signal Strength
-	int rsrq;	// Link Quality
+	Integer rsrp;	// Radio Signal Strength
+	Integer rsrq;	// Link Quality
 	String ipAddress;	// 모뎀의 IP 주소 (IPv6)
-	int cellId;	// Serving Cell ID
-	int smnc; // Serving Mobile Network Code
-	int smcc; // Serving Mobile Country Code
-	int ssnr; // Signal SNR
+	Integer cellId;	// Serving Cell ID
+	Integer smnc; // Serving Mobile Network Code
+	Integer smcc; // Serving Mobile Country Code
+	Integer ssnr; // Signal SNR
 	
 	String usageTime; // 20200224000000
 	String saveTime; // 20200224000000
