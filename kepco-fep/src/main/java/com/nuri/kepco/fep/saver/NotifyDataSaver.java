@@ -58,7 +58,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			if(cpuUsageList != null) {
 				if(cpuUsageList.size() > 0) {					
 					int result = saveCPUUsage(cpuUsageList);
-					LOG.debug("save CPU Usage : total {} / result {}", cpuUsageList.size(), result);
+					int result2 = saveCpuStatisticsMonitor(cpuUsageList);
+					LOG.debug("save CPU Usage : total {} / result {} / statistics {}", cpuUsageList.size(), result, result2);
 				}
 			}
 			
@@ -66,7 +67,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			if(ramUsageList != null) {
 				if(ramUsageList.size() > 0) {					
 					int result = saveRAMUsage(ramUsageList);
-					LOG.debug("save RAM Usage : total {} / result {}", ramUsageList.size(), result);
+					int result2 = saveRamStatisticsMonitor(ramUsageList);
+					LOG.debug("save RAM Usage : total {} / result {}/ statistics {}", ramUsageList.size(), result, result2);
 				}
 			}
 			
@@ -201,13 +203,12 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	}
 	
 	/**
-	 * saveConnectivityMonitor
-	 * @param connectivityList
+	 * saveCpuStatisticsMonitor
+	 * @param cpuUsageList
 	 * @return
 	 */
 	private int saveConnectivityStatisticsMonitor(Map<Integer, ConnectivityMonitor> connectivityList) {
 		
-		List<ConnectivityStatisticsMonitor> list = new ArrayList<ConnectivityStatisticsMonitor>();
 		int result = 0;
 		
 		try {
@@ -227,13 +228,13 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				ConnectivityStatisticsMonitor param = new ConnectivityStatisticsMonitor();
 				param.setDeviceId(deviceId);
 				 
-				List<ConnectivityStatisticsMonitor> slist = connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(param);				
+				List<ConnectivityStatisticsMonitor> _list = connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(param);				
 				ConnectivityStatisticsMonitor statistics = null;
 				
-				LOG.debug("slist : {}", slist);
+				LOG.debug("_list : {}", _list);
 				
-				if(slist.size() > 0) {					 
-					statistics = slist.get(0);
+				if(_list.size() > 0) {					 
+					statistics = _list.get(0);
 					
 				} else {
 					statistics = new ConnectivityStatisticsMonitor();
@@ -245,14 +246,18 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				statistics.setBranchNm(branchNm);
 				statistics.setDeviceStatus(deviceStatus);
 				statistics.setDeviceStatusNm(deviceStatusNm);
-				statistics.setRsrp(connectivityMonitor.getRsrp());
-				statistics.setRsrq(connectivityMonitor.getRsrq());
-				statistics.setIpAddress(connectivityMonitor.getIpAddress());
-				statistics.setCellId(connectivityMonitor.getCellId());
-				statistics.setSmnc(connectivityMonitor.getSmnc());
-				statistics.setSmcc(connectivityMonitor.getSmcc());
-				statistics.setSsnr(connectivityMonitor.getSsnr());
-				LOG.debug("slist : {}", slist);
+				
+				if(connectivityMonitor.getRsrp() != null) { statistics.setRsrp(connectivityMonitor.getRsrp()); }
+				if(connectivityMonitor.getRsrq() != null) { statistics.setRsrq(connectivityMonitor.getRsrq()); }
+				if(connectivityMonitor.getIpAddress() != null) { statistics.setIpAddress(connectivityMonitor.getIpAddress()); }
+				if(connectivityMonitor.getCellId() != null) { statistics.setCellId(connectivityMonitor.getCellId()); }
+				if(connectivityMonitor.getSmnc() != null) { statistics.setSmnc(connectivityMonitor.getSmnc()); }
+				if(connectivityMonitor.getSmcc() != null) { statistics.setSmcc(connectivityMonitor.getSmcc()); }
+				if(connectivityMonitor.getSsnr() != null) { statistics.setSsnr(connectivityMonitor.getSsnr()); }
+				if(connectivityMonitor.getUsageTime() != null) { statistics.setUsageTime(connectivityMonitor.getUsageTime());}
+				if(connectivityMonitor.getSaveTime() != null) { statistics.setSaveTime(connectivityMonitor.getSaveTime());}
+					
+				LOG.debug("_list : {}", _list);
 				// save
 				connectivityStatisticsMonitorDAO.save(statistics);
 				result++;
@@ -265,5 +270,120 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		
 		return result;
 	}
+	
+	/**
+	 * saveCpuStatisticsMonitor
+	 * @param cpuUsageList
+	 * @return
+	 */
+	private int saveCpuStatisticsMonitor(List<CpuUsageMonitor> cpuUsageList) {
+		
+		int result = 0;
+		
+		try {
+			
+			String deviceId = getDeviceInfo().getDevice_id();
+			String deviceSerial = getDeviceInfo().getDevice_serial();
+			String branchId = getDeviceInfo().getBranch_id();
+			String branchNm = getDeviceInfo().getBranch_nm();
+			String deviceStatus = getDeviceInfo().getDevice_status();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			
+			for(CpuUsageMonitor cpu : cpuUsageList) {
+				
+				// param - device id가 동일한 Statistics를 가지로 온다.
+				ConnectivityStatisticsMonitor param = new ConnectivityStatisticsMonitor();
+				param.setDeviceId(deviceId);
+				 
+				List<ConnectivityStatisticsMonitor> _list = connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(param);
+				ConnectivityStatisticsMonitor statistics = null;
+				
+				if(_list.size() > 0) {					 
+					statistics = _list.get(0);					
+				} else {
+					statistics = new ConnectivityStatisticsMonitor();
+					
+					statistics.setDeviceId(deviceId);
+					statistics.setDeviceSerial(deviceSerial);
+					statistics.setBranchId(branchId);
+					statistics.setBranchNm(branchNm);
+					statistics.setDeviceStatus(deviceStatus);
+					statistics.setDeviceStatusNm(deviceStatusNm);
+				}
+				
+				if(cpu.getCpuUsage() != null) { statistics.setCpuUsage(cpu.getCpuUsage());}
+				if(cpu.getUsageTime() != null) { statistics.setUsageTime(cpu.getUsageTime());}
+				if(cpu.getSaveTime() != null) { statistics.setSaveTime(cpu.getSaveTime());}
+				
+				connectivityStatisticsMonitorDAO.save(statistics);
+				
+			}
+				
+			
+		} catch (Exception e) {
+			LOG.error("error", e);
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	
+	/**
+	 * saveRamStatisticsMonitor
+	 * @param ramUsageList
+	 * @return
+	 */
+	private int saveRamStatisticsMonitor(List<RamUsageMonitor> ramUsageList) {
+		
+		int result = 0;
+		
+		try {
+			
+			String deviceId = getDeviceInfo().getDevice_id();
+			String deviceSerial = getDeviceInfo().getDevice_serial();
+			String branchId = getDeviceInfo().getBranch_id();
+			String branchNm = getDeviceInfo().getBranch_nm();
+			String deviceStatus = getDeviceInfo().getDevice_status();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			
+			for(RamUsageMonitor ram : ramUsageList) {
+				
+				// param - device id가 동일한 Statistics를 가지로 온다.
+				ConnectivityStatisticsMonitor param = new ConnectivityStatisticsMonitor();
+				param.setDeviceId(deviceId);
+				 
+				List<ConnectivityStatisticsMonitor> _list = connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(param);
+				ConnectivityStatisticsMonitor statistics = null;
+				
+				if(_list.size() > 0) {					 
+					statistics = _list.get(0);					
+				} else {
+					statistics = new ConnectivityStatisticsMonitor();
+					
+					statistics.setDeviceId(deviceId);
+					statistics.setDeviceSerial(deviceSerial);
+					statistics.setBranchId(branchId);
+					statistics.setBranchNm(branchNm);
+					statistics.setDeviceStatus(deviceStatus);
+					statistics.setDeviceStatusNm(deviceStatusNm);
+				}
+				
+				if(ram.getRamUsage() != null) { statistics.setRamUsage(ram.getRamUsage());}
+				if(ram.getUsageTime() != null) { statistics.setUsageTime(ram.getUsageTime());}
+				if(ram.getSaveTime() != null) { statistics.setSaveTime(ram.getSaveTime());}
+				
+				connectivityStatisticsMonitorDAO.save(statistics);				
+			}
+				
+			
+		} catch (Exception e) {
+			LOG.error("error", e);
+			result = -1;
+		}
+		
+		return result;
+	}
+	
 
 }
