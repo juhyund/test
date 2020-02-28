@@ -75,7 +75,7 @@
 			a.device_id
 			, a.device_serial
 			, a.service_id
-			, a.branch_id
+			, a.branch_id			
 			, a.model_seq
 			, a.device_oid
 			, a.comm_type
@@ -94,9 +94,9 @@
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, b.device_status
-			, FNC_GET_CODE_NM(a.device_status) as device_status_nm
+			, FNC_GET_CODE_NM(b.device_status) as device_status_nm
 		FROM EMI_DEVICE_INFO a	
-		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
 		<include refid="base_where_list" />
 		
 		<include refid="order_by_list" />	
@@ -110,7 +110,7 @@
 			a.device_id
 			, a.device_serial
 			, a.service_id
-			, a.branch_id
+			, a.branch_id			
 			, a.model_seq
 			, a.device_oid
 			, a.comm_type
@@ -128,11 +128,10 @@
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
-			, b.device_status
+			, b.device_status			
 		FROM EMI_DEVICE_INFO a	
-		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
 		WHERE a.device_id = #{device_id}
-		
 	</select>
 	
 	<select id="selectByDeviceSerial" resultType="deviceInfo" parameterType="java.lang.String">	
@@ -141,6 +140,7 @@
 			, a.device_serial
 			, a.service_id
 			, a.branch_id
+			, c.branch_nm
 			, a.model_seq
 			, a.device_oid
 			, a.comm_type
@@ -159,8 +159,10 @@
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, b.device_status
+			, FNC_GET_CODE_NM(b.device_status) as device_status_nm
 		FROM EMI_DEVICE_INFO a	
-		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
+		LEFT OUTER JOIN EMI_BRANCH_INFO c ON (a.branch_id = c.branch_id)	
 		WHERE a.device_serial = #{device_serial}		
 	</select>
 	
