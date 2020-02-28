@@ -50,6 +50,8 @@ public class NotifyDataParser extends DataParser {
 		this.modemTime = (modemTime == null)? TimeUtil.getCurrentTimeMilli() : modemTime;
 		this.deviceId = deviceId;
 		
+		LOG.debug("modemTime : [{}]", this.modemTime);
+		
 		try {
 			
 			JsonRootObject jsonObject = LwM2mJson.fromJsonLwM2m(data);			
@@ -70,6 +72,7 @@ public class NotifyDataParser extends DataParser {
 					
 					LwM2mPath path = new LwM2mPath(resourcePath);
 					
+					
 					// AMI_COMMON_CONTROL_OBJECTID
 					if(AMI_COMMON_CONTROL_OBJECTID.equals(path.getObjectId())) {
 						
@@ -77,7 +80,7 @@ public class NotifyDataParser extends DataParser {
 							
 							CpuUsageMonitor cpu = new CpuUsageMonitor();
 							cpu.setCpuUsage(e.getFloatValue().intValue());
-							cpu.setUsageTime(modemTime);
+							cpu.setUsageTime(this.modemTime);
 							cpu.setSaveTime(TimeUtil.getCurrentTimeMilli());
 							
 							cpuUsageList.add(cpu);
@@ -87,7 +90,7 @@ public class NotifyDataParser extends DataParser {
 							
 							RamUsageMonitor ram = new RamUsageMonitor();
 							ram.setRamUsage(e.getFloatValue().intValue());
-							ram.setUsageTime(modemTime);
+							ram.setUsageTime(this.modemTime);
 							ram.setSaveTime(TimeUtil.getCurrentTimeMilli());
 							
 							ramUsageList.add(ram);

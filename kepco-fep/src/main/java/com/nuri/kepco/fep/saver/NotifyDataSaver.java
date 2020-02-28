@@ -231,8 +231,6 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				List<ConnectivityStatisticsMonitor> _list = connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(param);				
 				ConnectivityStatisticsMonitor statistics = null;
 				
-				LOG.debug("_list : {}", _list);
-				
 				if(_list.size() > 0) {					 
 					statistics = _list.get(0);
 					
@@ -316,7 +314,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				if(cpu.getSaveTime() != null) { statistics.setSaveTime(cpu.getSaveTime());}
 				
 				connectivityStatisticsMonitorDAO.save(statistics);
-				
+				result++;
 			}
 				
 			
@@ -369,11 +367,14 @@ public class NotifyDataSaver extends AbstractMDSaver {
 					statistics.setDeviceStatusNm(deviceStatusNm);
 				}
 				
+				LOG.debug("ram.getUsageTime() {}", ram.getUsageTime());
+				
 				if(ram.getRamUsage() != null) { statistics.setRamUsage(ram.getRamUsage());}
 				if(ram.getUsageTime() != null) { statistics.setUsageTime(ram.getUsageTime());}
 				if(ram.getSaveTime() != null) { statistics.setSaveTime(ram.getSaveTime());}
 				
-				connectivityStatisticsMonitorDAO.save(statistics);				
+				connectivityStatisticsMonitorDAO.save(statistics);
+				result++;
 			}
 				
 			
