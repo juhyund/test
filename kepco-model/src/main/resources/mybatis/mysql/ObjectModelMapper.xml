@@ -60,7 +60,7 @@
 			
 		<include refid="base_where_list" />
 		
-		<include refid="order_by_list" />	
+		order by object_id	
 			
 		<include refid="query_limit" />
 		

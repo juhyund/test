@@ -21,7 +21,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        method: 'POST',
 	        url: COMMON_URL + "/ajaxDeviceObjectModelList",
 	        params : { 
-	        	"device_id" : $("#device_id").val(), 
 	        	"searchfield" : $("#searchfield").val(),
             	"searchquery" : $("#searchquery").val(),
             	"instances" : $("#instances").val()	
