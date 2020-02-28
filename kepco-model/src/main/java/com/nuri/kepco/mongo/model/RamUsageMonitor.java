@@ -20,7 +20,7 @@ public class RamUsageMonitor {
 	private String deviceSerial; 
 	private String deviceStatus; // 단말상태
 	private String deviceStatusNm;
-	private int ramUsage;
+	private Integer ramUsage;
 	private String usageTime;	// usage 수신 시간
 	private String saveTime;	// 서버 저장 시간
 	

@@ -22,15 +22,15 @@ public class ConnectivityStatisticsMonitor {
 	private String deviceSerial;
 	private String deviceStatus; // 단말상태
 	private String deviceStatusNm;
-	private int rsrp;	// Radio Signal Strength
-	private int rsrq;	// Link Quality
+	private Integer rsrp;	// Radio Signal Strength
+	private Integer rsrq;	// Link Quality
 	private String ipAddress;	// 모뎀의 IP 주소 (IPv6)
-	private int cellId;	// Serving Cell ID
-	private int smnc; // Serving Mobile Network Code
-	private int smcc; // Serving Mobile Country Code
-	private int ssnr; // Signal SNR
-	private int cpu;
-	private int ram;
+	private Integer cellId;	// Serving Cell ID
+	private Integer smnc; // Serving Mobile Network Code
+	private Integer smcc; // Serving Mobile Country Code
+	private Integer ssnr; // Signal SNR
+	private Integer cpuUsage; // cpu
+	private Integer ramUsage; // ram
 	
 	private String usageTime; // 20200224000000
 	private String saveTime; // 20200224000000
