@@ -112,6 +112,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				cpu.setDeviceStatusNm(deviceStatusNm);
 			}
 			
+			LOG.debug("cpuUsageList : {}", cpuUsageList);
+			
 			cpuUsageMonitorDAO.add(cpuUsageList);
 			result = cpuUsageList.size();
 			
