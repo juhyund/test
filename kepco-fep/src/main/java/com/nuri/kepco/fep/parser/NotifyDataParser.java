@@ -160,7 +160,7 @@ public class NotifyDataParser extends DataParser {
 			}
 		}
 		
-		LOG.debug("TEST : {}", connectivityList.get(0));
+		LOG.debug("connectivityList : {}", connectivityList.get(0));
 	}
 	
 	public Map<Integer, ConnectivityMonitor> getConnectivityList() {

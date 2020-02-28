@@ -14,9 +14,11 @@ import com.nuri.kepco.fep.mddata.IMeasurementData;
 import com.nuri.kepco.fep.parser.KepcoDLMSParser;
 import com.nuri.kepco.fep.parser.NotifyDataParser;
 import com.nuri.kepco.mongo.model.ConnectivityMonitor;
+import com.nuri.kepco.mongo.model.ConnectivityStatisticsMonitor;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
 import com.nuri.kepco.mongo.model.dao.ConnectivityMonitorDAO;
+import com.nuri.kepco.mongo.model.dao.ConnectivityStatisticsMonitorDAO;
 import com.nuri.kepco.mongo.model.dao.CpuUsageMonitorDAO;
 import com.nuri.kepco.mongo.model.dao.RamUsageMonitorDAO;
 
@@ -33,6 +35,9 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	
 	@Autowired
 	ConnectivityMonitorDAO connectivityMonitorDAO;
+	
+	@Autowired
+	ConnectivityStatisticsMonitorDAO connectivityStatisticsMonitorDAO;
 	
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
@@ -69,7 +74,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			if(connectiviMonitorList != null) {
 				if(connectiviMonitorList.size() > 0) {					
 					int result = saveConnectivityMonitor(connectiviMonitorList);
-					LOG.debug("save Connectivity Monitor : total {} / result {}", connectiviMonitorList.size(), result);
+					int result2 = saveConnectivityStatisticsMonitor(connectiviMonitorList);
+					LOG.debug("save Connectivity Monitor : total {} / result {} / statistics {}", connectiviMonitorList.size(), result, result2);
 				}
 			}
 			
@@ -77,6 +83,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		return false;
 	}
 	
+	/**
+	 * saveCPUUsage
+	 * @param connectivityList
+	 * @return
+	 */
 	private int saveCPUUsage(List<CpuUsageMonitor> cpuUsageList) {
 		
 		int result = 0;
@@ -85,10 +96,18 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			
 			String deviceId = getDeviceInfo().getDevice_id();
 			String deviceSerial = getDeviceInfo().getDevice_serial();
+			String branchId = getDeviceInfo().getBranch_id();
+			String branchNm = getDeviceInfo().getBranch_nm();
+			String deviceStatus = getDeviceInfo().getDevice_status();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
 			
 			for(CpuUsageMonitor cpu : cpuUsageList) {				
 				cpu.setDeviceId(deviceId);
 				cpu.setDeviceSerial(deviceSerial);
+				cpu.setBranchId(branchId);
+				cpu.setBranchNm(branchNm);
+				cpu.setDeviceStatus(deviceStatus);
+				cpu.setDeviceStatusNm(deviceStatusNm);
 			}
 			
 			cpuUsageMonitorDAO.add(cpuUsageList);
@@ -102,7 +121,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		return result;
 	}
 
-	
+	/**
+	 * saveRAMUsage
+	 * @param connectivityList
+	 * @return
+	 */
 	private int saveRAMUsage(List<RamUsageMonitor> ramUsageList) {
 		
 		int result = 0;
@@ -110,10 +133,18 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			
 			String deviceId = getDeviceInfo().getDevice_id();
 			String deviceSerial = getDeviceInfo().getDevice_serial();
+			String branchId = getDeviceInfo().getBranch_id();
+			String branchNm = getDeviceInfo().getBranch_nm();
+			String deviceStatus = getDeviceInfo().getDevice_status();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
 			
 			for(RamUsageMonitor ram : ramUsageList) {				
 				ram.setDeviceId(deviceId);
 				ram.setDeviceSerial(deviceSerial);
+				ram.setBranchId(branchId);
+				ram.setBranchNm(branchNm);
+				ram.setDeviceStatus(deviceStatus);
+				ram.setDeviceStatusNm(deviceStatusNm);
 			}
 			
 			ramUsageMonitorDAO.add(ramUsageList);
@@ -126,7 +157,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		return result;
 	}	
 	
-	
+	/**
+	 * saveConnectivityMonitor
+	 * @param connectivityList
+	 * @return
+	 */
 	private int saveConnectivityMonitor(Map<Integer, ConnectivityMonitor> connectivityList) {
 		
 		List<ConnectivityMonitor> list = new ArrayList<ConnectivityMonitor>();
@@ -136,12 +171,20 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			
 			String deviceId = getDeviceInfo().getDevice_id();
 			String deviceSerial = getDeviceInfo().getDevice_serial();
+			String branchId = getDeviceInfo().getBranch_id();
+			String branchNm = getDeviceInfo().getBranch_nm();
+			String deviceStatus = getDeviceInfo().getDevice_status();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
 			
 			for(Integer key: connectivityList.keySet()) {
 				
 				ConnectivityMonitor connectivityMonitor = connectivityList.get(key);
 				connectivityMonitor.setDeviceId(deviceId);
 				connectivityMonitor.setDeviceSerial(deviceSerial);
+				connectivityMonitor.setBranchId(branchId);
+				connectivityMonitor.setBranchNm(branchNm);
+				connectivityMonitor.setDeviceStatus(deviceStatus);
+				connectivityMonitor.setDeviceStatusNm(deviceStatusNm);
 				
 				list.add(connectivityMonitor);
 			}
@@ -155,6 +198,72 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		}
 		
 		return result;
-	}	
+	}
+	
+	/**
+	 * saveConnectivityMonitor
+	 * @param connectivityList
+	 * @return
+	 */
+	private int saveConnectivityStatisticsMonitor(Map<Integer, ConnectivityMonitor> connectivityList) {
+		
+		List<ConnectivityStatisticsMonitor> list = new ArrayList<ConnectivityStatisticsMonitor>();
+		int result = 0;
+		
+		try {
+			
+			String deviceId = getDeviceInfo().getDevice_id();
+			String deviceSerial = getDeviceInfo().getDevice_serial();
+			String branchId = getDeviceInfo().getBranch_id();
+			String branchNm = getDeviceInfo().getBranch_nm();
+			String deviceStatus = getDeviceInfo().getDevice_status();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			
+			for(Integer key: connectivityList.keySet()) {
+				
+				ConnectivityMonitor connectivityMonitor = connectivityList.get(key);
+				
+				// param - device id가 동일한 Statistics를 가지로 온다.
+				ConnectivityStatisticsMonitor param = new ConnectivityStatisticsMonitor();
+				param.setDeviceId(deviceId);
+				 
+				List<ConnectivityStatisticsMonitor> slist = connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(param);				
+				ConnectivityStatisticsMonitor statistics = null;
+				
+				LOG.debug("slist : {}", slist);
+				
+				if(slist.size() > 0) {					 
+					statistics = slist.get(0);
+					
+				} else {
+					statistics = new ConnectivityStatisticsMonitor();
+				}
+				
+				statistics.setDeviceId(deviceId);
+				statistics.setDeviceSerial(deviceSerial);
+				statistics.setBranchId(branchId);
+				statistics.setBranchNm(branchNm);
+				statistics.setDeviceStatus(deviceStatus);
+				statistics.setDeviceStatusNm(deviceStatusNm);
+				statistics.setRsrp(connectivityMonitor.getRsrp());
+				statistics.setRsrq(connectivityMonitor.getRsrq());
+				statistics.setIpAddress(connectivityMonitor.getIpAddress());
+				statistics.setCellId(connectivityMonitor.getCellId());
+				statistics.setSmnc(connectivityMonitor.getSmnc());
+				statistics.setSmcc(connectivityMonitor.getSmcc());
+				statistics.setSsnr(connectivityMonitor.getSsnr());
+				LOG.debug("slist : {}", slist);
+				// save
+				connectivityStatisticsMonitorDAO.save(statistics);
+				result++;
+			}
+			
+		} catch (Exception e) {
+			LOG.error("error", e);
+			result = -1;
+		}
+		
+		return result;
+	}
 
 }

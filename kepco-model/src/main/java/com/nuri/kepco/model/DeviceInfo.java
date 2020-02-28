@@ -38,5 +38,7 @@ public class DeviceInfo extends CommonObj {
 	private String lsdate;
 	private String ledate;
 	
+	private String device_status_nm; // add
+	
 }
 
