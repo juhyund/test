@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.nuri.kepco.fep.datatype.ResultMessage;
+
 @Service
 public class MeasurementData implements IMeasurementData {
 
@@ -69,5 +71,10 @@ public class MeasurementData implements IMeasurementData {
 	public void decode(String data) throws Exception {
 		this.parser.parser(data, deviceId, modemTime);
 	}
+	
+	public void decode(ResultMessage resultMessage) throws Exception {
+		this.parser.parser(resultMessage, deviceId, modemTime);
+	}
+
 
 }

@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nuri.kepco.fep.datatype.MeterEntry.METERENTRY;
+import com.nuri.kepco.fep.datatype.ResultMessage;
 import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.model.DeviceResource;
 import com.nuri.kepco.model.MeterInfo;
@@ -157,6 +158,12 @@ public class ObjectLinkDataParser extends DataParser {
 		}
 
 		return strDate;
+	}
+
+	@Override
+	public void parser(ResultMessage data, String deviceId, String modemTime) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

@@ -37,6 +37,7 @@
 		<typeAlias alias="userInfo" type="com.nuri.kepco.model.UserInfo" />
 		<typeAlias alias="userLogin" type="com.nuri.kepco.model.UserLogin" />
 		<typeAlias alias="vendorInfo" type="com.nuri.kepco.model.VendorInfo" />
+		<typeAlias alias="operationLog" type="com.nuri.kepco.model.OperationLog" />
   	</typeAliases>
 
 	<mappers>
@@ -60,6 +61,7 @@
 		<mapper resource="mybatis/mysql/UserInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/UserLoginMapper.xml" />
 		<mapper resource="mybatis/mysql/VendorInfoMapper.xml" />
+		<mapper resource="mybatis/mysql/OperationLogMapper.xml" />
 		
 	</mappers>
 
