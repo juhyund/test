@@ -1,5 +1,9 @@
 package com.nuri.kepco.service;
 
-public interface ObjectModelService extends GenericService {
+import java.util.Map;
 
+import org.json.simple.JSONArray;
+
+public interface ObjectModelService extends GenericService {
+	JSONArray selectObjectList(Map<String, Object> param) throws Exception;
 }

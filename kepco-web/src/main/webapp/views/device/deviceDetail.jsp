@@ -196,6 +196,9 @@ function goBack() {
 												<div class="table-responsive">
 													<table class="table table-striped">
 														<thead>
+															<tr align="center" ng-repeat="(key, data) in object.instance">
+																<td colspan=10><h4>Instance: {{key}}</h></td>
+															</tr>
 															<tr align="center">
 																<th width="100">리소스 ID</th>
 																<th style="text-align: left">리소스명</th>
@@ -211,7 +214,7 @@ function goBack() {
 														</thead>
 														<tbody>
 															<tr align="center"
-																ng-repeat="resource in object.resources">
+																ng-repeat="resource in object.instance[{{key}}]">
 																<td>{{resource.resource_id}}</td>
 																<td align="left">{{resource.resource_nm}}</td>
 																<td>{{resource.resource_val}}</td>
