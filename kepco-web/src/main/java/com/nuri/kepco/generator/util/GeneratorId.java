@@ -93,16 +93,4 @@ public class GeneratorId {
 	public void delete(String key) {
 		generatorMap.invalidate(key);
 	}
-	
-	public static void main(String[] args) {
-		GeneratorId gid = new GeneratorId(); 
-		//new GeneratorId().getInstance();
-		System.out.println(gid.getId("abc"));
-		System.out.println(gid.get("abc"));
-		GeneratorId.getInstance().delete("abc");
-		System.out.println(GeneratorId.getInstance().get("abc"));
-		System.out.println(new GeneratorId().getId("abc"));
-		
-	}
-	
 }
