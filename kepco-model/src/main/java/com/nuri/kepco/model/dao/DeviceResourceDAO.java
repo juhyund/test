@@ -13,8 +13,6 @@ public interface DeviceResourceDAO extends GenericDAO<DeviceResource> {
 
 	int delete(DeviceResource param);
 	
-	List<DeviceResource> getObjectModelList(DeviceResource param);
-
 	List<DeviceResource> getResourceModelList(DeviceResource param);
 }
 
