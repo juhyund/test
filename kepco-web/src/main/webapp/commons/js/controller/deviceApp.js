@@ -21,7 +21,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        method: 'POST',
 	        url: COMMON_URL + "/ajaxDeviceObjectModelList",
 	        params : { 
-	        	"device_id" : $("#device_id").val(), 
 	        	"searchfield" : $("#searchfield").val(),
             	"searchquery" : $("#searchquery").val(),
             	"instances" : $("#instances").val()	
@@ -40,8 +39,9 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	            params : { "device_id" : $("#device_id").val(), "object_id" : item.object_id }
 	    	
 	        }).then(function resourceSuccessCallback(data, status, headers, config) {
-	        	// resources
-	        	item.resources = data.data.result;	
+	        	// instance
+	        	item.instance = data.data.result;
+	        	//item.resources = data.data.result;	
 	        	$scope.objects[index] = item;
 	    	}, function errorCallback(response) {
 	        	console.log("error");

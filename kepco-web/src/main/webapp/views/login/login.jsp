@@ -20,6 +20,11 @@
 <script src="<%=COMMON_PATH_JS%>/jquery-3.1.1.min.js"></script>
 <script src="<%=COMMON_PATH_JS%>/bootstrap.js"></script>
 <script src="<%=COMMON_PATH_JS%>/jquery.slimscroll.min.js"></script>
+<script type="text/javascript">
+if (top.location!= self.location) {
+   top.location = self.location.href;
+}
+</script>
 
 <style>
 .login-bg {

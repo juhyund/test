@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : kepco-model
+* @FileName : OperationLogMapper.xml
+* @Author : kh.yoon
+* @Date : 2020-02-03
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.OperationLogDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="device_id != null and device_id != ''" >     
+            AND a.device_id = #{device_id}
+        </if>                
+		<if test="searchfield != null and searchquery != null and searchfield != ''" >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="operationLog">	
+		SELECT COUNT(*) co
+		FROM EMI_OPERATION_LOG a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="operationLog" parameterType="operationLog">	
+		SELECT 
+			device_id
+			, request_dt
+			, service_id
+			, method
+			, object_id
+			, object_instance_id
+			, resource_id
+			, resource_instance_id
+			, format
+			, token
+			, mid
+			, payload
+			, result
+			, result_dt
+			, reg_id					
+		FROM EMI_OPERATION_LOG a	
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+
+	<select id="selectOne" resultType="operationLog" parameterType="operationLog">	
+		SELECT 
+			device_id
+			, request_dt
+			, service_id
+			, method
+			, object_id
+			, object_instance_id
+			, resource_id
+			, resource_instance_id
+			, format
+			, token
+			, mid
+			, payload
+			, result
+			, result_dt
+			, reg_id
+		 FROM EMI_OPERATION_LOG a				
+		WHERE device_id = #{device_id} 
+          AND request_dt = #{request_dt} 
+	</select>
+	
+	<insert id="insert" parameterType="operationLog">     	
+		INSERT INTO EMI_OPERATION_LOG (
+			device_id
+			, request_dt
+			, service_id
+			, method
+			, object_id
+			, object_instance_id
+			, resource_id
+			, resource_instance_id
+			, format
+			, token
+			, mid
+			, payload
+			, result
+			, result_dt
+			, reg_id
+		) VALUES (
+			  #{device_id}
+			, #{request_dt}
+			, #{service_id}
+			, #{method}
+			, #{object_id}
+			, #{object_instance_id}
+			, #{resource_id}
+			, #{resource_instance_id}
+			, #{format}
+			, #{token}
+			, #{mid}
+			, #{payload}
+			, #{result}
+			, #{result_dt}
+			, #{reg_id}
+		)
+    </insert>
+    
+    <update id="update" parameterType="operationLog">
+		UPDATE EMI_OPERATION_LOG SET
+			service_id = #{service_id}
+			, method = #{method}
+			, object_id = #{object_id}
+			, object_instance_id = #{object_instance_id}
+			, resource_id = #{resource_id}
+			, resource_instance_id = #{resource_instance_id}
+			, format = #{format}
+			, token = #{token}
+			, mid = #{mid}
+			, payload = #{payload}
+			, result = #{result}
+			, result_dt = #{result_dt}
+			, reg_id = #{reg_id}
+		WHERE device_id = #{device_id} and request_dt = #{request_dt}
+	</update>
+	
+</mapper>

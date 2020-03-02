@@ -39,7 +39,8 @@ public class CpuUsageMonitorDAOImpl implements CpuUsageMonitorDAO {
 
 		Query query = getQuery(param);
 		query.skip(param.getOffset());
-		query.limit(param.getRow());
+//		query.limit(param.getRow());
+		query.limit(10);
 
 		return mongoTemplate.find(query, CpuUsageMonitor.class);
 	}

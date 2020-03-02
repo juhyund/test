@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nuri.kepco.service.DeviceInfoService;
+import com.nuri.kepco.service.ObjectModelService;
 import com.nuri.kepco.service.DeviceResourceService;
 import com.nuri.kepco.service.DeviceModelService;
 import com.nuri.kepco.util.ControllerUtil;
@@ -29,6 +30,9 @@ public class DeviceController {
 	@Autowired
 	private DeviceInfoService deviceInfoService;
 
+	@Autowired
+	private ObjectModelService objectModelService;
+	
 	@Autowired
 	private DeviceResourceService deviceResourceService;
 	
@@ -115,7 +119,7 @@ public class DeviceController {
 			String[] commStr = { "device_id", "instances" };
 			ControllerUtil.getCustomParam(request, commStr, param);
 
-			JSONArray jarr = this.deviceResourceService.getObjectModelList(param);
+			JSONArray jarr = this.objectModelService.selectObjectList(param);
 
 			json.put("result", jarr);
 		} catch (Exception e) {
@@ -136,9 +140,9 @@ public class DeviceController {
 			param.put("device_id", request.getParameter("device_id"));
 			param.put("object_id", request.getParameter("object_id"));
 
-			JSONArray jarr = this.deviceResourceService.getResourceModelList(param);
+			JSONObject result = this.deviceResourceService.getResourceModelList(param);
 
-			json.put("result", jarr);
+			json.put("result", result);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
 		}

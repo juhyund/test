@@ -8,36 +8,38 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-@Document(collection="RamUsageMonitor")
-public class RamUsageMonitor {
+@Document(collection="CmdResultData")
+public class CmdResultData {
 	
 	@Id
-	private String id;
-	
-	private String branchId; // branch id
-	private String branchNm; // branch name
+	private String id;	
 	private String deviceId;
-	private String deviceSerial; 
-	private String deviceStatus; // 단말상태
-	private String deviceStatusNm;
-	private Integer ramUsage;
-	private String usageTime;	// usage 수신 시간
-	private String saveTime;	// 서버 저장 시간
+	private String tid;
+	private String method;
+	private String resource; 
+	private String format;
+	private String token;
+	private String mid;
+	private String payload;
+	private String resultTime;
+	private String saveTime;
+	private String requestTime;
+	private Boolean result;
 	
 	// 조회조건
 	private Date sdate;
 	private Date edate;
 	private int page;
 	private int row;
-
+	
 	private long offset;
-
+	
 	public void setOffset(long offset) {
 		this.offset = offset;
 	}
-
+	
 	public long getOffset() {
 		return (this.page - 1) * this.row;
 	}
+	
 }
-

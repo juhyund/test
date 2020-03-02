@@ -39,7 +39,8 @@ public class RamUsageMonitorDAOImpl implements RamUsageMonitorDAO {
 
 		Query query = getQuery(param);
 		query.skip(param.getOffset());
-		query.limit(param.getRow());
+//		query.limit(param.getRow());
+		query.limit(10);
 
 		return mongoTemplate.find(query, RamUsageMonitor.class);
 	}
@@ -57,7 +58,7 @@ public class RamUsageMonitorDAOImpl implements RamUsageMonitorDAO {
 		}
 
 		if (param.getSdate() != null) {
-			query.addCriteria(Criteria.where("insertDt").gte(param.getSdate()).lte(param.getEdate()));
+			query.addCriteria(Criteria.where("usageTime").gte(param.getSdate()).lte(param.getEdate()));
 		}
 
 		return query;

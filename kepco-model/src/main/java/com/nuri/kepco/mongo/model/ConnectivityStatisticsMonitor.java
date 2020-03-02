@@ -8,9 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-@Document(collection="CpuUsageMonitor")
-public class CpuUsageMonitor {
+@Document(collection="ConnectivityStatisticsMonitor")
+public class ConnectivityStatisticsMonitor {
 	
+	// 최종 통신 데이터만 가지고 있다.
+	// device 별 rowdata는 한개 이다.
 	@Id
 	private String id;
 	
@@ -18,11 +20,20 @@ public class CpuUsageMonitor {
 	private String branchNm; // branch name
 	private String deviceId;
 	private String deviceSerial;
-	private Integer cpuUsage;
 	private String deviceStatus; // 단말상태
 	private String deviceStatusNm;
-	private String usageTime; // usage 수신 시간(통신일자)
-	private String saveTime; // 서버 저장 시간
+	private Integer rsrp;	// Radio Signal Strength
+	private Integer rsrq;	// Link Quality
+	private String ipAddress;	// 모뎀의 IP 주소 (IPv6)
+	private Integer cellId;	// Serving Cell ID
+	private Integer smnc; // Serving Mobile Network Code
+	private Integer smcc; // Serving Mobile Country Code
+	private Integer ssnr; // Signal SNR
+	private Integer cpuUsage; // cpu
+	private Integer ramUsage; // ram
+	
+	private String usageTime; // 20200224000000
+	private String saveTime; // 20200224000000
 	
 	// 조회조건
 	private Date sdate;
@@ -40,4 +51,3 @@ public class CpuUsageMonitor {
 		return (this.page - 1) * this.row;
 	}
 }
-
