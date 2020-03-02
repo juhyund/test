@@ -180,10 +180,14 @@ var columnDefs = [
 	{headerName: "오브젝트명", field: "object_instance_id"},
 	{headerName: "리소스명", field: "resource_instance_id", width:150, cellStyle:{'text-align': "center"}},
 	{headerName: "제어항목", field: "operation_item", cellStyle:{'text-align': "center"}},
-	{headerName: "제어결과", field: "operation_result", width:120},
-	{headerName: "트랜잭션ID", field: "tid"},
-	{headerName: "제어 전송 일시", field: "operation_trans_dt"},
-	{headerName: "제어 완료 일시", field: "operation_done_dt"},
+/* 	{headerName: "제어결과", field: "operation_result", width:120}, */
+	{headerName: "제어결과", field: "result", width:120},
+/* 	{headerName: "트랜잭션ID", field: "tid"}, */
+	{headerName: "트랜잭션ID", field: "mid"},
+/* 	{headerName: "제어 전송 일시", field: "operation_trans_dt"}, */
+	{headerName: "제어 전송 일시", field: "request_dt"},
+/* 	{headerName: "제어 완료 일시", field: "operation_done_dt"}, */
+	{headerName: "제어 완료 일시", field: "result_dt"},
 	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
 ];
 
