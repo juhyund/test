@@ -79,7 +79,8 @@ public class PageController {
 	}
 	
 	@RequestMapping("/operationLogDetail")
-	public String controlHistoryDetail() throws Exception {
+	public String controlHistoryDetail(@ModelAttribute(value="device_id") String device_id, Model model) throws Exception {
+		model.addAttribute("device_id", device_id);
 		return "history/operationLogDetail";
 	}
 }
