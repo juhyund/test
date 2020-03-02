@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : kepco-model
+* @FileName : AllCodeMapper.xml
+* @Author : kh.yoon
+* @Date : 2020-02-03
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.ObisCodeDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="code != null and code != ''" >     
+            AND a.code = #{code}
+        </if>
+        
+        <if test="parent_code != null and parent_code != ''" >     
+            AND a.parent_code = #{parent_code}
+        </if>
+        
+        <if test="use_yn != null and use_yn != ''" >     
+            AND a.use_yn = #{use_yn}
+        </if>
+		
+        <if test="code_nm != null and code_nm != ''" >     
+            AND a.code_nm like concat(${code_nm},'%')
+        </if>        
+		<if test="searchfield != null and searchquery != null and searchfield != ''" >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="obisCode">	
+		SELECT COUNT(*) co
+		FROM EMI_OBIS_CODE a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="obisCode" parameterType="obisCode">	
+		SELECT * 						
+		FROM EMI_OBIS_CODE a	
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="selectOne" resultType="obisCode" parameterType="obisCode">	
+		SELECT *
+		FROM EMI_OBIS_CODE a				
+		WHERE obis_id = #{obis_id}
+	</select>
+	
+	<!-- 미터 상세 : 검침스케줄 설정 (동적스케줄) OBIS 팝업 -->
+	<select id="selectObisList" resultType="obisCode" parameterType="obisCode">	
+		SELECT 
+			A.OBJECT_ID
+			, A.OBJECT_INSTANCE_ID
+			, A.METERING_TYPE_NM
+			, COUNT(*) OBIS_CNT
+			, GROUP_CONCAT(RESOURCE_INSTANCE_ID) AS  ARR_RESOURCE_INSTANCE_ID
+			, GROUP_CONCAT(OBIS_CODE)AS  ARR_OBIS_CODE
+		FROM (
+			SELECT 
+				A.OBJECT_ID
+				, A.OBJECT_INSTANCE_ID
+				, A.METERING_TYPE_NM
+				, B.RESOURCE_ID
+				, B.RESOURCE_INSTANCE_ID
+				, B.DESCR 
+				, CONCAT(O.CLASS_ID, ':', O.OBIS_CODE, ':', O.ATTRIBUTE_NO) AS OBIS_CODE
+			FROM EMI_METERING_CONFIG A 
+			INNER JOIN EMI_METERING_CONFIG_OBIS B ON (A.OBJECT_ID = B.OBJECT_ID AND A.OBJECT_INSTANCE_ID = B.OBJECT_INSTANCE_ID)
+			INNER JOIN EMI_OBIS_CODE O ON (B.OBIS_ID = O.OBIS_ID)
+			WHERE A.METER_TYPE = #{meter_type} AND A.USE_YN = 1
+		) A
+		GROUP BY A.OBJECT_ID, A.OBJECT_INSTANCE_ID, A.METERING_TYPE_NM;
+	</select>
+	
+	<!-- 미터 상세 : 미터설정  OBIS 팝업 -->
+	<select id="selectObisList2" resultType="obisCode" parameterType="obisCode">	
+		SELECT *
+		FROM EMI_OBIS_CODE a				
+		WHERE meter_type = #{meter_type}
+	</select>
+	
+	<!-- <insert id="insert" parameterType="obisCode">     	
+		INSERT INTO EMI_OBIS_CODE (
+			code
+			, code_nm
+			, code_local_nm
+			, parent_code
+			, sort
+			, use_yn
+			, remark
+			, reg_id
+			, reg_dt
+			, update_id
+			, update_dt
+			, add_col1
+			, add_col2
+			, add_col3
+			, add_col4
+			, add_col5
+		) VALUES (
+			  #{code}
+			, #{code_nm}
+			, #{code_local_nm}
+			, #{parent_code}
+			, #{sort}
+			, #{use_yn}
+			, #{remark}
+			, #{reg_id}
+			, now()
+			, #{update_id}
+			, now()
+			, #{add_col1}
+			, #{add_col2}
+			, #{add_col3}
+			, #{add_col4}
+			, #{add_col5}
+		)
+    </insert>
+    
+    <update id="update" parameterType="obisCode">
+		UPDATE EMI_OBIS_CODE SET			
+			code_nm = #{code}
+			, code_local_nm = #{code}
+			, parent_code = #{code}
+			, sort = #{code}
+			, use_yn = #{code}
+			, remark = #{code}
+			, update_id = #{code}
+			, update_dt = now()
+			, add_col1 = #{code}
+			, add_col2 = #{code}
+			, add_col3 = #{code}
+			, add_col4 = #{code}
+			, add_col5 = #{code}
+		WHERE code = #{code}
+	</update> -->
+	
+</mapper>

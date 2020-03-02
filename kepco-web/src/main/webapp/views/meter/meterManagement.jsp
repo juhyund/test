@@ -205,10 +205,8 @@ function comboDeviceStatus() {
 
 // branch
 function comboBranch() {
-	console.log("1");
 	var combo = [ 'ajaxParentBranchCombo'];
 	for (var i = 0; i < combo.length; i++) {
-		console.log(combo[i]);
 		var options = { 
 	           beforeSend  : showRequest,
 	           success     : successResultCombo,

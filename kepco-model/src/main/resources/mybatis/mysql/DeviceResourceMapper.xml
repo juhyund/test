@@ -170,6 +170,32 @@
 		WHERE device_id = #{device_id} and resource_path = #{resource_path}
 	</update>
 	
+	<select id="getObjectModelList" resultType="deviceResource" parameterType="deviceResource">  
+        SELECT 
+        	c.device_id
+        	, a.object_nm
+        	, a.object_id
+        	, c.object_instance_id
+        	, a.instances
+        	, b.descr
+        FROM 
+        EMI_OBJECT_MODEL a 
+        LEFT OUTER JOIN EMI_RESOURCE_MODEL b ON a.object_id = b.object_id
+        LEFT OUTER JOIN EMI_DEVICE_RESOURCE c ON a.object_id = c.object_id AND b.resource_id = c.resource_id
+        
+        <where>
+		<if test="device_id != null" >     
+            AND c.device_id = #{device_id}
+        </if>
+        <if test="searchfield != null and searchquery != null " >
+			AND a.${searchfield} like concat(#{searchquery},'%')
+		</if>
+        <if test="instances != -1" >
+			AND a.instances = #{instances}
+		</if>
+		</where>
+        GROUP BY c.device_id, c.object_id
+    </select>
     <select id="getResourceModelList" resultType="deviceResource" parameterType="deviceResource">  
 		SELECT 
         	c.device_id
@@ -199,6 +225,7 @@
 	  	SELECT
 			A.OBJECT_ID
 			, A.OBJECT_INSTANCE_ID
+			, A.OBJECT_NM
 			, A.RESOURCE_ID
 			, A.RESOURCE_NM
 			, A.OPERATION
@@ -209,7 +236,6 @@
 			, A.UNIT	
 			, GROUP_CONCAT(RESOURCE_INSTANCE_ID) AS RESOURCE_INSTANCE_ID
 			, GROUP_CONCAT(RESOURCE_VAL) AS RESOURCE_VAL
-			, A.
 		FROM (
 			SELECT 
 				A.OBJECT_ID

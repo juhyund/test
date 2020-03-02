@@ -2,6 +2,21 @@ var meterApp = angular.module('meterApp', []);
 
 meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	
+	$scope.objectInfo = function () {
+		
+		var object_id = "31011"; //$("#object_id").val();
+		
+		$http({
+	        method: 'POST',
+	        url: COMMON_URL + "/ajaxMeterObjectModel",
+	        params : {"object_id" : object_id}
+	    }).then(function getInfo(data, status, headers, config) {
+	    	$scope.object = data.data.result;
+		}, function errorCallback(response) {
+	        alert("error");
+	    });
+	};
+	
 	$scope.meterResourceList = function () {
 		
 		var device_id = "GW00000007";// $("#device_id").val();
@@ -16,7 +31,8 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 		        	  "object_id" : object_id,
 		        	  "object_instance_id" : object_instance_id}
 	    }).then(function getInfo(data, status, headers, config) {
-	    	$scope.resource = data.data.result;
+	    	
+	    	$scope.resources = data.data.result;
 		}, function errorCallback(response) {
 	        alert("error");
 	    });

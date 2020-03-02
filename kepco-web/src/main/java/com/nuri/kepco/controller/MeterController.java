@@ -14,10 +14,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nuri.kepco.service.DeviceResourceService;
 import com.nuri.kepco.service.MeterInfoService;
+import com.nuri.kepco.service.ObisCodeService;
+import com.nuri.kepco.service.ObjectModelService;
 import com.nuri.kepco.util.ControllerUtil;
 
 @Controller
@@ -31,7 +35,13 @@ public class MeterController {
 	private MeterInfoService meterInfoService;
 	
 	@Autowired
+	private ObjectModelService objectModelService;
+	
+	@Autowired
 	private DeviceResourceService deviceResourceService;
+	
+	@Autowired
+	private ObisCodeService obisCodeService;
 	
 
 	@RequestMapping(value = "/ajaxMeterInfoList")
@@ -80,6 +90,27 @@ public class MeterController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value = "/ajaxMeterObjectModel")
+	public ResponseEntity<Object> ajaxMeterObjectModel(HttpServletRequest request) {
+		
+		JSONObject json = new JSONObject();
+		try {
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			String[] commStr = { "object_id" };
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			JSONObject jarr = this.objectModelService.selectOne(param);
+
+			json.put("result", jarr);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
 	@RequestMapping(value = "/ajaxMeterResourceList")
 	public ResponseEntity<Object> ajaxMeterResourceList(HttpServletRequest request) {
 		
@@ -89,9 +120,61 @@ public class MeterController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			logger.info("===============ajaxMeterResourceModelList==========================\n param "+param);
-
 			JSONArray jarr = this.deviceResourceService.getMeterResourceList(param);
+
+			json.put("result", jarr);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	
+	@RequestMapping(value = "/obisCodePopup")
+	public String obisCodePopup(@ModelAttribute(value="meter_type") String meter_type,	Model model) {
+		model.addAttribute("meter_type", meter_type);
+		return "meter/obisCodePopup";
+	}
+	
+	//미터 : 검침 스케줄(동적스케줄) 메뉴의 OBIS 팝업
+	@RequestMapping(value = "/ajaxSelectObisList")
+	public ResponseEntity<Object> ajaxSelectObisList(HttpServletRequest request) {
+		
+		JSONObject json = new JSONObject();
+		try {
+			String[] commStr = { "meter_type" };
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			logger.info("\n\n----------ajaxSelectObisList-----------\n param ="+param+"\n");
+			
+			JSONArray jarr = this.obisCodeService.selectObisList(param);
+
+			logger.info("\n\n----------ajaxSelectObisList-----------\n jarr ="+jarr+"\n");
+			json.put("result", jarr);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	//미터 : 미터 설정 메뉴의 OBIS 팝업
+	@RequestMapping(value = "/ajaxSelectObisList2")
+	public ResponseEntity<Object> ajaxSelectObisList2(HttpServletRequest request) {
+		
+		JSONObject json = new JSONObject();
+		try {
+			String[] commStr = { "meter_type" };
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			JSONArray jarr = this.obisCodeService.selectObisList2(param);
 
 			json.put("result", jarr);
 		} catch (Exception e) {
