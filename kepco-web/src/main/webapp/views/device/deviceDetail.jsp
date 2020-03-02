@@ -28,9 +28,16 @@
 <script src="<%=COMMON_PATH_JS%>/controller/deviceApp.js"></script>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
-function goBack() {
-	window.history.back();
-}
+$(document).ready(function() {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+    	var target = $(e.target).attr("href");
+    	if(target == '#info'){
+    		$('#info_btn').show();
+    	} else {
+    		$('#info_btn').hide();
+    	}
+    });
+});
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js"
@@ -63,12 +70,14 @@ function goBack() {
 							data-toggle="tab" href="#info">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#object">오브젝트 정보</a></li>
+						<!-- 
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#zxc">연결미터</a></li>
+							href="#meters">연결미터</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#zxc">Observe 상태</a></li>
+							href="#observe">Observe 상태</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#zxc">제어이력</a></li>
+							href="#history">제어이력</a></li>
+						 -->
 					</ul>
 				</div>
 				<!-- navigator -->
@@ -184,20 +193,20 @@ function goBack() {
 									<div class="col-lg-12">
 										<div class="ibox" style="margin-bottom: 0px">
 											<div class="ibox-title collapse-link" style="cursor: pointer" data-toggle="collapse" href="\#{{object.object_id}}">
-												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 명  : {{object.object_nm}}</h>
-												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 ID : {{object.object_id}}</h>
-												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 인스턴스 : {{object.instances}}</h>
-												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 1">인스턴스 : Single</h>
-												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 0">인스턴스 : Multiple</h>
-												<h5 style="margin-top: 6px; margin-right: 50px">설명 : {{object.descr}}</h>
+												<h5 style="margin-top: 6px; width: 300px">오브젝트 명  : {{object.object_nm}}</h>
+												<h5 style="margin-top: 6px; width: 180px">오브젝트 ID : {{object.object_id}}</h>
+												<h5 style="margin-top: 6px; width: 180px">오브젝트 인스턴스 : {{object.instances}}</h>
+												<h5 style="margin-top: 6px; width: 160px" ng-if="object.instances == 1">인스턴스 : Single</h>
+												<h5 style="margin-top: 6px; width: 160px" ng-if="object.instances == 0">인스턴스 : Multiple</h>
+												<h5 style="margin-top: 6px;">설명 : {{object.descr}}</h>
 											</div>
 											<!-- ibox-content -->
 											<div class="ibox-content collapse" id="{{object.object_id}}">
-												<div class="table-responsive">
+												<div class="table-responsive" ng-repeat="(key, data) in object.instance">
 													<table class="table table-striped">
 														<thead>
-															<tr align="center" ng-repeat="(key, data) in object.instance">
-																<td colspan=10><h4>Instance: {{key}}</h></td>
+															<tr align="center">
+																<td colspan=10 style="text-indent: 1em;"><h4><i class="fas fa-list"></i>&nbsp;인스턴스: {{key}}</h></td>
 															</tr>
 															<tr align="center">
 																<th width="100">리소스 ID</th>
@@ -205,17 +214,16 @@ function goBack() {
 																<th width="150">리소스값</th>
 																<th width="150">단위</th>
 																<th width="150">Operation</th>
-																<th width="80">속성설정</th>
-																<th width="250">Observe 설정/해제</th>
+																<!-- th width="80">속성설정</th>
+																<th width="250">Observe 설정/해제</th -->
 																<th width="250">값 변경</th>
 																<th width="80">실행</th>
 																<th width="250">제어상태</th>
 															</tr>
 														</thead>
 														<tbody>
-															<tr align="center"
-																ng-repeat="resource in object.instance[{{key}}]">
-																<td>{{resource.resource_id}}</td>
+															<tr align="center" ng-repeat="resource in data">
+																<td style="text-align: center">{{resource.resource_id}}</td>
 																<td align="left">{{resource.resource_nm}}</td>
 																<td>{{resource.resource_val}}</td>
 																<td>{{resource.unit}}</td>
@@ -227,15 +235,11 @@ function goBack() {
 																		class="btn btn-primary btn-xs" type="button"
 																		ng-click="execute(resource);">Execute</button>
 																</td>
-																<td>
-																	<!-- button
-																		ng-show="resource.operation.indexOf('R') != -1"
-																		class="btn btn-primary btn-xs" type="button"
-																		ng-click="attribute(resource);">속성</button -->
+																<!-- td>
 																	<button
 																		ng-show="resource.operation.indexOf('R') != -1"
 																		class="btn btn-primary btn-xs" type="button"
-																		onclick="fwListModal()">속성</button>
+																		ng-click="attribute(resource);">속성</button>
 																</td>
 																<td>
 																	<button ng-show="resource.operation.indexOf('R') != -1"
@@ -244,14 +248,22 @@ function goBack() {
 																	<button ng-show="resource.operation.indexOf('R') != -1"
 																		class="btn btn-primary btn-xs" type="button"
 																		ng-click="observe(resource, 'N');">Cancel</button>
-																</td>
-																<td><input
-																	ng-show="resource.operation.indexOf('W') != -1"
-																	type="text" ng-model="newValue" name="newValue"
-																	style="width: 100px;">
-																	<button ng-show="resource.operation.indexOf('W') != -1"
+																</td -->
+																<td>
+																	<div ng-show="object.object_id != 5 && resource.resource_id != 0">
+																		<input ng-show="resource.operation.indexOf('W') != -1"
+																		type="text" ng-model="newValue" name="newValue"
+																		style="width: 100px;">
+																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
-																		ng-click="write(resource, newValue);">Write</button></td>
+																		ng-click="write(resource, newValue);">Write</button>
+																	</div>
+																	<div ng-show="object.object_id == 5 && resource.resource_id == 0">
+																		<button ng-show="resource.operation.indexOf('W') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		onclick="fwListModal()">List</button>
+																	</div>
+																</td>
 																<td>{{resource.operation_method}}</td>
 																<td>{{resource.statusMsg}} {{resource.tid}}</td>
 																
@@ -268,18 +280,56 @@ function goBack() {
 								</div>
 							</div>
 						</div>
+						<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px; float: right" type="button" onclick="javascript:history.back(-1)">
+							<i class="fa fa-undo"> 목록으로 돌아가기</i>
+						</button>
+						<div id='info_btn' style="float: right">
+							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="javascript:history.back(-1)">
+								<i class="fas fa-wifi"> CoAP Ping</i>
+							</button>
+							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="javascript:history.back(-1)">
+								<i class="fas fa-retweet"> Reset</i>
+							</button>
+							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 7px; height: 35px" type="button" onclick="javascript:history.back(-1)">
+								<i class="fas fa-edit"> 수정</i>
+							</button>
+						</div>
 					</div>
 				</div>
 				</form>
-				<button class="btn btn-primary"
-					style="height: 50px; width: 50px; float: right;" type="button"
-					onclick="goBack();">
-					<i class="fa fa-caret-left"></i>
-				</button>
+				
 				<!-- body -->
 			</div>
 		</div>
 	</div>
+
+	<!-- modal -->
+	<div class="modal bs-example-modal-sm" id="coapModal" tabindex="-1" role="dialog"
+	aria-labelledby="coapModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">				
+				<h4 class="modal-title" id="coapModal"></h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">		
+			<form class="form-horizontal" role="form" method="post" id="form">	
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">CoAP Ping</label>
+					<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control">초</div>
+					<label class="col-lg-3 col-form-label">간격</label>
+					<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control">회</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</form>
+		</div>
+	</div>
+	</div>
+	<!-- modal -->
 
 	<!-- modal -->
 	<div class="modal bs-example-modal-sm" id="writeModal" tabindex="-1" role="dialog"

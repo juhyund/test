@@ -73,8 +73,13 @@ public class PageController {
 		return "meter/meterDetail";
 	}
 	
-	@RequestMapping("/controlHistory")
+	@RequestMapping("/operationLog")
 	public String controlHistory() throws Exception {
-		return "history/controlHistory";
+		return "history/operationLog";
+	}
+	
+	@RequestMapping("/operationLogDetail")
+	public String controlHistoryDetail() throws Exception {
+		return "history/operationLogDetail";
 	}
 }
