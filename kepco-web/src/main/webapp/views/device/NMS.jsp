@@ -178,15 +178,15 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "단말 번호", field: "deviceSerial"},
-	{headerName: "지역본부", field: ""},
-	{headerName: "단말상태", field: "device_status"},
+	{headerName: "지역본부", field: "branchNm"},
+	{headerName: "단말상태", field: "deviceStatusNm"},
 	{headerName: "CPU", field: "cpuUsage"},
 	{headerName: "Memory", field: "ramUsage"},
 	{headerName: "RSRP(dBm)", field: "rsrp"},
 	{headerName: "RSRQ(dB)", field: "rsrq"},
 	{headerName: "SNR(dB)", field: "ssnr"},
 	{headerName: "최종 통신일자", field: "usageTime"},
-	{headerName: "등록일자", field: ""}
+	{headerName: "등록일자", field: "saveTime"}
 ];
 
 //device type

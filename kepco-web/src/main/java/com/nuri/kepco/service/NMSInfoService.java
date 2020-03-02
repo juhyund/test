@@ -20,10 +20,13 @@ public interface NMSInfoService extends GenericService {
 	
 	JSONObject getNMSDetail(String meter_serial) throws Exception;
 
+	JSONArray getConnectivityStatistics(Map<String, Object> param) throws Exception;
+	
 	List<RamUsageMonitor> getRamUsageMonitor(Map<String, Object> param) throws Exception;
 
 	List<CpuUsageMonitor> getCpuUsageMonitor(Map<String, Object> param) throws Exception;
 
 	List<ConnectivityMonitor> getConnectivityMonitor(Map<String, Object> param) throws Exception;
+
 	
 }
