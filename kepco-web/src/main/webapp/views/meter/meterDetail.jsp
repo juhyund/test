@@ -18,6 +18,15 @@
 <script src="<%=COMMON_PATH_JS%>/bootstrap.js"></script>
 <script src="<%=COMMON_PATH_JS%>/jquery.metisMenu.js"></script>
 <script src="<%=COMMON_PATH_JS%>/jquery.slimscroll.min.js"></script>
+
+
+<!-- angular -->
+<script src="<%=COMMON_PATH_JS%>/angular.min.js"></script>
+<script src="<%=COMMON_PATH_JS%>/angular-route.min.js"></script>
+<script src="<%=COMMON_PATH_JS%>/controller/deviceApp.js"></script>
+
+
+
 <!-- Data picker -->
 <script src="<%=COMMON_PATH_JS%>/bootstrap-datepicker.js"></script>
 
@@ -44,11 +53,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
 
 <link href="<%=COMMON_PATH_CSS%>/style.css" rel="stylesheet">
+
+
 <!-- <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet"> -->
 </head>
-<body>
+<body ng-app="meterApp">
 <!--  wrapper -->
-<div id="content">
+<div id="content"  ng-controller="meterCtrl"> 
 <div id="wrapper">
 <div id="page-wrapper" style="width:100%" class="gray-bg" >
 <!-- navigator -->
@@ -194,12 +205,182 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
                                 </div>
                             </div>
-                            <div role="tabpanel" id="tab-3" class="tab-pane">
-                                <div class="panel-body">
-									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <div role="tabpanel" id="tab-3" class="tab-pane" id="resource" ng-init="meterResourceList()">
+									<div class="col-lg-10">
+										<h4 style="margin-top: 6px">검침스케줄 읽기/설정</h4>
+									</div>
+									<div class="row" style="margin-top: 10px">
+										<!-- <div class="col-lg-12">
+											<div class="ibox-title" style="border: 0px #f3f3f4; background-color: #f3f3f4">
+												<h5 style="margin-top: 6px; margin-right: 50px">단말 ID : {{device_info.device_id}}</h>
+												<h5 style="margin-top: 6px; margin-right: 50px">OID : {{device_info.device_oid}}</h>
+												<h5 style="margin-top: 6px; margin-right: 50px">제조사 : {{device_info.vendor_nm}}</h>
+												<h5 style="margin-top: 6px">모델 : {{device_info.model_nm}}</h>
+											</div>
+										</div> -->
+										<div class="col-lg-12">
+											<div class="ibox-content" style="background-color: #e7eaec">
+												<table style="height: 100%; width: 100%; border: 0px #e7eaec">
+													<tbody>
+														<tr width="100%" >
+															<td width="90%">
+																<div class="form-group row">
+																	<label class="col-lg-1 col-form-label" style="padding-left: 10px; font-weight: bold;">검색</label>
+																	<div class="col-lg-5">
+																		<select class="form-control" name="searchfield" id="searchfield" style="width: 30%; display: inline-block;">
+																			<option value=''>선택</option>
+																			<option value='object_id'>오브젝트 ID</option>
+																			<option value='object_nm'>오브젝트 명</option>
+																		</select>
+																		<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+																	</div>
+																	<label class="col-lg-1 col-form-label" style="padding-left: 10px; font-weight: bold;">인스턴스</label>
+																	<div class="col-lg-5">
+																		<input type="text" class="form-control" name="instances" id="instances" style="width: 100%; height: 33px; vertical-align: top; display: inline;">
+																	</div>
+																</div>
+				
+															</td>
+															<td width="120" style="text-align: right">
+																<button class="btn btn-primary" style="height: 40px; width: 40px" type="button" ng-click="meterResourceList();">
+																	<i class="fa fa-search"></i>
+																</button>
+																<button class="btn btn-warning" style="height: 40px; width: 40px" type="button" onclick="resetForm();">
+																	<i class="fa fa-undo"></i>
+																</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div ng-repeat="object in objects">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="ibox">
+													<div class="ibox-title">
+														<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 명  : {{object.object_nm}}</h>
+														<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 ID : {{resource.object_id}}</h>
+														<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 인스턴스 : {{object.object_instance_id}}</h>
+														<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 1">인스턴스 : Single</h>
+														<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 0">인스턴스 : Multiple</h>
+														<h5 style="margin-top: 6px; margin-right: 50px">설명 : {{object.descr}}</h>
+														<div class="ibox-tools">
+															<a class="collapse-link" data-toggle="collapse" href={{resource.resource_id}} role="button" aria-expanded="false" aria-controls='{{resource.resource_id}}'>
+																<i class="fa fa-chevron-up"></i>
+															</a>
+														</div>
+													</div>
+													<!-- ibox-content -->
+													<!-- div class="ibox-content collapse" data-toggle="collapse" id='{{resource.resource_id}}' -->
+													<div class="ibox-content">
+														<div class="table-responsive">
+															<table class="table table-striped">
+																<thead>
+																	<tr align="center">
+																		<th width="100">리소스 ID</th>
+																		<th style="text-align: left">리소스명</th>
+																		<th width="150">리소스값</th>
+																		<th width="150">단위</th>
+																		<th width="150">Operation</th>
+																		<th width="80">속성설정</th>
+																		<th width="250">Observe 설정/해제</th>
+																		<th width="250">값 변경</th>
+																		<th width="80">실행</th>
+																		<th width="250">제어상태</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr align="center"
+																		ng-repeat="resource in object.resources">
+																		<td>{{resource.resource_id}}</td>
+																		<td align="left">{{resource.resource_nm}}</td>
+																		<td>{{resource.resource_val}}</td>
+																		<td>{{resource.unit}}</td>
+																		<td>
+																			<button ng-show="resource.operation.indexOf('R') != -1"
+																				class="btn btn-primary btn-xs" type="button"
+																				ng-click="read(resource);">Read</button>
+																			<button ng-show="resource.operation.indexOf('E') != -1"
+																				class="btn btn-primary btn-xs" type="button"
+																				ng-click="execute(resource);">Execute</button>
+																		</td>
+																		<td>
+																			<!-- button
+																				ng-show="resource.operation.indexOf('R') != -1"
+																				class="btn btn-primary btn-xs" type="button"
+																				ng-click="attribute(resource);">속성</button -->
+																			<button
+																				ng-show="resource.operation.indexOf('R') != -1"
+																				class="btn btn-primary btn-xs" type="button"
+																				onclick="fwListModal()">속성</button>
+																		</td>
+																		<td>
+																			<button ng-show="resource.operation.indexOf('R') != -1"
+																				class="btn btn-primary btn-xs" type="button"
+																				ng-click="observe(resource, 'Y');">Observe</button>
+																			<button ng-show="resource.operation.indexOf('R') != -1"
+																				class="btn btn-primary btn-xs" type="button"
+																				ng-click="observe(resource, 'N');">Cancel</button>
+																		</td>
+																		<td><input
+																			ng-show="resource.operation.indexOf('W') != -1"
+																			type="text" ng-model="newValue" name="newValue"
+																			style="width: 100px;">
+																			<button ng-show="resource.operation.indexOf('W') != -1"
+																				class="btn btn-primary btn-xs" type="button"
+																				ng-click="write(resource, newValue);">Write</button></td>
+																		<td>{{resource.operation_method}}</td>
+																		<td>{{resource.statusMsg}} {{resource.tid}}</td>
+																		
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+		
+													</div>
+													<!-- ibox-content -->
+												</div>
+											</div>
+		
+										</div>
+									</div>
                             </div>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             <div role="tabpanel" id="tab-4" class="tab-pane">
                                 <div class="panel-body">
 									<!-- grid -->

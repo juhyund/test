@@ -1,5 +1,6 @@
 package com.nuri.kepco.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.nuri.kepco.service.DeviceResourceService;
 import com.nuri.kepco.service.MeterInfoService;
 import com.nuri.kepco.util.ControllerUtil;
 
@@ -27,6 +29,10 @@ public class MeterController {
 	
 	@Autowired
 	private MeterInfoService meterInfoService;
+	
+	@Autowired
+	private DeviceResourceService deviceResourceService;
+	
 
 	@RequestMapping(value = "/ajaxMeterInfoList")
 	public ResponseEntity<Object> ajaxMeterInfoList(HttpServletRequest request) {                
@@ -65,6 +71,29 @@ public class MeterController {
 			
 			json.put("result", jarr);
 
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/ajaxMeterResourceList")
+	public ResponseEntity<Object> ajaxMeterResourceList(HttpServletRequest request) {
+		
+		JSONObject json = new JSONObject();
+		try {
+			String[] commStr = { "device_id", "object_id", "object_instance_id" };
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			logger.info("===============ajaxMeterResourceModelList==========================\n param "+param);
+
+			JSONArray jarr = this.deviceResourceService.getMeterResourceList(param);
+
+			json.put("result", jarr);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
 		}

@@ -80,6 +80,15 @@ public class DeviceResourceServiceImpl implements DeviceResourceService {
 
 		return ConversionUtil.getJSONArrayByModel(list);
 	}
+
+	@Override
+	public JSONArray getMeterResourceList(Map<String, Object> param) throws Exception {
+		DeviceResource deviceResource = new DeviceResource();
+		ConversionUtil.getModelByMap(deviceResource, param);
+		List<DeviceResource> list = this.deviceResourceDAO.getMeterResourceList(deviceResource);
+
+		return ConversionUtil.getJSONArrayByModel(list);
+	}
 	
 }
 
