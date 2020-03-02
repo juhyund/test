@@ -36,6 +36,12 @@ public class DLMSVARIABLE {
         BILLING_DATE("010000010200", "Monthly Billing Date"),	// 검침일자
         BILLING("000062010100", "Billing"),	// billing 0000620101VZ
         BILLING_REVERSE("000062010300", "Billing"),	// billing 역방향 0000620103VZ
+        
+        ETYPE_BILLING("010101080001", "EtypeBilling"), // ETYPE 정기검침
+        
+        NET_METERING("010000F200FF", "Net Metering"), // 01 - 역방향 /00 - 순방향 양방향
+        
+        AVG_POWER_PERIOD("010080000CFF", "AveragePowerPeriod"), // 평균전압전류주기
             	
         HW_VER("00002A0000FF", "METER VERSION");	// COSEM 계기 식별자
     
@@ -110,16 +116,63 @@ public class DLMSVARIABLE {
         }
     }
     
+    public enum METERTYPECODE {
+    	
+    	STYPE("MT001","MT001"),	
+    	ETYPE("MT002","MT002"),	
+    	EATYPE("MT003","MT003"),
+    	GTYPE("MT004","MT004"),
+    	SECTYPE("MT005","MT005"), 
+    	UNKNOWN("MT006","MT006");
+    	        
+        private String code;
+        private String name;
+        
+        METERTYPECODE(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+        
+        public String getCode() {
+            return this.code;
+        }
+        
+        public String getName() {
+            return this.name;
+        }
+        
+        public static METERTYPECODE getMeterType(String code) {
+            for (METERTYPECODE metertype : values()) {
+                if (metertype.getCode().equals(code)) return metertype;
+            }
+            return null;
+        }
+    }
     
     public enum METERTYPE {
     	
-    	ET1P2W40A("17","MT002"),	// 단상 2선식 40(10)A
-    	ET1P2W40A1("18","MT002"),  // 단상 2선식 40(10)A  	
-    	GT1P2W100A("25","MT004"), // 단상 2선식 100(10)A_contactor내장
-    	GT3P4W100A("45","MT004"), // 3상 4선식 100(10)A
-    	GT1P2W5A("26","MT004"), // 단상 2선식 5A
-    	GT3P4W5A("46","MT004"), // 3상 4선식 5A
-    	AET1P2W50A("19","MT003"); // 단상 2선식 50(5)A_contactor내장
+    	METERTYPE14("14","MT001"),	// Standard- Single Ph 2 wire 40(10)A
+    	METERTYPE15("15","MT001"),	// Standard- Single Ph 2 wire 120(30)A
+    	METERTYPE34("34","MT001"), // Standard- 3 Ph 4 wire 40(10)A
+    	METERTYPE35("35","MT001"), // Standard- 3 Ph 4 wire 120(30)A
+    	METERTYPE01("01","MT001"), // Standard- Single Ph 2 wire 5A
+    	METERTYPE03("03","MT001"), // Standard- 3 Ph 4 wire 5A
+    	
+    	METERTYPE17("17","MT002"),	// E-Type  - bottom Type
+    	METERTYPE18("18","MT002"),  // E-Type  - top bottom Type
+    	
+    	METERTYPE25("25","MT004"), // G-Type  - Single Ph 2 wire 100(10)A
+    	METERTYPE27("27","MT004"), //  G-Type  - Single Ph 2 wire 120(10)A
+    	METERTYPE45("45","MT004"), //  G-Type  - 3 Ph 4 wire 100(10)A
+    	METERTYPE47("47","MT004"), //  G-Type  - 3 Ph 4 wire 120(10)A
+    	METERTYPE37("37","MT004"), //  G-Type  - 3 Ph 3 wire 120(10)A
+    	METERTYPE26("26","MT004"), // G-Type  - Single Ph 2 wire 5A
+    	METERTYPE46("46","MT004"), //  G-Type  - 3 Ph 4 wire 5A
+    	METERTYPE38("38","MT004"), // G-Type  - 3 Ph 3 wire 5A
+    
+    	METERTYPE19("19","MT003"), //  EA-Type - Single Ph 2 wire 50(5)A
+    	
+    	UNKNOWN("99","MT006");
     	        
         private String code;
         private String name;
@@ -148,13 +201,27 @@ public class DLMSVARIABLE {
     
     public enum METERPHASE {
     	
-    	ET1P2W40A("17","MP002"),	// 단상 2선식 40(10)A
-    	ET1P2W40A1("18","MP002"),  // 단상 2선식 40(10)A  	
-    	GT1P2W100A("25","MP002"), // 단상 2선식 100(10)A_contactor내장
-    	GT3P4W100A("45","MP005"), // 3상 4선식 100(10)A
-    	GT1P2W5A("26","MP002"), // 단상 2선식 5A
-    	GT3P4W5A("46","MP005"), // 3상 4선식 5A
-    	AET1P2W50A("19","MP002"); // 단상 2선식 50(5)A_contactor내장
+    	METERPHASE14("14","MP014"),	// Standard- Single Ph 2 wire 40(10)A
+    	METERPHASE15("15","MP015"),	// Standard- Single Ph 2 wire 120(30)A
+    	METERPHASE34("34","MP034"), // Standard- 3 Ph 4 wire 40(10)A
+    	METERPHASE35("35","MP035"), // Standard- 3 Ph 4 wire 120(30)A
+    	METERPHASE01("01","MP001"), // Standard- Single Ph 2 wire 5A
+    	METERPHASE03("03","MP003"), // Standard- 3 Ph 4 wire 5A
+    	
+    	METERPHASE17("17","MP017"),	// E-Type  - bottom Type
+    	METERPHASE18("18","MP018"),  // E-Type  - top bottom Type
+    	
+    	METERPHASE25("25","MP025"), // G-Type  - Single Ph 2 wire 100(10)A
+    	METERPHASE27("27","MP027"), //  G-Type  - Single Ph 2 wire 120(10)A
+    	METERPHASE45("45","MP045"), //  G-Type  - 3 Ph 4 wire 100(10)A
+    	METERPHASE47("47","MP047"), //  G-Type  - 3 Ph 4 wire 120(10)A
+    	METERPHASE37("37","MP037"), //  G-Type  - 3 Ph 3 wire 120(10)A
+    	METERPHASE26("26","MP026"), // G-Type  - Single Ph 2 wire 5A
+    	METERPHASE46("46","MP046"), //  G-Type  - 3 Ph 4 wire 5A
+    	METERPHASE38("38","MP038"), // G-Type  - 3 Ph 3 wire 5A
+    
+    	METERPHASE19("19","MP019"), //  EA-Type - Single Ph 2 wire 50(5)A
+    	UNKNOWN("99","MP099"); // UNKNOWN
     	        
         private String code;
         private String name;
@@ -258,6 +325,7 @@ public class DLMSVARIABLE {
         REGISTER_ATTR02(2),        // value
         REGISTER_ATTR03(3),        // scalar unit
         REGISTER_ATTR04(4),        // status
+        REGISTER_ATTR05(5),        // 
         PROFILE_GENERIC_ATTR04(4),        // value
         PROFILE_GENERIC_ATTR02(2), // buffer
         PROFILE_GENERIC_ATTR03(3),	// capture object (for SAT)

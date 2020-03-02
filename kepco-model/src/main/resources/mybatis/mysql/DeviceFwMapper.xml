@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.nuri.kepco.model.dao.DeviceFwDAO">
+
+	<sql id="base_where_list">
+		<where>
+		<if test="fw_nm != null" >     
+            AND a.fw_nm = #{fw_nm}
+        </if>
+        <if test="fw_file_nm != null" >
+        	AND a.fw_file_nm like concat('%', #{fw_file_nm},'%')
+        </if>
+        <if test="fw_version != null" >
+     	    AND a.fw_version like concat('%', #{fw_version},'%')
+        </if>
+        <if test="fw_file_path != null" >     
+            AND a.fw_file_path = #{fw_file_path}
+        </if>
+        <if test="fw_pkg_uri != null" >     
+            AND a.fw_pkg_uri = #{fw_pkg_uri}
+        </if>
+        <if test="fw_biuld_no != null" >     
+            AND a.fw_biuld_no = #{fw_biuld_no}
+        </if>
+        <if test="remark != null" >     
+            AND a.remark = #{remark}
+        </if>
+        <if test="reg_id != null" >     
+            AND a.reg_id = #{reg_id}
+        </if>
+        <if test="update_id != null" >     
+            AND a.update_id = #{update_id}
+        </if>
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		<if test="sdate != null and edate != null">
+			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		</where>
+	</sql>
+	
+	<sql id="order_by_list">	
+		<foreach collection="orderByList" item="orderby" open="order by" index="index" separator=",">
+            ${orderby.sort} ${orderby.dir}            
+        </foreach>
+	</sql>
+	
+	<sql id="query_limit">	
+		<if test="limit > 0 " >
+			LIMIT #{start}, #{limit}
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="deviceFw">	
+		SELECT COUNT(*) co
+		FROM EMI_DEVICE_FW a		
+		<include refid="base_where_list" /> 
+	</select>
+
+	<select id="selectList" resultType="deviceFw" parameterType="deviceFw">	
+		SELECT
+			fw_id
+			, fw_nm
+			, fw_file_nm
+			, fw_version
+			, fw_file_path
+			, fw_pkg_uri
+			, fw_biuld_no
+			, remark
+			, use_yn
+			, reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, update_id
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+		FROM EMI_DEVICE_FW a
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="selectOne" resultType="deviceFw" parameterType="deviceFw">	
+		SELECT 
+			fw_id
+			, fw_nm
+			, fw_file_nm
+			, fw_version
+			, fw_file_path
+			, fw_pkg_uri
+			, fw_biuld_no
+			, remark
+			, use_yn
+			, reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, update_id
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+		FROM EMI_DEVICE_FW a				
+		WHERE fw_id = #{fw_id}
+	</select>
+	
+	<insert id="insert" parameterType="deviceFw" useGeneratedKeys="true" keyProperty="fw_id">     	
+		INSERT INTO EMI_DEVICE_FW (			
+			fw_nm
+			, fw_file_nm
+			, fw_version
+			, fw_file_path
+			, fw_pkg_uri
+			, fw_biuld_no
+			, remark
+			, use_yn
+			, reg_id
+			, reg_dt
+		) VALUES (			  
+			#{fw_nm}
+			, #{fw_file_nm}
+			, #{fw_version}
+			, #{fw_file_path}
+			, #{fw_pkg_uri}
+			, #{fw_biuld_no}
+			, #{remark}
+			, #{use_yn}
+			, #{reg_id}
+			, now()
+		)
+    </insert>
+    
+    <update id="update" parameterType="deviceFw">
+		UPDATE EMI_DEVICE_FW SET
+			fw_nm = #{fw_nm}
+			, fw_file_nm = #{fw_file_nm}
+			, fw_version = #{fw_version}
+			, fw_file_path = #{fw_file_path}
+			, fw_pkg_uri = #{fw_pkg_uri}
+			, fw_biuld_no = #{fw_biuld_no}
+			, remark = #{remark}
+			, use_yn = #{use_yn}
+			, update_id = #{update_id}
+			, update_dt	 = now()
+		WHERE fw_id = #{fw_id}
+	</update>
+	
+</mapper>

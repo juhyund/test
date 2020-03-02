@@ -1,7 +1,9 @@
 package com.nuri.kepco.fep.saver;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,7 @@ import com.nuri.kepco.model.dao.MeterValueDAO;
 @Service
 public class KepcoMDDataSaver extends AbstractMDSaver {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(KepcoMDDataParser.class);
+	private static final Logger LOG = LoggerFactory.getLogger(KepcoMDDataSaver.class);
 	
 	@Autowired
 	MeterValueDAO meterValueDAO;
@@ -34,30 +36,50 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 	public boolean save(IMeasurementData md) throws Exception {
 		
 		KepcoMDDataParser parser = (KepcoMDDataParser)md.getMeterDataParser();		
-		List<MDData> mdList = parser.getMDList();
-		
+		List<MDData> mdList = parser.getMDList();		
 		String deviceSerial = md.getDeviceId();
 		
+		LOG.debug("## deviceSerial Saver : {}" , deviceSerial);
+		
 		// checkDevice
-		checkDevice(deviceSerial, md.getTimeStamp());
+		checkDevice(deviceSerial, md.getModemTime());
 		
 		if(getDeviceInfo() != null) {
 				
 			for (MDData mdData : mdList) {
+ 
+				if(mdData.getMeterTime() == null) {
+					if(mdData.getLpDatas() != null) {
+						// lp의 미터시간은 lpDatas의 마지막 read_dt
+						if(mdData.getLpDatas().size() > 0) {
+							LPData lp = mdData.getLpDatas().get(mdData.getLpDatas().size() - 1);							
+							mdData.setMeterTime(lp.getRead_dt() + "00");
+						}
+					}
+				}
 				
 				// 0. check meter
 				checkMeter(mdData);
 				
-				if(mdData.getMeterInfo() != null) {
+				LOG.debug("meter time : {}" , mdData.getMeterTime());
 				
-					// 1. save lp
-					saveLpData(mdData);
+				if(mdData.getMeterInfo() != null) {	
+					
+					// 1. save lp					
+					int result = saveLpData(mdData);
+					LOG.debug("## SAVE LP - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result);
 					
 					// 2. save meterBillingImport					
-					saveMeterBillingImport(mdData);
+					int result2 = saveMeterBillingImport(mdData);
+					LOG.debug("## SAVE meterBillingImport - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result2);
 					
-					// 3. save meterBillingExport
-					saveMeterBillingExport(mdData);
+					// 3. save meterBillingExport					
+					int result3 = saveMeterBillingExport(mdData);
+					LOG.debug("## SAVE meterBillingExport - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result3);
+					
+					// 4. save meterEtypeBillingExport					
+					int result4 = saveEtypeMeterBillingImport(mdData);
+					LOG.debug("## SAVE meterEtypeBillingExport - deviceSerial : [{}], meterId : [{}], result : [{}]", deviceSerial, mdData.getMeterInfo().getMeter_serial(), result4);
 				}
 			}
 		}
@@ -77,15 +99,43 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		
 		MeterInfo meterInfo = mdData.getMeterInfo();
 		
+		Map<String, Double> initChannelValue = new HashMap<String, Double>();
+		
 		for (LPData lpData : lpDatas) {
 			
 			MeterValue lp = new MeterValue();
+			Double sect_meter_value = 0.0;
 			
 			lp.setMeter_id(meterInfo.getMeter_id());
 			lp.setRead_dt(lpData.getRead_dt());
 			lp.setChannel(lpData.getChannel());
 			lp.setMeter_value(lpData.getValue());
-			lp.setSect_meter_value(lpData.getValue());
+			
+			if(mdData.getMeterTime() != null && !"".equals(mdData.getMeterTime())) {
+				lp.setMtime(mdData.getMeterTime()); // meter time
+			}
+			if(mdData.getModemTime() != null && !"".equals(mdData.getModemTime())) {
+				lp.setItime(mdData.getModemTime());
+			}
+			
+			Double initVal = null;
+			initVal = initChannelValue.get(lpData.getChannel());
+			
+			// 구간값
+			if(initVal == null) {	
+				
+				MeterValue lastVal = meterValueDAO.selectLastValue(lp);
+				
+				if(lastVal != null) {
+					sect_meter_value = lp.getMeter_value() - lastVal.getMeter_value(); // 구간값 : 현재 - 이전						
+				}			
+							
+			} else {					
+				sect_meter_value = lp.getMeter_value() - initVal; // 구간값 : 현재 - 이전
+			}
+			
+			initChannelValue.put(lp.getChannel(), lp.getMeter_value()); // 현재값으로 update			
+			lp.setSect_meter_value(sect_meter_value);
 			
 			meterValues.add(lp);
 		}
@@ -109,20 +159,42 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		List<MeterBilling> meterBillings = mdData.getBillingImportData();
 		
 		if(meterBillings != null) {
+			
 			MeterInfo meterInfo = mdData.getMeterInfo();
 			
 			for (MeterBilling meterBilling : meterBillings) {
 				
 				try {
-					LOG.debug("METER_ID : " + meterInfo.getMeter_id());
-					meterBilling.setMeter_id(meterInfo.getMeter_id());
-					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
+					
+					String billingDate = mdData.getBillingDate();
+					
+					if(billingDate == null) {
+						billingDate = getBillingDate(mdData.getModemTime(), meterInfo.getBilling_dt());
+					}
+					
+					LOG.debug("[saveMeterBillingImport] meter billing day : {}", meterInfo.getBilling_dt());
+					LOG.debug("[saveMeterBillingImport] METER_ID : {}" , meterInfo.getMeter_id());
+					LOG.debug("[saveMeterBillingImport] MODEM TIME : {}" , mdData.getModemTime());
+					LOG.debug("[saveMeterBillingImport] BILLING DATE : {} " , mdData.getBillingDate());
+					
+					meterBilling.setMeter_id(meterInfo.getMeter_id());					
+					meterBilling.setBilling_dt(billingDate); // 정기검침일자
+					
+					if(mdData.getMeterTime() != null && !"".equals(mdData.getMeterTime())) {
+						meterBilling.setMtime(mdData.getMeterTime()); // meter time
+					}
+					if(mdData.getModemTime() != null && !"".equals(mdData.getModemTime())) {
+						meterBilling.setItime(mdData.getModemTime());
+					}
+					
+					LOG.debug("meterBilling : {}", meterBilling);
+					
 					result += meterBillingDAO.insertImport(meterBilling);
+					
 				} catch (Exception e) {
-					LOG.error("e: {}", e.getMessage());
+					LOG.error("error", e);
 				}
-			}
-			
+			}			
 		}
 		
 		return result;
@@ -143,16 +215,73 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 			
 			for (MeterBilling meterBilling : meterBillings) {
 				
-				try {
-					LOG.debug("METER_ID : " + meterInfo.getMeter_id());
-					meterBilling.setMeter_id(meterInfo.getMeter_id());
-					meterBilling.setBilling_dt(meterInfo.getBilling_dt()); // 정기검침일자
+				try {					
+					String billingDate = mdData.getBillingDate();
+					
+					if(billingDate == null) {
+						billingDate = getBillingDate(mdData.getModemTime(), meterInfo.getBilling_dt());
+					}
+					
+					LOG.debug("[saveMeterBillingExport] meter billing day : {}", meterInfo.getBilling_dt());
+					LOG.debug("[saveMeterBillingExport] METER_ID : {}" , meterInfo.getMeter_id());
+					LOG.debug("[saveMeterBillingExport] MODEM TIME : {}" , mdData.getModemTime());
+					LOG.debug("[saveMeterBillingExport] BILLING DATE : {} " , mdData.getBillingDate());
+					
+					meterBilling.setMeter_id(meterInfo.getMeter_id());					
+					meterBilling.setBilling_dt(billingDate); // 정기검침일자
+					
+					if(mdData.getMeterTime() != null && !"".equals(mdData.getMeterTime())) {
+						meterBilling.setMtime(mdData.getMeterTime()); // meter time
+					}
+					if(mdData.getModemTime() != null && !"".equals(mdData.getModemTime())) {
+						meterBilling.setItime(mdData.getModemTime());
+					}
+					
 					result += meterBillingDAO.insertExport(meterBilling);
+					
 				} catch (Exception e) {
-					LOG.error("e: {}", e.getMessage());
+					LOG.error("error", e);
 				}
 			}
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * 순방향 정기검침 (ETYPE)
+	 * @param mdData
+	 * @return
+	 */
+	public int saveEtypeMeterBillingImport(MDData mdData) {
+		
+		int result = 0;		
+		List<MeterBilling> meterBillings = mdData.getETypeBillingImportData();
+		
+		if(meterBillings != null) {
+			
+			MeterInfo meterInfo = mdData.getMeterInfo();
+			
+			for (MeterBilling meterBilling : meterBillings) {
+				
+				try {				
+					
+					meterBilling.setMeter_id(meterInfo.getMeter_id());			
+					if(mdData.getMeterTime() != null && !"".equals(mdData.getMeterTime())) {
+						meterBilling.setMtime(mdData.getMeterTime()); // meter time
+					}
+					if(mdData.getModemTime() != null && !"".equals(mdData.getModemTime())) {
+						meterBilling.setItime(mdData.getModemTime());
+					}
+					result += meterBillingDAO.insertImport(meterBilling);
+					
+				} catch (Exception e) {
+					LOG.error("error", e);
+				}
+			}			
+		}
+		
+		return result;
+	}
+	
 }

@@ -34,7 +34,7 @@
 	
 	<select id="selectCount" resultType="java.lang.Integer" parameterType="compInfo">	
 		SELECT COUNT(*) co
-		FROM EMI_COMP_INFO a		
+		FROM EMI_COMP_INFO		
 		<include refid="base_where_list" /> 
 	</select>
 
@@ -45,7 +45,7 @@
 			, corp_reg_num
 			, comp_reg_num
 			, comp_stat
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt 
 			, comp_manage
 			, comp_type
 			, comp_sector
@@ -61,7 +61,7 @@
 			, reg_id
 			, reg_ip
 			, comp_addr4
-		FROM EMI_COMP_INFO a	
+		FROM EMI_COMP_INFO	
 			
 		<include refid="base_where_list" />
 		
@@ -78,7 +78,7 @@
 			, corp_reg_num
 			, comp_reg_num
 			, comp_stat
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, DATE_FORMAT(reg_dt,'${prop.dt}') AS reg_dt 
 			, comp_manage
 			, comp_type
 			, comp_sector
@@ -94,17 +94,18 @@
 			, reg_id
 			, reg_ip
 			, comp_addr4
-		FROM EMI_COMP_INFO a				
+		FROM EMI_COMP_INFO 				
 		WHERE object_id = #{object_id}
 	</select>
 	
 	<insert id="insert" parameterType="compInfo">     	
 		INSERT INTO EMI_COMP_INFO (
-			comp_name
+			comp_seq
+			, comp_name
 			, corp_reg_num
 			, comp_reg_num
 			, comp_stat
-			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, reg_dt 
 			, comp_manage
 			, comp_type
 			, comp_sector
@@ -121,7 +122,8 @@
 			, reg_ip
 			, comp_addr4
 		) VALUES (
-			#{comp_name}
+			#{comp_seq}
+			, #{comp_name}
 			, #{corp_reg_num}
 			, #{comp_reg_num}
 			, #{comp_stat}
@@ -156,4 +158,31 @@
 		WHERE object_id = #{object_id}
 	</update>
 	
+	<select id="getCompInfoByUser" resultType="compInfo" parameterType="int">	
+		SELECT
+			a.comp_seq
+			, a.comp_name
+			, a.corp_reg_num
+			, a.comp_reg_num
+			, a.comp_stat
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, a.comp_manage
+			, a.comp_type
+			, a.comp_sector
+			, a.comp_cat
+			, a.comp_zcode
+			, a.comp_addr1
+			, a.comp_addr2
+			, a.comp_addr3
+			, a.comp_phone
+			, a.comp_email
+			, a.comp_fax
+			, a.comp_id
+			, a.reg_id
+			, INET_NTOA(a.reg_ip) as reg_ip	  
+			, a.comp_addr4
+		FROM EMI_COMP_INFO a 
+		INNER JOIN EMI_USER_INFO b ON (a.comp_seq = b.comp_seq)
+		WHERE b.user_seq = #{user_seq}
+	</select>
 </mapper>

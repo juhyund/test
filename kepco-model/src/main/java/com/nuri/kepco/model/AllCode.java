@@ -12,7 +12,7 @@ public class AllCode extends CommonObj {
 	private String code_local_nm;
 	private String parent_code;
 	private String sort;
-	private String use_yn;
+	private int use_yn;
 	private String remark;
 	private String reg_id;
 	private String reg_dt;

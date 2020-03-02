@@ -59,6 +59,17 @@ public class MeterBilling extends CommonObj {
 	private Double lead_exp_rate4;
 	private Double lagging_exp_rate4;
 	private Double pf_exp_rate4;
-	private Double reg_dt;
-	private Double update_dt;
+	private String reg_dt;
+	private String update_dt;
+	
+	private String meter_serial;
+	private String device_serial;
+	private String meter_type;
+	private String branch_id;
+	private String branch_nm;
+	private String parent_branch_nm;
+	private String billing_dt_int;
+	
+	private String mtime;
+	private String itime;
 }

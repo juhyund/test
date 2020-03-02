@@ -1,5 +1,7 @@
 package com.nuri.kepco.fep.datatype;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -13,4 +15,7 @@ public class ResultMessage {
 	String token;
 	String mid;
 	String payload;
+	Date resultTime;
+	String requestTime;
+	Boolean result;
 }

@@ -23,8 +23,8 @@
             AND a.use_yn = #{use_yn}
         </if>
 		
-        <if test="code_name != null and code_name != ''" >     
-            AND a.code_name like concat(#{code_name},'%')
+        <if test="code_nm != null and code_nm != ''" >     
+            AND a.code_nm like concat(${code_nm},'%')
         </if>        
 		<if test="searchfield != null and searchquery != null and searchfield != ''" >
 			AND ${searchfield} like concat(#{searchquery},'%')
@@ -77,6 +77,21 @@
 		<include refid="query_limit" />
 		
 	</select>
+	
+	<select id="selectCombo" resultType="java.util.Map" parameterType="AllCode"> 
+      SELECT 
+        code
+		, code_nm
+		, code_local_nm
+		, parent_code
+		, sort          
+      FROM EMI_ALL_CODE a    
+      
+      <include refid="base_where_list" />
+      
+      <include refid="order_by_list" />
+      
+    </select>
 	
 	<select id="selectOne" resultType="allCode" parameterType="allCode">	
 		SELECT 

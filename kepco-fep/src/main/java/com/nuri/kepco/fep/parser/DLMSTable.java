@@ -157,6 +157,14 @@ public class DLMSTable {
 						}
 					}
 				}
+				if (obis == OBIS.NET_METERING && dlmsTags.size() != 0) {
+					
+					byte[] data = dlmsTags.get(0).getOCTET().getValue();
+					
+					if(data.length >= 3) {
+						ret.put(OBIS.NET_METERING.getName(), DataUtil.getIntToByte(data[2]));
+					}
+				}
 			default:
 				break;
 			}
@@ -165,16 +173,57 @@ public class DLMSTable {
 			switch (attr) {
 			case REGISTER_ATTR02: // value
 				if (obis == OBIS.ACTIVEPOWER_CONSTANT && dlmsTags.size() != 0) {
-					ret.put(OBIS.ACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					
+					if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.OctetString) {
+						// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+						// 강제로 형변환
+						try {
+							ret.put(OBIS.ACTIVEPOWER_CONSTANT.getName(), new Float(DataUtil.getFloat(dlmsTags.get(0).getData(), 0)));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						ret.put(OBIS.ACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					}					
 				}
 				if (obis == OBIS.REACTIVEPOWER_CONSTANT && dlmsTags.size() != 0) {
-					ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.OctetString) {
+						// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+						// 강제로 형변환
+						try {
+							ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), new Float(DataUtil.getFloat(dlmsTags.get(0).getData(), 0)));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					}	
+					
 				}
 				if (obis == OBIS.APPRENTPOWER_CONSTANT && dlmsTags.size() != 0) {
-					ret.put(OBIS.APPRENTPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+					// 강제로 형변환
+					if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.OctetString) {
+						// STYPE 미터에서 Float 형이 OctetString으로 잘 못 들어온다.
+						// 강제로 형변환
+						try {
+							ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), new Float(DataUtil.getFloat(dlmsTags.get(0).getData(), 0)));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						ret.put(OBIS.REACTIVEPOWER_CONSTANT.getName(), dlmsTags.get(0).getValue());
+					}					
 				}
 				if (obis == OBIS.LP_INTERVAL && dlmsTags.size() != 0) {
 					ret.put(OBIS.LP_INTERVAL.getName(), dlmsTags.get(0).getValue());
+				}
+				
+				if (obis == OBIS.AVG_POWER_PERIOD && dlmsTags.size() != 0) {
+					ret.put(OBIS.AVG_POWER_PERIOD.getName(), dlmsTags.get(0).getValue());
 				}
 				break;
 			case REGISTER_ATTR03: // scaler_unit
@@ -272,10 +321,42 @@ public class DLMSTable {
 				break;
 			}
 			break;
-		case RELAY_CLASS:
-			break;
-		case MBUS_CLIENT_CLASS:
-			break;
+		case EXTEND_REGISTER:
+			if (attr == null)
+				break;
+			switch (attr) {
+			case REGISTER_ATTR02: // data
+				try {
+					if (obis == OBIS.ETYPE_BILLING && dlmsTags.size() != 0) {
+						if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.UINT32) {
+							ret.put(OBIS.ETYPE_BILLING.getName(), dlmsTags.get(0).getValue());
+							LOG.debug("ETYPE_BILLING : {}", ret.get(OBIS.ETYPE_BILLING.getName()));
+						}
+					}
+				} catch (Exception e) {
+					LOG.error("ERROR", e);
+				}
+				break;
+			case REGISTER_ATTR05: // 날짜
+				try {
+					if (obis == OBIS.ETYPE_BILLING && dlmsTags.size() != 0) {
+						byte[] data = dlmsTags.get(0).getOCTET().getValue();
+						if (data.length == 12) {
+							try {
+								String str = getDateTime(data);
+								ret.put(OBIS.ETYPE_BILLING.getName() + "-date", str);
+								LOG.debug("ETYPE_BILLING DATE: {}", ret.get(OBIS.ETYPE_BILLING.getName() + "-date"));
+							} catch (Exception e) {
+								LOG.warn("Exception : {}", e);
+							}
+						}
+					}
+				} catch (Exception e) {
+					LOG.error("ERROR", e);
+				}
+				break;
+			}			
+			break;		
 		default:
 			break;
 		}
@@ -305,8 +386,16 @@ public class DLMSTable {
 						channelIndex = 1;
 					} else {
 						if (tag.getTag().equals(DLMS_TAG_TYPE.OctetString)) { // Date
-							// name = "DateTime";
-							name = "DateTime";
+							
+							// Stype은 float을 OctetString으로 준다.
+							// length가 4라면 Date형이 아니므로 float 형으로 처리한다.
+							if(tag.getLength() == 4) { 							
+								name = "Channel[" + channelIndex + "]";
+								channelIndex++;
+							} else {
+								// name = "DateTime";
+								name = "DateTime";
+							}
 						} else if (tag.getTag().equals(DLMS_TAG_TYPE.UINT32)) { // Channel
 							name = "Channel[" + channelIndex + "]";
 							channelIndex++;
@@ -348,7 +437,7 @@ public class DLMSTable {
 				break;
 			case BILLING_REVERSE:
 				getOBIS_CODE_BILLING_REVERSE_PROFILE(map, dataName, tag);
-				break;
+				break;			
 			}
 
 		} catch (Exception e) {
@@ -416,8 +505,20 @@ public class DLMSTable {
 		for (int cnt = 0;; cnt++) {
 			key = dataName + "-" + cnt;
 			if (!map.containsKey(key)) {
-				LOG.debug("DATA_NAME[" + key + "] VALUE[" + tag.getValue() + "]");
-				map.put(key, tag.getValue());
+				
+				if(tag.getTag().equals(DLMS_TAG_TYPE.OctetString)) {
+					
+					if(tag.getLength() == 4) {						
+						LOG.debug("DATA_NAME[" + key + "] VALUE[" + new Float(DataUtil.getFloat(tag.getData(), 0)) + "]");
+						map.put(key, new Float(DataUtil.getFloat(tag.getData(), 0)));
+					}
+					
+				} else {
+					LOG.debug("DATA_NAME[" + key + "] VALUE[" + tag.getValue() + "]");
+					map.put(key, tag.getValue());
+				}
+				
+				
 				break;
 			}
 		}

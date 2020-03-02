@@ -17,7 +17,10 @@
 		<if test="service_id != null" >     
             AND a.service_id = #{service_id}
         </if>
-		<if test="branch_id != null" >     
+		<if test="branch_parent_id != null" >     
+            AND d.branch_parent_id = #{branch_parent_id}
+        </if>
+        <if test="branch_id != null" >     
             AND a.branch_id = #{branch_id}
         </if>
         <if test="model_seq != null" >     
@@ -33,8 +36,19 @@
             AND a.allow_yn = #{allow_yn}
         </if>
 		<if test="searchfield != null and searchquery != null " >
-			AND ${searchfield} like concat(#{searchquery},'%')
+			AND a.${searchfield} like concat(#{searchquery},'%')
 		</if>
+		<!-- DeviceInfoList -->		
+		<if test="device_status != null" >     
+            AND c.device_status = #{device_status}
+        </if>
+		<if test="sdate != null and edate != null">
+			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="lsdate != null and ledate != null">
+			AND c.last_comm_dt between date_format(concat(#{lsdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{ledate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		
 		</where>
 	</sql>
 	
@@ -61,7 +75,7 @@
 			a.device_id
 			, a.device_serial
 			, a.service_id
-			, a.branch_id
+			, a.branch_id			
 			, a.model_seq
 			, a.device_oid
 			, a.comm_type
@@ -70,15 +84,19 @@
 			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
 			, INET_NTOA(ip) as ip
 			, a.port
+			, a.fw_version
+			, a.hw_version
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.remark
 			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, b.device_status
+			, FNC_GET_CODE_NM(b.device_status) as device_status_nm
 		FROM EMI_DEVICE_INFO a	
-		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
 		<include refid="base_where_list" />
 		
 		<include refid="order_by_list" />	
@@ -92,7 +110,7 @@
 			a.device_id
 			, a.device_serial
 			, a.service_id
-			, a.branch_id
+			, a.branch_id			
 			, a.model_seq
 			, a.device_oid
 			, a.comm_type
@@ -101,17 +119,19 @@
 			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
 			, INET_NTOA(ip) as ip
 			, a.port
+			, a.fw_version
+			, a.hw_version
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.remark
 			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
-			, b.device_status
+			, b.device_status			
 		FROM EMI_DEVICE_INFO a	
-		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
 		WHERE a.device_id = #{device_id}
-		
 	</select>
 	
 	<select id="selectByDeviceSerial" resultType="deviceInfo" parameterType="java.lang.String">	
@@ -120,6 +140,7 @@
 			, a.device_serial
 			, a.service_id
 			, a.branch_id
+			, c.branch_nm
 			, a.model_seq
 			, a.device_oid
 			, a.comm_type
@@ -128,15 +149,20 @@
 			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
 			, INET_NTOA(ip) as ip
 			, a.port
+			, a.fw_version
+			, a.hw_version
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
+			, a.remark
 			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, b.device_status
+			, FNC_GET_CODE_NM(b.device_status) as device_status_nm
 		FROM EMI_DEVICE_INFO a	
-		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)	
+		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
+		LEFT OUTER JOIN EMI_BRANCH_INFO c ON (a.branch_id = c.branch_id)	
 		WHERE a.device_serial = #{device_serial}		
 	</select>
 	
@@ -157,7 +183,10 @@
 			, device_type
 			, ip
 			, port
+			, fw_version
+			, hw_version
 			, allow_yn			
+			, remark
 			, reg_id
 			, reg_dt			
 		) VALUES (
@@ -171,7 +200,10 @@
 			, #{device_type}
 			, INET_ATON(#{ip})
 			, #{port}
+			, #{fw_version}
+			, #{hw_version}
 			, #{allow_yn}			
+			, #{remark}
 			, #{reg_id}
 			, now()			
 		)
@@ -180,16 +212,90 @@
     <update id="update" parameterType="deviceInfo">
 		UPDATE EMI_DEVICE_INFO SET
 			device_serial = #{device_serial}
-			, service_id = #{service_id}
-			, branch_id = #{branch_id}
-			, model_seq = #{model_seq}
-			, device_oid = #{device_oid}
-			, comm_type = #{comm_type}
-			, device_type = #{device_type}
-			, ip = INET_ATON(#{ip})
-			, port = #{port}
-			, allow_yn = #{allow_yn}			
+			<if test="service_id != null" > , service_id = #{service_id}</if>
+			<if test="branch_id != null" > , branch_id = #{branch_id}</if>
+			<if test="model_seq != null" > , model_seq = #{model_seq}</if>
+			<if test="device_oid != null" > , device_oid = #{device_oid}</if>
+			<if test="comm_type != null" > , comm_type = #{comm_type}</if>
+			<if test="device_type != null" > , device_type = #{device_type}</if>
+			<if test="ip != null" > , ip = INET_ATON(#{ip})</if>
+			<if test="port != null" > , port = #{port}</if>
+			<if test="fw_version != null" > , fw_version = #{fw_version}</if>
+			<if test="hw_version != null" > , hw_version = #{hw_version}</if>
+			<if test="allow_yn != null" > , allow_yn = #{allow_yn}</if>			
+			<if test="remark != null" > , remark = #{remark}</if>	
 		WHERE device_id = #{device_id}
 	</update>
+	
+	<select id="getDeviceList" resultType="deviceInfo" parameterType="deviceInfo">	
+		SELECT
+			a.device_id
+			, a.device_serial
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = d.branch_parent_id) AS parent_branch_nm
+			, d.branch_nm
+			, b.model_nm
+			, e.vendor_nm
+			, f.code_local_nm
+			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+		FROM
+			EMI_DEVICE_INFO a
+			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
+			LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
+			LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
+			LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
+			LEFT OUTER JOIN EMI_ALL_CODE f ON c.device_status = f.code
+			
+		<include refid="base_where_list" />	
+		
+		<include refid="order_by_list" />	
+		
+		<include refid="query_limit" />
+		
+	</select>
+
+	<select id="getDeviceListCnt" resultType="int" parameterType="deviceInfo">		
+		SELECT
+			 COUNT(*) co
+		FROM
+			EMI_DEVICE_INFO a
+			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
+			LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
+			LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
+			LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
+			LEFT OUTER JOIN EMI_ALL_CODE f ON c.device_status = f.code
+
+		<include refid="base_where_list" />	
+	</select>
+	
+	<select id="getDeviceInfo" resultType="deviceInfo" parameterType="java.lang.String">	
+		SELECT
+			a.device_id
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = d.branch_parent_id) AS parent_branch_nm
+			, d.branch_nm
+			, a.device_serial
+			, e.vendor_nm
+			, a.device_oid
+			, a.ip
+			, a.port
+			, a.fw_version
+			, a.hw_version
+			, b.model_nm
+			, g.security_mode
+			, f.code_local_nm
+			, a.remark
+			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+		FROM
+			EMI_DEVICE_INFO a
+			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
+			LEFT OUTER JOIN EMI_DEVICE_STATUS c ON a.device_id = c.device_id
+			LEFT OUTER JOIN EMI_BRANCH_INFO d ON a.branch_id = d.branch_id
+			LEFT OUTER JOIN EMI_VENDOR_INFO e ON b.vendor_seq = e.vendor_seq
+			LEFT OUTER JOIN EMI_ALL_CODE f ON c.device_status = f.code
+			LEFT OUTER JOIN EMI_DEVICE_SECURITY g ON a.device_id = g.device_id
+		WHERE 
+			a.device_id = #{device_id}
+	</select>
 	
 </mapper>

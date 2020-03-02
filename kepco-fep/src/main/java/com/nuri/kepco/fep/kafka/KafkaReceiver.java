@@ -17,28 +17,30 @@ public class KafkaReceiver {
 	@Autowired
 	MDDataProcess mdDataProcess;
 	
-//    @KafkaListener(topics = "${kafka.topic.mddata}")
-//    public void listen(@Payload String message) {    	
-//        LOG.info("received message='{}'", message);
-//    }
-    
-    @KafkaListener(topics = "${kafka.topic.dpdata}")
-    public void dpDataListen(@Payload String message) {    	
-    	mdDataProcess.process(message);
+	// command 요청에 대한 응답 처리
+    @KafkaListener(topics = "${kafka.topic.mddata}")
+    public void listen(@Payload String message) {    	
+        LOG.info("received message='{}'", message);
     }
+//    
+//    @KafkaListener(topics = "${kafka.topic.dpdata}")
+//    public void dpDataListen(@Payload String message) {    	
+//    	mdDataProcess.process(message);
+//    }
     
 //    @KafkaListener(topics = "${kafka.topic.eventdata}")
-//    public void eventDatalisten(@Payload String message) {    	
-//        LOG.info("received message='{}'", message);
+//    public void eventDatalisten(@Payload String message) {   
+//    	LOG.debug("message : {}", message);
+////    	mdDataProcess.process(message);
 //    }
-//    
-//    @KafkaListener(topics = "${kafka.topic.lwm2mdata}")
-//    public void lwm2mDatalisten(@Payload String message) {    	
-//        LOG.info("received message='{}'", message);
-//    }
-//    
+    
 //    @KafkaListener(topics = "${kafka.topic.objectlinkdata}")
 //    public void objectlinkDatalisten(@Payload String message) {    	
-//        LOG.info("received message='{}'", message);
+//        mdDataProcess.process(message);
+//    }
+//    
+//    @KafkaListener(topics = "${kafka.topic.notifydata}")
+//    public void notifyDatalisten(@Payload String message) {    	
+//    	mdDataProcess.process(message);
 //    }
 }

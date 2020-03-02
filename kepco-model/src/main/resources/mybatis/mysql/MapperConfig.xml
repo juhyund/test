@@ -17,12 +17,15 @@
 		<typeAlias alias="branchInfo" type="com.nuri.kepco.model.BranchInfo"/>
 		<typeAlias alias="compInfo" type="com.nuri.kepco.model.CompInfo"/>      		
 		<typeAlias alias="deviceAttr" type="com.nuri.kepco.model.DeviceAttr"/>      		
+		<typeAlias alias="deviceFw" type="com.nuri.kepco.model.DeviceFw"/>      		
+		<typeAlias alias="deviceFwHistory" type="com.nuri.kepco.model.DeviceFwHistory"/>      		
 		<typeAlias alias="deviceInfo" type="com.nuri.kepco.model.DeviceInfo"/>      		
 		<typeAlias alias="deviceModel" type="com.nuri.kepco.model.DeviceModel"/>
 		<typeAlias alias="deviceResource" type="com.nuri.kepco.model.DeviceResource"/>
 		<typeAlias alias="deviceSecLog" type="com.nuri.kepco.model.DeviceSecLog"/>
 		<typeAlias alias="deviceSecurity" type="com.nuri.kepco.model.DeviceSecurity" />
 		<typeAlias alias="deviceStatus" type="com.nuri.kepco.model.DeviceStatus" />
+		<typeAlias alias="groupInfo" type="com.nuri.kepco.model.GroupInfo" />
 		<typeAlias alias="meterBilling" type="com.nuri.kepco.model.MeterBilling" />
 		<typeAlias alias="meterInfo" type="com.nuri.kepco.model.MeterInfo" />
 		<typeAlias alias="meterMonthlyDemand" type="com.nuri.kepco.model.MeterMonthlyDemand" />
@@ -34,6 +37,7 @@
 		<typeAlias alias="userInfo" type="com.nuri.kepco.model.UserInfo" />
 		<typeAlias alias="userLogin" type="com.nuri.kepco.model.UserLogin" />
 		<typeAlias alias="vendorInfo" type="com.nuri.kepco.model.VendorInfo" />
+		<typeAlias alias="operationLog" type="com.nuri.kepco.model.OperationLog" />
   	</typeAliases>
 
 	<mappers>
@@ -41,6 +45,8 @@
 		<mapper resource="mybatis/mysql/BranchInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/CompInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceAttrMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceFwMapper.xml" />
+		<mapper resource="mybatis/mysql/DeviceFwHistoryMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceModelMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceStatusMapper.xml" />
@@ -51,8 +57,11 @@
 		<mapper resource="mybatis/mysql/MeterValueMapper.xml" />
 		<mapper resource="mybatis/mysql/ObjectModelMapper.xml" />
 		<mapper resource="mybatis/mysql/ResourceModelMapper.xml" />
-	
-		<mapper resource="mybatis/mysql/VendorMapper.xml" />
+		<mapper resource="mybatis/mysql/UserGroupMapper.xml" />
+		<mapper resource="mybatis/mysql/UserInfoMapper.xml" />
+		<mapper resource="mybatis/mysql/UserLoginMapper.xml" />
+		<mapper resource="mybatis/mysql/VendorInfoMapper.xml" />
+		<mapper resource="mybatis/mysql/OperationLogMapper.xml" />
 		
 	</mappers>
 

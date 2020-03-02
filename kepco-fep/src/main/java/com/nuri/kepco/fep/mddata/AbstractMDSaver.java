@@ -3,18 +3,22 @@ package com.nuri.kepco.fep.mddata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.aimir.util.TimeUtil;
 import com.nuri.kepco.fep.datatype.MDData;
 import com.nuri.kepco.fep.datatype.MeterType;
 import com.nuri.kepco.fep.datatype.MeterType.COMMTYPE;
 import com.nuri.kepco.fep.datatype.MeterType.DEVICEFLAG;
 import com.nuri.kepco.fep.datatype.MeterType.DEVICESTATUS;
 import com.nuri.kepco.fep.datatype.MeterType.DEVICETYPE;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE;
 import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.model.DeviceModel;
 import com.nuri.kepco.model.DeviceStatus;
 import com.nuri.kepco.model.MeterInfo;
+import com.nuri.kepco.model.VendorInfo;
 import com.nuri.kepco.model.dao.DeviceInfoDAO;
 import com.nuri.kepco.model.dao.DeviceModelDAO;
 import com.nuri.kepco.model.dao.DeviceStatusDAO;
@@ -42,12 +46,22 @@ public abstract class AbstractMDSaver {
 	DeviceInfoDAO deviceInfoDAO;
 
 	private DeviceInfo deviceInfo;
+	
+	@Value("${device.model.name}")
+	private String defaultModelName;
+	
+	@Value("${unknown.model.name:UNKNOWN}")
+	private String unknownModelName;
+	
+	@Value("${default.branch.id:9999}")
+	private String defaultBranchId;
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
-	
-	String modemTime;
 
-	protected void checkMeter(MDData mdData) {
+
+	String modemTime; // 서버가 모뎀으로부터 수신한 시간
+
+	protected int checkMeter(MDData mdData) {
 
 		int result = 0;
 		boolean isNewMeter = false;
@@ -62,7 +76,7 @@ public abstract class AbstractMDSaver {
 			}
 			String meterType = mdData.getMeterType();
 			String meterPhase = mdData.getMeterPhase();
-
+			
 			// meter type
 			if (!"".equals(meterType) && meterType != null) {
 				meter.setMeter_type(meterType);
@@ -72,13 +86,15 @@ public abstract class AbstractMDSaver {
 
 			meter.setMeter_phase(meterPhase);
 			meter.setMeter_serial(mdData.getMeterID());
-			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());			
+			meter.setMeterModel(); // serial vendorCd, modelCd 
+			meter.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
 			meter.setDevice_id(deviceInfo.getDevice_id());
-			
-			if (mdData.getBillingDate() != null) {
-				meter.setBilling_dt(mdData.getBillingDate());
+
+			// 정기검침일 (MeterEntry)
+			if (mdData.getBillingDay() != null) {
+				meter.setBilling_dt(mdData.getBillingDay()); 
 			}
-			
+
 			if (mdData.getCosemDeviceName() != null) {
 				meter.setCosem_device_name(mdData.getCosemDeviceName());
 			}
@@ -104,11 +120,33 @@ public abstract class AbstractMDSaver {
 				meter.setNet_metering(mdData.getNetMetering());
 			}
 			
-			
+			if(mdData.getAvgPowerPeriod() != null) {
+				meter.setAvg_power_period(mdData.getAvgPowerPeriod());
+			}
+
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
+			logger.debug("meter.getVendorCd() : {}", meter.getVendorCd());
+			
+			// vendor info
+			int vendorSeq = getVendorSeqByCode(meter.getVendorCd());
+			if(vendorSeq > 0) {			
+				meter.setVendor_seq(vendorSeq);
+			}
+			
+			// model info
+			int model_seq = getModelSeqByVendorCode(meter.getVendorCd());			
+			if(model_seq > 0) {
+				meter.setModel_seq(model_seq);
+			} else {
+				// 없다면 default
+				meter.setModel_seq(getModelSeqByName(unknownModelName)); 
+			}
 
-			if (isNewMeter) {
+			if (isNewMeter) {				
+				// default branch id
+				deviceInfo.setBranch_id(defaultBranchId);
+				
 				// insert
 				result = meterInfoDAO.insert(meter);
 			} else {
@@ -117,17 +155,110 @@ public abstract class AbstractMDSaver {
 			}
 
 			logger.debug(meter.getMeter_id());
-			
-			updateDeviceStatus(meter, mdData);
+
+			updateDeviceStatus(meter, mdData.getMeterTime());
 
 			mdData.setMeterInfo(meter);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+		
+		return result;
+	}
+	
+	protected int checkMeter(MeterInfo meterInfo) {
+		
+		int result = 0;
+		
+		try {
+			
+			meterInfo.setMeterModel(); // modelcd, vendorcd
+			meterInfo.setMeter_type(DLMSVARIABLE.METERTYPE.getMeterType(meterInfo.getModelCd()).getName());
+			meterInfo.setMeter_phase(DLMSVARIABLE.METERPHASE.getMeterPhase(meterInfo.getModelCd()).getName());
+			meterInfo.setEnergy_type_code(MeterType.TYPE.EnergyMeter.getCode());
+			
+			// vendor info
+			int vendorSeq = getVendorSeqByCode(meterInfo.getVendorCd());
+			if(vendorSeq > 0) {
+				meterInfo.setVendor_seq(vendorSeq);
+			}		
+			
+			// model info
+			int model_seq = getModelSeqByVendorCode(meterInfo.getVendorCd());			
+			if(model_seq > 0) {
+				meterInfo.setModel_seq(model_seq);
+			} else {
+				// 없다면 default
+				meterInfo.setModel_seq(getModelSeqByName(unknownModelName)); 
+			}
+			
+			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
+			if (meter == null) {				
+				// default branch id
+				deviceInfo.setBranch_id(defaultBranchId);
+				result += meterInfoDAO.insert(meterInfo);				
+			} else {
+				meterInfo.setMeter_id(meter.getMeter_id()); // meter id
+				result += meterInfoDAO.update(meterInfo);
+			}
+			
+			updateDeviceStatus(meter, null);
+		
+		} catch (Exception e) {
+			logger.error("error", e);
+		}
+		
+		return result;
+	}
+	
+	private int getVendorSeqByCode(String vendorCode) {
+		
+		VendorInfo vendorInfo = null;
+		try {
+			vendorInfo = vendorInfoDAO.selectVendorByCode(vendorCode);
+			
+			if(vendorInfo != null) {
+				return vendorInfo.getVendor_seq();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	private Integer getModelSeqByVendorCode(String vendorCode) {
+		
+		DeviceModel deviceInfo = null;
+		try {
+			deviceInfo = deviceModelDAO.selectModelByVendorCode(vendorCode);			
+			if(deviceInfo != null) {
+				return deviceInfo.getModel_seq();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	private Integer getModelSeqByName(String modelName) {
+		
+		DeviceModel deviceInfo = null;
+		try {
+			deviceInfo = deviceModelDAO.selectModelByName(modelName);			
+			if(deviceInfo != null) {
+				return deviceInfo.getModel_seq();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
-	protected void checkDevice(String deviceSerial, String modemTime) {
+	protected int checkDevice(String deviceSerial, String modemTime) {
 
 		int result = 0;
 		boolean isNewDevice = false;
@@ -148,32 +279,51 @@ public abstract class AbstractMDSaver {
 			deviceInfo.setAllow_yn("1");
 			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
 
-			if (isNewDevice) {
-				deviceInfoDAO.insert(deviceInfo);
-				updateDeviceStatus(deviceInfo);
+			if (isNewDevice) {				
+				// model을 default로 저장
+				String model_nm = defaultModelName;
+				DeviceModel deviceModel = deviceModelDAO.selectModelByName(model_nm);
+				if(deviceModel != null) {
+					deviceInfo.setModel_seq(deviceModel.getModel_seq());
+				}				
+				deviceInfo.setBranch_id(defaultBranchId);
+				result = deviceInfoDAO.insert(deviceInfo);				
 			} else {
-				deviceInfoDAO.update(deviceInfo);
-				updateDeviceStatus(deviceInfo);
+				result = deviceInfoDAO.update(deviceInfo);
 			}
-
+			
+			updateDeviceStatus(deviceInfo);
 			this.deviceInfo = deviceInfo;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("error", e);
 		}
+		
+		return result;
 	}
-
-	protected void updateDeviceStatus(MeterInfo meterInfo, MDData mdData) {
+	
+	/**
+	 * updateDeviceStatus - meter 상태정보 업데이트
+	 * @param meterInfo
+	 * @param mdData
+	 */
+	protected void updateDeviceStatus(MeterInfo meterInfo, String meterTime) {
 
 		DeviceStatus param = new DeviceStatus();
 		param.setDevice_id(meterInfo.getMeter_id());
 
 		DeviceStatus deviceStatus = null;
+		
+		if(meterTime == null) {
+			// 현재시간
+			meterTime = TimeUtil.getCurrentTimeMilli();
+		}
 
 		try {
 
 			deviceStatus = deviceStatusDAO.selectOne(param);
+			
+			// todo last_comm_dt 통신시간 체크
 
 			if (deviceStatus == null) { // insert
 
@@ -181,7 +331,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.METER.getCode()); // meter
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
-				deviceStatus.setLast_comm_dt(mdData.getMeterTime()); // meter time
+				deviceStatus.setLast_comm_dt(meterTime); // meter time
 				deviceStatusDAO.insert(deviceStatus);
 
 			} else { // update
@@ -190,7 +340,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus.setDevice_id(meterInfo.getMeter_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.METER.getCode()); // meter
 				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
-				deviceStatus.setLast_comm_dt(mdData.getMeterTime()); // meter time
+				deviceStatus.setLast_comm_dt(meterTime); // meter time
 				deviceStatusDAO.update(deviceStatus);
 			}
 
@@ -201,7 +351,7 @@ public abstract class AbstractMDSaver {
 	}
 
 	/**
-	 * updateDeviceStatus
+	 * updateDeviceStatus - 단말 상태 정보 업데이트
 	 * 
 	 * @param deviceInfo
 	 */
@@ -211,6 +361,11 @@ public abstract class AbstractMDSaver {
 		param.setDevice_id(deviceInfo.getDevice_id());
 
 		DeviceStatus deviceStatus = null;
+		
+		if(modemTime == null) {
+			// 현재시간
+			modemTime = TimeUtil.getCurrentTimeMilli();
+		}
 
 		try {
 
@@ -245,4 +400,23 @@ public abstract class AbstractMDSaver {
 		return deviceInfo;
 	}
 
+	/**
+	 * 정기검침일
+	 * 
+	 * @param mrd
+	 * @return
+	 */
+	public String getBillingDate(String meterTime, String billingDay) {
+		
+		if("".equals(billingDay) || billingDay == null) {
+			billingDay = "01";
+		}
+		
+		if(billingDay.length() == 1) {
+			billingDay = "0" + billingDay;
+		}
+		
+		logger.debug("billingDay : {}", billingDay);
+		return meterTime.substring(0, 6) + billingDay + "0000"; // length - 12
+	}
 }
