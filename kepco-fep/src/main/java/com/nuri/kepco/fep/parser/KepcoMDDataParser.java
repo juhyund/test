@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.aimir.util.Hex;
 import com.nuri.kepco.fep.datatype.MDData;
+import com.nuri.kepco.fep.datatype.ResultMessage;
 import com.nuri.kepco.fep.mddata.DataParser;
 
 public class KepcoMDDataParser extends DataParser {
@@ -97,6 +98,12 @@ public class KepcoMDDataParser extends DataParser {
 
 	public Map<Integer, byte[]> getMeterData() {
 		return meterData;
+	}
+
+	@Override
+	public void parser(ResultMessage data, String deviceId, String modemTime) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

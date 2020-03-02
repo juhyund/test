@@ -1,10 +1,13 @@
 package com.nuri.kepco.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,12 +76,32 @@ public class DeviceResourceServiceImpl implements DeviceResourceService {
 	}
 
 	@Override
-	public JSONArray getResourceModelList(Map<String, Object> param) throws Exception {
+	public JSONObject getResourceModelList(Map<String, Object> param) throws Exception {
 		DeviceResource deviceResource = new DeviceResource();
 		ConversionUtil.getModelByMap(deviceResource, param);
 		List<DeviceResource> list = this.deviceResourceDAO.getResourceModelList(deviceResource);
 
-		return ConversionUtil.getJSONArrayByModel(list);
+		Map<String, List<DeviceResource>> map = new HashMap<String, List<DeviceResource>>();
+		for(DeviceResource dr : list) {
+			String key = dr.getObject_instance_id();
+			if(key == null) {
+				key = "0";
+			}
+			if(map.containsKey(key)) {
+				map.get(key).add(dr);
+			} else {
+				List<DeviceResource> l = new ArrayList<DeviceResource>();
+				l.add(dr);
+				map.put(key, l);
+			}
+		}
+		
+		JSONObject result = new JSONObject();
+		for(String key : map.keySet()) {
+			result.put(key, ConversionUtil.getJSONArrayByModel(map.get(key)));
+		}
+
+		return result;
 	}
 	
 }

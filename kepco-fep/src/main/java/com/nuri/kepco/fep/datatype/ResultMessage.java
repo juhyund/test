@@ -16,4 +16,6 @@ public class ResultMessage {
 	String mid;
 	String payload;
 	Date resultTime;
+	String requestTime;
+	Boolean result;
 }

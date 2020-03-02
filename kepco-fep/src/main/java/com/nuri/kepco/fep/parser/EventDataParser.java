@@ -24,9 +24,9 @@ import com.nuri.kepco.mongo.model.ConnectivityMonitor;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
 
-public class NotifyDataParser extends DataParser {
+public class EventDataParser extends DataParser {
 
-	private static final Logger LOG = LoggerFactory.getLogger(NotifyDataParser.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EventDataParser.class);
 	
 	private static final Integer AMI_COMMON_CONTROL_OBJECTID = 26241;
 	private static final Integer AMI_CPU_RESOURCEID = 10;

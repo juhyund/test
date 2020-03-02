@@ -119,7 +119,7 @@ public class DeviceController {
 			String[] commStr = { "device_id", "instances" };
 			ControllerUtil.getCustomParam(request, commStr, param);
 
-			JSONArray jarr = this.objectModelService.selectList(param);
+			JSONArray jarr = this.objectModelService.selectObjectList(param);
 
 			json.put("result", jarr);
 		} catch (Exception e) {
@@ -140,9 +140,9 @@ public class DeviceController {
 			param.put("device_id", request.getParameter("device_id"));
 			param.put("object_id", request.getParameter("object_id"));
 
-			JSONArray jarr = this.deviceResourceService.getResourceModelList(param);
+			JSONObject result = this.deviceResourceService.getResourceModelList(param);
 
-			json.put("result", jarr);
+			json.put("result", result);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
 		}

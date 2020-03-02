@@ -59,9 +59,9 @@
 		FROM EMI_OBJECT_MODEL a	
 			
 		<include refid="base_where_list" />
+
+		<include refid="order_by_list" />
 		
-		order by object_id	
-			
 		<include refid="query_limit" />
 		
 	</select>
@@ -119,5 +119,34 @@
 			, update_dt = now()
 		WHERE object_id = #{object_id}
 	</update>
+	
+	<select id="selectObjectList" resultType="objectModel" parameterType="objectModel">	
+		SELECT 
+			object_id
+			, object_nm
+			, instances
+			, mandatory
+			, object_urn
+			, descr
+			, reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt  
+			, update_id
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS dest_dt
+		FROM EMI_OBJECT_MODEL a	
+		WHERE
+		a.object_id != 0 
+		
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		<if test="instances != null" >     
+            AND a.instances = #{instances}
+        </if>
+
+		order by convert(object_id, decimal)	
+			
+		<include refid="query_limit" />
+		
+	</select>
 	
 </mapper>

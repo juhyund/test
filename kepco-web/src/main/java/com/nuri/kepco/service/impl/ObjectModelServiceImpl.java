@@ -63,4 +63,13 @@ public class ObjectModelServiceImpl implements ObjectModelService {
 		return this.objectModelDAO.update(objectModel);
 	}
 
+	@Override
+	public JSONArray selectObjectList(Map<String, Object> param) throws Exception {
+		ObjectModel objectModel = new ObjectModel();
+		ConversionUtil.getModelByMap(objectModel, param);
+		List<ObjectModel> list = this.objectModelDAO.selectObjectList(objectModel);
+		
+		return ConversionUtil.getJSONArrayByModel(list);
+	}
+
 }
