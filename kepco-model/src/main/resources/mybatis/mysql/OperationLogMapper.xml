@@ -13,7 +13,10 @@
 		<where>
 		<if test="device_id != null and device_id != ''" >     
             AND a.device_id = #{device_id}
-        </if>                
+        </if>
+        <if test="sdate != null and edate != null">
+			AND a.result_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>                
 		<if test="searchfield != null and searchquery != null and searchfield != ''" >
 			AND ${searchfield} like concat(#{searchquery},'%')
 		</if>
@@ -141,4 +144,39 @@
 		WHERE device_id = #{device_id} and request_dt = #{request_dt}
 	</update>
 	
+	<select id="getOperationLogList" resultType="operationLog" parameterType="operationLog">	
+		SELECT 
+			device_id
+			, request_dt
+			, service_id
+			, method
+			, object_id
+			, object_instance_id
+			, resource_id
+			, resource_instance_id
+			, format
+			, token
+			, mid
+			, payload
+			, result
+			, result_dt
+			, reg_id					
+		FROM EMI_OPERATION_LOG a	
+			
+		<include refid="base_where_list" />
+		
+		<include refid="order_by_list" />	
+			
+		<include refid="query_limit" />
+		
+	</select>
+	
+	<select id="getOperationLogListCnt" resultType="int" parameterType="operationLog">	
+		SELECT 
+			COUNT(*) co					
+		FROM EMI_OPERATION_LOG a	
+			
+		<include refid="base_where_list" />
+		
+	</select>
 </mapper>

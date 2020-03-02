@@ -1,5 +1,6 @@
 package com.nuri.kepco.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.nuri.kepco.model.NMSInfo;
 import com.nuri.kepco.mongo.model.ConnectivityMonitor;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
@@ -33,7 +35,7 @@ public class NMSController {
 	private NMSInfoService nmsInfoService;
 
 	@RequestMapping(value = "/ajaxNMSList")
-	public ResponseEntity<Object> ajaxMeterInfoList(HttpServletRequest request) {                
+	public ResponseEntity<Object> ajaxNMSList(HttpServletRequest request) {                
 		
 		JSONObject json = new JSONObject();
 		try {
@@ -44,17 +46,36 @@ public class NMSController {
 //			param.put("dir", "DESC");
 			
 //			int cnt = this.nmsInfoService.getNMSListCnt(param);
-//			JSONArray jarr = this.nmsInfoService.getNMSList(param);
+			JSONObject jsonObj = new JSONObject();
+			JSONArray jarr = null;
+			HashMap<String, String> map = new HashMap<>();
+			
+			
+			JSONArray connectivityStatistics =  nmsInfoService.getConnectivityStatistics(param);
+			
 			
 			List<RamUsageMonitor> ramUsageList = this.nmsInfoService.getRamUsageMonitor(param);
-//			List<CpuUsageMonitor> cpuUsageList = this.nmsInfoService.getCpuUsageMonitor(param);
-//			List<ConnectivityMonitor> connectivityList = this.nmsInfoService.getConnectivityMonitor(param);
+			List<CpuUsageMonitor> cpuUsageList = this.nmsInfoService.getCpuUsageMonitor(param);
+			List<ConnectivityMonitor> connectivityList = this.nmsInfoService.getConnectivityMonitor(param);
 			
+		/*	for (int i = 0; i < ramUsageList.size(); i++) {
+				map.put("ramUsage", Integer.toString(ramUsageList.get(i).getRamUsage()));				
+			}
+			for (int i = 0; i < cpuUsageList.size(); i++) {
+				jsonObj.put("cpuUsage", cpuUsageList.get(i).getCpuUsage());				
+			}
+			for (int i = 0; i < connectivityList.size(); i++) {
+				jsonObj.put("rsrp", connectivityList.get(i).getRsrp());				
+				jsonObj.put("rsrq", connectivityList.get(i).getRsrq());				
+				jsonObj.put("ssnr", connectivityList.get(i).getSsnr());				
+			}
+			
+			jarr.add(jsonObj);*/
 			
 //			json.put("totalCount", cnt);
-			json.put("resultGrid", ramUsageList);
+			json.put("resultGrid", connectivityStatistics);
 			
-			json.put("ramUsageList", ramUsageList);
+//			json.put("ramUsageList", ramUsageList);
 //			json.put("cpuUsageList", cpuUsageList);
 //			json.put("connectivityList", connectivityList);
 

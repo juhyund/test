@@ -110,8 +110,8 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/ajaxDeviceObjectModelList")
-	public ResponseEntity<Object> ajaxDeviceObjectModelList(HttpServletRequest request) {
+	@RequestMapping(value = "/ajaxObjectModelList")
+	public ResponseEntity<Object> ajaxObjectModelList(HttpServletRequest request) {
 		
 		JSONObject json = new JSONObject();
 		try {

@@ -70,15 +70,21 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+													<!--	<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+															<div class="col-lg-3">
+																<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
+																	<option value=''>선택</option>
+																	<option value='deviceId'>단말ID</option>
+																	<option value='deviceSerial'>단말 번호</option>
+																</select>
+																<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+															</div>   -->
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">계기번호</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
-																<option value=''>선택</option>
-																<option value='deviceId'>단말ID</option>
-																<option value='deviceSerial'>단말 번호</option>
-															</select>
-															<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
-														</div>
+															<input class="form-control" name="device_id"
+																id="device_id"></input>
+														</div>	
 														
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">계기타입</label>
@@ -116,8 +122,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															</div>
 														</div>
 													</div>
-
-
 												</td>
 												<td width="180" height="80" style="text-align: right">
 													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
@@ -171,15 +175,20 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
-	{headerName: "리소스 경로", field: ""},
-	{headerName: "오브젝트명", field: ""},
-	{headerName: "리소스명", field: "", width:150, cellStyle:{'text-align': "center"}},
-	{headerName: "제어항목", field: "", cellStyle:{'text-align': "center"}},
-	{headerName: "제어결과", field: "", width:120},
-	{headerName: "트랜잭션ID", field: ""},
-	{headerName: "제어 전송 일시", field: ""},
-	{headerName: "제어 완료 일시", field: ""},
-	{headerName: "요청자", field: "", cellStyle:{'text-align': "center"}}		
+	{headerName: "계기번호", field: "device_id", cellStyle:{'text-align': "center"}},
+	/* {headerName: "리소스 경로", field: ""}, */
+	{headerName: "오브젝트명", field: "object_instance_id"},
+	{headerName: "리소스명", field: "resource_instance_id", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "제어항목", field: "operation_item", cellStyle:{'text-align': "center"}},
+/* 	{headerName: "제어결과", field: "operation_result", width:120}, */
+	{headerName: "제어결과", field: "result", width:120},
+/* 	{headerName: "트랜잭션ID", field: "tid"}, */
+	{headerName: "트랜잭션ID", field: "mid"},
+/* 	{headerName: "제어 전송 일시", field: "operation_trans_dt"}, */
+	{headerName: "제어 전송 일시", field: "request_dt"},
+/* 	{headerName: "제어 완료 일시", field: "operation_done_dt"}, */
+	{headerName: "제어 완료 일시", field: "result_dt"},
+	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
 ];
 
 // init selectComboBox
@@ -247,17 +256,17 @@ var initGrid = function() {
 };
 
 // grid row click
-onRowClicked = function(event){
-	var meter_serial = event.data.meter_serial;
-	location.href = CONTEXT_PATH + "/meterDetail?meter_serial="+meter_serial;
-}
+/* onRowClicked = function(event){
+	var device_id = event.data.device_id;
+	location.href = CONTEXT_PATH + "/operationLogDetail?device_id="+device_id;
+} */
 
 function ajaxSearchForm() {
 	
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxControlHistoryList",
+           url         : COMMON_URL + "/ajaxOperationLogList",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
