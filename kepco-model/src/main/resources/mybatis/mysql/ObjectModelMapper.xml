@@ -136,8 +136,13 @@
 		WHERE
 		a.object_id != 0 
 		
-		<include refid="base_where_list" />
-		
+		<if test="searchfield != null and searchquery != null " >
+			AND ${searchfield} like concat(#{searchquery},'%')
+		</if>
+		<if test="instances != null" >     
+            AND a.instances = #{instances}
+        </if>
+
 		order by convert(object_id, decimal)	
 			
 		<include refid="query_limit" />

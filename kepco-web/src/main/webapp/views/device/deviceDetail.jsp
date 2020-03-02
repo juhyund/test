@@ -184,20 +184,20 @@ function goBack() {
 									<div class="col-lg-12">
 										<div class="ibox" style="margin-bottom: 0px">
 											<div class="ibox-title collapse-link" style="cursor: pointer" data-toggle="collapse" href="\#{{object.object_id}}">
-												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 명  : {{object.object_nm}}</h>
-												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 ID : {{object.object_id}}</h>
-												<h5 style="margin-top: 6px; margin-right: 50px">오브젝트 인스턴스 : {{object.instances}}</h>
-												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 1">인스턴스 : Single</h>
-												<h5 style="margin-top: 6px; margin-right: 50px" ng-if="object.instances == 0">인스턴스 : Multiple</h>
-												<h5 style="margin-top: 6px; margin-right: 50px">설명 : {{object.descr}}</h>
+												<h5 style="margin-top: 6px; width: 300px">오브젝트 명  : {{object.object_nm}}</h>
+												<h5 style="margin-top: 6px; width: 180px">오브젝트 ID : {{object.object_id}}</h>
+												<h5 style="margin-top: 6px; width: 180px">오브젝트 인스턴스 : {{object.instances}}</h>
+												<h5 style="margin-top: 6px; width: 160px" ng-if="object.instances == 1">인스턴스 : Single</h>
+												<h5 style="margin-top: 6px; width: 160px" ng-if="object.instances == 0">인스턴스 : Multiple</h>
+												<h5 style="margin-top: 6px;">설명 : {{object.descr}}</h>
 											</div>
 											<!-- ibox-content -->
 											<div class="ibox-content collapse" id="{{object.object_id}}">
-												<div class="table-responsive">
+												<div class="table-responsive" ng-repeat="(key, data) in object.instance">
 													<table class="table table-striped">
 														<thead>
-															<tr align="center" ng-repeat="(key, data) in object.instance">
-																<td colspan=10><h4>Instance: {{key}}</h></td>
+															<tr align="center">
+																<td colspan=10 style="text-indent: 1em;"><h4><i class="fas fa-list"></i>&nbsp;인스턴스: {{key}}</h></td>
 															</tr>
 															<tr align="center">
 																<th width="100">리소스 ID</th>
@@ -214,7 +214,7 @@ function goBack() {
 														</thead>
 														<tbody>
 															<tr align="center"
-																ng-repeat="resource in object.instance[{{key}}]">
+																ng-repeat="resource in data">
 																<td>{{resource.resource_id}}</td>
 																<td align="left">{{resource.resource_nm}}</td>
 																<td>{{resource.resource_val}}</td>
@@ -228,14 +228,10 @@ function goBack() {
 																		ng-click="execute(resource);">Execute</button>
 																</td>
 																<td>
-																	<!-- button
-																		ng-show="resource.operation.indexOf('R') != -1"
-																		class="btn btn-primary btn-xs" type="button"
-																		ng-click="attribute(resource);">속성</button -->
 																	<button
 																		ng-show="resource.operation.indexOf('R') != -1"
 																		class="btn btn-primary btn-xs" type="button"
-																		onclick="fwListModal()">속성</button>
+																		ng-click="attribute(resource);">속성</button>
 																</td>
 																<td>
 																	<button ng-show="resource.operation.indexOf('R') != -1"
@@ -245,13 +241,21 @@ function goBack() {
 																		class="btn btn-primary btn-xs" type="button"
 																		ng-click="observe(resource, 'N');">Cancel</button>
 																</td>
-																<td><input
-																	ng-show="resource.operation.indexOf('W') != -1"
-																	type="text" ng-model="newValue" name="newValue"
-																	style="width: 100px;">
-																	<button ng-show="resource.operation.indexOf('W') != -1"
+																<td>
+																	<div ng-show="object.object_id != 5 && resource.resource_id != 0">
+																		<input ng-show="resource.operation.indexOf('W') != -1"
+																		type="text" ng-model="newValue" name="newValue"
+																		style="width: 100px;">
+																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
-																		ng-click="write(resource, newValue);">Write</button></td>
+																		ng-click="write(resource, newValue);">Write</button>
+																	</div>
+																	<div ng-show="object.object_id == 5 && resource.resource_id == 0">
+																		<button ng-show="resource.operation.indexOf('W') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		onclick="fwListModal()">List</button>
+																	</div>
+																</td>
 																<td>{{resource.operation_method}}</td>
 																<td>{{resource.statusMsg}} {{resource.tid}}</td>
 																

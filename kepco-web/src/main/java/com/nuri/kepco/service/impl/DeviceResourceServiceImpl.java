@@ -85,7 +85,7 @@ public class DeviceResourceServiceImpl implements DeviceResourceService {
 		for(DeviceResource dr : list) {
 			String key = dr.getObject_instance_id();
 			if(key == null) {
-				key = " ";
+				key = "0";
 			}
 			if(map.containsKey(key)) {
 				map.get(key).add(dr);
