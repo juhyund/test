@@ -56,8 +56,12 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 		$http({
 	    
 			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execReadResource",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path}
+	        url: COMMON_URL + "/ajaxExecResource",
+	        params : {
+	        	"url" : "", 
+	        	"device_id" : $("#device_id").val(), 
+	        	"resource" : path
+	        }
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	 	    	
@@ -86,8 +90,13 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 		$http({
 	    
 			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execControlValue",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path, "newValue" : newValue}
+	        url: COMMON_URL + "/ajaxExecResource",
+	        params : {
+	        	"url" : "", 
+	        	"device_id" : $("#device_id").val(), 
+	        	"resource" : path, 
+	        	"newValue" : newValue
+	        }
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	 	    	
@@ -116,8 +125,12 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 		$http({
 	    
 			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execControlExecute",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path}
+	        url: COMMON_URL + "/ajaxExecResource",
+	        params : {
+	        	"url" : "", 
+	        	"device_id" : $("#device_id").val(), 
+	        	"resource" : path
+	        }
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	    		
@@ -161,12 +174,13 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
             $http({
     			
     			method: 'POST',
-    	        url: COMMON_URL + "/nuri/kicpcall/execControlAttribute",
+    	        url: COMMON_URL + "/ajaxExecResource",
     	        params : {
-    	        	"device_id" : $("#device_id").val()
+    	        	"url" : "" 
+    	        	, "device_id" : $("#device_id").val()
     	        	, "resource" : path
     	        	, "attributes" : attributes
-    	        	}
+	        	}
     		
     	    }).then(function SuccessCallback(data, status, headers, config) {
     	    
@@ -204,8 +218,13 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 		$http({
 	    
 			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execControlObserve",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path, "observeType" : observeType}
+	        url: COMMON_URL + "/ajaxExecResource",
+	        params : {
+	        	"url" : "",
+	        	"device_id" : $("#device_id").val(), 
+	        	"resource" : path, 
+	        	"observeType" : observeType
+	        }
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	    	
