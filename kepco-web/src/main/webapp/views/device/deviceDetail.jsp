@@ -38,6 +38,64 @@ $(document).ready(function() {
     	}
     });
 });
+
+
+function coapModal() {
+	$('#coapModal').modal('show');
+}
+
+function updateForm() {
+	$('#update_data').show();
+	$('#update_form').hide();
+	
+	$('#di_ip').attr("readonly", false);	
+	$('#di_port').attr("readonly", false);	
+	$('#di_hw_version').attr("readonly", false);	
+	$('#di_fw_version').attr("readonly", false);	
+	$('#di_remark').attr("readonly", false);
+	
+	$('#di_ip').css({'border' : ''});
+	$('#di_port').css({'border' : ''});
+	$('#di_hw_version').css({'border' : ''});
+	$('#di_fw_version').css({'border' : ''});
+	$('#di_remark').css({'border' : ''});
+}
+
+function updateData() {
+	$('#update_data').hide();
+	$('#update_form').show();
+
+	var options = { 
+           //success     : successResultCombo,
+           url         : COMMON_URL + "/ajaxBranchCombo",
+           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+           type        : "post", /* get, post */
+           dataType    : "json", /* xml, html, script, json */
+           data        : {
+	        	"device_id" : $("#device_id").val(),
+	        	"ip" : $("#di_ip").val(),
+	        	"port" : $("#di_port").val(),
+	        	"hw_version" : $("#di_hw_version").val(),
+	        	"fw_version" : $("#di_fw_version").val(),
+	        	"remark" : $("#di_remark").val()
+	       }
+     };             
+    
+     $.ajax(options);
+
+	$('#di_ip').attr("readonly", true);	
+	$('#di_port').attr("readonly", true);	
+	$('#di_hw_version').attr("readonly", true);	
+	$('#di_fw_version').attr("readonly", true);	
+	$('#di_remark').attr("readonly", true);
+	
+	$('#di_ip').css({'border' : 'none'});
+	$('#di_port').css({'border' : 'none'});
+	$('#di_hw_version').css({'border' : 'none'});
+	$('#di_fw_version').css({'border' : 'none'});
+	$('#di_remark').css({'border' : 'none'});
+}
+
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js"
@@ -107,16 +165,16 @@ $(document).ready(function() {
 									</tr>
 									<tr>
 										<th class="device-detail-head">단말IP/PORT</th>
-										<td class="device-detail-body">{{device_info.ip}} /
-											{{device_info.port}}</td>
+										<td class="device-detail-body"><input type="text" id="di_ip" style="border: none" value="{{device_info.ip}}" readonly="readonly" > /
+											<input type="text" id="di_port" style="border: none" value="{{device_info.port}}" readonly="readonly" ></td>
 										<th class="device-detail-head">모델명</th>
 										<td class="device-detail-body">{{device_info.model_nm}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
-										<td class="device-detail-body">{{device_info.hw_version}}</td>
+										<td class="device-detail-body"><input type="text" id="di_hw_version" style="border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
 										<th class="device-detail-head">펌웨어 버전</th>
-										<td class="device-detail-body">{{device_info.fw_version}}</td>
+										<td class="device-detail-body"><input type="text" id="di_fw_version" style="border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">인증방식</th>
@@ -132,7 +190,7 @@ $(document).ready(function() {
 									</tr>
 									<tr>
 										<th class="device-detail-head">설명</th>
-										<td class="device-detail-body" colspan="3">{{device_info.remark}}</td>
+										<td class="device-detail-body" colspan="3"><input type="text" id="di_remark" style="border: none; width: 100%" value="{{device_info.remark}}" readonly="readonly"></td>
 									</tr>
 								</thead>
 							</table>
@@ -284,14 +342,17 @@ $(document).ready(function() {
 							<i class="fa fa-undo"> 목록으로 돌아가기</i>
 						</button>
 						<div id='info_btn' style="float: right">
-							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="javascript:history.back(-1)">
+							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="coapModal()">
 								<i class="fas fa-wifi"> CoAP Ping</i>
 							</button>
-							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="javascript:history.back(-1)">
+							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="">
 								<i class="fas fa-retweet"> Reset</i>
 							</button>
-							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 7px; height: 35px" type="button" onclick="javascript:history.back(-1)">
+							<button id="update_form" class="btn btn-outline btn-primary m-t-sm" style="margin-right: 7px; height: 35px" type="button" onclick="updateForm()">
 								<i class="fas fa-edit"> 수정</i>
+							</button>
+							<button id="update_data" class="btn btn-outline btn-primary m-t-sm" style="margin-right: 7px; height: 35px; display: none" type="button" onclick="updateData()">
+								<i class="fas fa-edit"> 반영</i>
 							</button>
 						</div>
 					</div>
@@ -317,9 +378,9 @@ $(document).ready(function() {
 			<form class="form-horizontal" role="form" method="post" id="form">	
 				<div class="form-group row">
 					<label class="col-lg-3 col-form-label">CoAP Ping</label>
-					<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control">초</div>
+					<div class="col-lg-2"><input type="text" name="sec" id="sec" class="form-control">초</div>
 					<label class="col-lg-3 col-form-label">간격</label>
-					<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control">회</div>
+					<div class="col-lg-2"><input type="text" name="round" id="round" class="form-control">회</div>
 				</div>
 			</div>
 			<div class="modal-footer">
