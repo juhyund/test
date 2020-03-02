@@ -39,8 +39,8 @@ public class ConnectivityMonitorDAOImpl implements ConnectivityMonitorDAO {
 		
 		Query query = getQuery(param);
 		query.skip(param.getOffset());
-//		query.limit(param.getRow());
-		query.limit(10);
+		query.limit(param.getRow());
+//		query.limit(10);
 
 		return mongoTemplate.find(query, ConnectivityMonitor.class);
 	}

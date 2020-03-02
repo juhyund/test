@@ -135,4 +135,12 @@ public class NMSInfoServiceImpl implements NMSInfoService {
 		
 		return ConversionUtil.getJSONArrayByModel(list);
 	}
+
+	@Override
+	public long getCount(Map<String, Object> param) throws Exception {
+		ConnectivityStatisticsMonitor connectivityStatistics = new ConnectivityStatisticsMonitor();
+		ConversionUtil.getModelByMap(connectivityStatistics, param);
+
+		return this.connectivityStatisticsMonitorDAO.getCount(connectivityStatistics);
+	}
 }

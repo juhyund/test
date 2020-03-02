@@ -60,11 +60,11 @@ public class OperationLogController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String meter_serial = request.getParameter("_meter_serial");
+			String device_id = request.getParameter("_device_id");
 			
-//			JSONObject jarr = this.operationLogService.getOperationLogDetail(meter_serial);
+			JSONObject jarr = this.operationLogService.getOperationLogDetail(device_id);
 			
-//			json.put("result", jarr);
+			json.put("result", jarr);
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
