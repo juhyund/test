@@ -2,10 +2,13 @@ package com.keymng.restapi.service.impl;
 
 import java.util.List;
 
-import org.jboss.logging.Logger;
+import javax.persistence.Column;
+import javax.persistence.Id;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.keymng.restapi.model.Authorize;
 import com.keymng.restapi.repository.KeyinfoRepository;
 import com.keymng.restapi.service.KeyinfoService;
@@ -21,7 +24,7 @@ public class KeyinfoServiceImpl implements KeyinfoService {
 	@Autowired
 	private KeyinfoRepository keyinfoRepository;
 	
-	private static Logger logger = Logger.getLogger(KeyinfoServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(KeyinfoServiceImpl.class);
 			
 	public int InsertAuthKey(String calling_id, String sys_title, String nas_ip, String nas_port, String fep_key, String nms_key){
 		
@@ -73,7 +76,7 @@ public class KeyinfoServiceImpl implements KeyinfoService {
 		try {
 			keyinfoRepository.save(auth);
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("keyinforepository save=",e);
 			return -1;
 		}
 		if(result==0) logger.info("======= Insert Auth Key Information. =======");
@@ -82,9 +85,4 @@ public class KeyinfoServiceImpl implements KeyinfoService {
 		return (int) result;
 	}
 
-	public int InsertAuthLog(String calling_id, String sys_title,
-			String nas_ip, String nas_port, String fep_key, String nms_key) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

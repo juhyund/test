@@ -1,6 +1,7 @@
 package com.keymng.restapi.controller;
 
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.LinkedMultiValueMap;
 
+import com.keymng.restapi.service.AuthlogService;
 import com.keymng.restapi.service.KeyinfoService;
 
 import org.springframework.http.HttpMethod;
@@ -40,6 +42,9 @@ import java.util.List;
 public class MainController {
     @Autowired
     KeyinfoService keyinfoService;
+    
+    @Autowired
+    AuthlogService authlogService;
     		
 	@Autowired
     RestTemplate restTemplate;
@@ -47,7 +52,10 @@ public class MainController {
 	@Value("${redisurl}") 
 	String uri;
     
-    private static Logger logger = Logger.getLogger(MainController.class);
+    //private static Logger logger = Logger.getLogger(MainController.class);
+    
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	
     /**
      * 
      * 1. 메소드명 : SampleTest
@@ -76,7 +84,8 @@ public class MainController {
 		
 		logger.info("======= Trying to send Auth Key ro REDIS =======");
 		//callSendPSKtoRedisRestAPI(sys_title, fep_key);
-		callSendPSKtoRedisRestAPI("yoon", "1234");
+		//callSendPSKtoRedisRestAPI("yoon", "1234");
+		callSendPSKtoRedisRestAPI(sys_title, fep_key.substring(0,32));
 		
 		logger.info("======= Trying to Saving Auth Key =======");		
 		res = keyinfoService.InsertAuthKey(calling_id, sys_title, nas_ip, nas_port, fep_key, nms_key);
@@ -87,6 +96,31 @@ public class MainController {
 		else if (res == 0 ) return "Insert New Auth-key Success [" +calling_id+ "]";
 		
 		return "Update Auth-key Success [" +calling_id+ "]";
+	}
+	
+	
+	/**
+	 * 
+	 * 1. 메소드명 : SavingAuthLog
+	 * 2. 작성일   : 2020. 2. 28. 오후 3:50:40
+	 * 3. 설명     : Client의 GET방식 /SavingAuthLog Request를 처리 
+	 */
+	@RequestMapping(value="/SavingAuthLog", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public String SavingAuthLog(@RequestParam String sys_title,
+			@RequestParam String device_id, @RequestParam String log_cd, @RequestParam String receive_dt){
+		
+		int res = 0;
+		
+		logger.info("======= Trying to Saving Auth log =======");		
+		res = authlogService.InsertAuthLog(sys_title, device_id, log_cd, receive_dt);
+		if( res < 0 ){
+			logger.error("======= Failed to save auth log =======");
+			return "Fail";
+		}
+		else if (res == 0 ) return "Insert New Auth-log Success [" +sys_title+ "]";
+		
+		return "Update Auth-log Success [" +sys_title+ "]";
 	}
 	
 	
@@ -101,7 +135,7 @@ public class MainController {
  
         HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> entity = new HttpEntity<>(headers);
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         restTemplate.setMessageConverters(converters);
  

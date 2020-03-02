@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	
+	<!-- 60초마다 설정 파일의 변경을 확인한다. 파일이 변경되면 다시 로딩한다 -->
+	<configuration scan="true" scanPeriod="60 seconds" debug="true">	
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+	    <encoder>
+	        <pattern>
+	         [%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{36}][%class.%method:%line] - %msg%n	         
+	        </pattern>     
+	    </encoder>
+	</appender>
+	
+	
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/ifkey.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/logs/ifkey.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- delete after 30 days -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{36}][%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    
+    <!-- 
+    <appender name="file-sql" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/sql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/logs/sql.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{36}][%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    -->
+ 	<!-- nuri-emi-server -->
+	<logger name="com.keymng.restapi" level="debug">	    
+	</logger>
+	
+
+	<!-- mapper sql-->
+<!--  
+	<logger name="com.keymng.restapi.repository" level="debug">
+		<appender-ref ref="file-sql"></appender-ref>	    
+	</logger>	
+-->
+	
+	<root level="debug">  
+		<appender-ref ref="file"></appender-ref> 
+	    <appender-ref ref="STDOUT"> </appender-ref>	    
+	</root>	
+	
+	<!--  
+	  <logger name="jdbc" level="OFF"/>
+  <logger name="jdbc.sqlonly" level="OFF"/>
+  <logger name="jdbc.sqltiming" level="DEBUG"/>
+  <logger name="jdbc.audit" level="OFF"/>
+  <logger name="jdbc.resultset" level="OFF"/>
+  <logger name="jdbc.resultsettable" level="DEBUG"/>
+  <logger name="jdbc.connection" level="OFF"/>
+  -->
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+  </root>
+	<root level="error">		
+		<appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
