@@ -7,9 +7,11 @@ import com.nuri.kepco.model.AllCode;
 import com.nuri.kepco.model.ObisCode;
 
 @Mapper
-public interface ObisCodeDAO extends GenericDAO<AllCode> {
+public interface ObisCodeDAO extends GenericDAO<ObisCode> {
 
 	List<Map<String, Object>> selectObisList(ObisCode obisCode);
 
 	List<Map<String, Object>> selectObisList2(ObisCode obisCode);
+	
+	ObisCode selectObisByCode(ObisCode obisCode);
 }

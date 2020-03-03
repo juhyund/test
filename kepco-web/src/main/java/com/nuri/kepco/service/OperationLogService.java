@@ -12,6 +12,7 @@ public interface OperationLogService extends GenericService {
 	JSONArray getOperationLogList(Map<String, Object> param) throws Exception;
 	
 	int getOperationLogListCnt(Map<String, Object> param) throws Exception;
-	
+
+	JSONObject getOperationLogDetail(String device_id) throws Exception;
 	
 }

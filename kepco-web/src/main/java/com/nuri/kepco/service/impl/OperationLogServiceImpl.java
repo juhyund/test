@@ -74,4 +74,10 @@ public class OperationLogServiceImpl implements OperationLogService {
 		
 		return this.operationLogDAO.getOperationLogListCnt(operationLog);
 	}
+
+	@Override
+	public JSONObject getOperationLogDetail(String device_id) throws Exception {
+		OperationLog operationLog = operationLogDAO.getOperationLogDetail(device_id);
+		return ConversionUtil.getJSONObjectByModel(operationLog);
+	}
 }

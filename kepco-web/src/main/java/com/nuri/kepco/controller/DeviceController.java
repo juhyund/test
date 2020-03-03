@@ -1,6 +1,7 @@
 package com.nuri.kepco.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -152,5 +153,37 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value = "/ajaxDeviceInfoUpdate")
+	public ResponseEntity<Object> ajaxDeviceInfoUpdate(HttpServletRequest request) {
+		
+		String[] commStr = { "ip", "port", "hw_version", "fw_version", "remark" };
+		
+		JSONObject json = new JSONObject();
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("device_id", request.getParameter("device_id"));
+			
+			JSONObject ori = deviceInfoService.selectOne(param);
+			Iterator<String> keysItr = ori.keySet().iterator();
+		    while(keysItr.hasNext()) {
+		        String key = keysItr.next();
+		        Object value = ori.get(key);
+
+		        param.put(key, value);
+		    }
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			deviceInfoService.update(param);
+
+			json.put("result", "SUCCESS!");
+		} catch (Exception e) {
+			json.put("result", "ERROR!");
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
 }
 

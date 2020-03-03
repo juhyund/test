@@ -161,7 +161,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												<tr>
 													<th class="text-navy" scope="row">계기번호:</th>
 													<td id = "meter_serial"></td>
-													<th class="text-navy" scope="row">COSEM:</th>
+													<th class="text-navy" scope="row"> COSEM 계기 식별자:</th>
 													<td id = "cosem_device_name"></td>
 													<th class="text-navy" scope="row">마지막 검침 일시:</th>
 													<td id = "last_comm_dt"></td>

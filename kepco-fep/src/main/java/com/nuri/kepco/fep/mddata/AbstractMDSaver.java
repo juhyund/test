@@ -258,7 +258,7 @@ public abstract class AbstractMDSaver {
 		return -1;
 	}
 
-	protected int checkDevice(String deviceSerial, String modemTime) {
+	protected int checkDevice(String deviceSerial, String modemTime, String mobileNo) {
 
 		int result = 0;
 		boolean isNewDevice = false;
@@ -278,6 +278,7 @@ public abstract class AbstractMDSaver {
 			deviceInfo.setDevice_type(DEVICETYPE.DEVICE.getCode()); // DEVICE
 			deviceInfo.setAllow_yn("1");
 			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
+			if(mobileNo != null) deviceInfo.setMobile_no(mobileNo);
 
 			if (isNewDevice) {				
 				// model을 default로 저장
@@ -300,6 +301,12 @@ public abstract class AbstractMDSaver {
 		}
 		
 		return result;
+	}
+	
+	
+	protected int checkDevice(String deviceSerial, String modemTime) {
+
+		return checkDevice(deviceSerial, modemTime, null);
 	}
 	
 	/**

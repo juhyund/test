@@ -201,44 +201,4 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         $('#writeModal').modal('show');
     	
     };
-    
-    $scope.observe = function (resource, observeType) {
-    	
-    	if(observeType == "Y") {
-    		resource.operation_method = "Observe";
-    	} else {
-    		resource.operation_method = "Observe-Cancel";
-    	}
-    	
-		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;		
-				
-		$http({
-	    
-			method: 'POST',
-	        url: COMMON_URL + "/ajaxExecResource",
-	        params : {
-	        	"url" : "/nuri/kicpcall/execControlObserve",
-	        	"device_id" : $("#device_id").val(), 
-	        	"resource" : path, 
-	        	"observeType" : observeType
-	        }
-		
-	    }).then(function SuccessCallback(data, status, headers, config) {
-	    	
-	    	resource.statusCode = data.data.statusCode
-    		resource.statusMsg = data.data.statusMsg;
-	    	resource.tid = data.data.tid;
-	    	
-	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
-	    	} else {
-	    		alert("제어실패 [" + resource.statusMsg + "]");
-	    	}
-	    	
-    	}, function errorCallback(response) {
-	        alert("전송실패");
-	        resource.statusMsg = "전송실패";	    	
-	    });
-    };
-
 });

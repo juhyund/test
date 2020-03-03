@@ -101,6 +101,13 @@
 		WHERE meter_type = #{meter_type}
 	</select>
 	
+	<select id="selectObisByCode" resultType="obisCode" parameterType="obisCode">	
+		SELECT *
+		FROM EMI_OBIS_CODE a				
+		WHERE a.meter_type = #{meter_type}
+		AND a.obis_code = #{obis_code} 
+	</select>
+	
 	<!-- <insert id="insert" parameterType="obisCode">     	
 		INSERT INTO EMI_OBIS_CODE (
 			code

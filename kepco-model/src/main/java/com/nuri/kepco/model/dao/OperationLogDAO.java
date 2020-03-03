@@ -13,4 +13,8 @@ public interface OperationLogDAO extends GenericDAO<OperationLog> {
 	List<OperationLog> getOperationLogList(OperationLog operationLog) throws Exception;
 	
 	int getOperationLogListCnt(OperationLog operationLog) throws Exception;
+
+	OperationLog getOperationLogDetail(String device_id);
+	
+	OperationLog selectByTID(String tid) throws Exception;
 }
