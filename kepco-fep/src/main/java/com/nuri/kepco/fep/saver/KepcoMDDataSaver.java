@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.leshan.core.node.LwM2mPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,20 @@ import org.springframework.stereotype.Service;
 
 import com.nuri.kepco.fep.datatype.LPData;
 import com.nuri.kepco.fep.datatype.MDData;
+import com.nuri.kepco.fep.datatype.MeterAccessResult;
 import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
 import com.nuri.kepco.fep.parser.KepcoMDDataParser;
+import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.model.MeterBilling;
 import com.nuri.kepco.model.MeterInfo;
 import com.nuri.kepco.model.MeterValue;
+import com.nuri.kepco.model.OperationLog;
+import com.nuri.kepco.model.dao.DeviceInfoDAO;
 import com.nuri.kepco.model.dao.MeterBillingDAO;
+import com.nuri.kepco.model.dao.MeterInfoDAO;
 import com.nuri.kepco.model.dao.MeterValueDAO;
+import com.nuri.kepco.model.dao.OperationLogDAO;
 
 @Service
 public class KepcoMDDataSaver extends AbstractMDSaver {
@@ -31,18 +38,103 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 	
 	@Autowired
 	MeterBillingDAO meterBillingDAO;
+	
+	@Autowired
+	MeterInfoDAO meterInfoDAO;
+	
+	@Autowired
+	DeviceInfoDAO deviceInfoDAO;
+	
+	@Autowired
+	OperationLogDAO operationLogDAO;
 		
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
 		
-		KepcoMDDataParser parser = (KepcoMDDataParser)md.getMeterDataParser();		
+		KepcoMDDataParser parser = (KepcoMDDataParser)md.getMeterDataParser();
+		
+		if(parser.getMeterAccessResult() != null) { // meterAccessResult
+			
+			meterAccessResultSaver(parser, md);
+			
+		} else if(parser.getMDList().size() > 0) { // 검침정보 
+			
+			mdDataSaver(parser, md);
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * meterAccessResultSaver
+	 * @param parser
+	 * @param md
+	 */
+	private void meterAccessResultSaver(KepcoMDDataParser parser, IMeasurementData md) {
+		
+		MeterAccessResult meterAccessResult = parser.getMeterAccessResult();
+		Map<Integer, String> meterStatus = (Map<Integer, String>)meterAccessResult.getMeterStatus();
+		
+		// OperationLog에 결과를 저장한다.
+		try {
+			
+			// device info
+			String device_serial = md.getDeviceId();
+			DeviceInfo deviceInfo = deviceInfoDAO.selectByDeviceSerial(device_serial);
+			
+			String payload = "";
+			payload += "OBIS [" + meterAccessResult.getOBIS() + "]\n";
+			payload += "APDU [" + meterAccessResult.getAPDU() + "]\n";
+			payload += meterAccessResult.getResultMsg();
+			
+			for(Integer key : meterStatus.keySet()) {			
+
+				// meter info param				
+				MeterInfo param = new MeterInfo();				
+				param.setMeter_serial(String.valueOf(key));
+				param.setDevice_serial(device_serial);
+				
+				LOG.debug("key : {}" , key);
+				LOG.debug(meterStatus.get(key));
+				
+				
+				// meter info
+				MeterInfo meterInfo = meterInfoDAO.getMeterInfoBySerial(param);				
+				payload += "=============================\n";						
+				payload += "Meter Serial [" + meterInfo.getMeter_serial() + "] STATUS [" + meterStatus.get(key) + "]\n";
+				payload += "=============================\n";
+			}
+			
+			OperationLog operationLog = new OperationLog();
+			operationLog.setDevice_id(deviceInfo.getDevice_id());
+			operationLog.setRequest_dt(md.getModemTime());
+			operationLog.setObject_id(31012); // METER ACCESS
+			operationLog.setFormat("JSON");
+			operationLog.setPayload(payload);
+			operationLog.setResult(1);		
+			operationLog.setResult_dt(md.getModemTime());
+			
+			int result = operationLogDAO.insert(operationLog);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * mdDataSaver
+	 * @param parser
+	 * @param md
+	 */
+	private void mdDataSaver(KepcoMDDataParser parser, IMeasurementData md) {
 		List<MDData> mdList = parser.getMDList();		
 		String deviceSerial = md.getDeviceId();
 		
 		LOG.debug("## deviceSerial Saver : {}" , deviceSerial);
 		
 		// checkDevice
-		checkDevice(deviceSerial, md.getModemTime());
+		checkDevice(deviceSerial, md.getModemTime(), parser.getMobileNo());
 		
 		if(getDeviceInfo() != null) {
 				
@@ -83,8 +175,6 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				}
 			}
 		}
-		
-		return false;
 	}
 	
 	/**
