@@ -232,4 +232,26 @@
 		LEFT OUTER JOIN EMI_RESOURCE_MODEL RM ON OM.OBJECT_ID = RM.OBJECT_ID AND OL.RESOURCE_ID = RM.RESOURCE_ID
 		WHERE A.device_id = #{device_id}	
 	</select>
+	
+	<select id="selectByTID" resultType="operationLog" parameterType="java.lang.String">	
+		SELECT 
+			device_id
+			, request_dt
+			, service_id
+			, tid
+			, method
+			, object_id
+			, object_instance_id
+			, resource_id
+			, resource_instance_id
+			, format
+			, token
+			, mid
+			, payload
+			, result
+			, result_dt
+			, reg_id
+		 FROM EMI_OPERATION_LOG a				
+		WHERE tid = #{tid} 
+	</select>
 </mapper>
