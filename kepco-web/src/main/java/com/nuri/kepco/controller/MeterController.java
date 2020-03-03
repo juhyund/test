@@ -149,11 +149,7 @@ public class MeterController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			logger.info("\n\n----------ajaxSelectObisList-----------\n param ="+param+"\n");
-			
 			JSONArray jarr = this.obisCodeService.selectObisList(param);
-
-			logger.info("\n\n----------ajaxSelectObisList-----------\n jarr ="+jarr+"\n");
 			json.put("result", jarr);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
