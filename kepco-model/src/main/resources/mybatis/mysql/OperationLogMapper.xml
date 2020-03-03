@@ -198,6 +198,7 @@
 			, a.object_instance_id
 			, a.resource_id
 			, a.resource_instance_id
+			, '' as resource_sum
 			, a.format
 			, a.token
 			, a.mid

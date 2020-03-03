@@ -346,7 +346,7 @@ function successResultHandler(data, status) {
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
 	
-	//allow_yn 변환
+	//result, 리소스경로 변환
 	$.each( data, function(index, item) {
 		if(index == 'resultGrid'){
 			for(var i=0; i<item.length; i++){
