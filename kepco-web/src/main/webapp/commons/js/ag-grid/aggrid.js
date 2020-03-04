@@ -281,4 +281,7 @@ function numberFormatter(params) {
 	    return "";
 	  }
 }
+function obisListFormatter(params) {
+	 return params.toString().replace(",", "<br>");
+}
 
