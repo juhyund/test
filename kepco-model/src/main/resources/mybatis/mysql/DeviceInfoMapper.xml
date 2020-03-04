@@ -276,7 +276,7 @@
 			, a.device_serial
 			, e.vendor_nm
 			, a.device_oid
-			, a.ip
+			, INET_NTOA(a.ip) as ip
 			, a.port
 			, a.fw_version
 			, a.hw_version

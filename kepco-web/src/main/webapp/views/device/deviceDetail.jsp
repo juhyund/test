@@ -67,7 +67,7 @@ function updateData() {
 
 	var options = { 
            //success     : successResultCombo,
-           url         : COMMON_URL + "/ajaxBranchCombo",
+           url         : COMMON_URL + "/ajaxDeviceInfoUpdate",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
@@ -143,6 +143,7 @@ function updateData() {
 				<!-- body -->
 				<form name="search_form" id="search_form" method="post">
 				<input type=hidden name="device_id" id="device_id" value="<%=device_id%>">
+				<input type=hidden name="device_serial" id="device_serial" value="{{device_info.device_serial}}">
 				<div class="row">
 					<div class="tab-content" style="width: 100%">
 						<div class="tab-pane fade show active" id="info" ng-init="deviceInfo()">
@@ -165,16 +166,16 @@ function updateData() {
 									</tr>
 									<tr>
 										<th class="device-detail-head">단말IP/PORT</th>
-										<td class="device-detail-body"><input type="text" id="di_ip" style="border: none" value="{{device_info.ip}}" readonly="readonly" > /
-											<input type="text" id="di_port" style="border: none" value="{{device_info.port}}" readonly="readonly" ></td>
+										<td class="device-detail-body"><input type="text" id="di_ip" style="width:80px; border: none" value="{{device_info.ip}}" readonly="readonly" > /
+											<input type="text" id="di_port" style="width:80px; border: none" value="{{device_info.port}}" readonly="readonly" ></td>
 										<th class="device-detail-head">모델명</th>
 										<td class="device-detail-body">{{device_info.model_nm}}</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
-										<td class="device-detail-body"><input type="text" id="di_hw_version" style="border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
+										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:80px; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
 										<th class="device-detail-head">펌웨어 버전</th>
-										<td class="device-detail-body"><input type="text" id="di_fw_version" style="border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
+										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:80px; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">인증방식</th>
@@ -264,7 +265,9 @@ function updateData() {
 													<table class="table table-striped">
 														<thead>
 															<tr align="center">
-																<td colspan=10 style="text-indent: 1em;"><h4><i class="fas fa-list"></i>&nbsp;인스턴스: {{key}}</h></td>
+																<td colspan=10 style="text-indent: 1em; background-color: #18a689; border-color: #18a689; color: #FFF">
+																	<h4><i class="fas fa-list"></i>&nbsp;인스턴스: {{key}}</h>
+																</td>
 															</tr>
 															<tr align="center">
 																<th width="100">리소스 ID</th>
@@ -362,90 +365,97 @@ function updateData() {
 				<!-- body -->
 			</div>
 		</div>
-	</div>
-
-	<!-- modal -->
-	<div class="modal bs-example-modal-sm" id="coapModal" tabindex="-1" role="dialog"
-	aria-labelledby="coapModal" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">				
-				<h4 class="modal-title" id="coapModal"></h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body">		
-			<form class="form-horizontal" role="form" method="post" id="form">	
-				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">CoAP Ping</label>
-					<div class="col-lg-2"><input type="text" name="sec" id="sec" class="form-control">초</div>
-					<label class="col-lg-3 col-form-label">간격</label>
-					<div class="col-lg-2"><input type="text" name="round" id="round" class="form-control">회</div>
+		
+		<!-- modal -->
+		<div class="modal bs-example-modal-sm" id="coapModal" tabindex="-1" role="dialog"
+		aria-labelledby="coapModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
+					<h4 class="modal-title">CoAP PING</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-			</div>
-		</form>
-		</div>
-	</div>
-	</div>
-	<!-- modal -->
-
-	<!-- modal -->
-	<div class="modal bs-example-modal-sm" id="writeModal" tabindex="-1" role="dialog"
-	aria-labelledby="writeModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">				
-				<h4 class="modal-title" id="writeModalLabel"></h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body">		
-			<form class="form-horizontal" role="form" method="post" id="form">	
-				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">최소주기</label>
-					<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control"></div>
-				</div>
-				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">최대주기</label>
-					<div class="col-lg-9"><input type="text" name="pmax" id="pmax" placeholder="pmax" class="form-control"></div>
-				</div>
-				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">최소값</label>
-					<div class="col-lg-9"><input type="text" name="lt" id="lt" placeholder="lt" class="form-control"></div>
-				</div>
-				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">최대값</label>
-					<div class="col-lg-9"><input type="text" name="gt" id="gt" placeholder="gt" class="form-control"></div>
-				</div>
-				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">간격</label>
-					<div class="col-lg-9"><input type="text" name="step" id="step" placeholder="step" class="form-control"></div>
-				</div>
-				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">Notification</label>
-					<div class="col-lg-9">
-					<select class="form-control m-b" name="ntype" id="ntype">
-                        <option value="true">true</option>
-                        <option value="false">false</option>                        
-                    </select>
+				<div class="modal-body">		
+				<form class="form-horizontal" role="form" method="post" id="form">	
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">CoAP Ping</label>
+						<div class="col-lg-2 col-form-label"><input type="text" name="sec" id="sec" class="form-control">초</div>
+						<label class="col-lg-2 col-form-label">간격</label>
+						<div class="col-lg-2 col-form-label"><input type="text" name="round" id="round" class="form-control">회</div>
+						<button type="button" class="btn btn-default" ng-click="coapping();">실행</button>
 					</div>
-				</div>	
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">실행결과</label>
+						<div class="col-lg-2"><input type="text" name="ping_result" id="ping_result"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary" data-dismiss="modal" id="writeSubmit">적용</button>
-			</div>
-		</form>
 		</div>
-	</div>
-	</div>
-	<!-- modal -->
+		</div>
+		<!-- modal -->
 	
-	<!-- fw modal -->
-	<%@ include file="/views/device/fwModal.jsp"%>
+		<!-- modal -->
+		<div class="modal bs-example-modal-sm" id="writeModal" tabindex="-1" role="dialog"
+		aria-labelledby="writeModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">				
+					<h4 class="modal-title" id="writeModalLabel"></h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">		
+				<form class="form-horizontal" role="form" method="post" id="form">	
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">최소주기</label>
+						<div class="col-lg-9"><input type="text" name="pmin" id="pmin" placeholder="pmin" class="form-control"></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">최대주기</label>
+						<div class="col-lg-9"><input type="text" name="pmax" id="pmax" placeholder="pmax" class="form-control"></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">최소값</label>
+						<div class="col-lg-9"><input type="text" name="lt" id="lt" placeholder="lt" class="form-control"></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">최대값</label>
+						<div class="col-lg-9"><input type="text" name="gt" id="gt" placeholder="gt" class="form-control"></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">간격</label>
+						<div class="col-lg-9"><input type="text" name="step" id="step" placeholder="step" class="form-control"></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label">Notification</label>
+						<div class="col-lg-9">
+						<select class="form-control m-b" name="ntype" id="ntype">
+	                        <option value="true">true</option>
+	                        <option value="false">false</option>                        
+	                    </select>
+						</div>
+					</div>	
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" id="writeSubmit">적용</button>
+				</div>
+			</form>
+			</div>
+		</div>
+		</div>
+		<!-- modal -->
+		
+		<!-- fw modal -->
+		<%@ include file="/views/device/fwModal.jsp"%>
+	</div>
+
+	
 
 </body>
 </html>

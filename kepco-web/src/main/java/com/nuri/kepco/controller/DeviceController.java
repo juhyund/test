@@ -168,11 +168,15 @@ public class DeviceController {
 		    while(keysItr.hasNext()) {
 		        String key = keysItr.next();
 		        Object value = ori.get(key);
-
-		        param.put(key, value);
+		        if(value != null && !"".equals(value)) {
+		        	if("model_seq".equals(key)) {
+		        		param.put(key, ((int)(long) value));		        		
+		        	} else {
+		        		param.put(key, value);	
+		        	}
+		        }
 		    }
 			ControllerUtil.getCustomParam(request, commStr, param);
-			
 			deviceInfoService.update(param);
 
 			json.put("result", "SUCCESS!");
