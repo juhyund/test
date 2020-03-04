@@ -92,8 +92,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                     <div class="tabs-container" style=width:200%;>
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a class="nav-link active" data-toggle="tab" href="#tab-1">기본정보</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-2">미터 설정 읽기/설정</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-3">검침스케줄 읽기/설정</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-2" ng-click="meterResourceList(2);">미터 설정 읽기/설정</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-3" ng-click="meterResourceList(3);">검침스케줄 읽기/설정</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-5">TOU설정 조회</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-6">제어이력</a></li>
@@ -161,7 +161,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												<tr>
 													<th class="text-navy" scope="row">계기번호:</th>
 													<td id = "meter_serial"></td>
-													<th class="text-navy" scope="row">COSEM:</th>
+													<th class="text-navy" scope="row"> COSEM 계기 식별자:</th>
 													<td id = "cosem_device_name"></td>
 													<th class="text-navy" scope="row">마지막 검침 일시:</th>
 													<td id = "last_comm_dt"></td>
@@ -209,13 +209,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                             
                             
                             
-                            
-                            
-                            
-                            
-                            
-                            
-                            
                             <div role="tabpanel" id="tab-3" class="tab-pane">
 									<div class="col-lg-10">
 										<h4 style="margin-top: 6px"></h4>
@@ -256,7 +249,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													
 													<div class="ibox-content">
-														<div class="table-responsive"  id="resource" ng-init="meterResourceList()">
+														<div> 
+															<input type="hidden" id=device_id name="device_id" value=""> </input>
+														</div>
+														<div class="table-responsive"  id="resource">
 															<table class="table">
 																<thead class ="gray-bg">
 																	<tr align="center" >
@@ -314,22 +310,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									</div>
 									
                             </div>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
                             
                             
                             
@@ -410,9 +390,11 @@ function resetForm(){
 	
 };
 
+
 function showRequest() {
 	// $("#loading").show();
 }
+
 
 function successResultHandler(data, status) {	
 	
@@ -440,6 +422,7 @@ function successResultHandler(data, status) {
 	$('#meter_type').text(data.result.meter_type);	
 	$('#meter_type_view').text(data.result.meter_type);	
 	meterTypeCode = data.result.meter_type_code;	
+	$('#device_id').val(data.result.device_id);	
 	
 	$('#prog_id').text(data.result.prog_id);	
 	$('#prog_version').text(data.result.prog_version);	
@@ -459,6 +442,12 @@ function successResultHandler(data, status) {
 	$('#avg_power_period').text(data.result.avg_power_period);
 	
 }
+
+function changeTab(selectedTab){
+	
+	alert("selectedTAb: "+selectedTab);
+
+};
 
 var winObj;
 function popupObisCode(){ 
@@ -484,6 +473,9 @@ function init() {
 
 $(document).ready(function() {	
 	init();
+	
+
+	
 });
 
 </script>

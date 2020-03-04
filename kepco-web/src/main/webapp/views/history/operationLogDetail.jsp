@@ -87,9 +87,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</tr>
 										<tr>
 											<th class="device-detail-head">리소스</th>
-											<td class="device-detail-body" id="method"></td>
+											<td class="device-detail-body" id="resource_sum"></td>
 											<th class="device-detail-head">제어구분</th>
-											<td class="device-detail-body" id=""></td>
+											<td class="device-detail-body" id="method"></td>
 										</tr>
 										<tr>
 											<th class="device-detail-head">오브젝트명</th>
@@ -105,7 +105,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</tr>
 										<tr>
 											<th class="device-detail-head">결과내용</th>
-											<td class="device-detail-body" colspan="3" id=""></td>
+											<td class="device-detail-body" colspan="3" id="payload"></td>
 										</tr>
 									</thead>
 								</table>
@@ -147,7 +147,36 @@ function showRequest() {
 	// $("#loading").show();
 }
 
-function successResultHandler(data, status) {	
+function successResultHandler(data, status) {
+	
+	//result, resource_sum 변환
+	$.each( data, function(index, item) {
+		if(index == 'result'){
+			if(item.result == 1){
+				data.result.result = '성공'
+			}else if(item.result == 2){
+				data.result.result = '실패'
+			}else{
+				data.result.result = '대기중'
+			}
+		
+			if(item.object_id != ""){
+				item.resource_sum = item.object_id
+				
+				if(item.object_instance_id != ""){
+					item.resource_sum += "/"+item.object_instance_id
+				}	
+			}
+			
+			if(item.resource_id != ""){
+				item.resource_sum += "/"+item.resource_id
+				
+				if(item.resource_instance_id != ""){
+					item.resource_sum += "/"+item.resource_instance_id
+				}
+			}
+		}
+	});
 	
 	$('#device_serial').text(data.result.device_serial);
 	$('#device_id').text(data.result.device_id);
@@ -160,6 +189,8 @@ function successResultHandler(data, status) {
 	$('#reg_id').text(data.result.reg_id);
 	$('#object_nm').text(data.result.object_nm);
 	$('#resource_nm').text(data.result.resource_nm);
+	$('#payload').text(data.result.payload);
+	$('#resource_sum').text(data.result.resource_sum);
 	
 }
 

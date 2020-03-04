@@ -180,11 +180,11 @@ var columnDefs = [
 	{headerName: "단말 번호", field: "deviceSerial"},
 	{headerName: "지역본부", field: "branchNm"},
 	{headerName: "단말상태", field: "deviceStatusNm"},
-	{headerName: "CPU", field: "cpuUsage"},
-	{headerName: "Memory", field: "ramUsage"},
-	{headerName: "RSRP(dBm)", field: "rsrp"},
-	{headerName: "RSRQ(dB)", field: "rsrq"},
-	{headerName: "SNR(dB)", field: "ssnr"},
+	{headerName: "CPU(%)", field: "cpuUsage", cellStyle:{'text-align': "right"}},
+	{headerName: "Memory(%)", field: "ramUsage", cellStyle:{'text-align': "right"}},
+	{headerName: "RSRP(dBm)", field: "rsrp", cellStyle:{'text-align': "right"}},
+	{headerName: "RSRQ(dB)", field: "rsrq", cellStyle:{'text-align': "right"}},
+	{headerName: "SNR(dB)", field: "ssnr", cellStyle:{'text-align': "right"}},
 	{headerName: "최종 통신일자", field: "usageTime"},
 	{headerName: "등록일자", field: "saveTime"}
 ];

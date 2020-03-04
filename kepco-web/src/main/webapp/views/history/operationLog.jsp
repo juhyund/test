@@ -79,13 +79,33 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<div class="col-lg-3">
 																<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 																	<option value=''>선택</option>
-																	<option value='deviceId'>단말ID</option>
-																	<option value='deviceSerial'>단말 번호</option>
+																	<option value='device_id'>단말ID</option>
+																	<option value='device_serial'>단말 번호</option>
 																	<option value='object_id'>Object ID</option>
 																</select>
-																<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 															</div>
 														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">전송일시</label>
+														<div class="col-sm-4" id="datePicker">
+															<div class="input-group date" style="width: 48%; float: left;">
+																<input type="text" class="form-control" id="request_sdate" name="request_sdate" value="">
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
+															</div>
+															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+															<div class="input-group date" style="width: 48%;">
+																<input type="text" class="form-control" id="request_edate" name="request_edate" value="">
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group form-group-end row">
 														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label> -->
 														<div style="margin-right: 12px;">
 															<select class="form-control" name="method_type"
@@ -94,50 +114,26 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														
 														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어결과</label> -->
 														<div>
-															<select class="form-control" name="result_status" id="result_status">
+															<select class="form-control" name="result_status" id="result_status" style="margin-right: 45px;">
 																<option value=''>제어결과</option>
 																<option value='1'>성공</option>
 																<option value='2'>실패</option>
 																<option value='0'>대기중</option>
 															</select>
 														</div>
-													</div>
-
-													<div class="form-group form-group-end row">
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">전송일시</label>
-														<div class="col-sm-4" id="datePicker">
-															<div class="input-group date" style="width: 48%; float: left;">
-																<input type="hidden" id="sdate" name="request_sdate" value=""> 
-																<input type="text" class="form-control" id="sdate" name="sdate" value="">
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
-															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
-															<div class="input-group date" style="width: 48%;">
-																<input type="hidden" id="edate" name="request_edate" value=""> 
-																<input type="text" class="form-control" id="edate" name="edate" value="">
-																<span class="input-group-addon" style="list-style: none;">
-																	<i class="fa fa-calendar"></i>
-																</span>
-															</div>
-														</div>
 														
 														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">완료일시</label>
+															style="padding-left: 10px;">응답일시</label>
 														<div class="col-sm-4" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
-																<input type="hidden" id="sdate" name="result_sdate" value=""> 
-																<input type="text" class="form-control" id="sdate" name="sdate" value="">
+																<input type="text" class="form-control" id="result_sdate" name="result_sdate" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
 															</div>
 															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 															<div class="input-group date" style="width: 48%;">
-																<input type="hidden" id="edate" name="result_edate" value=""> 
-																<input type="text" class="form-control" id="edate" name="edate" value="">
+																<input type="text" class="form-control" id="result_edate" name="result_edate" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
@@ -223,7 +219,8 @@ function selectMethodComboBox(combo_id, parent_code) {
            		$('#'+combo_id).append(new Option("제어항목", ""));
            		$.each(data.result, function(i, combo) 
 				{  
-					$('#'+combo_id).append(new Option(combo.code_nm, combo.code));
+					/* $('#'+combo_id).append(new Option(combo.code_nm, combo.code)); */
+					$('#'+combo_id).append(new Option(combo.code_nm, combo.code_nm));
          		});
            },
            url         : COMMON_URL + "/ajaxCodeCombo",
@@ -346,7 +343,7 @@ function successResultHandler(data, status) {
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
 	
-	//allow_yn 변환
+	//result, 리소스경로 변환
 	$.each( data, function(index, item) {
 		if(index == 'resultGrid'){
 			for(var i=0; i<item.length; i++){
@@ -385,16 +382,14 @@ function successResultHandler(data, status) {
 }
 
 function resetForm() {
-	$('#sdate').val("");
-	$('#edate').val("");
-	$('#lsdate').val("");
-	$('#ledate').val("");
-	$("#branch_parent_id").val($("#target option:first").val());
-	$("#branch_id").val($("#target option:first").val());
-	$("#meter_type").val($("#target option:first").val());
-	$("#device_status").val($("#target option:first").val());
-	$("#meter_serial").val("");
-	$("#device_serial").val("");
+	$('#searchquery').val("");
+	$("#searchfield").val($("#target option:first").val());
+	$("#method_type").val($("#target option:first").val());
+	$("#result_status").val($("#target option:first").val());
+	$("#request_sdate").val("");
+	$("#request_edate").val("");
+	$("#result_sdate").val("");
+	$("#result_edate").val("");
 }
 
 

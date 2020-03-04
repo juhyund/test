@@ -25,6 +25,7 @@ public class DeviceInfo extends CommonObj {
 	private String reg_id;
 	private String reg_dt;
 	private String dest_dt;
+	private String mobile_no;
 	
 	private String branch_parent_id;
 	private String parent_branch_nm;

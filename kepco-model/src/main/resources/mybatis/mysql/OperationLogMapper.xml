@@ -14,11 +14,26 @@
 		<if test="device_id != null and device_id != ''" >     
             AND a.device_id = #{device_id}
         </if>
-        <if test="sdate != null and edate != null">
-			AND a.result_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+        <if test="method_type != null and method_type != ''" >     
+            AND ol.method = #{method_type}
+        </if>
+        <if test="result_status != null and result_status != ''" >     
+            AND ol.result = #{result_status}
+        </if>
+        <if test="request_sdate != null and request_edate != null">
+			<!-- AND ol.request_dt between date_format(concat(#{request_sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{request_edate},'235959'), '%Y-%m-%d %H:%i:%s') -->
+			AND ol.request_dt between concat(#{request_sdate},'000000') AND concat(#{request_edate},'235959')
+		</if>
+		<if test="result_sdate != null and result_edate != null">
+			AND ol.result_dt between concat(#{result_sdate},'000000') AND concat(#{result_edate},'235959')
 		</if>                
 		<if test="searchfield != null and searchquery != null and searchfield != ''" >
-			AND ${searchfield} like concat(#{searchquery},'%')
+			<if test="searchfield == 'device_id' or searchfield == 'device_serial'">
+				AND a.${searchfield} like concat(#{searchquery},'%')
+			</if>
+			<if test="searchfield == 'object_id'">
+				AND ol.${searchfield} like concat(#{searchquery},'%')
+			</if>
 		</if>
 		</where>
 	</sql>
@@ -146,28 +161,29 @@
 	
 	<select id="getOperationLogList" resultType="operationLog" parameterType="operationLog">	
 		SELECT 
-			a.device_id
-			, ifnull(date_format(a.request_dt, '%y-%m-%d %h:%i:%s'),'') as request_dt
-			, a.service_id
-			, a.method
-			, a.object_id
-			, a.object_instance_id
-			, a.resource_id
-			, a.resource_instance_id
-			, '' as resource_sum
-			, a.format
-			, a.token
-			, a.mid
-			, a.tid
-			, a.payload
-			, a.result
-			, ifnull(date_format(a.result_dt, '%y-%m-%d %h:%i:%s'),'') as result_dt
-			, a.reg_id
-			, o.object_nm
-			, r.resource_nm					
-		FROM EMI_OPERATION_LOG a
-		LEFT OUTER JOIN EMI_OBJECT_MODEL O ON A.OBJECT_ID = O.OBJECT_ID
-		LEFT OUTER JOIN EMI_RESOURCE_MODEL	R ON O.OBJECT_ID = R.OBJECT_ID AND A.RESOURCE_ID = R.RESOURCE_ID
+			ol.device_id
+			, a.device_serial			
+			, ol.service_id
+			, ol.method
+			, ol.object_id
+			, ol.object_instance_id
+			, ol.resource_id
+			, ol.resource_instance_id
+			, ol.format
+			, ol.token
+			, ol.mid
+			, ol.tid
+			, ol.payload
+			, ol.result
+			, ifnull(date_format(ol.request_dt, '%y-%m-%d %h:%i:%s'),'') as request_dt
+			, ifnull(date_format(ol.result_dt, '%y-%m-%d %h:%i:%s'),'') as result_dt
+			, ol.reg_id
+			, om.object_nm
+			, rm.resource_nm								
+		FROM EMI_DEVICE_INFO a		
+		INNER JOIN EMI_OPERATION_LOG OL ON a.DEVICE_ID = OL.DEVICE_ID
+		LEFT OUTER JOIN EMI_OBJECT_MODEL OM ON OL.OBJECT_ID = OM.OBJECT_ID
+		LEFT OUTER JOIN EMI_RESOURCE_MODEL RM ON OM.OBJECT_ID = RM.OBJECT_ID AND OL.RESOURCE_ID = RM.RESOURCE_ID
 			
 		<include refid="base_where_list" />
 		
@@ -180,9 +196,10 @@
 	<select id="getOperationLogListCnt" resultType="int" parameterType="operationLog">	
 		SELECT 
 			COUNT(*) co					
-		FROM EMI_OPERATION_LOG a
-		LEFT OUTER JOIN EMI_OBJECT_MODEL O ON A.OBJECT_ID = O.OBJECT_ID
-		LEFT OUTER JOIN EMI_RESOURCE_MODEL	R ON O.OBJECT_ID = R.OBJECT_ID AND A.RESOURCE_ID = R.RESOURCE_ID	
+		FROM EMI_DEVICE_INFO a		
+		INNER JOIN EMI_OPERATION_LOG OL ON a.DEVICE_ID = OL.DEVICE_ID
+		LEFT OUTER JOIN EMI_OBJECT_MODEL OM ON OL.OBJECT_ID = OM.OBJECT_ID
+		LEFT OUTER JOIN EMI_RESOURCE_MODEL RM ON OM.OBJECT_ID = RM.OBJECT_ID AND OL.RESOURCE_ID = RM.RESOURCE_ID	
 			
 		<include refid="base_where_list" />
 		
@@ -190,29 +207,51 @@
 	
 	<select id="getOperationLogDetail" resultType="operationLog" parameterType="operationLog">	
 		SELECT 
-			a.device_id
-			, ifnull(date_format(a.request_dt, '%y-%m-%d %h:%i:%s'),'') as request_dt
-			, a.service_id
-			, a.method
-			, a.object_id
-			, a.object_instance_id
-			, a.resource_id
-			, a.resource_instance_id
-			, a.format
-			, a.token
-			, a.mid
-			, a.tid
-			, a.payload
-			, a.result
-			, ifnull(date_format(a.result_dt, '%y-%m-%d %h:%i:%s'),'') as result_dt
-			, a.reg_id
-			, o.object_nm
-			, r.resource_nm
-			, d.device_serial					
-		FROM EMI_OPERATION_LOG a
-		LEFT OUTER JOIN EMI_OBJECT_MODEL O ON A.OBJECT_ID = O.OBJECT_ID
-		LEFT OUTER JOIN EMI_RESOURCE_MODEL	R ON O.OBJECT_ID = R.OBJECT_ID AND A.RESOURCE_ID = R.RESOURCE_ID
-		LEFT OUTER JOIN EMI_DEVICE_INFO D ON D.DEVICE_ID = A.DEVICE_ID
+			ol.device_id
+			, a.device_serial			
+			, ol.service_id
+			, ol.method
+			, ol.object_id
+			, ol.object_instance_id
+			, ol.resource_id
+			, ol.resource_instance_id
+			, ol.format
+			, ol.token
+			, ol.mid
+			, ol.tid
+			, ol.payload
+			, ol.result
+			, ifnull(date_format(ol.request_dt, '%y-%m-%d %h:%i:%s'),'') as request_dt
+			, ifnull(date_format(ol.result_dt, '%y-%m-%d %h:%i:%s'),'') as result_dt
+			, ol.reg_id
+			, om.object_nm
+			, rm.resource_nm								
+		FROM EMI_DEVICE_INFO a		
+		INNER JOIN EMI_OPERATION_LOG OL ON a.DEVICE_ID = OL.DEVICE_ID
+		LEFT OUTER JOIN EMI_OBJECT_MODEL OM ON OL.OBJECT_ID = OM.OBJECT_ID
+		LEFT OUTER JOIN EMI_RESOURCE_MODEL RM ON OM.OBJECT_ID = RM.OBJECT_ID AND OL.RESOURCE_ID = RM.RESOURCE_ID
 		WHERE A.device_id = #{device_id}	
+	</select>
+	
+	<select id="selectByTID" resultType="operationLog" parameterType="java.lang.String">	
+		SELECT 
+			device_id
+			, request_dt
+			, service_id
+			, tid
+			, method
+			, object_id
+			, object_instance_id
+			, resource_id
+			, resource_instance_id
+			, format
+			, token
+			, mid
+			, payload
+			, result
+			, result_dt
+			, reg_id
+		 FROM EMI_OPERATION_LOG a				
+		WHERE tid = #{tid} 
 	</select>
 </mapper>
