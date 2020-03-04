@@ -338,6 +338,7 @@
 	<select id="getMeterDetailInfo" resultType="meterInfo" parameterType="meterInfo">
 		SELECT 
 			di.device_serial
+			, di.device_id
 			, br.branch_nm
 			, a.meter_serial
 			, a.cosem_device_name

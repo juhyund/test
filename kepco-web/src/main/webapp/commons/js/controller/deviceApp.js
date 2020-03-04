@@ -47,16 +47,17 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         });     
 	}
 	$scope.read = function (resource) {
-		
-		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
+		resource.operation_method = "Read";
+		var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
 		
 		$http({
 	    
 			method: 'POST',
 	        url: COMMON_URL + "/ajaxExecResource",
 	        params : {
-	        	"url" : "/nuri/kicpcall/execReadResource", 
-	        	"device_id" : $("#device_id").val(), 
+	        	"url" : "clients/",
+	        	"method" : resource.operation_method,
+	        	"device_serial" : $("#device_serial").val(), 
 	        	"resource" : path
 	        }
 		
@@ -76,21 +77,22 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        alert("전송실패");
 	        resource.statusMsg = "제어실패";	    	
 	    });
-		resource.operation_method = "Read";
+		
     };
     
     $scope.write = function (resource, newValue) {
     	
     	resource.operation_method = "Write";    	
-		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
+		var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
 		
 		$http({
 	    
 			method: 'POST',
 	        url: COMMON_URL + "/ajaxExecResource",
 	        params : {
-	        	"url" : "/nuri/kicpcall/execControlValue", 
-	        	"device_id" : $("#device_id").val(), 
+	        	"url" : "clients/",
+	        	"method" : resource.operation_method,
+	        	"device_serial" : $("#device_serial").val(), 
 	        	"resource" : path, 
 	        	"newValue" : newValue
 	        }
@@ -117,15 +119,16 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     	
     	resource.operation_method = "Execute";
     
-    	var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
+    	var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
 		
 		$http({
 	    
 			method: 'POST',
 	        url: COMMON_URL + "/ajaxExecResource",
 	        params : {
-	        	"url" : "/nuri/kicpcall/execControlExecute", 
-	        	"device_id" : $("#device_id").val(), 
+	        	"url" : "clients/execute/",
+	        	"method" : resource.operation_method,
+	        	"device_serial" : $("#device_serial").val(), 
 	        	"resource" : path
 	        }
 		
@@ -153,7 +156,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     	
     	resource.operation_method = "속성설정";
     	
-    	var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
+    	var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
     	
     	$('#writeModalLabel').text(resource.resource_name + " (" + path + ") 속성 설정");
     	$('#writeSubmit').unbind();
@@ -173,8 +176,9 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     			method: 'POST',
     	        url: COMMON_URL + "/ajaxExecResource",
     	        params : {
-    	        	"url" : "/nuri/kicpcall/execControlAttribute" 
-    	        	, "device_id" : $("#device_id").val()
+    	        	"url" : "clients/"
+    	        	, "method" : "WriteAttribute" 
+    	        	, "device_serial" : $("#device_serial").val()
     	        	, "resource" : path
     	        	, "attributes" : attributes
 	        	}
@@ -201,4 +205,37 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         $('#writeModal').modal('show');
     	
     };
+    
+    $scope.coapping = function () {
+		
+		$http({
+			method: 'POST',
+	        url: COMMON_URL + "/ajaxExecResource",
+	        params : {
+	        	"url" : "coapping/clients/",
+	        	"method" : "coapping",
+	        	"device_serial" : $("#device_serial").val(), 
+	        	"resource" : ""
+	        }
+		
+	    }).then(function SuccessCallback(data, status, headers, config) {
+	 	    
+	    	console.log(data);
+	    	/*
+	    	resource.statusCode = data.data.statusCode
+    		resource.statusMsg = data.data.statusMsg;
+	    	resource.tid = data.data.tid;
+	    	*/
+	    	if(data.data.statusCode == "200") {
+	    		alert("전송성공 [" + data.data.tid + "]");
+	    	} else {
+	    		alert("제어실패 [" + resource.statusMsg + "]");
+	    	}
+	    	
+    	}, function errorCallback(response) {
+	        alert("전송실패");
+	        resource.statusMsg = "제어실패";	    	
+	    });
+    };
+    
 });
