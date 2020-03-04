@@ -45,7 +45,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 					object_instance_id = 52;
 		   	   		break;
 		   		}
-				case "AE-Type":  {
+				case "AE-TYPE":  {
 					object_instance_id = 82;
 		   	   		break;
 		   		}

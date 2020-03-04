@@ -75,14 +75,42 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 	<div class="col-lg-12">	
 		<div class="ibox">
 			<div class="ibox-content">
-					<!-- start :summary_area -->
+				<form name="search_form" id="search_form" method="post">
+					<table class="table table-borderless" style="height: 100%; "
+						style="margin-bottom: 7px;" border="1">
+						<tbody >
+							<tr class="table-border">
+								<td height="80">
+									<div class="form-group row">
+										<label class="col-lg-1 col-form-label">OBIS code</label>
+										<div class="col-lg-3">
+											<input type="text" id="obis_code" name="obis_code" value="" class="form-control">
+										</div>
+										<label class="col-lg-1 col-form-label"
+											style="padding-left: 10px;">설명</label>
+										<div class="col-lg-3">
+											<input type="text" id="descr" name="descr" value="" class="form-control">
+										</div>
+									</div>
+								</td>
+								<td width="180" height="80" style="text-align: right">
+									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
+										<i class="fa fa-search"></i>
+									</button>
+									<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
+										<i class="fa fa-undo"></i>
+									</button>
+								</td>
+							</tr>
+					</table>
+			
+				</form>
+			
 					
-				<div class="row m-b-md ">
-
-				</div>
-				<!--  end : summary_area  -->
+				<!-- <div class="row m-b-md ">
+				</div> -->
 				
-				 <div id="grid" style="height:400px;" class="ag-theme-balham"></div>								
+				 <div id="grid" style="height:400px;" class="ag-theme-balham m-b-md"></div>								
 				<div>
 					<button class="btn btn-primary m-t-sm" style="height: 100%" type="button" onclick="selectObis()">
 						<i class="fa fa-undo">OBIS 선택</i>
@@ -99,11 +127,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 
 <script type="text/javascript" charset="utf-8">	
-
+var selectedObisCode = '';
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", 					field: "no", 					width:50,	suppressSizeToFit: true},
-	{headerName: "선택", 					field: "no", 					width:50,	suppressSizeToFit: true},
 	{headerName: "metering_type_nm", 	field: "metering_type_nm"},
 	{headerName: "obis_cnt",			field: "obis_cnt"},
 	{headerName: "resource_instance_id",field: "arr_resource_instance_id"},
@@ -128,10 +155,23 @@ function ajaxSearchForm() {
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
-           data        : {meter_type :'${meter_type}'}
-     };             
+           data        : {meter_type		:'${meter_type}',
+        	  			  obis_code			: $("#obis_code").val(),
+        	  			  metering_type_nm 	: $("#descr").val()}
+     };             	
     
      $.ajax(options);
+}
+
+onRowClicked = function(event){
+	//선택된 row의 obis_code를 저장한다
+	
+	var selectedRows = dataGrid.getSelectedRow();
+    var selectedRowsString = '';
+    selectedRows.forEach( function(selectedRow, index) {
+    	selectedObisCode = selectedRow.arr_obis_code;
+    });
+    alert("selectedObisCode = "+selectedObisCode);
 }
 
 function resetForm(){

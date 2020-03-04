@@ -273,7 +273,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																			<select ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'"
 																				ng-model="newValue" name="newValue"
 																				style="min-width: 200px; ">
-																				<option id="selected_meter_id">해당 미터 </option>
+																				<option id="selected_meter_id" selected>해당 미터 </option>
 																				<option value="00000000000">같은 타입 모든 미터</option>
 																			</select>
 																			<input
@@ -423,6 +423,7 @@ function successResultHandler(data, status) {
 	$('#meter_type_view').text(data.result.meter_type);	
 	meterTypeCode = data.result.meter_type_code;	
 	$('#device_id').val(data.result.device_id);	
+	$('#selected_meter_id').val(data.result.device_id);	
 	
 	$('#prog_id').text(data.result.prog_id);	
 	$('#prog_version').text(data.result.prog_version);	
@@ -452,7 +453,7 @@ function changeTab(selectedTab){
 var winObj;
 function popupObisCode(){ 
 	
-	var opts="width=1000,left=200, top=500, resizable=no, toolbar=yes"; 
+	var opts="width=1000, height=550,left=200, top=200, resizable=no, toolbar=yes";
 
 	if(winObj)
         winObj.close();

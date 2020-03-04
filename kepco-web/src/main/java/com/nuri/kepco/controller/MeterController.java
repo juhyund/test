@@ -145,11 +145,12 @@ public class MeterController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String[] commStr = { "meter_type" };
+			String[] commStr = { "meter_type","obis_code","metering_type_nm" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
-			
+			logger.info("\n-------------ajaxSelectObisList--------------------------\nparam= "+param);
 			JSONArray jarr = this.obisCodeService.selectObisList(param);
+			logger.info("jarr= "+jarr);
 			json.put("result", jarr);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
