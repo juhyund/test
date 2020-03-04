@@ -12,28 +12,34 @@ import org.json.simple.parser.JSONParser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.model.common.OrderByMap;
 
 public class ConversionUtil {
 
 	public static void getModelByMap(Object o, Map<String, Object> param) throws Exception {
-		Class<?> scls = o.getClass().getSuperclass();
-		for (Field f : scls.getDeclaredFields()) {
-			if(param.containsKey(f.getName())) {
-				String name = "set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
-				Method method = scls.getMethod(name, f.getType());
-				method.invoke(o, param.get(f.getName()));
+		getModelByMap(o,param, true);
+	}
+	
+	public static void getModelByMap(Object o, Map<String, Object> param, boolean isSuper) throws Exception {
+		if(isSuper) {
+			Class<?> scls = o.getClass().getSuperclass();
+			for (Field f : scls.getDeclaredFields()) {
+				if(param.containsKey(f.getName())) {
+					String name = "set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
+					Method method = scls.getMethod(name, f.getType());
+					method.invoke(o, param.get(f.getName()));
+				}
+			}
+			
+			if(param.containsKey("sort") && param.containsKey("dir")) {
+				List<OrderByMap> orderByList = new ArrayList<OrderByMap>();
+				orderByList.add(new OrderByMap((String)param.get("sort"), (String)param.get("dir")));
+				Method method;
+				method = scls.getMethod("setOrderByMap", List.class);
+				method.invoke(o, orderByList);
 			}
 		}
-		
-		if(param.containsKey("sort") && param.containsKey("dir")) {
-			List<OrderByMap> orderByList = new ArrayList<OrderByMap>();
-			orderByList.add(new OrderByMap((String)param.get("sort"), (String)param.get("dir")));
-			Method method;
-			method = scls.getMethod("setOrderByMap", List.class);
-			method.invoke(o, orderByList);
-		}
-		
 		
 		Class<?> cls = o.getClass();
 		for (Field f : cls.getDeclaredFields()) {
@@ -52,7 +58,8 @@ public class ConversionUtil {
 		}
 
 		Gson gson = new GsonBuilder().serializeNulls().create();
-		String str = gson.toJson(o).toString().replaceAll("null", "\"\"");
+		//String str = gson.toJson(o).toString().replaceAll("null", "\"\"");
+		String str = gson.toJson(o).toString();
 		JSONParser parser = new JSONParser();
 		Object obj = parser.parse(str);
 		json = (JSONObject) obj;
