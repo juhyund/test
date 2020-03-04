@@ -170,6 +170,32 @@
 		WHERE device_id = #{device_id} and resource_path = #{resource_path}
 	</update>
 	
+	<select id="getObjectModelList" resultType="deviceResource" parameterType="deviceResource">  
+        SELECT 
+        	c.device_id
+        	, a.object_nm
+        	, a.object_id
+        	, c.object_instance_id
+        	, a.instances
+        	, b.descr
+        FROM 
+        EMI_OBJECT_MODEL a 
+        LEFT OUTER JOIN EMI_RESOURCE_MODEL b ON a.object_id = b.object_id
+        LEFT OUTER JOIN EMI_DEVICE_RESOURCE c ON a.object_id = c.object_id AND b.resource_id = c.resource_id
+        
+        <where>
+		<if test="device_id != null" >     
+            AND c.device_id = #{device_id}
+        </if>
+        <if test="searchfield != null and searchquery != null " >
+			AND a.${searchfield} like concat(#{searchquery},'%')
+		</if>
+        <if test="instances != -1" >
+			AND a.instances = #{instances}
+		</if>
+		</where>
+        GROUP BY c.device_id, c.object_id
+    </select>
     <select id="getResourceModelList" resultType="deviceResource" parameterType="deviceResource">  
 		SELECT 
         	c.device_id
@@ -192,6 +218,53 @@
 			AND a.object_id = #{object_id}
         </if>
         </where>
+    </select>
+    
+    
+    <select id="getMeterResourceList" resultType="deviceResource" parameterType="deviceResource">
+	  	SELECT
+			A.OBJECT_ID
+			, A.OBJECT_INSTANCE_ID
+			, A.OBJECT_NM
+			, A.RESOURCE_ID
+			, A.RESOURCE_NM
+			, A.OPERATION
+			, A.INSTANCES
+			, A.MANDATORY
+			, A.DATA_TYPE
+			, A.RANGE
+			, A.UNIT	
+			, GROUP_CONCAT(RESOURCE_INSTANCE_ID) AS RESOURCE_INSTANCE_ID
+			, GROUP_CONCAT(RESOURCE_VAL) AS RESOURCE_VAL
+		FROM (
+			SELECT 
+				A.OBJECT_ID
+				, ${object_instance_id} AS OBJECT_INSTANCE_ID 
+				, A.OBJECT_NM
+				, B.RESOURCE_ID
+				, B.RESOURCE_NM		
+				, B.OPERATION
+				, B.INSTANCES
+				, B.MANDATORY
+				, B.DATA_TYPE
+				, B.RANGE
+				, B.UNIT
+				, D.RESOURCE_INSTANCE_ID
+				, D.RESOURCE_VAL
+			FROM EMI_OBJECT_MODEL A 
+			INNER JOIN EMI_RESOURCE_MODEL B ON (A.OBJECT_ID = B.OBJECT_ID)
+			LEFT OUTER JOIN (
+				SELECT 
+					D.* 
+			   FROM EMI_DEVICE_RESOURCE D
+				WHERE D.DEVICE_ID = #{device_id}
+				  AND D.OBJECT_ID = #{object_id}
+				  AND D.OBJECT_INSTANCE_ID = #{object_instance_id}
+			) D ON (A.OBJECT_ID = D.OBJECT_ID AND B.RESOURCE_ID = D.RESOURCE_ID) 
+			WHERE A.OBJECT_ID = #{object_id}
+			  AND B.OPERATION = 'RW'
+		) A 
+		GROUP BY A.OBJECT_ID, A.OBJECT_INSTANCE_ID, A.RESOURCE_ID	
     </select>
 
 </mapper>

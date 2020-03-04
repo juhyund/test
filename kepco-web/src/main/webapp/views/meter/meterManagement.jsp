@@ -46,15 +46,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="col-lg-10">
 						<h3 style="margin-top: 6px">미터 정보 조회</h3>
 					</div>
-					<div class="col-lg-2">
-						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-							<li class="breadcrumb-item"><a
-								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-							</li>
-							<li class="breadcrumb-item active"><strong>Layouts</strong>
-							</li>
-						</ol>
-					</div>
 				</div>
 				<!-- navigator -->
 				<!-- body -->
@@ -214,10 +205,8 @@ function comboDeviceStatus() {
 
 // branch
 function comboBranch() {
-	console.log("1");
 	var combo = [ 'ajaxParentBranchCombo'];
 	for (var i = 0; i < combo.length; i++) {
-		console.log(combo[i]);
 		var options = { 
 	           beforeSend  : showRequest,
 	           success     : successResultCombo,

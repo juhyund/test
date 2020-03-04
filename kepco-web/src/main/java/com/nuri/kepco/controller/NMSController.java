@@ -42,42 +42,45 @@ public class NMSController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
+			int limit = Integer.parseInt(request.getParameter("limit"));
+			param.put("row", limit);
+			
 //			param.put("sort", "usageTime");
 //			param.put("dir", "DESC");
 			
-//			int cnt = this.nmsInfoService.getNMSListCnt(param);
-			JSONObject jsonObj = new JSONObject();
-			JSONArray jarr = null;
-			HashMap<String, String> map = new HashMap<>();
-			
-			
+			long cnt = this.nmsInfoService.getCount(param);
 			JSONArray connectivityStatistics =  nmsInfoService.getConnectivityStatistics(param);
 			
+			json.put("totalCount", cnt);
+			json.put("resultGrid", connectivityStatistics);
+			
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/ajaxNMSDetail")
+	public ResponseEntity<Object> ajaxNMSDetail(HttpServletRequest request) {                
+		
+		JSONObject json = new JSONObject();
+		try {
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			int limit = Integer.parseInt(request.getParameter("limit"));
+			param.put("row", limit);
 			
 			List<RamUsageMonitor> ramUsageList = this.nmsInfoService.getRamUsageMonitor(param);
 			List<CpuUsageMonitor> cpuUsageList = this.nmsInfoService.getCpuUsageMonitor(param);
 			List<ConnectivityMonitor> connectivityList = this.nmsInfoService.getConnectivityMonitor(param);
 			
-		/*	for (int i = 0; i < ramUsageList.size(); i++) {
-				map.put("ramUsage", Integer.toString(ramUsageList.get(i).getRamUsage()));				
-			}
-			for (int i = 0; i < cpuUsageList.size(); i++) {
-				jsonObj.put("cpuUsage", cpuUsageList.get(i).getCpuUsage());				
-			}
-			for (int i = 0; i < connectivityList.size(); i++) {
-				jsonObj.put("rsrp", connectivityList.get(i).getRsrp());				
-				jsonObj.put("rsrq", connectivityList.get(i).getRsrq());				
-				jsonObj.put("ssnr", connectivityList.get(i).getSsnr());				
-			}
-			
-			jarr.add(jsonObj);*/
-			
-//			json.put("totalCount", cnt);
-			json.put("resultGrid", connectivityStatistics);
-			
-//			json.put("ramUsageList", ramUsageList);
-//			json.put("cpuUsageList", cpuUsageList);
-//			json.put("connectivityList", connectivityList);
+			json.put("ramUsageList", ramUsageList);
+			json.put("cpuUsageList", cpuUsageList);
+			json.put("connectivityList", connectivityList);
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);

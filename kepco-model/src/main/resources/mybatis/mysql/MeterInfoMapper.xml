@@ -338,6 +338,7 @@
 	<select id="getMeterDetailInfo" resultType="meterInfo" parameterType="meterInfo">
 		SELECT 
 			di.device_serial
+			, di.device_id
 			, br.branch_nm
 			, a.meter_serial
 			, a.cosem_device_name
@@ -353,6 +354,7 @@
 			, dm.model_nm
 			, dm.vendor_seq
 			, ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type
+			, a.meter_type as meter_type_code
 			, ifnull(fnc_get_code_nm(a.meter_phase),'') as meter_phase
 			, ifnull(fnc_get_code_nm(di.comm_type),'') as comm_type
 			, ifnull(fnc_get_code_nm(a.prog_id),'') as prog_id
@@ -375,4 +377,27 @@
 		LEFT OUTER JOIN EMI_VENDOR_INFO VI ON DM.VENDOR_SEQ = VI.VENDOR_SEQ
 		WHERE A.METER_SERIAL = #{meter_serial}
 	</select>
+	
+	
+	<select id="getMeterInfoBySerial" resultType="meterInfo" parameterType="meterInfo">
+		SELECT
+			a.meter_id
+			, a.meter_serial
+			, a.cosem_device_name
+			, a.acon
+			, a.rcon
+			, a.pcon
+			, a.billing_dt
+			, a.itime
+			, a.mtime
+			, a.net_metering
+			, a.avg_power_period
+			, a.lp_period			
+		FROM EMI_METER_INFO A 
+		INNER JOIN EMI_DEVICE_INFO DI ON (A.DEVICE_ID = DI.DEVICE_ID)		
+		WHERE A.METER_SERIAL like concat('%', #{meter_serial})
+		AND DI.DEVICE_SERIAL = #{device_serial}
+	</select>
+	
+	
 </mapper>

@@ -8,6 +8,7 @@ import lombok.Data;
 public class OperationLog extends CommonObj {
 
 	private String device_id;
+	private String device_serial;
 	private String request_dt;
 	private String service_id;
 	private String method;
@@ -18,9 +19,19 @@ public class OperationLog extends CommonObj {
 	private String format;
 	private String token;
 	private String mid;
+	private String tid;
 	private String payload;
 	private Integer result;
 	private String result_dt;
 	private String reg_id;
+	private String object_nm;
+	private String resource_nm;
+	private String method_type;
+	private String result_status;
+	
+	private String request_sdate;
+	private String request_edate;
+	private String result_sdate;
+	private String result_edate;
 
 }

@@ -200,7 +200,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<option value='deviceId'>단말ID</option>
 											<option value='deviceSerial'>단말 번호</option>
 										</select>
-										<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+										<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" value="${deviceSerial}" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 									</div>
 													
 									<label class="col-sm-1 col-form-label">검색 일자</label>
@@ -240,7 +240,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		    		   <div id="container-RAM" class="chart-container"></div>
 		    	   </figure>
 				   <figure class="highcharts-line">
-		    		   <div id="container" style="overflow: inherit !important;"></div>
+		    		   <div id="container"></div>
 		    	    </figure>
 				   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
 						<i class="fa fa-undo"> 목록으로 돌아가기</i>
@@ -268,7 +268,7 @@ function ajaxSearchForm() {
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxNMSList",
+           url         : COMMON_URL + "/ajaxNMSDetail",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
@@ -360,7 +360,7 @@ var gaugeOptions = {
 	};
 
 	// The speed gauge
-	var chartSpeed = Highcharts.chart('container-CPU', Highcharts.merge(gaugeOptions, {
+	var chartCPU = Highcharts.chart('container-CPU', Highcharts.merge(gaugeOptions, {
 	    yAxis: {
 	        min: 0,
 	        max: 100,
@@ -391,7 +391,7 @@ var gaugeOptions = {
 	}));
 
 	// The RPM gauge
-	var chartRpm = Highcharts.chart('container-RAM', Highcharts.merge(gaugeOptions, {
+	var chartRAM = Highcharts.chart('container-RAM', Highcharts.merge(gaugeOptions, {
 	    yAxis: {
 	        min: 0,
 	        max: 100,
@@ -421,13 +421,13 @@ var gaugeOptions = {
 
 	// Bring life to the dials
 	setInterval(function () {
-	    // Speed
+	    // CPU
 	    var point,
 	        newVal,
 	        inc;
 
-	    if (chartSpeed) {
-	        point = chartSpeed.series[0].points[0];
+	    if (chartCPU) {
+	        point = chartCPU.series[0].points[0];
 	        inc = data;
 	        /* inc = Math.round((Math.random() - 0.5) * 100); */
 	        newVal = point.y + inc;
@@ -439,9 +439,9 @@ var gaugeOptions = {
 	        point.update(newVal);
 	    }
 
-	    // RPM
-	    if (chartRpm) {
-	        point = chartRpm.series[0].points[0];
+	    // RAM
+	    if (chartRAM) {
+	        point = chartRAM.series[0].points[0];
 	        inc = Math.round((Math.random() - 0.5) * 100);
 	        newVal = point.y + inc;
 
@@ -530,7 +530,7 @@ function init() {
 	//initGrid();
 	
 	// form search
-	//ajaxSearchForm();
+	ajaxSearchForm();
 }
 	
 $(document).ready(function() {	

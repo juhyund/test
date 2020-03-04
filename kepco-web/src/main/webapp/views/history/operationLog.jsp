@@ -26,7 +26,12 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
-
+<style>
+  select.form-control {
+		width: fit-content;
+	}
+  	
+</style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
@@ -70,52 +75,65 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-													<!--	<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
 															<div class="col-lg-3">
 																<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 																	<option value=''>선택</option>
-																	<option value='deviceId'>단말ID</option>
-																	<option value='deviceSerial'>단말 번호</option>
+																	<option value='device_id'>단말ID</option>
+																	<option value='device_serial'>단말 번호</option>
+																	<option value='object_id'>Object ID</option>
 																</select>
-																<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
-															</div>   -->
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">계기번호</label>
-														<div class="col-lg-3">
-															<input class="form-control" name="device_id"
-																id="device_id"></input>
-														</div>	
+																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+															</div>
 														
 														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">계기타입</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="meter_type"
-																id="meter_type"></select>
-														</div>
-													</div>
-
-													<div class="form-group form-group-end row">
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">통신상태</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="device_status"
-																id="device_status"></select>
-														</div>
-														
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">검색 일자</label>
+															style="padding-left: 10px;">전송일시</label>
 														<div class="col-sm-4" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
-																<input type="hidden" id="sdate" name="sdate" value=""> 
-																<input type="text" class="form-control" id="sdate" name="sdate" value="">
+																<input type="text" class="form-control" id="request_sdate" name="request_sdate" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
 															</div>
 															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 															<div class="input-group date" style="width: 48%;">
-																<input type="hidden" id="edate" name="edate" value=""> 
-																<input type="text" class="form-control" id="edate" name="edate" value="">
+																<input type="text" class="form-control" id="request_edate" name="request_edate" value="">
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group form-group-end row">
+														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label> -->
+														<div style="margin-right: 12px;">
+															<select class="form-control" name="method_type"
+																id="method_type"></select>
+														</div>
+														
+														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어결과</label> -->
+														<div>
+															<select class="form-control" name="result_status" id="result_status" style="margin-right: 45px;">
+																<option value=''>제어결과</option>
+																<option value='1'>성공</option>
+																<option value='2'>실패</option>
+																<option value='0'>대기중</option>
+															</select>
+														</div>
+														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">응답일시</label>
+														<div class="col-sm-4" id="datePicker">
+															<div class="input-group date" style="width: 48%; float: left;">
+																<input type="text" class="form-control" id="result_sdate" name="result_sdate" value="">
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
+															</div>
+															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+															<div class="input-group date" style="width: 48%;">
+																<input type="text" class="form-control" id="result_edate" name="result_edate" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
@@ -175,31 +193,44 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
-	{headerName: "계기번호", field: "device_id", cellStyle:{'text-align': "center"}},
-	/* {headerName: "리소스 경로", field: ""}, */
-	{headerName: "오브젝트명", field: "object_instance_id"},
-	{headerName: "리소스명", field: "resource_instance_id", width:150, cellStyle:{'text-align': "center"}},
-	{headerName: "제어항목", field: "operation_item", cellStyle:{'text-align': "center"}},
-/* 	{headerName: "제어결과", field: "operation_result", width:120}, */
+	{headerName: "리소스 경로", field: "resource_sum"},
+	{headerName: "단말ID", field: "device_id", hide:"true"},
+	{headerName: "오브젝트명", field: "object_nm"},
+	{headerName: "리소스명", field: "resource_nm", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
 	{headerName: "제어결과", field: "result", width:120},
-/* 	{headerName: "트랜잭션ID", field: "tid"}, */
-	{headerName: "트랜잭션ID", field: "mid"},
-/* 	{headerName: "제어 전송 일시", field: "operation_trans_dt"}, */
+	{headerName: "트랜잭션ID", field: "tid"},
 	{headerName: "제어 전송 일시", field: "request_dt"},
-/* 	{headerName: "제어 완료 일시", field: "operation_done_dt"}, */
-	{headerName: "제어 완료 일시", field: "result_dt"},
+	{headerName: "응답 일시", field: "result_dt"},
 	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
 ];
 
 // init selectComboBox
 //device type
-function comboMeterType() { 
-     selectComboBox('meter_type', 'MT');
+function comboMethodType() { 
+     selectMethodComboBox('method_type', 'OP');
 }
 
-//device status
-function comboDeviceStatus() { 
-     selectComboBox('device_status', 'DS');
+function selectMethodComboBox(combo_id, parent_code) {
+	
+    var options = { 
+           	beforeSend  : showRequest,
+           	success     : function(data, status) {           		
+           		$('#'+combo_id).append(new Option("제어항목", ""));
+           		$.each(data.result, function(i, combo) 
+				{  
+					/* $('#'+combo_id).append(new Option(combo.code_nm, combo.code)); */
+					$('#'+combo_id).append(new Option(combo.code_nm, combo.code_nm));
+         		});
+           },
+           url         : COMMON_URL + "/ajaxCodeCombo",
+           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+           type        : "post", /* get, post */
+           dataType    : "json", /* xml, html, script, json */
+           data        : {parent_code: parent_code}
+     };             
+    
+     $.ajax(options);
 }
 
 // branch
@@ -256,10 +287,10 @@ var initGrid = function() {
 };
 
 // grid row click
-/* onRowClicked = function(event){
+ onRowClicked = function(event){
 	var device_id = event.data.device_id;
 	location.href = CONTEXT_PATH + "/operationLogDetail?device_id="+device_id;
-} */
+}
 
 function ajaxSearchForm() {
 	
@@ -312,15 +343,35 @@ function successResultHandler(data, status) {
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
 	
-	//allow_yn 변환
+	//result, 리소스경로 변환
 	$.each( data, function(index, item) {
 		if(index == 'resultGrid'){
 			for(var i=0; i<item.length; i++){
-				if(item[i].allow_yn == 1){
-					data.resultGrid[i].allow_yn = '인가'
-				}else if(item[i].allow_yn == 2){
-					data.resultGrid[i].allow_yn = '비인가'
+				if(item[i].result == 1){
+					data.resultGrid[i].result = '성공'
+				}else if(item[i].result == 2){
+					data.resultGrid[i].result = '실패'
+				}else{
+					data.resultGrid[i].result = '대기중'
 				}
+				
+				if(item[i].object_id != ""){
+					item[i].resource_sum = item[i].object_id
+					
+					if(item[i].object_instance_id != ""){
+						item[i].resource_sum += "/"+item[i].object_instance_id
+					}	
+				/* }else if(item[i].object_instance_id != null){
+					item[i].resource_sum += "/"+item[i].object_instance_id */
+				}
+				
+				if(item[i].resource_id != ""){
+					item[i].resource_sum += "/"+item[i].resource_id
+					
+					if(item[i].resource_instance_id != ""){
+						item[i].resource_sum += "/"+item[i].resource_instance_id
+					}
+				} 
 			}
 		}
 		
@@ -331,16 +382,14 @@ function successResultHandler(data, status) {
 }
 
 function resetForm() {
-	$('#sdate').val("");
-	$('#edate').val("");
-	$('#lsdate').val("");
-	$('#ledate').val("");
-	$("#branch_parent_id").val($("#target option:first").val());
-	$("#branch_id").val($("#target option:first").val());
-	$("#meter_type").val($("#target option:first").val());
-	$("#device_status").val($("#target option:first").val());
-	$("#meter_serial").val("");
-	$("#device_serial").val("");
+	$('#searchquery').val("");
+	$("#searchfield").val($("#target option:first").val());
+	$("#method_type").val($("#target option:first").val());
+	$("#result_status").val($("#target option:first").val());
+	$("#request_sdate").val("");
+	$("#request_edate").val("");
+	$("#result_sdate").val("");
+	$("#result_edate").val("");
 }
 
 
@@ -348,9 +397,8 @@ function init() {
 	
 	// init
 	// combo
-	comboMeterType();
-	comboDeviceStatus();
-	comboBranch();
+	comboMethodType();
+	//comboBranch();
 	
 	// Grid
 	initGrid();

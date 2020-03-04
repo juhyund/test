@@ -24,7 +24,7 @@ public class OperationLogController {
 	
 	Logger logger = LoggerFactory.getLogger(OperationLogController.class);
 
-	private String[] commStr = { "device_id", "meter_type", "device_status", "sdate", "edate" };
+	private String[] commStr = { "device_id", "method_type", "result_status", "request_sdate", "request_edate", "result_sdate", "result_edate" };
 	
 	@Autowired
 	private OperationLogService operationLogService;
@@ -60,11 +60,11 @@ public class OperationLogController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String meter_serial = request.getParameter("_meter_serial");
+			String device_id = request.getParameter("_device_id");
 			
-//			JSONObject jarr = this.operationLogService.getOperationLogDetail(meter_serial);
+			JSONObject jarr = this.operationLogService.getOperationLogDetail(device_id);
 			
-//			json.put("result", jarr);
+			json.put("result", jarr);
 
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
