@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,7 +73,6 @@ public class DeviceFwController {
 		JSONObject json = new JSONObject();
 		try {
 			String new_name = UUID.randomUUID().toString();
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 			String[] commStr = { "fw_nm", "fw_version", "fw_file_nm" };
 			Map<String, Object> param = new HashMap<String, Object>();
@@ -96,7 +93,7 @@ public class DeviceFwController {
 			param.put("fw_pkg_uri", new_name);
 			param.put("fw_biuld_no", "1.0");
 			param.put("use_yn", CodeConstants.USE_YN.Y.getCode());
-			param.put("reg_id", authentication.getName());
+			param.put("reg_id", ControllerUtil.getLoginUser());
 			
 			deviceFwService.insert(param);
 			

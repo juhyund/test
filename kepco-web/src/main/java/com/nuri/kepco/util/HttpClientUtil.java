@@ -38,7 +38,9 @@ public class HttpClientUtil {
 			postRequest.setHeader("Accept", "application/json");
 			postRequest.setHeader("Content-Type", "application/json");
 
-			postRequest.setEntity(new StringEntity(contents)); 
+			if (!"coapping".equals(method)) {
+				postRequest.setEntity(new StringEntity(contents));	
+			}
 
 			response = client.execute(postRequest);
 

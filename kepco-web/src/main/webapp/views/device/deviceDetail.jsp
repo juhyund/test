@@ -143,6 +143,7 @@ function updateData() {
 				<!-- body -->
 				<form name="search_form" id="search_form" method="post">
 				<input type=hidden name="device_id" id="device_id" value="<%=device_id%>">
+				<input type=hidden name="service_id" id="service_id" value="{{device_info.service_id}}">
 				<input type=hidden name="device_serial" id="device_serial" value="{{device_info.device_serial}}">
 				<div class="row">
 					<div class="tab-content" style="width: 100%">
@@ -376,19 +377,32 @@ function updateData() {
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">		
 				<form class="form-horizontal" role="form" method="post" id="form">	
-					<div class="form-group row">
-						<label class="col-lg-3 col-form-label">CoAP Ping</label>
-						<div class="col-lg-2 col-form-label"><input type="text" name="sec" id="sec" class="form-control">초</div>
-						<label class="col-lg-2 col-form-label">간격</label>
-						<div class="col-lg-2 col-form-label"><input type="text" name="round" id="round" class="form-control">회</div>
-						<button type="button" class="btn btn-default" ng-click="coapping();">실행</button>
-					</div>
-					<div class="form-group row">
-						<label class="col-lg-3 col-form-label">실행결과</label>
-						<div class="col-lg-2"><input type="text" name="ping_result" id="ping_result"></div>
-					</div>
+				<div class="form-group row">
+					<table class="table table-borderless" style="height: 100%; margin: 7px 0px;" border="1">
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" style="padding-left: 10px;">CoAP Ping</label>
+										<input type="text" class="form-control" name="sec" id="sec" style="width: 15%; height: 33px; vertical-align: top; display: inline;" value="5">
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">초</label>
+									</div>
+								</td>
+								<td style="text-align: right">
+									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" ng-click="coapping();">실행</button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="form-group form-group-end row">
+										<label class="col-sm-4 col-form-label" style="padding-left: 10px;">실행결과</label>
+										<div class="col-lg-3">{{coapping.statusMsg}}</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>

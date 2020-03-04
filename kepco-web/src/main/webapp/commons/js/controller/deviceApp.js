@@ -57,7 +57,10 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        params : {
 	        	"url" : "clients/",
 	        	"method" : resource.operation_method,
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
+	        	"resource_instance_id" : resource.resource_instance_id, 
 	        	"resource" : path
 	        }
 		
@@ -92,7 +95,10 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        params : {
 	        	"url" : "clients/",
 	        	"method" : resource.operation_method,
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
+	        	"resource_instance_id" : resource.resource_instance_id,
 	        	"resource" : path, 
 	        	"newValue" : newValue
 	        }
@@ -128,7 +134,10 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        params : {
 	        	"url" : "clients/execute/",
 	        	"method" : resource.operation_method,
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
+	        	"resource_instance_id" : resource.resource_instance_id,
 	        	"resource" : path
 	        }
 		
@@ -176,11 +185,14 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     			method: 'POST',
     	        url: COMMON_URL + "/ajaxExecResource",
     	        params : {
-    	        	"url" : "clients/"
-    	        	, "method" : "WriteAttribute" 
-    	        	, "device_serial" : $("#device_serial").val()
-    	        	, "resource" : path
-    	        	, "attributes" : attributes
+    	        	"url" : "clients/",
+    	        	"method" : "WriteAttribute", 
+	        		"device_id" : $("#device_id").val(),
+	        		"service_id" : $("#service_id").val(),
+    	        	"device_serial" : $("#device_serial").val(),
+    	        	"resource_instance_id" : resource.resource_instance_id,
+    	        	"resource" : path, 
+    	        	"attributes" : attributes
 	        	}
     		
     	    }).then(function SuccessCallback(data, status, headers, config) {
@@ -207,34 +219,35 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     };
     
     $scope.coapping = function () {
-		
+    	$scope.coapping = {};
 		$http({
 			method: 'POST',
-	        url: COMMON_URL + "/ajaxExecResource",
+	        url: COMMON_URL + "/ajaxCoAPpIng",
 	        params : {
 	        	"url" : "coapping/clients/",
 	        	"method" : "coapping",
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
-	        	"resource" : ""
+	        	"sec" : $("#sec").val(), 
+	        	"round" : $("#round").val(), 
 	        }
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
-	 	    
-	    	console.log(data);
+	    	$scope.coapping = data.data.statusMsg;
 	    	/*
 	    	resource.statusCode = data.data.statusCode
-    		resource.statusMsg = data.data.statusMsg;
 	    	resource.tid = data.data.tid;
 	    	*/
 	    	if(data.data.statusCode == "200") {
 	    		alert("전송성공 [" + data.data.tid + "]");
 	    	} else {
-	    		alert("제어실패 [" + resource.statusMsg + "]");
+	    		alert("제어실패 [" + coapping.statusMsg + "]");
 	    	}
 	    	
     	}, function errorCallback(response) {
 	        alert("전송실패");
-	        resource.statusMsg = "제어실패";	    	
+	        coapping.statusMsg = "제어실패";	    	
 	    });
     };
     

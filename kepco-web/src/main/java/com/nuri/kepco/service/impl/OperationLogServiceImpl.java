@@ -42,8 +42,10 @@ public class OperationLogServiceImpl implements OperationLogService {
 
 	@Override
 	public int insert(Map<String, Object> param) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		OperationLog operationLog = new OperationLog();
+		ConversionUtil.getModelByMap(operationLog, param);
+		
+		return this.operationLogDAO.insert(operationLog);
 	}
 
 	@Override
