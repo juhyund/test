@@ -90,6 +90,12 @@
 			INNER JOIN EMI_METERING_CONFIG_OBIS B ON (A.OBJECT_ID = B.OBJECT_ID AND A.OBJECT_INSTANCE_ID = B.OBJECT_INSTANCE_ID)
 			INNER JOIN EMI_OBIS_CODE O ON (B.OBIS_ID = O.OBIS_ID)
 			WHERE A.METER_TYPE = #{meter_type} AND A.USE_YN = 1
+			<if test="obis_code != null and obis_code != ''" >     
+			     AND O.obis_code = #{obis_code}
+			</if>
+			<if test="metering_type_nm != null and metering_type_nm != ''" >     
+			   AND A.metering_type_nm =  #{metering_type_nm}
+			</if>
 		) A
 		GROUP BY A.OBJECT_ID, A.OBJECT_INSTANCE_ID, A.METERING_TYPE_NM;
 	</select>
