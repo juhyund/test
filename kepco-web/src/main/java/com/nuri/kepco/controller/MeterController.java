@@ -174,7 +174,6 @@ public class MeterController {
 			String[] commStr = { "meter_type","obis_code","descr" };
 			
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
-			logger.info("\n-------------ajaxSelectObisList2---\nparam = "+param);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			JSONArray jarr = this.obisCodeService.selectObisList2(param);
 			
