@@ -35,6 +35,9 @@
         <if test="allow_yn != null" >     
             AND a.allow_yn = #{allow_yn}
         </if>
+        <if test="mobile_no != null" >     
+            AND a.mobile_no = #{mobile_no}
+        </if>
 		<if test="searchfield != null and searchquery != null " >
 			AND a.${searchfield} like concat(#{searchquery},'%')
 		</if>
@@ -90,6 +93,7 @@
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
 			, a.reg_id
+			, a.mobile_no
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
@@ -125,6 +129,7 @@
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
 			, a.reg_id
+			, a.mobile_no
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
@@ -151,7 +156,8 @@
 			, a.port
 			, a.fw_version
 			, a.hw_version
-			, a.allow_yn			
+			, a.allow_yn	
+			, a.mobile_no		
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
 			, a.reg_id
@@ -185,6 +191,7 @@
 			, port
 			, fw_version
 			, hw_version
+			, mobile_no
 			, allow_yn			
 			, remark
 			, reg_id
@@ -202,6 +209,7 @@
 			, #{port}
 			, #{fw_version}
 			, #{hw_version}
+			, #{mobile_no}
 			, #{allow_yn}			
 			, #{remark}
 			, #{reg_id}
@@ -224,6 +232,7 @@
 			<if test="hw_version != null" > , hw_version = #{hw_version}</if>
 			<if test="allow_yn != null" > , allow_yn = #{allow_yn}</if>			
 			<if test="remark != null" > , remark = #{remark}</if>	
+			<if test="mobile_no != null" > , mobile_no = #{mobile_no}</if>	
 		WHERE device_id = #{device_id}
 	</update>
 	
@@ -238,6 +247,7 @@
 			, f.code_local_nm
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, a.mobile_no
 		FROM
 			EMI_DEVICE_INFO a
 			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
@@ -273,10 +283,11 @@
 			a.device_id
 			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = d.branch_parent_id) AS parent_branch_nm
 			, d.branch_nm
+			, a.service_id
 			, a.device_serial
 			, e.vendor_nm
 			, a.device_oid
-			, a.ip
+			, INET_NTOA(a.ip) as ip
 			, a.port
 			, a.fw_version
 			, a.hw_version
@@ -284,6 +295,7 @@
 			, g.security_mode
 			, f.code_local_nm
 			, a.remark
+			, a.mobile_no
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
 		FROM

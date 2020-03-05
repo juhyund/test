@@ -2,9 +2,9 @@ var meterApp = angular.module('meterApp', []);
 
 meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	
-	$scope.objectInfo = function () {
+/*	$scope.objectInfo = function () {
 		
-		var object_id = "31011"; //$("#object_id").val();
+		var object_id = $("#object_id").val();
 		
 		$http({
 	        method: 'POST',
@@ -12,30 +12,60 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	        params : {"object_id" : object_id}
 	    }).then(function getInfo(data, status, headers, config) {
 	    	$scope.object = data.data.result;
+	    	$("#object_id").val(data.data.result.object_id);
 		}, function errorCallback(response) {
 	        alert("error");
 	    });
-	};
+	};*/
 	
-	$scope.meterResourceList = function () {
+	$scope.meterResourceList = function (selectedTab) {
 		
-		var device_id = "GW00000007";// $("#device_id").val();
-		var object_id = "31011"; //$("#object_id").val();
-		var object_instance_id = "10"; //$("#object_instance_id").val();
+		var device_id = $("#device_id").val();
+		var object_id;
+		var object_instance_id;
+		var meter_type = $('#meter_type').text()
 		
-		$http({
-	        method: 'POST',
-
-	        url: COMMON_URL + "/ajaxMeterResourceList",
-	        params : {"device_id" : device_id,
-		        	  "object_id" : object_id,
-		        	  "object_instance_id" : object_instance_id}
-	    }).then(function getInfo(data, status, headers, config) {
-	    	
-	    	$scope.resources = data.data.result;
-		}, function errorCallback(response) {
-	        alert("error");
-	    });
+		if(selectedTab == 2){//미터 설정
+    		object_id = 31012;
+    		object_instance_id = 0;
+	   	}
+		else if(selectedTab == 3){//검침스케줄 읽기
+			
+			object_id = 31011;
+			switch(meter_type){	
+				case "S-TYPE":  {
+					object_instance_id = 10;
+		   	   		break;
+		   		}
+				case "E-TYPE":  {
+					object_instance_id = 30;
+		   	   		break;
+		   		}
+				case "G-TYPE":  {
+					object_instance_id = 52;
+		   	   		break;
+		   		}
+				case "AE-TYPE":  {
+					object_instance_id = 82;
+		   	   		break;
+		   		}
+			}
+		}
+		
+			
+			$http({
+		        method: 'POST',
+	
+		        url: COMMON_URL + "/ajaxMeterResourceList",
+		        params : {"device_id" : device_id,
+			        	  "object_id" : object_id,
+			        	  "object_instance_id" : object_instance_id}
+		    }).then(function getInfo(data, status, headers, config) {
+		    	
+		    	$scope.resources = data.data.result;
+			}, function errorCallback(response) {
+		        alert("error");
+		    });
 	};
 	
 	$scope.read = function (resource) {

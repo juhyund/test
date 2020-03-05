@@ -138,22 +138,23 @@ public class MeterController {
 		model.addAttribute("meter_type", meter_type);
 		return "meter/obisCodePopup";
 	}
+	@RequestMapping(value = "/obisCodePopup2")
+	public String obisCodePopup2(@ModelAttribute(value="meter_type") String meter_type,	Model model) {
+		model.addAttribute("meter_type", meter_type);
+		return "meter/obisCodePopup2";
+	}
 	
-	//미터 : 검침 스케줄(동적스케줄) 메뉴의 OBIS 팝업
+	//미터 : 동적스케줄 설정 메뉴의 OBIS 팝업
 	@RequestMapping(value = "/ajaxSelectObisList")
 	public ResponseEntity<Object> ajaxSelectObisList(HttpServletRequest request) {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String[] commStr = { "meter_type" };
+			String[] commStr = { "meter_type","obis_code","metering_type_nm" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
-			
-			logger.info("\n\n----------ajaxSelectObisList-----------\n param ="+param+"\n");
-			
 			JSONArray jarr = this.obisCodeService.selectObisList(param);
-
-			logger.info("\n\n----------ajaxSelectObisList-----------\n jarr ="+jarr+"\n");
+			
 			json.put("result", jarr);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
@@ -164,18 +165,17 @@ public class MeterController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
-	//미터 : 미터 설정 메뉴의 OBIS 팝업
+	//미터 : 동적미터 설정 메뉴의 OBIS 팝업
 	@RequestMapping(value = "/ajaxSelectObisList2")
 	public ResponseEntity<Object> ajaxSelectObisList2(HttpServletRequest request) {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String[] commStr = { "meter_type" };
+			String[] commStr = { "meter_type","obis_code","descr" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
-			
 			JSONArray jarr = this.obisCodeService.selectObisList2(param);
-
+			
 			json.put("result", jarr);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);

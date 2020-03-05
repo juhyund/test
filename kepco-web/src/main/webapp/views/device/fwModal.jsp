@@ -8,12 +8,6 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
 
 <script>
-function resetForm() {
-	$("#searchfield").val($("#target option:first").val());
-	$("#searchquery").val("");
-	$("#instances").val("");
-}
-
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80, menuTabs:[]},
@@ -53,13 +47,18 @@ function successResultHandler(data, status) {
 	//var currentPage = $("#page").val();
 	
 	dataGrid.setData(data.resultGrid);
-	gridPage(data.totalCount, dataPerPage, 10, currentPage);
+	//gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }
 
 function fwListModal() {
 	ajaxSearchForm();
 	$('#writeSubmit').unbind();
     $('#fwListModal').modal('show');
+	
+};
+
+function fwUpgradeModal() {
+    $('#fwUpgradeModal').modal('show');
 	
 };
 
@@ -130,10 +129,6 @@ $(function() {
 			</div>
 			<div class="modal-body">		
 			<form class="form-horizontal" role="form" method="post" id="fwModal">
-				<!-- 
-				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
-				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-				 -->
 				<div>
 					<div class="ibox-content" style="background-color: #e7eaec">
 						<table style="height: 100%; width: 100%; border: 0px #e7eaec">
@@ -211,6 +206,38 @@ $(function() {
 			<div class="modal-footer">
 				<!-- <button type="button" class="file btn btn-lg btn-primary" data-dismiss="modal">파일 업로드<input type="file" name="file"/></button> -->
 				<button type="button" class="btn btn-primary" id="uploadFw" data-dismiss="modal" onclick="ajaxDeviceFwUpdate()">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			</div>
+		</form>
+		</div>
+	</div>
+	</div>
+	<!-- modal -->
+	
+	<!-- modal -->
+	<div class="modal bs-example-modal-sm" id="fwUpgradeModal" tabindex="-1" role="dialog"
+	aria-labelledby="fwUpgradeModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 420px">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
+				<h4 class="modal-title">펌웨어 업그레이드</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">		
+			<form class="form-horizontal" role="form" method="post" id="fwUpgradeform">
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">단말번호</label>
+					<div class="col-lg-9"><input type="text" name="deviceserial" id="deviceserial" class="form-control" style="border: none" readonly="readonly"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">패키지 URI</label>
+					<div class="col-lg-9"><input type="text" name="package_uri" id="package_uri" class="form-control" style="border: none" readonly="readonly"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<!-- <button type="button" class="file btn btn-lg btn-primary" data-dismiss="modal">파일 업로드<input type="file" name="file"/></button> -->
+				<button type="button" class="btn btn-primary" id="uploadFw" data-dismiss="modal" onclick="ajaxDeviceFwUpdate()">모뎀전송</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 			</div>
 		</form>

@@ -58,7 +58,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 	@Override
 	public int update(Map<String, Object> param) throws Exception {
 		DeviceInfo deviceInfo = new DeviceInfo();
-		ConversionUtil.getModelByMap(deviceInfo, param);
+		ConversionUtil.getModelByMap(deviceInfo, param, false);
 
 		return this.deviceInfoDAO.update(deviceInfo);
 	}

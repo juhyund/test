@@ -92,11 +92,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                     <div class="tabs-container" style=width:200%;>
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a class="nav-link active" data-toggle="tab" href="#tab-1">기본정보</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-2">미터 설정 읽기/설정</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-3">검침스케줄 읽기/설정</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-2" ng-click="meterResourceList(2);">동적 미터 설정</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-3" ng-click="meterResourceList(3);">동적 스케줄 설정</a></li>
+                          <!--   <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-5">TOU설정 조회</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-6">제어이력</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-6">제어이력</a></li> -->
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" id="tab-1" class="tab-pane active">
@@ -200,24 +200,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                                 </div>
                             </div>
                             <div role="tabpanel" id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                	<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
-                            </div>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            <div role="tabpanel" id="tab-3" class="tab-pane">
-									<div class="col-lg-10">
+                               <div class="col-lg-10">
 										<h4 style="margin-top: 6px"></h4>
 									</div>
 									<div>
@@ -245,10 +228,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																</thead>
 																<tbody>
 																	<tr>
-																		<td><h3 id = "device_serial_view"></h3></td>
-																		<td><h3 id = "meter_type_view"></h3></td>
-																		<td><h3 id = "meter_serial_view"></h3></td>
-																		<td><h3 id = "lp_period_view"></h3></td>
+																		<td><h3 id = "device_serial_tab2"></h3></td>
+																		<td><h3 id = "meter_type_tab2"></h3></td>
+																		<td><h3 id = "meter_serial_tab2"></h3></td>
+																		<td><h3 id = "lp_period_tab2"></h3></td>
 																	</tr>
 																</tbody>
 															</table>
@@ -256,7 +239,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													
 													<div class="ibox-content">
-														<div class="table-responsive"  id="resource" ng-init="meterResourceList()">
+														<div> 
+															<input type="hidden" id=device_id name="device_id" value=""> </input>
+															
+														</div>
+														<div class="table-responsive"  id="resource">
 															<table class="table">
 																<thead class ="gray-bg">
 																	<tr align="center" >
@@ -272,33 +259,46 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<td>{{resource.resource_id}}</td>
 																		<td align="left">{{resource.resource_nm}}</td>
 																		<td>{{resource.resource_val}}</td>
-																		<td>{{resource.unit}}</td>
+																		<td style="max-width: 200px;">{{resource.unit}}
+																			<button  ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '105'" ng-model="newValue" name="newValue"
+																					class="btn btn-primary btn-outline" style="margin-right:10px; max-width: 200px;"  type="button" onclick="popupObisCode2();">
+																					<i class="fa fa-search"> OBIS 코드 찾기</i>
+																			</button>
+																		</td>
 																		<td>
 																			<select ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'"
-																				ng-model="newValue" name="newValue"
-																				style="min-width: 200px; ">
-																				<option id="selected_meter_id">해당 미터 </option>
-																				<option value="00000000000">같은 타입 모든 미터</option>
+																				ng-model="newValue" name="newValue" 
+																				style="min-width: 200px; " id="command-select" >
+																				<option value="192" selected>GET </option>
+																				<option value="193">SET</option>
+																				<option value="5">READ </option>
+																				<option value="6">WRITE </option>
 																			</select>
 																			<input
 																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_nm.indexOf('OBIS') == -1"
 																				type="text" ng-model="newValue" name="newValue"
 																				style="min-width: 200px; ">
-																			<input
-																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_nm.indexOf('OBIS') != -1"
-																				type="text" ng-model="newValue" name="newValue" 
-																				style="min-width: 200px;" readonly>
+																			
+																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_nm.indexOf('OBIS') != -1">
+																				<input type="text" ng-model="obis_code" name="obis_code" id="obis_code{{resource.resource_id}}" style="min-width: 200px;" readonly>
+																			</div>
+																			
 																		</td>
 																	</tr>
 																</tbody>
 															</table>
 															<div name="schedule-buttons" class="row" style="margin:0; height:35px">
-																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" ng-click="">
+																
+																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" onclick="settingBillingDt();">
+																	<i class="fa"> 정기검침일 설정 </i>
+																</button>
+																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" onclick="settingLpPeriod();">
+																	<i class="fa" > LP 주기 설정 </i>
+																</button>
+																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="">
 																	<i class="fa fa-play"> 동적 스케줄 실행</i>
 																</button>
-																<button class="btn btn-warning" style="margin-right:10px; width: 140px" type="button" onclick="popupObisCode();">
-																	<i class="fa fa-search"> OBIS 코드 찾기</i>
-																</button>
+																
 															</div>
 															
 															
@@ -322,38 +322,108 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                             
                             
                             
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            <div role="tabpanel" id="tab-4" class="tab-pane">
-                                <div class="panel-body">
-									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" id="tab-5" class="tab-pane">
-                                <div class="panel-body">
-									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" id="tab-6" class="tab-pane">
-                                <div class="panel-body">
-									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
+                            <div role="tabpanel" id="tab-3" class="tab-pane">
+									<div class="col-lg-10">
+										<h4 style="margin-top: 6px"></h4>
+									</div>
+									<select id="testselect"></select>
+									<div>
+										<div class="row" style="margin-top: 10px">
+											<div class="col-lg-12">
+												<div class="ibox">
+													<div class="row m-b-md">
+														<div>
+										                    <div class="widget-left-color-box p-sm m-l-n-sm navy-bg">
+										                        <div >
+										                           <i class="fa fa-sitemap fa-5x"></i>
+										                        </div>
+										                	</div>
+										                </div>
+										                <div class=" gray-bg m-r-n-sm"   style="width:90%"> 
+											                <table class="table-borderless text-center m-t" style="width:100%" >
+																<thead>
+																	<tr class="text-navy">
+																		<th>단말 번호</th>
+																		<th>미터 타입</th>
+																		<th>계기 번호</th>
+																		<th>검침 주기</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td><h3 id = "device_serial_tab3"></h3></td>
+																		<td><h3 id = "meter_type_tab3"></h3></td>
+																		<td><h3 id = "meter_serial_tab3"></h3></td>
+																		<td><h3 id = "lp_period_tab3"></h3></td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+													
+													<div class="ibox-content">
+														<div class="table-responsive"  id="resource">
+															<table class="table">
+																<thead class ="gray-bg">
+																	<tr align="center" >
+																		<th>리소스 ID</th>
+																		<th style="text-align: left">리소스명</th>
+																		<th>리소스값</th>
+																		<th>단위</th>
+																		<th>값 변경</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr align="center"  ng-repeat="resource in resources">
+																		<td>{{resource.resource_id}}</td>
+																		<td align="left">{{resource.resource_nm}}</td>
+																		<td>{{resource.resource_val}}</td>
+																		<td style="max-width: 200px;">{{resource.unit}}
+																			<button  ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '113'" ng-model="newValue" name="newValue"
+																					class="btn btn-primary btn-outline" style="margin-right:10px; max-width: 200px;" type="button" onclick="popupObisCode();">
+																					<i class="fa fa-search"> OBIS 코드 찾기</i>
+																			</button>
+																		</td>
+																		<td>
+																			<select ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'"
+																				ng-model="newValue" name="newValue" id="target_meter{{resource.resource_id}}"
+																				style="min-width: 200px; ">
+																				<option value="00000000000">같은 타입 모든 미터</option>
+																			</select>
+																			<input
+																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_nm.indexOf('OBIS') == -1"
+																				type="text" ng-model="newValue" name="newValue"
+																				style="min-width: 200px; ">
+																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '112'">
+																				<input type="text" style="min-width: 200px;" readonly>
+																			</div>
+																			
+																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '113'">
+																				<input type="text" ng-model="obis_code" name="obis_code3" id="obis_code_tab3_{{resource.resource_id}}" style="min-width: 200px;" readonly>
+																			</div>
+																			
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+															<div name="schedule-buttons" class="row" style="margin:0; height:35px">
+																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="">
+																	<i class="fa fa-play"> 동적 스케줄 실행</i>
+																</button>
+															</div>
+															
+															
+															
+														</div>
+													</div>
+													<!-- ibox-content -->
+												</div>
+												
+											</div>
+											
+										</div>
+									</div>
+									
                             </div>
                         </div>
                    		 </div>
@@ -383,6 +453,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script type="text/javascript" charset="utf-8">	
 var meterTypeCode;
+var obis_code;
 
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500);    
@@ -410,9 +481,11 @@ function resetForm(){
 	
 };
 
+
 function showRequest() {
 	// $("#loading").show();
 }
+
 
 function successResultHandler(data, status) {	
 	
@@ -430,16 +503,22 @@ function successResultHandler(data, status) {
 	var comm_type = data.result.comm_type; */
 	
 	$('#device_serial').text(data.result.device_serial);
-	$('#device_serial_view').text(data.result.device_serial);
+	$('#device_serial_tab2').text(data.result.device_serial);
+	$('#device_serial_tab3').text(data.result.device_serial);
 	$('#meter_serial').text(data.result.meter_serial);
-	$('#meter_serial_view').text(data.result.meter_serial);
+
+	$('#meter_serial_tab2').text(data.result.meter_serial);
+	$('#meter_serial_tab3').text(data.result.meter_serial);
 	$('#reg_dt').text(data.result.reg_dt);
  	$('#last_comm_dt').text(data.result.last_comm_dt);
 	$('#lp_period').text(data.result.lp_period);
-	$('#lp_period_view').text(data.result.lp_period);
+	$('#lp_period_tab2').text(data.result.lp_period);
+	$('#lp_period_tab3').text(data.result.lp_period);
 	$('#meter_type').text(data.result.meter_type);	
-	$('#meter_type_view').text(data.result.meter_type);	
+	$('#meter_type_tab2').text(data.result.meter_type);	
+	$('#meter_type_tab3').text(data.result.meter_type);	
 	meterTypeCode = data.result.meter_type_code;	
+	$('#device_id').val(data.result.device_id);	
 	
 	$('#prog_id').text(data.result.prog_id);	
 	$('#prog_version').text(data.result.prog_version);	
@@ -458,19 +537,47 @@ function successResultHandler(data, status) {
 	$('#net_metering').text(data.result.net_metering);
 	$('#avg_power_period').text(data.result.avg_power_period);
 	
+	
+		 $("#testselect").prepend("<option value="+data.result.meter_serial+">"+data.result.meter_serial+"</option>");
+	$("#target_meter104").prepend("<option value="+data.result.meter_serial+">"+data.result.meter_serial+"</option>");
 }
 
-var winObj;
-function popupObisCode(){ 
-	
-	var opts="width=1000,left=200, top=500, resizable=no, toolbar=yes"; 
+function settingBillingDt(){
+	//정기검침일 설정. 
+	//DlmsMethod – Set / OBIS - 001600000F0000FF04 세팅
 
+	 $("#command-select").val("193").attr("selected", "true");
+	 $("#obis_code105").val("001600000F0000FF04");
+};
+
+function settingLpPeriod(){
+	//LP 주기 설정
+	//DlmsMethod – Set / OBIS - 00030101000804FF02 세팅
+	
+	$("#command-select").val("193").attr("selected", "true");
+	 $("#obis_code105").val("00030101000804FF02");
+};
+
+
+
+var winObj;
+function popupObisCode(){ //검침스케줄
+
+	var opts="width=1000, height=550,left=200, top=200, resizable=no, toolbar=yes";
 	if(winObj)
         winObj.close();
-	
 	var param = "?meter_type="+meterTypeCode;
-	
     winObj = window.open(COMMON_URL+"/obisCodePopup"+param, "", opts);
+}
+
+
+function popupObisCode2(){ //미터설정
+	
+	var opts="width=1000, height=550,left=200, top=200, resizable=no, toolbar=yes";
+	if(winObj)
+        winObj.close();
+	var param = "?meter_type="+meterTypeCode;
+	    winObj = window.open(COMMON_URL+"/obisCodePopup2"+param, "", opts);
 }
 
 function init() {
@@ -484,6 +591,9 @@ function init() {
 
 $(document).ready(function() {	
 	init();
+	
+
+	
 });
 
 </script>

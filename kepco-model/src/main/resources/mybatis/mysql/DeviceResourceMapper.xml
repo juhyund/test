@@ -149,7 +149,7 @@
 			, #{list.update_id}
 			, now()
 		</foreach>		
-		ON DUPLICATE KEY UPDATE resource_val=VALUES(resource_val),update_dt=now();
+		ON DUPLICATE KEY UPDATE resource_val=VALUES(resource_val)
     </insert>
     
     <delete id="delete" parameterType="deviceResource">
@@ -239,7 +239,7 @@
 		FROM (
 			SELECT 
 				A.OBJECT_ID
-				, ${object_instance_id} AS OBJECT_INSTANCE_ID -- OBJECT_INSTANCE_ID
+				, ${object_instance_id} AS OBJECT_INSTANCE_ID 
 				, A.OBJECT_NM
 				, B.RESOURCE_ID
 				, B.RESOURCE_NM		
@@ -257,11 +257,11 @@
 				SELECT 
 					D.* 
 			   FROM EMI_DEVICE_RESOURCE D
-				WHERE D.DEVICE_ID = #{device_id} -- DEVICE_ID
-				  AND D.OBJECT_ID = #{object_id} -- OBJECT_ID
-				  AND D.OBJECT_INSTANCE_ID = #{object_instance_id} -- OBJECT_INSTANCE_ID
+				WHERE D.DEVICE_ID = #{device_id}
+				  AND D.OBJECT_ID = #{object_id}
+				  AND D.OBJECT_INSTANCE_ID = #{object_instance_id}
 			) D ON (A.OBJECT_ID = D.OBJECT_ID AND B.RESOURCE_ID = D.RESOURCE_ID) 
-			WHERE A.OBJECT_ID = #{object_id} -- OBJECT_ID
+			WHERE A.OBJECT_ID = #{object_id}
 			  AND B.OPERATION = 'RW'
 		) A 
 		GROUP BY A.OBJECT_ID, A.OBJECT_INSTANCE_ID, A.RESOURCE_ID	

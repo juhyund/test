@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class ControllerUtil {
 
@@ -14,6 +16,14 @@ public class ControllerUtil {
 	
 	static String[] commStr = { "searchfield", "searchquery", "sdate", "edate" };
 	static String[] commInt = { "limit", "page"};
+	
+	
+	public static String getLoginUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();	
+		return authentication.getName();
+	}
+	
+	
 	
 	public static Map<String, Object> getCommonParam(HttpServletRequest request) {
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -58,6 +68,7 @@ public class ControllerUtil {
 		
 		return false;
 	}
+
 	
 }
 

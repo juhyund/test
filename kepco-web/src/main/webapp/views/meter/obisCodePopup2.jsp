@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
-<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=03"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=0"></script>
 <style>
   div .ibox-title {
 		/* background-color: #dee2e6; */
@@ -65,7 +65,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">OBIS CODE 선택</h3>
+	<h3 style="margin-top:6px">OBIS CODE 선택2</h3>
 </div>						
 </div>
 <!-- navigator -->
@@ -87,7 +87,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<input type="text" id="obis_code" name="obis_code" value="" class="form-control">
 										</div>
 										<label class="col-lg-2 col-form-label"
-											style="padding-left: 10px;">리소스 명</label>
+											style="padding-left: 10px;">OBIS 코드명</label>
 										<div class="col-lg-3">
 											<input type="text" id="descr" name="descr" value="" class="form-control">
 										</div>
@@ -113,7 +113,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				 <div id="grid" style="height:300px;" class="ag-theme-balham m-b-md"></div>								
 				<div>
 					<button class="btn btn-primary m-t-sm" style="height: 100%" type="button" onclick="selectObis()">
-						<i >OBIS 선택</i>
+						<i class="fa">OBIS 선택</i>
 					</button>
 			   </div> 
 			      
@@ -130,14 +130,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var selectedObisCode = '';
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", 					field: "no", 					width:50,	suppressSizeToFit: true},
-	{headerName: "리소스명",			 	field: "metering_type_nm"},
-	{headerName: "OBIS 개수",				field: "obis_cnt"},
-	// {headerName: "resource_instance_id",field: "arr_resource_instance_id"},
-	{headerName: "오브젝트 ID",				field: "object_id"},
-	{headerName: "오브젝트 인스턴스 ID",		field: "object_instance_id", 	width:100,	suppressSizeToFit: true},
-	{headerName: "OBIS 코드", 			field: "arr_obis_code",			width:300},
-	{headerName: "OBIS 코드_view", 		field: "arr_obis_code",			valueFormatter:obisListFormatter, width:300}
+	{headerName: "번호", 			field: "no", 	   width:50,suppressSizeToFit: true},
+	{headerName: "CLASS",		field: "class_id"},
+	{headerName: "OBIS 코드",		field: "obis_code",width:300},
+ 	{headerName: "OBIS 코드명",	field: "descr"},
+	{headerName: "속성",			field: "attribute_no"},
+	{headerName: "권한",			field: "access_right"}
 ];
 
 
@@ -152,7 +150,7 @@ function ajaxSearchForm() {
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxSelectObisList",
+           url         : COMMON_URL + "/ajaxSelectObisList2",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
@@ -170,15 +168,14 @@ onRowClicked = function(event){
 	var selectedRows = dataGrid.getSelectedRow();
     var selectedRowsString = '';
     selectedRows.forEach( function(selectedRow, index) {
-    	selectedObisCode = selectedRow.arr_obis_code;
-    
+    	selectedObisCode = selectedRow.class_id+selectedRow.obis_code+selectedRow.attribute_no
     	
     });
 }
 
 selectObis = function(event){
-	opener.document.getElementById("obis_code_tab3_113").value = selectedObisCode;
-	window.close();
+	opener.document.getElementById("obis_code105").value = selectedObisCode;
+	 window.close();
 }
 
 function resetForm(){
