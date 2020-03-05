@@ -28,9 +28,10 @@
 <script src="<%=COMMON_PATH_JS%>/controller/deviceApp.js"></script>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
+var target;
 $(document).ready(function() {
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-    	var target = $(e.target).attr("href");
+    	target = $(e.target).attr("href");
     	if(target == '#info'){
     		$('#info_btn').show();
     	} else {
@@ -105,6 +106,10 @@ function updateData() {
 	$('#di_remark').css({'border' : 'none'});
 }
 
+function firmwarelist() {
+	var scope = angular.element($('#content')).scope();
+	scope.firmware();
+}
 </script>
 <script src="<%=COMMON_PATH_JS%>/inspinia.js"></script>
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js"
@@ -213,7 +218,7 @@ function updateData() {
 							</div>
 							<div class="row">
 								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
-								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="firmware()">
+								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="firmwarelist()">
 								<div class="col-lg-12">
 									<div class="ibox-content">
 										<table class="table table-borderless" style="height: 100%; style="margin-bottom: 7px;" border="1">
@@ -232,7 +237,7 @@ function updateData() {
 														</div>
 													</td>
 													<td width="15%" style="text-align: right">
-														<button class="btn btn-primary" style="height: 35px; width: 40px" type="button" ng-click="firmware()">
+														<button class="btn btn-primary" style="height: 35px; width: 40px" type="button" onclick="firmwarelist()">
 															<i class="fa fa-search"></i>
 														</button>
 														<button class="btn btn-warning" style="height: 35px; width: 40px" type="button" onclick="fwUploadModal();">
@@ -387,6 +392,14 @@ function updateData() {
 																</td -->
 																<td>
 																	<div ng-show="object.object_id != 5 && resource.resource_id != 0">
+																		<input ng-show="resource.operation.indexOf('W') != -1"
+																		type="text" ng-model="newValue" name="newValue"
+																		style="width: 100px;">
+																		<button ng-show="resource.operation.indexOf('W') != -1"
+																		class="btn btn-primary btn-xs" type="button"
+																		ng-click="write(resource, newValue);">Write</button>
+																	</div>
+																	<div ng-show="object.object_id == 5 && resource.resource_id == 1">
 																		<input ng-show="resource.operation.indexOf('W') != -1"
 																		type="text" ng-model="newValue" name="newValue"
 																		style="width: 100px;">

@@ -16,8 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.nuri.kepco.config.CodeConstants.FW_STATUS;
 import com.nuri.kepco.generator.util.GeneratorId;
 import com.nuri.kepco.service.OperationLogService;
+import com.nuri.kepco.service.DeviceFwService;
+import com.nuri.kepco.service.DeviceFwHistoryService;
 import com.nuri.kepco.util.ControllerUtil;
 import com.nuri.kepco.util.DateUtil;
 import com.nuri.kepco.util.HttpClientUtil;
@@ -33,6 +36,12 @@ public class ExecResourceController {
 	@Autowired
 	private OperationLogService operationLogService;
 	
+	@Autowired
+	private DeviceFwService deviceFwService;
+	
+	@Autowired
+	private DeviceFwHistoryService deviceFwHistoryService;
+	
 	@RequestMapping(value = "/ajaxExecResource")
 	public ResponseEntity<Object> ajaxExecResource(HttpServletRequest request) {                
 		
@@ -43,9 +52,11 @@ public class ExecResourceController {
 			String url = request.getParameter("url");
 			String method = request.getParameter("method");
 			String device_serial = request.getParameter("device_serial");
-			String resource = request.getParameter("resource");
+			String resources = request.getParameter("resource");
+			String[] resource = resources.split("/");
+			
 			tid = GeneratorId.getInstance().getId(device_serial);
-			url = cmdUrl + url + device_serial + resource;
+			url = cmdUrl + url + device_serial + resources;
 			
 			if("Execute".equals(method)) {
 				url += "?tid=" + tid;
@@ -58,19 +69,33 @@ public class ExecResourceController {
 			
 			if("Execute".equals(method) || "Write".equals(method)) {
 				String value = request.getParameter("newValue");
-				body.put("id", "0"); //TODO id는 무엇?
+				body.put("id", resource[3]);
 				body.put("value", value);
 			}
 			
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("request_dt", DateUtil.getNowDateTime());
 			param.put("tid", tid);
+			param.put("method", method.toUpperCase());
+			param.put("object_id", Integer.parseInt(resource[1]));
+			param.put("object_instance_id", Integer.parseInt(resource[2]));
+			param.put("resource_id", Integer.parseInt(resource[3]));
 			param.put("reg_id", ControllerUtil.getLoginUser());
+			param.put("format", "JSON");
 			
 			String[] commStr = { "device_id",  "service_id", "resource_instance_id" };
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
 			operationLogService.insert(param);
+			
+			if("/5/0/1".equals(resources)) {
+				JSONObject deviceFw = deviceFwService.selectOneByPackageUri((String)body.get("value"));
+				param.put("fw_id", (int)(long)deviceFw.get("fw_id"));
+				param.put("fw_write_dt", DateUtil.getNowDateTime());
+				param.put("fw_issue_status", FW_STATUS.FW000.name());
+				
+				deviceFwHistoryService.insert(param);	
+			}
 			
 			logger.debug("url: " + url);
 			json = HttpClientUtil.send(url, body.toString(), method);

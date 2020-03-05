@@ -85,4 +85,9 @@ public class PageController {
 		model.addAttribute("request_dt", request_dt);
 		return "history/operationLogDetail";
 	}
+	
+	@RequestMapping("/firmware")
+	public String firmware() throws Exception {
+		return "history/deviceFwHistory";
+	}
 }

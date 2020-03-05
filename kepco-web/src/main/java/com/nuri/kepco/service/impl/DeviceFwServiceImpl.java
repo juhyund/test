@@ -62,5 +62,13 @@ public class DeviceFwServiceImpl implements DeviceFwService {
 
 		return this.deviceFwDAO.update(deviceFw);
 	}
+	
+	@Override
+	public JSONObject selectOneByPackageUri(String param) throws Exception {
+		DeviceFw deviceFw = new DeviceFw();
+		deviceFw = this.deviceFwDAO.selectOneByPackageUri(param);
+
+		return ConversionUtil.getJSONObjectByModel(deviceFw);
+	}
 
 }

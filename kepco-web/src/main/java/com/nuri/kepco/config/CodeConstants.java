@@ -97,6 +97,25 @@ public class CodeConstants {
 		}
 	}
 	
+	@Getter
+	public enum FW_STATUS {
+		FW000("펌웨어파일전송"),
+		FW001("업데이트 성공"),
+		FW002("플래시 메모리 부족"),
+		FW003("다운로드 프로세스 중 RAM 부족 "),
+		FW004("다운로드 프로세스 중 연결이 끊김"),
+		FW005("다운로드 된 새 패키지에 대한 무결성 검사 실패"),
+		FW006("미지원 패키지 유형 "),
+		FW007("잘못된 URI"),
+		FW008("펌웨어 업데이트 실패"),
+		FW009("미지원 프로토콜");
+		
+		private String descr;
+		FW_STATUS(String descr) {
+			this.descr = descr;
+		}
+	}
+	
 	@Getter 
 	public enum USE_YN {
 		Y(1),
