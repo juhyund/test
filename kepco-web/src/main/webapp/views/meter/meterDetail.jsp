@@ -171,7 +171,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "mtime"></td>
 												</tr>
 												<tr>
-													<th class="text-navy" scope="row">계기 타입:</th>
+													<th class="text-navy" scope="row">계기타입:</th>
 													<td id = "meter_type"></td>
 													<th class="text-navy" scope="row">유효전력량 계기정수:</th>
 													<td id = "acon"></td>

@@ -63,7 +63,7 @@ public class MeterInfoServiceImpl implements MeterInfoService {
 		ConversionUtil.getModelByMap(meterInfo, param);
 		List<MeterInfo> list = this.meterInfoDAO.getMeterList(meterInfo);
 
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list,meterInfo.getStart());
 	}
 
 	@Override
