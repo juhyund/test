@@ -170,11 +170,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", 		field: "no", 				width:50,	suppressSizeToFit: true},
 	{headerName: "검침일", 	field: "read_dt",			width:200},
-	{headerName: "미터 시리얼", field: "meter_serial",		width:100},
+	{headerName: "계기번호", field: "meter_serial",		width:100},
 	{headerName: "본부", 	  	field: "parent_branch_nm", 	width:200},
 	{headerName: "지사", 		field: "branch_nm",			width:100},
 	{headerName: "계기타입", 	field: "meter_type", 		width:100},
-	{headerName: "계기번호", 	field: "meter_serial", 		width:100},
 	{headerName: "모뎀 번호", 	field: "device_serial", 	width:200},
    	{headerName: "누적검침값 (kWh)", width:100,	
 			   	field: "meter_value", 

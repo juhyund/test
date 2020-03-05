@@ -184,11 +184,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", 		field: "no", 			width:50,	suppressSizeToFit: true, pinned:"left"},
 	{headerName: "검침일", 	field: "billing_dt",	width:100,	suppressSizeToFit: true, pinned:"left"},
-	{headerName: "미터 시리얼", field: "meter_serial",	width:100,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "계기번호", field: "meter_serial",	width:100,	suppressSizeToFit: true, pinned:"left"},
 	{headerName: "본부", 	  	 field: "parent_branch_nm", width:100,suppressSizeToFit: true},
 	{headerName: "지사", 		field: "branch_nm",		width:100,	suppressSizeToFit: true},
 	{headerName: "계기타입", 	field: "meter_type", 	width:100,	suppressSizeToFit: true},
-	{headerName: "계기번호", 	field: "meter_serial", 	width:100,	suppressSizeToFit: true},
 	{headerName: "모뎀 번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
 	{headerName: '순방향 유효전력',
        children: [{headerName: "전체",  width:100, 
