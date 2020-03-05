@@ -60,9 +60,14 @@ public class OperationLogController {
 		
 		JSONObject json = new JSONObject();
 		try {
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			String device_id = request.getParameter("_device_id");
+			String request_dt = request.getParameter("_request_dt");
 			
-			JSONObject jarr = this.operationLogService.getOperationLogDetail(device_id);
+			param.put("device_id", device_id);
+			param.put("request_dt", request_dt);
+			
+			JSONObject jarr = this.operationLogService.getOperationLogDetail(param);
 			
 			json.put("result", jarr);
 

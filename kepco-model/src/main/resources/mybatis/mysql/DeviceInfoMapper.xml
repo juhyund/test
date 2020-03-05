@@ -247,7 +247,7 @@
 			, f.code_local_nm
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
-			, e.mobile_no
+			, a.mobile_no
 		FROM
 			EMI_DEVICE_INFO a
 			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
@@ -283,6 +283,7 @@
 			a.device_id
 			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = d.branch_parent_id) AS parent_branch_nm
 			, d.branch_nm
+			, a.service_id
 			, a.device_serial
 			, e.vendor_nm
 			, a.device_oid

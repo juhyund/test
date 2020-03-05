@@ -60,8 +60,6 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		DeviceInfo deviceInfo = new DeviceInfo();
 		ConversionUtil.getModelByMap(deviceInfo, param, false);
 
-		System.out.println(deviceInfo);
-		
 		return this.deviceInfoDAO.update(deviceInfo);
 	}
 

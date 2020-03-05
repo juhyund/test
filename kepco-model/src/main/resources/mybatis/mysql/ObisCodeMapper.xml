@@ -85,11 +85,17 @@
 				, B.RESOURCE_ID
 				, B.RESOURCE_INSTANCE_ID
 				, B.DESCR 
-				, CONCAT(O.CLASS_ID, ':', O.OBIS_CODE, ':', O.ATTRIBUTE_NO) AS OBIS_CODE
+				, CONCAT(O.CLASS_ID, O.OBIS_CODE, O.ATTRIBUTE_NO) AS OBIS_CODE
 			FROM EMI_METERING_CONFIG A 
 			INNER JOIN EMI_METERING_CONFIG_OBIS B ON (A.OBJECT_ID = B.OBJECT_ID AND A.OBJECT_INSTANCE_ID = B.OBJECT_INSTANCE_ID)
 			INNER JOIN EMI_OBIS_CODE O ON (B.OBIS_ID = O.OBIS_ID)
 			WHERE A.METER_TYPE = #{meter_type} AND A.USE_YN = 1
+			<if test="obis_code != null and obis_code != ''" >     
+			     AND O.obis_code = #{obis_code}
+			</if>
+			<if test="metering_type_nm != null and metering_type_nm != ''" >     
+			   AND A.metering_type_nm =  #{metering_type_nm}
+			</if>
 		) A
 		GROUP BY A.OBJECT_ID, A.OBJECT_INSTANCE_ID, A.METERING_TYPE_NM;
 	</select>
@@ -99,6 +105,12 @@
 		SELECT *
 		FROM EMI_OBIS_CODE a				
 		WHERE meter_type = #{meter_type}
+		<if test="obis_code != null and obis_code != ''" >     
+			     AND a.obis_code = #{obis_code}
+			</if>
+			<if test="descr != null and descr != ''" >     
+			   AND a.descr =  #{descr}
+			</if>
 	</select>
 	
 	<select id="selectObisByCode" resultType="obisCode" parameterType="obisCode">	

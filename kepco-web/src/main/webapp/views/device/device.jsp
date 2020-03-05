@@ -55,16 +55,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</li>
 						</ol>
 					</div>
+				</div>
 				<!-- navigator -->
 				<!-- body -->
-				<div class="row">
+				<div class="row" style="width: 100%">
 					<div class="col-lg-12">
 						<div class="ibox">
 							<div class="ibox-content">
 								<form name="search_form" id="search_form" method="post">
 								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
 								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-								<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
+								<table class="table table-borderless" style="height: 100%; style="margin-bottom: 7px;" border="1">
 									<tbody>
 										<tr class="table-border">
 											<td height="80">

@@ -42,7 +42,7 @@ public class MeterBillingServiceImpl implements MeterBillingService {
 		ConversionUtil.getModelByMap(meterBilling, param);
 		List<MeterBilling> list = this.meterBillingDAO.selectList(meterBilling);
 
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list,meterBilling.getStart());
 	}
 
 	@Override

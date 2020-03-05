@@ -39,9 +39,18 @@ $(document).ready(function() {
     });
 });
 
+function resetForm() {
+	$("#searchfield").val($("#target option:first").val());
+	$("#searchquery").val("");
+	$("#instances").val("");
+}
 
 function coapModal() {
 	$('#coapModal').modal('show');
+}
+
+function rebootModal() {
+	$('#rebootModal').modal('show');
 }
 
 function updateForm() {
@@ -127,10 +136,10 @@ function updateData() {
 						<li class="nav-item"><a class="nav-link active"
 							data-toggle="tab" href="#info">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#firmware">펌웨어 업그레이드</a></li>
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#object">오브젝트 정보</a></li>
 						<!-- 
-						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#meters">연결미터</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#observe">Observe 상태</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -143,6 +152,7 @@ function updateData() {
 				<!-- body -->
 				<form name="search_form" id="search_form" method="post">
 				<input type=hidden name="device_id" id="device_id" value="<%=device_id%>">
+				<input type=hidden name="service_id" id="service_id" value="{{device_info.service_id}}">
 				<input type=hidden name="device_serial" id="device_serial" value="{{device_info.device_serial}}">
 				<div class="row">
 					<div class="tab-content" style="width: 100%">
@@ -154,49 +164,114 @@ function updateData() {
 								<thead>
 									<tr>
 										<th class="device-detail-head">단말ID</th>
-										<td class="device-detail-body">{{device_info.device_id}}</td>
+										<td class="device-detail-body"><span id="device_id_span" style="display: none;">{{device_info.device_id}}</span></td>
 										<th class="device-detail-head">지역본부</th>
-										<td class="device-detail-body">{{device_info.parent_branch_nm}} {{device_info.branch_nm}}</td>
+										<td class="device-detail-body"><span id="branch_span" style="display: none;">{{device_info.parent_branch_nm}} {{device_info.branch_nm}}</span></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">단말번호</th>
-										<td class="device-detail-body">{{device_info.device_serial}}</td>
+										<td class="device-detail-body"><span id="device_serial_span" style="display: none;">{{device_info.device_serial}}</span></td>
 										<th class="device-detail-head">제조사</th>
-										<td class="device-detail-body">{{device_info.vendor_nm}}</td>
+										<td class="device-detail-body"><span id="vendor_nm_span" style="display: none;">{{device_info.vendor_nm}}</span></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">단말IP/PORT</th>
-										<td class="device-detail-body"><input type="text" id="di_ip" style="width:80px; border: none" value="{{device_info.ip}}" readonly="readonly" > /
-											<input type="text" id="di_port" style="width:80px; border: none" value="{{device_info.port}}" readonly="readonly" ></td>
+										<td class="device-detail-body"><input type="text" id="di_ip" style="width:80px; display:none; border: none" value="{{device_info.ip}}" readonly="readonly" > /
+											<input type="text" id="di_port" style="width:80px; display:none; border: none" value="{{device_info.port}}" readonly="readonly" ></td>
 										<th class="device-detail-head">모델명</th>
-										<td class="device-detail-body">{{device_info.model_nm}}</td>
+										<td class="device-detail-body"><span id="model_nm_span" style="display: none;">{{device_info.model_nm}}</span></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
-										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:80px; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
+										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:80px; display:none; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
 										<th class="device-detail-head">펌웨어 버전</th>
-										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:80px; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
+										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:80px; display:none; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">인증방식</th>
-										<td class="device-detail-body">{{device_info.security_mode}}</td>
+										<td class="device-detail-body"><span id="security_mode_span" style="display: none;">{{device_info.security_mode}}</span></td>
 										<th class="device-detail-head">단말상태</th>
-										<td class="device-detail-body">{{device_info.code_local_nm}}</td>
+										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">최종통신일시</th>
-										<td class="device-detail-body">{{device_info.last_comm_dt}}</td>
+										<td class="device-detail-body"><span id="last_comm_dt_span" style="display: none;">{{device_info.last_comm_dt}}</span></td>
 										<th class="device-detail-head">등록일시</th>
-										<td class="device-detail-body">{{device_info.reg_dt}}</td>
+										<td class="device-detail-body"><span id="reg_dt_span" style="display: none;">{{device_info.reg_dt}}</span></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">설명</th>
-										<td class="device-detail-body" colspan="3"><input type="text" id="di_remark" style="border: none; width: 100%" value="{{device_info.remark}}" readonly="readonly"></td>
+										<td class="device-detail-body" colspan="3"><input type="text" id="di_remark" style="border: none; display:none; width: 100%" value="{{device_info.remark}}" readonly="readonly"></td>
 									</tr>
 								</thead>
 							</table>
-
 						</div>
+						
+						<div class="tab-pane fade" id="firmware" ng-init="firmware()">
+							<div class="col-lg-10">
+								<h4 style="margin-top: 6px">펌웨어 업그레이드</h4>
+							</div>
+							<div class="row">
+								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="firmware()">
+								<div class="col-lg-12">
+									<div class="ibox-content">
+										<table class="table table-borderless" style="height: 100%; style="margin-bottom: 7px;" border="1">
+											<tbody>
+												<tr class="table-border">
+													<td width="85%">
+														<div class="form-group row" style="margin-left: 0px">
+															<label class="col-sm-1 col-form-label">패키지 명</label>
+															<div class="col-lg-5">
+																<input type="text" class="form-control" name="fw_file_nm_b" id="fw_file_nm_b" style="height: 38px; display: inline;">
+															</div>
+															<label class="col-sm-1 col-form-label">패키지 버전</label>
+															<div class="col-lg-5">
+																<input type="text" class="form-control" name="fw_version_b" id="fw_version_b" style="height: 38px; display: inline;">
+															</div>
+														</div>
+													</td>
+													<td width="15%" style="text-align: right">
+														<button class="btn btn-primary" style="height: 35px; width: 40px" type="button" ng-click="firmware()">
+															<i class="fa fa-search"></i>
+														</button>
+														<button class="btn btn-warning" style="height: 35px; width: 40px" type="button" onclick="fwUploadModal();">
+															<i class="fa fa-upload"></i>
+														</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										
+										<div>
+											<!-- page option -->
+											<div class="row m-t-n-n" style="margin:-1px"  >
+												<div style="width :100%;vertical-align:center" class="m-t-n-sm">
+													<label id="cur_page_num" class="col-form-label"></label>
+													<div style ="float:right; margin-bottom:5px">
+														<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
+															<option value=10 selected>10개씩</option>
+															<option value=100>100개씩 </option>
+															<option value=250>250개씩 </option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<!-- grid -->
+											<div id="grid_b" style="height:400px;" class="ag-theme-balham"></div>
+											
+											<!-- grid pagination -->
+											<center>
+											<div id="grid-page" style ="display:none;" class="m-t-sm">
+												<ul id="pagination" class="pagination"></ul>
+											</div>
+											</center>
+								        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
 						<div class="tab-pane fade" id="object" ng-init="objectModel()">
 							<div class="col-lg-10">
 								<h4 style="margin-top: 6px">오브젝트 정보</h4>
@@ -251,7 +326,7 @@ function updateData() {
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="ibox" style="margin-bottom: 0px">
-											<div class="ibox-title collapse-link" style="cursor: pointer" data-toggle="collapse" href="\#{{object.object_id}}">
+											<div class="ibox-title collapse-link" style="cursor: pointer" data-toggle="collapse" href="\#{{object.object_id}}_obj">
 												<h5 style="margin-top: 6px; width: 300px">오브젝트 명  : {{object.object_nm}}</h>
 												<h5 style="margin-top: 6px; width: 180px">오브젝트 ID : {{object.object_id}}</h>
 												<h5 style="margin-top: 6px; width: 180px">오브젝트 인스턴스 : {{object.instances}}</h>
@@ -260,7 +335,7 @@ function updateData() {
 												<h5 style="margin-top: 6px;">설명 : {{object.descr}}</h>
 											</div>
 											<!-- ibox-content -->
-											<div class="ibox-content collapse" id="{{object.object_id}}">
+											<div class="ibox-content collapse" id="{{object.object_id}}_obj">
 												<div class="table-responsive" ng-repeat="(key, data) in object.instance">
 													<table class="table table-striped">
 														<thead>
@@ -348,7 +423,7 @@ function updateData() {
 							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="coapModal()">
 								<i class="fas fa-wifi"> CoAP Ping</i>
 							</button>
-							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="">
+							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="rebootModal()">
 								<i class="fas fa-retweet"> Reset</i>
 							</button>
 							<button id="update_form" class="btn btn-outline btn-primary m-t-sm" style="margin-right: 7px; height: 35px" type="button" onclick="updateForm()">
@@ -376,19 +451,32 @@ function updateData() {
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">		
 				<form class="form-horizontal" role="form" method="post" id="form">	
-					<div class="form-group row">
-						<label class="col-lg-3 col-form-label">CoAP Ping</label>
-						<div class="col-lg-2 col-form-label"><input type="text" name="sec" id="sec" class="form-control">초</div>
-						<label class="col-lg-2 col-form-label">간격</label>
-						<div class="col-lg-2 col-form-label"><input type="text" name="round" id="round" class="form-control">회</div>
-						<button type="button" class="btn btn-default" ng-click="coapping();">실행</button>
-					</div>
-					<div class="form-group row">
-						<label class="col-lg-3 col-form-label">실행결과</label>
-						<div class="col-lg-2"><input type="text" name="ping_result" id="ping_result"></div>
-					</div>
+				<div class="form-group row">
+					<table class="table table-borderless" style="height: 100%; margin: 7px 0px;" border="1">
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" style="padding-left: 10px;">CoAP Ping</label>
+										<input type="text" class="form-control" name="sec" id="sec" style="width: 15%; height: 33px; vertical-align: top; display: inline;" value="5">
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">초</label>
+									</div>
+								</td>
+								<td style="text-align: right">
+									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" ng-click="coapping();">실행</button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="form-group form-group-end row">
+										<label class="col-lg-3 col-form-label" style="padding-left: 10px;">실행결과</label>
+										<textarea style="border: 0px; width: 100%">{{coapping.statusMsg}}</textarea>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -398,6 +486,29 @@ function updateData() {
 		</div>
 		</div>
 		<!-- modal -->
+	
+		<!-- modal -->
+		<div class="modal bs-example-modal-sm" id="rebootModal" tabindex="-1" role="dialog"
+		aria-labelledby="rebootModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
+					<h4 class="modal-title">Reset</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-content" style="text-align: center; padding: 15px">
+					<h3><string>재시작 하시겠습니까?</string></h3>
+				</div>
+				<div class="modal-footer" style="justify-content: center">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="reset();">확인</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!-- modal -->
+	
 	
 		<!-- modal -->
 		<div class="modal bs-example-modal-sm" id="writeModal" tabindex="-1" role="dialog"

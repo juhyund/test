@@ -10,6 +10,21 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        params : {"device_id" : $("#device_id").val()}
 	    }).then(function getInfo(data, status, headers, config) {
 	    	$scope.device_info = data.data.result;
+	    	$("#device_id_span").show();
+	    	$("#branch_span").show();
+	    	$("#device_serial_span").show();
+	    	$("#vendor_nm_span").show();
+	    	$("#di_ip").show();
+	    	$("#di_port").show();
+	    	$("#model_nm_span").show();
+	    	$("#di_fw_version").show();
+	    	$("#di_hw_version").show();
+	    	$("#security_mode_span").show();
+	    	$("#code_local_nm_span").show();
+	    	$("#last_comm_dt_span").show();
+	    	$("#reg_dt_span").show();
+	    	$("#di_remark").show();
+	    	
 		}, function errorCallback(response) {
 	        alert("error");
 	    });
@@ -29,6 +44,51 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        alert("error");
 	    });
 	};
+	
+	$scope.firmware = function () {
+		var columnDefs = [
+			{headerName: "번호", field: "no", width:80},
+			{headerName: "생성일자", field: "reg_dt"},
+			{headerName: "파일명", field: "fw_nm"},
+			{headerName: "패키지 명", field: "fw_file_nm"},
+			{headerName: "패키지 버전", field: "fw_version"}
+		];
+		
+		var initGrid = function() {
+		  dataGrid = new DataGrid('grid_b', columnDefs, true, 500);    
+		  dataGrid.makeGrid();
+		  dataGrid.showNoRows();
+		};
+		
+		onRowClicked = function(event){
+			$("#deviceserial").val($("#device_serial").val());
+			$("#package_uri").val(event.data.fw_pkg_uri);
+			
+			fwUpgradeModal();
+		}
+		
+		initGrid();
+		
+		$http({
+	        method: 'POST',
+	        url: COMMON_URL + "/ajaxDeviceFWList",
+	        params : { 
+	        	"fw_file_nm" : $("#fw_file_nm_b").val(),
+            	"fw_version" : $("#fw_version_b").val(),
+	        }
+	    }).then(function result(data, status, headers, config) {
+	    	
+	    	var dataPerPage = $("#limit").val();
+	    	var currentPage = $("#page").val();
+	    	
+	    	dataGrid.setData(data.data.resultGrid);
+	    	gridPage(data.data.totalCount, dataPerPage, 10, currentPage);
+	    	
+		}, function errorCallback(response) {
+	        alert("error");
+	    });
+	};
+	
 	
 	function successCallback(data, status, headers, config) {
         $.each(data.data.result, function (index, item) {
@@ -57,7 +117,10 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        params : {
 	        	"url" : "clients/",
 	        	"method" : resource.operation_method,
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
+	        	"resource_instance_id" : resource.resource_instance_id, 
 	        	"resource" : path
 	        }
 		
@@ -92,7 +155,10 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        params : {
 	        	"url" : "clients/",
 	        	"method" : resource.operation_method,
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
+	        	"resource_instance_id" : resource.resource_instance_id,
 	        	"resource" : path, 
 	        	"newValue" : newValue
 	        }
@@ -128,7 +194,10 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        params : {
 	        	"url" : "clients/execute/",
 	        	"method" : resource.operation_method,
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
+	        	"resource_instance_id" : resource.resource_instance_id,
 	        	"resource" : path
 	        }
 		
@@ -176,11 +245,14 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     			method: 'POST',
     	        url: COMMON_URL + "/ajaxExecResource",
     	        params : {
-    	        	"url" : "clients/"
-    	        	, "method" : "WriteAttribute" 
-    	        	, "device_serial" : $("#device_serial").val()
-    	        	, "resource" : path
-    	        	, "attributes" : attributes
+    	        	"url" : "clients/",
+    	        	"method" : "WriteAttribute", 
+	        		"device_id" : $("#device_id").val(),
+	        		"service_id" : $("#service_id").val(),
+    	        	"device_serial" : $("#device_serial").val(),
+    	        	"resource_instance_id" : resource.resource_instance_id,
+    	        	"resource" : path, 
+    	        	"attributes" : attributes
 	        	}
     		
     	    }).then(function SuccessCallback(data, status, headers, config) {
@@ -207,35 +279,56 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     };
     
     $scope.coapping = function () {
-		
+    	$scope.coapping = {};
 		$http({
 			method: 'POST',
-	        url: COMMON_URL + "/ajaxExecResource",
+	        url: COMMON_URL + "/ajaxCoAPpIng",
 	        params : {
 	        	"url" : "coapping/clients/",
 	        	"method" : "coapping",
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
-	        	"resource" : ""
+	        	"sec" : $("#sec").val(), 
+	        	"round" : $("#round").val(), 
 	        }
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
-	 	    
-	    	console.log(data);
-	    	/*
-	    	resource.statusCode = data.data.statusCode
-    		resource.statusMsg = data.data.statusMsg;
-	    	resource.tid = data.data.tid;
-	    	*/
+	    	$scope.coapping.statusMsg = data.data.statusMsg;
 	    	if(data.data.statusCode == "200") {
 	    		alert("전송성공 [" + data.data.tid + "]");
 	    	} else {
-	    		alert("제어실패 [" + resource.statusMsg + "]");
+	    		alert("제어실패 [" + coapping.statusMsg + "]");
 	    	}
 	    	
     	}, function errorCallback(response) {
 	        alert("전송실패");
-	        resource.statusMsg = "제어실패";	    	
+	        coapping.statusMsg = "제어실패";	    	
 	    });
     };
     
+    $scope.reset = function () {
+		$http({
+			method: 'POST',
+	        url: COMMON_URL + "/ajaxExecResource",
+	        params : {
+	        	"url" : "clients/",
+	        	"method" : "Execute", 
+        		"device_id" : $("#device_id").val(),
+        		"service_id" : $("#service_id").val(),
+	        	"device_serial" : $("#device_serial").val(),
+	        	"resource" : "4/0/4", 
+        	}
+		
+	    }).then(function SuccessCallback(data, status, headers, config) {
+	    	if(data.data.statusCode == "200") {
+	    		alert("전송성공 [" + data.data.tid + "]");
+	    	} else {
+	    		alert("제어실패 [" + data.data.statusMsg + "]");
+	    	}
+	    	
+    	}, function errorCallback(response) {
+	        alert("전송실패");
+	    });
+    };
 });

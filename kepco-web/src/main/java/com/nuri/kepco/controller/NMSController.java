@@ -1,6 +1,7 @@
 package com.nuri.kepco.controller;
 
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.nuri.kepco.model.NMSInfo;
 import com.nuri.kepco.mongo.model.ConnectivityMonitor;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
@@ -51,6 +51,29 @@ public class NMSController {
 			long cnt = this.nmsInfoService.getCount(param);
 			JSONArray connectivityStatistics =  nmsInfoService.getConnectivityStatistics(param);
 			
+			/*JSONObject parseResult = new JSONObject();
+			for (int i = 0; i < connectivityStatistics.size(); i++) {
+				JSONObject tmp = (JSONObject) connectivityStatistics.get(i);
+				String usageTime = (String) tmp.get("usageTime");
+				String saveTime = (String) tmp.get("saveTime");
+				
+//				tmp.put("usageTime", usageTime);
+//				tmp.put("saveTime", saveTime);
+				
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+				Date toDate_usageTime = transFormat.parse(usageTime);
+				Date toDate_saveTime = transFormat.parse(saveTime);
+				
+//				tmp.put("usageTime", toDate_usageTime);
+//				tmp.put("saveTime", toDate_saveTime);
+				
+				tmp.put("usageTime", transFormat.parse((String) tmp.get("usageTime")));
+				tmp.put("saveTime", transFormat.parse((String) tmp.get("saveTime")));
+				
+				connectivityStatistics.add(i, tmp);
+			}*/
+			
 			json.put("totalCount", cnt);
 			json.put("resultGrid", connectivityStatistics);
 			
@@ -73,7 +96,8 @@ public class NMSController {
 			
 			int limit = Integer.parseInt(request.getParameter("limit"));
 			param.put("row", limit);
-			
+//			param.put("deviceSerial", request.getParameter("deviceSerial"));
+						
 			List<RamUsageMonitor> ramUsageList = this.nmsInfoService.getRamUsageMonitor(param);
 			List<CpuUsageMonitor> cpuUsageList = this.nmsInfoService.getCpuUsageMonitor(param);
 			List<ConnectivityMonitor> connectivityList = this.nmsInfoService.getConnectivityMonitor(param);

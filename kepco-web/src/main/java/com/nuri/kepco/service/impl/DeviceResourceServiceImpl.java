@@ -7,13 +7,10 @@ import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.nuri.kepco.model.DeviceResource;
 import com.nuri.kepco.model.dao.DeviceResourceDAO;
 import com.nuri.kepco.service.DeviceResourceService;
@@ -92,23 +89,6 @@ public class DeviceResourceServiceImpl implements DeviceResourceService {
 		
 		JSONObject result = new JSONObject();
 		for(String key : map.keySet()) {
-			
-			
-			for(Object o : map.get(key)) {
-				Gson gson = new GsonBuilder().serializeNulls().create();
-				String str = gson.toJson(o).toString();
-				
-				JSONParser parser = new JSONParser();
-				Object obj = null;
-				try {
-					obj = parser.parse(str);	
-				}catch (Exception e) {
-					System.out.println("o: " + o );
-					System.out.println(str);
-					//e.printStackTrace();
-				}
-			}
-			
 			result.put(key, ConversionUtil.getJSONArrayByModel(map.get(key)));
 		}
 
