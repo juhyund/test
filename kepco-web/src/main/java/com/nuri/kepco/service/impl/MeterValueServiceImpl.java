@@ -63,7 +63,7 @@ public class MeterValueServiceImpl implements MeterValueService {
 		ConversionUtil.getModelByMap(meterValue, param);
 		List<MeterValue> list = this.meterValueDAO.getMeterValue(meterValue);
 
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list,meterValue.getStart());
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class MeterValueServiceImpl implements MeterValueService {
 		meterValue.setChannelList(channels);
 		
 		List<Map<String, Object>> list = this.meterValueDAO.getMeterValueDetail(meterValue);
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list,meterValue.getStart());
 	}
 
 	@Override
