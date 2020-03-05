@@ -46,17 +46,25 @@
 
 	<select id="selectList" resultType="deviceFwHistory" parameterType="deviceFwHistory">	
 		SELECT 
-			fw_history_seq
-			, device_id
-			, fw_id
-			, fw_write_dt
-			, fw_execute_dt
-			, fw_issue_status
-			, tid
-			, reg_id
+			a.fw_history_seq
+			, a.device_id
+			, d.device_serial
+			, d.fw_version as device_fw_version
+			, a.fw_id
+			, b.fw_version
+			, b.fw_nm
+			, b.fw_file_nm						
+			, DATE_FORMAT(a.fw_write_dt,'${prop.dt}')
+			, DATE_FORMAT(a.fw_success_dt,'${prop.dt}') 
+			, a.fw_issue_status
+			, FNC_GET_CODE_NM(a.fw_issue_status) as fw_issue_status_nm
+			, a.tid			
+			, DATE_FORMAT(a.result_dt,'${prop.dt}')
+			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
-		FROM EMI_DEVICE_FW_HISTORY a	
-			
+		FROM EMI_DEVICE_FW_HISTORY a
+		INNER JOIN EMI_DEVICE_FW b ON (a.fw_id = b.fw_id)
+		INNER JOIN EMI_DEVICE_INFO d ON (a.device_id = d.device_id)	
 		<include refid="base_where_list" />
 		
 		<include refid="order_by_list" />	
@@ -67,38 +75,70 @@
 	
 	<select id="selectOne" resultType="deviceFwHistory" parameterType="deviceFwHistory">	
 		SELECT 
-			fw_history_seq
-			, device_id
-			, fw_id
-			, fw_write_dt
-			, fw_execute_dt
-			, fw_issue_status
-			, tid
-			, reg_id
+			a.fw_history_seq
+			, a.device_id
+			, d.device_serial
+			, d.fw_version as device_fw_version
+			, a.fw_id
+			, b.fw_version
+			, b.fw_nm
+			, b.fw_file_nm						
+			, DATE_FORMAT(a.fw_write_dt,'${prop.dt}')
+			, DATE_FORMAT(a.fw_success_dt,'${prop.dt}') 
+			, a.fw_issue_status
+			, FNC_GET_CODE_NM(a.fw_issue_status) as fw_issue_status_nm
+			, a.tid			
+			, DATE_FORMAT(a.result_dt,'${prop.dt}')
+			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
-		FROM EMI_DEVICE_FW_HISTORY a				
-		WHERE fw_history_seq = #{fw_history_seq}
+		FROM EMI_DEVICE_FW_HISTORY a
+		INNER JOIN EMI_DEVICE_FW b ON (a.fw_id = b.fw_id)
+		INNER JOIN EMI_DEVICE_INFO d ON (a.device_id = d.device_id)						
+		WHERE a.fw_history_seq = #{fw_history_seq}
+	</select>
+	
+	<select id="selectByTid" resultType="deviceFwHistory" parameterType="java.lang.String">	
+		SELECT 
+			a.fw_history_seq
+			, a.device_id
+			, d.device_serial
+			, d.fw_version as device_fw_version
+			, a.fw_id
+			, b.fw_version
+			, b.fw_nm
+			, b.fw_file_nm						
+			, DATE_FORMAT(a.fw_write_dt,'${prop.dt}')
+			, DATE_FORMAT(a.fw_success_dt,'${prop.dt}') 
+			, a.fw_issue_status
+			, FNC_GET_CODE_NM(a.fw_issue_status) as fw_issue_status_nm
+			, a.tid			
+			, DATE_FORMAT(a.result_dt,'${prop.dt}')
+			, a.reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+		FROM EMI_DEVICE_FW_HISTORY a
+		INNER JOIN EMI_DEVICE_FW b ON (a.fw_id = b.fw_id)
+		INNER JOIN EMI_DEVICE_INFO d ON (a.device_id = d.device_id)						
+		WHERE a.tid = #{tid}
 	</select>
 	
 	<insert id="insert" parameterType="deviceFwHistory">     	
-		INSERT INTO EMI_DEVICE_FW_HISTORY (			
-			fw_history_seq
-			, device_id
+		INSERT INTO EMI_DEVICE_FW_HISTORY (		
+			device_id
 			, fw_id
 			, fw_write_dt
-			, fw_execute_dt
+			, fw_success_dt
 			, fw_issue_status
 			, tid
+			, result_dt
 			, reg_id
-			, reg_dt
-		) VALUES (			  
-			#{fw_history_seq}
-			, #{device_id}
+		) VALUES (
+			#{device_id}
 			, #{fw_id}
 			, #{fw_write_dt}
-			, #{fw_execute_dt}
+			, #{fw_success_dt}
 			, #{fw_issue_status}
 			, #{tid}
+			, #{result_dt}
 			, #{reg_id}
 			, now()
 		)
@@ -106,12 +146,14 @@
     
     <update id="update" parameterType="deviceFwHistory">
 		UPDATE EMI_DEVICE_FW_HISTORY SET			
-			device_id = #{attr_policy_seq}
-			, fw_id = #{attr_policy_seq}
-			, fw_write_dt = #{attr_policy_seq}
-			, fw_execute_dt = #{attr_policy_seq}
-			, fw_issue_status = #{attr_policy_seq}
-			, tid = #{attr_policy_seq}
+			device_id = #{device_id}
+			, fw_id = #{fw_id}
+			, fw_write_dt = #{fw_write_dt}
+			, fw_success_dt = #{fw_success_dt}
+			, fw_issue_status = #{fw_issue_status}
+			, tid = #{tid}
+			, result_dt = #{result_dt}
+			, reg_id = #{reg_id}
 		WHERE fw_history_seq = #{fw_history_seq}
 	</update>
 	

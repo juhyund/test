@@ -102,6 +102,28 @@
 		WHERE fw_id = #{fw_id}
 	</select>
 	
+	
+	<select id="selectOneByPackageUri" resultType="deviceFw" parameterType="java.lang.String">	
+		SELECT 
+			fw_id
+			, fw_nm
+			, fw_file_nm
+			, fw_version
+			, fw_file_path
+			, fw_pkg_uri
+			, fw_biuld_no
+			, remark
+			, use_yn
+			, reg_id
+			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
+			, update_id
+			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
+		FROM EMI_DEVICE_FW a				
+		WHERE fw_pkg_uri = #{fw_pkg_uri}
+		ORDER BY fw_id DESC
+		LIMIT 1
+	</select>
+	
 	<insert id="insert" parameterType="deviceFw" useGeneratedKeys="true" keyProperty="fw_id">     	
 		INSERT INTO EMI_DEVICE_FW (			
 			fw_nm

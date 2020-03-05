@@ -12,19 +12,21 @@ import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
 import com.nuri.kepco.fep.parser.CmdResultDataParser;
 import com.nuri.kepco.fep.parser.KepcoDLMSParser;
+import com.nuri.kepco.model.DeviceFwHistory;
 import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.model.OperationLog;
+import com.nuri.kepco.model.dao.DeviceFwHistoryDAO;
 import com.nuri.kepco.model.dao.DeviceInfoDAO;
 import com.nuri.kepco.model.dao.OperationLogDAO;
 import com.nuri.kepco.mongo.model.CmdResultData;
 import com.nuri.kepco.mongo.model.dao.CmdResultDataDAO;
 
-import jdk.internal.org.jline.utils.Log;
-
 @Service
 public class CmdResultDataSaver extends AbstractMDSaver {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(KepcoDLMSParser.class);
+	
+	private static final Integer FIRMWARE_OBJECT_ID = 5;
 	
 	@Autowired
 	CmdResultDataDAO cmdResultDataDAO;
@@ -33,10 +35,13 @@ public class CmdResultDataSaver extends AbstractMDSaver {
 	OperationLogDAO operationLogDAO;
 	
 	@Autowired
+	DeviceFwHistoryDAO deviceFwHistoryDAO;
+	
+	@Autowired
 	DeviceInfoDAO deviceInfoDAO;
 	
 	@Override
-	public boolean save(IMeasurementData md) throws Exception {		
+	public boolean save(IMeasurementData md) throws Exception {
 		
 		CmdResultDataParser parser = (CmdResultDataParser)md.getMeterDataParser();
 		
@@ -47,6 +52,10 @@ public class CmdResultDataSaver extends AbstractMDSaver {
 		
 		// save to mariadb
 		saveOperationLog(list);
+		
+		// save to mariadb (fw history)
+		// fimware write 또는 execute 실행에 대한 응답 일자만 저장!
+		saveFirmwareHistoryLog(list);
 		
 		return true;
 	}
@@ -125,7 +134,38 @@ public class CmdResultDataSaver extends AbstractMDSaver {
 			LOG.error("error", e);
 		}
 		
-		return result;
+		return result;		
+	}
+	
+	/**
+	 * saveFirmwareHistoryLog
+	 * @param list
+	 * @return
+	 */
+	private int saveFirmwareHistoryLog(List<CmdResultData> list) {
+		int result = 0;
+		try {
+			
+			for(CmdResultData data : list) { // 실행에 대한 응답 일자를 업데이트 한다.
+				
+				LwM2mPath path = new LwM2mPath(data.getResource());
+				
+				if(path.getObjectId().equals(FIRMWARE_OBJECT_ID)) {
+					
+					// tid로 검색하여 deviceFwHistory가 있는지 확인한다.
+					DeviceFwHistory deviceFwHistory = deviceFwHistoryDAO.selectByTid(data.getTid());
+					
+					if(deviceFwHistory != null) { // null이 아닌 경우 update						
+						deviceFwHistory.setResult_dt(data.getResultTime());
+						result += deviceFwHistoryDAO.update(deviceFwHistory);
+					}
+				}
+			}
+			
+		} catch(Exception e) {
+			LOG.error("error", e);
+		}
 		
+		return result;		
 	}
 }
