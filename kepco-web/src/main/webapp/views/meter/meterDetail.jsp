@@ -94,9 +94,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                             <li><a class="nav-link active" data-toggle="tab" href="#tab-1">기본정보</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-2" ng-click="meterResourceList(2);">동적 미터 설정</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-3" ng-click="meterResourceList(3);">동적 스케줄 설정</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
+                          <!--   <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-5">TOU설정 조회</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-6">제어이력</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-6">제어이력</a></li> -->
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" id="tab-1" class="tab-pane active">
@@ -241,7 +241,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="ibox-content">
 														<div> 
 															<input type="hidden" id=device_id name="device_id" value=""> </input>
-															<input type="text" id=obis_code2 name="obis_code" value=""> 오 비 스 </input>
+															
 														</div>
 														<div class="table-responsive"  id="resource">
 															<table class="table">
@@ -274,11 +274,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																				<option value="5">READ </option>
 																				<option value="6">WRITE </option>
 																			</select>
-																			<input ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_nm.indexOf('OBIS') == -1" type="text" ng-model="newValue" name="newValue"
+																			<input
+																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_nm.indexOf('OBIS') == -1"
+																				type="text" ng-model="newValue" name="newValue"
 																				style="min-width: 200px; ">
 																			
 																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_nm.indexOf('OBIS') != -1">
-																				<input type="text" ng-model="obis_code" name="obis_code" id="obis_code" style="min-width: 200px;" readonly>
+																				<input type="text" ng-model="obis_code" name="obis_code" id="obis_code{{resource.resource_id}}" style="min-width: 200px;" readonly>
 																			</div>
 																			
 																		</td>
@@ -324,6 +326,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div class="col-lg-10">
 										<h4 style="margin-top: 6px"></h4>
 									</div>
+									<select id="testselect"></select>
 									<div>
 										<div class="row" style="margin-top: 10px">
 											<div class="col-lg-12">
@@ -337,7 +340,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										                	</div>
 										                </div>
 										                <div class=" gray-bg m-r-n-sm"   style="width:90%"> 
-										                
 											                <table class="table-borderless text-center m-t" style="width:100%" >
 																<thead>
 																	<tr class="text-navy">
@@ -360,9 +362,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													
 													<div class="ibox-content">
-														<div> 
-															<input type="hidden" id=device_id name="device_id" value=""> </input>
-														</div>
 														<div class="table-responsive"  id="resource">
 															<table class="table">
 																<thead class ="gray-bg">
@@ -386,26 +385,29 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																			</button>
 																		</td>
 																		<td>
-																			<select ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'"
-																				ng-model="newValue" name="newValue" id="target_meter_select"
+																			<select ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'"
+																				ng-model="newValue" name="newValue" id="target_meter{{resource.resource_id}}"
 																				style="min-width: 200px; ">
-																				<option id="selected_meter_id">해당 미터 </option>
 																				<option value="00000000000">같은 타입 모든 미터</option>
 																			</select>
 																			<input
 																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_nm.indexOf('OBIS') == -1"
 																				type="text" ng-model="newValue" name="newValue"
 																				style="min-width: 200px; ">
-																			<input
-																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_nm.indexOf('OBIS') != -1"
-																				type="text" ng-model="newValue" name="newValue" 
-																				style="min-width: 200px;" readonly>
+																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '112'">
+																				<input type="text" style="min-width: 200px;" readonly>
+																			</div>
+																			
+																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '113'">
+																				<input type="text" ng-model="obis_code" name="obis_code3" id="obis_code_tab3_{{resource.resource_id}}" style="min-width: 200px;" readonly>
+																			</div>
+																			
 																		</td>
 																	</tr>
 																</tbody>
 															</table>
 															<div name="schedule-buttons" class="row" style="margin:0; height:35px">
-																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" ng-click="">
+																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="">
 																	<i class="fa fa-play"> 동적 스케줄 실행</i>
 																</button>
 															</div>
@@ -422,31 +424,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									
-                            </div>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            <div role="tabpanel" id="tab-4" class="tab-pane">
-                                <div class="panel-body">
-									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" id="tab-5" class="tab-pane">
-                                <div class="panel-body">
-									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" id="tab-6" class="tab-pane">
-                                <div class="panel-body">
-									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
-                                </div>
                             </div>
                         </div>
                    		 </div>
@@ -529,6 +506,7 @@ function successResultHandler(data, status) {
 	$('#device_serial_tab2').text(data.result.device_serial);
 	$('#device_serial_tab3').text(data.result.device_serial);
 	$('#meter_serial').text(data.result.meter_serial);
+
 	$('#meter_serial_tab2').text(data.result.meter_serial);
 	$('#meter_serial_tab3').text(data.result.meter_serial);
 	$('#reg_dt').text(data.result.reg_dt);
@@ -541,7 +519,6 @@ function successResultHandler(data, status) {
 	$('#meter_type_tab3').text(data.result.meter_type);	
 	meterTypeCode = data.result.meter_type_code;	
 	$('#device_id').val(data.result.device_id);	
-	$('#selected_meter_id').val(data.result.device_id);	
 	
 	$('#prog_id').text(data.result.prog_id);	
 	$('#prog_version').text(data.result.prog_version);	
@@ -560,6 +537,9 @@ function successResultHandler(data, status) {
 	$('#net_metering').text(data.result.net_metering);
 	$('#avg_power_period').text(data.result.avg_power_period);
 	
+	
+		 $("#testselect").prepend("<option value="+data.result.meter_serial+">"+data.result.meter_serial+"</option>");
+	$("#target_meter104").prepend("<option value="+data.result.meter_serial+">"+data.result.meter_serial+"</option>");
 }
 
 function settingBillingDt(){
@@ -567,9 +547,7 @@ function settingBillingDt(){
 	//DlmsMethod – Set / OBIS - 001600000F0000FF04 세팅
 
 	 $("#command-select").val("193").attr("selected", "true");
-	 obis_code = '001600000F0000FF04';
-	 
-	 alert( " DlmsMethod="+$("#command-select option:selected").text()+"\nobis_code="+ obis_code);
+	 $("#obis_code105").val("001600000F0000FF04");
 };
 
 function settingLpPeriod(){
@@ -577,9 +555,7 @@ function settingLpPeriod(){
 	//DlmsMethod – Set / OBIS - 00030101000804FF02 세팅
 	
 	$("#command-select").val("193").attr("selected", "true");
-	 obis_code = '00030101000804FF02';
-	 
-	 alert( " DlmsMethod="+$("#command-select option:selected").text()+"\nobis_code="+ obis_code);
+	 $("#obis_code105").val("00030101000804FF02");
 };
 
 

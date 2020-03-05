@@ -130,12 +130,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var selectedObisCode = '';
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", 		field: "no", 	   width:50,suppressSizeToFit: true},
-	{headerName: "CLASS",	field: "class_id"},
-	{headerName: "OBIS 코드",field: "obis_code",width:300},
- 	{headerName: "OBIS 코드명",		field: "descr"},
-	{headerName: "속성",		field: "attribute_no"},
-	{headerName: "권한",		field: "access_right"}
+	{headerName: "번호", 			field: "no", 	   width:50,suppressSizeToFit: true},
+	{headerName: "CLASS",		field: "class_id"},
+	{headerName: "OBIS 코드",		field: "obis_code",width:300},
+ 	{headerName: "OBIS 코드명",	field: "descr"},
+	{headerName: "속성",			field: "attribute_no"},
+	{headerName: "권한",			field: "access_right"}
 ];
 
 
@@ -168,18 +168,13 @@ onRowClicked = function(event){
 	var selectedRows = dataGrid.getSelectedRow();
     var selectedRowsString = '';
     selectedRows.forEach( function(selectedRow, index) {
-    	selectedObisCode = selectedRow.obis_code;
+    	selectedObisCode = selectedRow.class_id+selectedRow.obis_code+selectedRow.attribute_no
+    	
     });
-    
-   
-    
 }
 
 selectObis = function(event){
-	opener.document.getElementById("obis_code").value = selectedObisCode;
-	opener.document.getElementById("obis_code2").value = selectedObisCode;
-	
-	 alert("selectedObisCode = "+selectedObisCode);
+	opener.document.getElementById("obis_code105").value = selectedObisCode;
 	 window.close();
 }
 

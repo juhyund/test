@@ -55,6 +55,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</li>
 						</ol>
 					</div>
+				</div>
 				<!-- navigator -->
 				<!-- body -->
 				<div class="row">

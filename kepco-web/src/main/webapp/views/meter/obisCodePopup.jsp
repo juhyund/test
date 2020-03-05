@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
-<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=0"></script>
+<script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=03"></script>
 <style>
   div .ibox-title {
 		/* background-color: #dee2e6; */
@@ -113,7 +113,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				 <div id="grid" style="height:300px;" class="ag-theme-balham m-b-md"></div>								
 				<div>
 					<button class="btn btn-primary m-t-sm" style="height: 100%" type="button" onclick="selectObis()">
-						<i class="fa fa-undo">OBIS 선택</i>
+						<i >OBIS 선택</i>
 					</button>
 			   </div> 
 			      
@@ -171,8 +171,14 @@ onRowClicked = function(event){
     var selectedRowsString = '';
     selectedRows.forEach( function(selectedRow, index) {
     	selectedObisCode = selectedRow.arr_obis_code;
+    
+    	
     });
-    alert("selectedObisCode = "+selectedObisCode);
+}
+
+selectObis = function(event){
+	opener.document.getElementById("obis_code_tab3_113").value = selectedObisCode;
+	window.close();
 }
 
 function resetForm(){
