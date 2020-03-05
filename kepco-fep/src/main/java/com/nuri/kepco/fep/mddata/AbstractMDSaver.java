@@ -195,10 +195,17 @@ public abstract class AbstractMDSaver {
 			
 			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
 			if (meter == null) {				
-				// default branch id
+				// default branch id 세팅
 				deviceInfo.setBranch_id(defaultBranchId);
+				meterInfo.setBranch_id(defaultBranchId);
 				result += meterInfoDAO.insert(meterInfo);				
 			} else {
+				
+				// default branch id 세팅
+				if(meter.getBranch_id() == null) {
+					meterInfo.setBranch_id(defaultBranchId); //
+				}
+				
 				meterInfo.setMeter_id(meter.getMeter_id()); // meter id
 				result += meterInfoDAO.update(meterInfo);
 			}
@@ -280,16 +287,25 @@ public abstract class AbstractMDSaver {
 			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
 			if(mobileNo != null) deviceInfo.setMobile_no(mobileNo);
 
-			if (isNewDevice) {				
+			if (isNewDevice) {			
+				
 				// model을 default로 저장
 				String model_nm = defaultModelName;
 				DeviceModel deviceModel = deviceModelDAO.selectModelByName(model_nm);
+				
 				if(deviceModel != null) {
 					deviceInfo.setModel_seq(deviceModel.getModel_seq());
 				}				
+				
 				deviceInfo.setBranch_id(defaultBranchId);
-				result = deviceInfoDAO.insert(deviceInfo);				
+				result = deviceInfoDAO.insert(deviceInfo);
+				
 			} else {
+				
+				if(deviceInfo.getBranch_id() == null) {
+					deviceInfo.setBranch_id(defaultBranchId);	
+				}
+				
 				result = deviceInfoDAO.update(deviceInfo);
 			}
 			

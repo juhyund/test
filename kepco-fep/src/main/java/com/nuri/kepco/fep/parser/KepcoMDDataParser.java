@@ -72,12 +72,14 @@ public class KepcoMDDataParser extends DataParser {
 
 					if (path.getResourceId() == MODEM_INFO_RESOURCE_ID) { // modem info
 						
-						LOG.debug("e.getStringValue() :{}", Hex.decode(Base64.getDecoder().decode(e.getStringValue())) );						
+						LOG.debug("e.getStringValue() :{}", Hex.decode(Base64.getDecoder().decode(e.getStringValue())) );
+						
 						modemInfo = Base64.getDecoder().decode(e.getStringValue());
 						byte[] mobileNo = new byte[8];
 						System.arraycopy(modemInfo, 0, mobileNo, 0, mobileNo.length);
 											
-						this.mobileNo = new String(mobileNo);						
+						this.mobileNo = new String(mobileNo);		// mobile번호는 8 
+																	// 나중에 format이 변동될 수 있다.
 					}
 
 					if (path.getResourceId() == METER_INFO_RESOURCE_ID) { // meter info
@@ -111,6 +113,8 @@ public class KepcoMDDataParser extends DataParser {
 				}
 			}
 			
+			// MeteringData는 (31008) 객체에 담겨 
+			// DATAPUSH 로 전송된다.
 			if(meterInfo != null) {
 				for(Integer key : meterInfo.keySet()) {
 					
@@ -120,6 +124,8 @@ public class KepcoMDDataParser extends DataParser {
 				}
 			}	
 			
+			// MeterAccess (31012) 객체에 WRITE/EXECUTE 하면
+			// 결과는 (31012) DATAPUSH로 전송된다.
 			if(!"".equals(meterAccessFrame)) {
 				KepcoMeterAccessParser dlmsParser = new KepcoMeterAccessParser();
 				meterAccessResult = dlmsParser.parser(Hex.encode(meterAccessFrame), OBIS, APDU, meterStatus);
