@@ -33,7 +33,7 @@
 	    <li>
 	        <a href="#"><i class="fa fa-map"></i> <span class="nav-label">NMS</span> <span class="fa arrow"></span></a>
 	        <ul class="nav nav-second-level collapse" aria-expanded="false">
-	            <li><a href="<%=COMMON_URL%>/NMS" target="contentsFrame">CPU,RAM 사용률 조회</a></li>
+	            <li><a href="<%=COMMON_URL%>/NMS" target="contentsFrame">Device Monitoring</a></li>
 	        </ul>
 	    </li>
 	    <li>

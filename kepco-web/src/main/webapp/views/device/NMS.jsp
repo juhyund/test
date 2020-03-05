@@ -92,7 +92,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<option value='deviceId'>단말ID</option>
 											<option value='deviceSerial'>단말 번호</option>
 										</select>
-										<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+										<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 									</div>
 													
 									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>

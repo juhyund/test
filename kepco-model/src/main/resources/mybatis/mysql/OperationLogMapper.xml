@@ -175,6 +175,7 @@
 			, ol.tid
 			, ol.payload
 			, ol.result
+			, ol.request_dt as _request_dt
 			, ifnull(date_format(ol.request_dt, '%y-%m-%d %h:%i:%s'),'') as request_dt
 			, ifnull(date_format(ol.result_dt, '%y-%m-%d %h:%i:%s'),'') as result_dt
 			, ol.reg_id
@@ -230,7 +231,13 @@
 		INNER JOIN EMI_OPERATION_LOG OL ON a.DEVICE_ID = OL.DEVICE_ID
 		LEFT OUTER JOIN EMI_OBJECT_MODEL OM ON OL.OBJECT_ID = OM.OBJECT_ID
 		LEFT OUTER JOIN EMI_RESOURCE_MODEL RM ON OM.OBJECT_ID = RM.OBJECT_ID AND OL.RESOURCE_ID = RM.RESOURCE_ID
-		WHERE A.device_id = #{device_id}	
+		WHERE 1=1
+		<if test="device_id != null and device_id != ''" >
+			AND OL.device_id = #{device_id} 
+		</if>
+		<if test="request_dt != null and request_dt != ''" >
+			AND OL.request_dt = #{request_dt}
+		</if>	 	
 	</select>
 	
 	<select id="selectByTID" resultType="operationLog" parameterType="java.lang.String">	

@@ -75,7 +75,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">단말 검색</label>
 															<div class="col-lg-3">
 																<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 																	<option value=''>선택</option>
@@ -194,7 +194,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
 	{headerName: "리소스 경로", field: "resource_sum"},
-	{headerName: "단말ID", field: "device_id", hide:"true"},
+	{headerName: "_단말ID", field: "device_id", hide:"true"}, 	// detail 조회용 컬럼
+	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},
 	{headerName: "리소스명", field: "resource_nm", width:150, cellStyle:{'text-align': "center"}},
 	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
@@ -289,7 +290,8 @@ var initGrid = function() {
 // grid row click
  onRowClicked = function(event){
 	var device_id = event.data.device_id;
-	location.href = CONTEXT_PATH + "/operationLogDetail?device_id="+device_id;
+	var request_dt = event.data._request_dt;
+	location.href = CONTEXT_PATH + "/operationLogDetail?device_id="+device_id+"&request_dt="+request_dt;
 }
 
 function ajaxSearchForm() {
