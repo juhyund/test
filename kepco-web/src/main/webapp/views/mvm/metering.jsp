@@ -96,7 +96,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			                            </div>
 									</div>
 									<div class="form-group row">
-										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">계기 타입</label>
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">계기타입</label>
 										<div class="col-lg-3">
 											<select class="form-control" name="meter_type"	id="meter_type"></select>
 										</div> 
