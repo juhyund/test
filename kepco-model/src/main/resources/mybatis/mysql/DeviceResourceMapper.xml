@@ -149,7 +149,7 @@
 			, #{list.update_id}
 			, now()
 		</foreach>		
-		ON DUPLICATE KEY UPDATE resource_val=VALUES(resource_val),update_dt=now();
+		ON DUPLICATE KEY UPDATE resource_val=VALUES(resource_val)
     </insert>
     
     <delete id="delete" parameterType="deviceResource">
