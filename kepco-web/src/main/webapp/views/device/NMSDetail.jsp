@@ -60,7 +60,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 	
 	.highcharts-line, .highcharts-data-table table {
 	    min-width: 360px; 
-	    max-width: 600px;
+	    max-width: fit-content;
 	    height: 400px;
 	    margin: 1em auto;
 	}
@@ -233,7 +233,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</tbody>
 				</table>	
 				</form>
-				<div>								
+				<div >								
 				   <!-- chart -->
 				   <figure class="highcharts-figure">
 					   <div id="container-CPU" class="chart-container"></div>
@@ -288,6 +288,8 @@ function showRequest() {
 }
 
 function successResultHandler(data, status) {
+	//chart rendering
+	renderChart(data, status)
 	
 	/* $.each( data, function(index, item) {
 		if(index == 'ramUsageList'){
@@ -324,6 +326,10 @@ var gaugeOptions = {
 	    exporting: {
 	        enabled: false
 	    },
+	    
+	    contextButton: {
+            enabled: false
+        },
 
 	    tooltip: {
 	        enabled: false
@@ -428,8 +434,7 @@ var gaugeOptions = {
 
 	    if (chartCPU) {
 	        point = chartCPU.series[0].points[0];
-	        inc = data;
-	        /* inc = Math.round((Math.random() - 0.5) * 100); */
+	        inc = Math.round((Math.random() - 0.5) * 100);
 	        newVal = point.y + inc;
 
 	        if (newVal < 0 || newVal > 100) {
@@ -453,7 +458,7 @@ var gaugeOptions = {
 	    }
 	}, 2000);
 	
-	//line chart
+/* 	//line chart
 	function getData(n) {
 	    var arr = [],
 	        i,
@@ -503,10 +508,6 @@ var gaugeOptions = {
 	        text: 'COMPARISON OF RSRP, RSRQ, SNR'
 	    },
 
-	   /*  subtitle: {
-	        text: 'Using the Boost module'
-	    }, */
-
 	    tooltip: {
 	        valueDecimals: 2
 	    },
@@ -522,7 +523,209 @@ var gaugeOptions = {
 	    }]
 
 	});
-	console.timeEnd('line');	
+	console.timeEnd('line'); */
+	
+function renderChart(data, status){
+	var format = '{value: %m/%e %H:%M}';
+
+	var chartOptions = {
+		  chart: {
+		    scrollablePlotArea: {
+		      minWidth: 900
+		    },
+		    zoomType: "x"
+		  },
+
+		  title: {
+		    text: ''
+		  },
+		  xAxis: {
+				type: 'datetime',
+				labels: {
+					format: format,
+					overflow: 'justify'
+					
+				},
+				//minTickInterval: interval,
+				ordinal: false //this sets the fixed time formats 
+			
+			}, 
+
+		  yAxis: [{ // left y axis
+		    title: {
+		      text: null
+		    },
+		    labels: {
+		      align: 'left',
+		      x: 3,
+		      y: 16,
+		      format: '{value:.,0f}'
+		    },
+		    showFirstLabel: false
+		  }/* , { // right y axis
+		    linkedTo: 0,
+		    gridLineWidth: 0,
+		    opposite: true,
+		    title: {
+		      text: null
+		    },
+		    labels: {
+		      align: 'right',
+		      x: -3,
+		      y: 16,
+		      format: '{value:.,0f}'
+		    },
+		    showFirstLabel: false
+		  } */],
+		  lang: {
+		        noData: "No data to Display"
+		  },
+		  legend: {
+		    align: 'center',
+		    verticalAlign: 'bottom',
+		    borderWidth: 0
+		  },
+	 
+		  tooltip: {
+		    shared: true
+		  },
+
+		  plotOptions: {
+		    series: {
+		      cursor: 'pointer',
+		      point: {
+		        events: {
+		          click: function (e) {
+		            hs.htmlExpand(null, {
+		              pageOrigin: {
+		                x: e.pageX || e.clientX,
+		                y: e.pageY || e.clientY
+		              },
+		              headingText: this.series.name,
+		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+		                this.y ,
+		              width: 200
+		            });
+		          }
+		        }
+		      }/* ,
+		      marker: {
+		        lineWidth: 1
+		      } */
+		    }
+		  },
+		  series: createSeries(data)
+		};
+	
+	
+	function createSeries(data) {
+		 var series = [];
+		 var rsrpChannelData = [];
+		 var rsrqChannelData = [];
+		 var ssnrChannelData = [];
+		 var cpuChannelData = [];
+		 var ramChannelData = [];
+		 
+			 //데이터 저장 (각 채널의 데이터 배열에 저장)
+			 $.each( data, function(index, item) {
+				if(index == 'connectivityList'){
+					for(var i=0; i<item.length; i++){
+						if(item[i].rsrp.getOwnPropertyNames = "rsrp"){
+							var point = [];
+							var pointData = item[i].rsrp;
+							
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(item[i].rsrp);
+							
+							rsrpChannelData.push(point);			
+						} 
+						
+						if(item[i].rsrq.getOwnPropertyNames = "rsrq"){
+							var point = [];
+							var pointData = item[i].rsrq;
+							
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(item[i].rsrq);
+							
+							rsrqChannelData.push(point);
+						}
+						
+						if(item[i].ssnr.getOwnPropertyNames = "ssnr"){
+							var point = [];
+							var pointData = item[i].ssnr;
+							
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(item[i].ssnr);
+							
+							ssnrChannelData.push(point);
+						}
+					}
+				}
+				
+				if(index == 'ramUsageList'){
+					for(var i=0; i<item.length; i++){
+						if(item[i].ramUsage != ""){
+							var point = [];
+							var pointData = item[i].ramUsage;
+							
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(item[i].rsrp);
+							
+							ramChannelData.push(point);			
+						} 
+					}
+				}
+				
+				if(index == 'cpuUsageList'){
+					for(var i=0; i<item.length; i++){
+						if(item[i].cpuUsage != ""){
+							var point = [];
+							var pointData = item[i].cpuUsage;
+							
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(item[i].rsrp);
+							
+							cpuChannelData.push(point);			
+						} 
+					}
+					
+				}
+				
+			});
+			 
+			 
+			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
+				 series.push({
+					 name : 'RSRP',
+					 data : rsrpChannelData
+				 });
+			 
+				 series.push({
+					 name : 'RSRQ',
+					 data : rsrqChannelData
+				 });
+				 
+				 series.push({
+					 name : 'SNR',
+					 data : ssnrChannelData
+				 });
+				 
+				 series.push({
+					 name : 'CPU',
+					 data : cpuChannelData
+				 });
+				 
+				 series.push({
+					 name : 'RAM',
+					 data : ramChannelData
+				 });
+			
+		  return series;
+	}
+	//highcharts 로딩
+	Highcharts.chart('container', chartOptions);
+	
+}	
 
 function init() {
 	

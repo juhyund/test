@@ -78,8 +78,8 @@ public class OperationLogServiceImpl implements OperationLogService {
 	}
 
 	@Override
-	public JSONObject getOperationLogDetail(String device_id) throws Exception {
-		OperationLog operationLog = operationLogDAO.getOperationLogDetail(device_id);
+	public JSONObject getOperationLogDetail(Map<String, Object> param) throws Exception {
+		OperationLog operationLog = operationLogDAO.getOperationLogDetail(param);
 		return ConversionUtil.getJSONObjectByModel(operationLog);
 	}
 }

@@ -111,6 +111,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								</table>
 								<form name="control_detail_form" id="control_detail_form" method="post">
 									<input type="hidden" id="_device_id" name="_device_id" value="${device_id}" class="form-control">
+									<input type="hidden" id="_request_dt" name="_request_dt" value="${request_dt}" class="form-control">
 								</form>
 								<div>
 									<button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
