@@ -105,6 +105,12 @@
 		SELECT *
 		FROM EMI_OBIS_CODE a				
 		WHERE meter_type = #{meter_type}
+		<if test="obis_code != null and obis_code != ''" >     
+			     AND a.obis_code = #{obis_code}
+			</if>
+			<if test="descr != null and descr != ''" >     
+			   AND a.descr =  #{descr}
+			</if>
 	</select>
 	
 	<select id="selectObisByCode" resultType="obisCode" parameterType="obisCode">	

@@ -280,12 +280,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</tr>
 											</thead>
 										</table>
+										
+										<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px; float: right" type="button" onclick="javascript:history.back(-1)">
+											<i class="fa fa-undo"> 목록으로 돌아가기</i>
+										</button>	
 									</div>
+									
 								</div>
 								<!--  end : table_area  -->
 
-
-
+										
+								
 							</div>
 						</div>
 					</div>

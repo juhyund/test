@@ -65,7 +65,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">OBIS CODE 선택2</h3>
+	<h3 style="margin-top:6px">OBIS CODE 선택</h3>
 </div>						
 </div>
 <!-- navigator -->
@@ -154,9 +154,9 @@ function ajaxSearchForm() {
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
-           data        : {meter_type		:'${meter_type}',
-        	  			  obis_code			: $("#obis_code").val(),
-        	  			  metering_type_nm 	: $("#descr").val()}
+           data        : {meter_type:'${meter_type}',
+        	  			  obis_code	: $("#obis_code").val(),
+        	  			  descr 	: $("#descr").val()}
      };             	
     
      $.ajax(options);

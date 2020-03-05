@@ -220,10 +220,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											                <table class="table-borderless text-center m-t" style="width:100%" >
 																<thead>
 																	<tr class="text-navy">
-																		<th>단말 번호</th>
-																		<th>미터 타입</th>
-																		<th>계기 번호</th>
-																		<th>검침 주기</th>
+																		<th>단말번호</th>
+																		<th>계기타입</th>
+																		<th>계기번호</th>
+																		<th>검침주기</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -343,10 +343,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											                <table class="table-borderless text-center m-t" style="width:100%" >
 																<thead>
 																	<tr class="text-navy">
-																		<th>단말 번호</th>
-																		<th>미터 타입</th>
-																		<th>계기 번호</th>
-																		<th>검침 주기</th>
+																		<th>단말번호</th>
+																		<th>계기타입</th>
+																		<th>계기번호</th>
+																		<th>검침주기</th>
 																	</tr>
 																</thead>
 																<tbody>

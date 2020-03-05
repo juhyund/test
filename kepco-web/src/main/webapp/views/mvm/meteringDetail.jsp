@@ -88,9 +88,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
 								<tr class="text-navy">
-									<th>미터 ID</th>
-									<th>단말 ID</th>
-									<th>미터 타입</th>
+									<th>미터ID</th>
+									<th>단말ID</th>
+									<th>계기타입</th>
 									<th>최종통신일자</th>
 								</tr>
 							</thead>
