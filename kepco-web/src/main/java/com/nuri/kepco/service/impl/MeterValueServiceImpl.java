@@ -116,7 +116,7 @@ public class MeterValueServiceImpl implements MeterValueService {
 		
 		String template_filepath = "/template/template_meter_value.xlsx";
 		String filename = "meter_value_" + DateUtil.getNowDateTime() + ".xlsx";			
-		String filepath = fileDownloadDir + "/metervalue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+		String filepath = fileDownloadDir + "/meterValue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 
 		List<MeterValue> result = this.meterValueDAO.getMeterValue(meterValue);
 		
@@ -130,8 +130,24 @@ public class MeterValueServiceImpl implements MeterValueService {
 
 	@Override
 	public Map<String, String> excelMeterValueDetail(Map<String, Object> param) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> output = new HashMap<String, String>();
+		MeterValue meterValue = new MeterValue();
+		ConversionUtil.getModelByMap(meterValue, param);
+		
+		
+		String template_filepath = "/template/template_meter_value_Detail.xlsx";
+		String filename = "meter_value_detail_" + DateUtil.getNowDateTime() + ".xlsx";			
+		String filepath = fileDownloadDir + "/metervalue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+
+		List<Map<String, Object>> result = this.meterValueDAO.getMeterValueDetail(meterValue);
+		System.out.println("\n=----------------------excelMeterValueDetail--------------------\n\nresult = "+result);
+		
+		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result);
+		
+		output.put("filepath", filepath);
+		output.put("filename", filename);
+		
+		return output;
 	}
 	
 	
