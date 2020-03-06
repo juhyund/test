@@ -21,6 +21,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	$scope.meterResourceList = function (selectedTab) {
 		
 		var device_id = $("#device_id").val();
+		var meter_serial = $("#_meter_serial").val();
 		var object_id;
 		var object_instance_id;
 		var meter_type = $('#meter_type').text()
@@ -53,96 +54,192 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 		}
 		
 			
-			$http({
-		        method: 'POST',
-	
-		        url: COMMON_URL + "/ajaxMeterResourceList",
-		        params : {"device_id" : device_id,
-			        	  "object_id" : object_id,
-			        	  "object_instance_id" : object_instance_id}
-		    }).then(function getInfo(data, status, headers, config) {
-		    	
-		    	$scope.resources = data.data.result;
-			}, function errorCallback(response) {
-		        alert("error");
-		    });
+		$http({
+	        method: 'POST',
+	        url: COMMON_URL + "/ajaxMeterResourceList",
+	        params : {"device_id" : device_id,
+		        	  "object_id" : object_id,
+		        	  "object_instance_id" : object_instance_id}
+	    }).then(function getInfo(data, status, headers, config) {
+	    	
+//	    	$scope.resources = data.data.result;
+	    	
+	    	var result = data.data.result;
+	    	
+	    	if(object_id == 31012) {
+	    		for(i in result) {	    			
+		    		if(result[i].resource_id == 101) { // targetMeter		    			
+		    			result[i].newValue = meter_serial;
+		    		} else if (result[i].resource_id == 102) { // MeterSchedule
+		    			result[i].newValue = "* * * * *";
+		    		} else if (result[i].resource_id == 103) { // UploadSchedule
+		    			result[i].newValue = "* * * * *";
+		    		} else if (result[i].resource_id == 104) { // DlmsMethod
+		    			result[i].newValue = 192;
+		    		}
+		    	}
+	    	} else if (object_id == 31011) {
+	    		
+	    		for(i in result) { 			
+		    		if(result[i].resource_id == 104) { // targetMeter		    			
+		    			result[i].newValue = meter_serial;
+		    		} else if (result[i].resource_id == 105) { // MeterSchedule
+		    			result[i].newValue = "* * * * *";
+		    		} else if (result[i].resource_id == 106) { // UploadSchedule
+		    			result[i].newValue = "* * * * *";
+		    		} else if (result[i].resource_id == 107) { // StartTime
+		    			result[i].newValue = "* * * * *";
+		    		} else if (result[i].resource_id == 108) { // EndTime
+		    			result[i].newValue = "* * * * *";
+		    		} else if (result[i].resource_id == 109) { // PG_Offset
+		    			result[i].newValue = -1;
+		    		} else if (result[i].resource_id == 110) { // PG_Count
+		    			result[i].newValue = -1;
+		    		} else if (result[i].resource_id == 111) { // PG_Access Selector
+		    			result[i].newValue = 1;
+		    		}
+		    	}
+	    	}
+	    	$scope.resources = result;
+	    	
+		}, function errorCallback(response) {
+	        alert("error");
+	    });
 	};
 	
-	$scope.read = function (resource) {
+	// meter serial for selectbox
+	$scope.meterSerialList = [
+		{id:$("#_meter_serial").val(), name:$("#_meter_serial").val()},
+		{id:"00000000000", name:"00000000000"}
+	];	
+	
+	$scope.write = function (resources) {
 		
-		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
+		var object_instance_id = 0;
+		var object_id = resources[0].object_id;
 		
-		$http({
-	    
-			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execReadResource",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path}
+		if(object_id == 31011) {
+			object_instance_id = $("#object_instance_id").val(); 
+		}
 		
-	    }).then(function SuccessCallback(data, status, headers, config) {
-	 	    	
-	    	resource.statusCode = data.data.statusCode
-    		resource.statusMsg = data.data.statusMsg;
-	    	resource.tid = data.data.tid;
-	    	
-	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
-	    	} else {
-	    		alert("제어실패 [" + resource.statusMsg + "]");
-	    	}
-	    	
-    	}, function errorCallback(response) {
-	        alert("전송실패");
-	        resource.statusMsg = "제어실패";	    	
-	    });
-		resource.operation_method = "Read";
+		// 전송
+		var path = "/" + object_id + "/" + object_instance_id;	
+		
+		if($scope.isValid(resources)) {
+			
+			var payload = {};
+			
+	        payload["id"] = object_instance_id;
+	        payload["resources"] = [];
+	           
+			for(i in resources) {			
+				
+				var resource = resources[i];
+				
+				if(object_id == 31011 && resource.resource_id == 113) { // multiple				
+					
+					if(resource.newValue != undefined) {
+						var resourceSplit = resource.newValue.split(',');
+		        		var values = {};
+		        		 
+		        		for ( var i in resourceSplit ) {
+		        			values[i] = resourceSplit[i];                        			                        			
+		        		}     
+		        		// 113
+		        		payload.resources.push({
+		                    "id":resource.resource_id,
+		                    "values":values
+		                });
+		        		
+		        		// 112
+		        		payload.resources.push({
+		                    "id":112,
+		                    "value":resourceSplit.length
+		                });
+					}
+					
+				} else {
+					
+					if(resource.newValue != undefined) {
+						payload.resources.push({
+			                "id":resource.resource_id,
+			                "value":resource.newValue
+			            });
+					}
+				}
+			}
+			
+			$scope.executeWrite(path, payload);
+		}
     };
     
-    $scope.write = function (resource, newValue) {
+    
+    $scope.isValid = function (resources) {
     	
-    	resource.operation_method = "Write";    	
-		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
-		
-		$http({
-	    
-			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execControlValue",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path, "newValue" : newValue}
-		
-	    }).then(function SuccessCallback(data, status, headers, config) {
-	 	    	
-	    	resource.statusCode = data.data.statusCode
-    		resource.statusMsg = data.data.statusMsg;
-	    	resource.tid = data.data.tid;
-	    	
-	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
-	    	} else {
-	    		alert("제어실패 [" + resource.statusMsg + "]");
-	    	}
-	    	
-    	}, function errorCallback(response) {
-	        alert("전송실패");
-	        resource.statusMsg = "제어실패";	    	
-	    });
+    	var object_id = resources[0].object_id;
+    	
+    	if(object_id == 31012) { // 동적미터 설정
+    		
+    		for(i in resources) {
+    			
+    			var resource = resources[i];    			
+    			if(resource.newValue == undefined || resource.newValue == "") {
+    				
+    				if(resource.resource_id == 106) {
+    					if(resources[3].newValue == 193 || resources[3].newValue == 6) {
+    						resource.msg = "설정할 값을 입력해 주세요!!!!";
+    						return false;
+    					}    					
+    				} else {
+    					resource.msg = resource.resource_nm + "을(를) 입력해 주세요!!!!";
+    					return false;
+    				}
+    					
+    			} else {
+    				resource.msg = "";
+    			}
+    			
+    		} // end for
+    		
+    	} else if(object_id == 31011) { // 동적스케줄 설정
+    		
+    		for(i in resources) {
+    			
+    			var resource = resources[i];    			
+    			if(resource.newValue == undefined || resource.newValue == "") {    				
+    				if(resource.resource_id != 114) {
+    					resource.msg = resource.resource_nm + "을(를) 입력해 주세요!!!!";
+    					return false;
+    				}    					
+    			} else {
+    				resource.msg = "";
+    			}    			
+    		} // end for
+    	}
+    	
+    	return true;
     };
     
-    $scope.execute = function (resource) {
-    	
-    	resource.operation_method = "Execute";
     
-    	var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
+    $scope.executeWrite = function (path, payload) {
+    	
+    	var operation_method = "Write";
+    	alert($("#device_serial").text());
 		
 		$http({
 	    
 			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execControlExecute",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path}
-		
+	        url: COMMON_URL + "/ajaxWriteMultiResource",
+	        params : {
+	        	"url" : "clients/",
+	        	"method" : operation_method,
+	        	"device_id" : $("#device_id").val(),
+	        	"service_id" : $("#service_id").val(),
+	        	"device_serial" : $("#device_serial").text(),
+	        	"resource" : path
+	        },
+	        data : payload		
 	    }).then(function SuccessCallback(data, status, headers, config) {
-	    		
-	    	resource.statusCode = data.data.statusCode
-    		resource.statusMsg = data.data.statusMsg;
-	    	resource.tid = data.data.tid;
 	    	
 	    	if(data.data.statusCode == "200") {
 	    		alert("전송성공 [" + data.data.tid + "]");
@@ -151,97 +248,38 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	    	}
 	    	
     	}, function errorCallback(response) {
-	        alert("전송실패");
-	        resource.statusMsg = "전송실패";	    	
-	    });
-		
-    };
-    
-
-    $scope.attribute = function (resource) {
-    	
-    	resource.operation_method = "속성설정";
-    	
-    	var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
-    	
-    	$('#writeModalLabel').text(resource.resource_name + " (" + path + ") 속성 설정");
-    	$('#writeSubmit').unbind();
-    	
-    	$('#form').each(function() {
-    		this.reset();
-    	});
-    	
-    	$('#writeSubmit').click(function(e) {
-            e.preventDefault();            
-            var attributes = $('#form').serialize();
-            
-            $('#writeModal').modal('hide');
-            
-            $http({
-    			
-    			method: 'POST',
-    	        url: COMMON_URL + "/nuri/kicpcall/execControlAttribute",
-    	        params : {
-    	        	"device_id" : $("#device_id").val()
-    	        	, "resource" : path
-    	        	, "attributes" : attributes
-    	        	}
-    		
-    	    }).then(function SuccessCallback(data, status, headers, config) {
-    	    
-    	    	resource.statusCode = data.data.statusCode
-        		resource.statusMsg = data.data.statusMsg;
-    	    	resource.tid = data.data.tid;
-    	    	
-    	    	if(data.data.statusCode == "200") {
-    	    		alert("전송성공 [" + data.data.tid + "]");
-    	    	} else {
-    	    		alert("제어실패 [" + resource.statusMsg + "]");
-    	    	}
-    	    	
-        	}, function errorCallback(response) {
-    	        alert("전송실패");
-    	        resource.statusMsg = "전송실패";	    	
-    	    });
-            
-        });
-    	
-        $('#writeModal').modal('show');
-    	
-    };
-    
-    $scope.observe = function (resource, observeType) {
-    	
-    	if(observeType == "Y") {
-    		resource.operation_method = "Observe";
-    	} else {
-    		resource.operation_method = "Observe-Cancel";
-    	}
-    	
-		var path = resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;		
-				
-		$http({
-	    
-			method: 'POST',
-	        url: COMMON_URL + "/nuri/kicpcall/execControlObserve",
-	        params : {"device_id" : $("#device_id").val(), "resource" : path, "observeType" : observeType}
-		
-	    }).then(function SuccessCallback(data, status, headers, config) {
-	    	
-	    	resource.statusCode = data.data.statusCode
-    		resource.statusMsg = data.data.statusMsg;
-	    	resource.tid = data.data.tid;
-	    	
-	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
-	    	} else {
-	    		alert("제어실패 [" + resource.statusMsg + "]");
-	    	}
-	    	
-    	}, function errorCallback(response) {
-	        alert("전송실패");
-	        resource.statusMsg = "전송실패";	    	
+	        alert("제어실패");	    	
 	    });
     };
-
+    
+    
+    $scope.settingBillingDt = function (resources) {
+    	//정기검침일 설정. 
+    	resources[3].newValue = 193;
+    	resources[4].newValue = "001600000F0000FF04";
+    	resources[4].obis_nm = "정기검침일";
+    };
+    
+    $scope.settingLpPeriod = function (resources) {
+    	resources[3].newValue = 193;    	
+   	 	resources[4].newValue = "00030101000804FF02";
+   	 	resources[4].obis_nm = "LP 주기";
+   	 	resources[4].msg = "";
+    };
+    
+    $scope.settingObisCode = function(obis, obis_nm) {    	
+    	var resources = $scope.resources;    	
+    	resources[4].newValue = obis;
+    	resources[4].obis_nm = obis_nm;
+    	resources[4].msg = "";
+    };
+    
+    $scope.settingDynamicObisCode = function(obis, obis_cnt, resource_nm) {	
+    	var resources = $scope.resources;    	
+    	resources[8].newValue = obis_cnt;
+    	resources[9].newValue = obis;
+    	resources[9].obis_nm = resource_nm;
+    	resources[8].msg = "";
+    	resources[9].msg = "";
+    };
 });

@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nuri.kepco.config.CodeConstants.FW_STATUS;
@@ -99,6 +100,57 @@ public class ExecResourceController {
 			
 			logger.debug("url: " + url);
 			json = HttpClientUtil.send(url, body.toString(), method);
+			
+		} catch (Exception e) {
+			json.put("statusCode", "500");
+			json.put("statusMsg", e.toString());
+			logger.error(e.toString(), e);
+		}
+
+		json.put("tid", tid);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	
+	@RequestMapping(value = "/ajaxWriteMultiResource")
+	public ResponseEntity<Object> ajaxWriteMultiResource(@RequestBody String payload, HttpServletRequest request) {                
+		
+		JSONObject json = new JSONObject();
+		String tid = null;
+		
+		try {			
+			
+			logger.debug("payload : {}", payload);
+			
+			String url = request.getParameter("url");
+			String method = request.getParameter("method");
+			String device_serial = request.getParameter("device_serial");
+			String resources = request.getParameter("resource");
+			String[] resource = resources.split("/");
+			
+			tid = GeneratorId.getInstance().getId(device_serial);
+			url = cmdUrl + url + device_serial + resources;
+			
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("request_dt", DateUtil.getNowDateTime());
+			param.put("tid", tid);
+			param.put("method", method.toUpperCase());			
+			if(resource.length >= 2) param.put("object_id", Integer.parseInt(resource[1]));
+			if(resource.length >= 3) param.put("object_instance_id", Integer.parseInt(resource[2]));
+			if(resource.length >= 4) param.put("resource_id", Integer.parseInt(resource[3]));
+			param.put("reg_id", ControllerUtil.getLoginUser());
+			param.put("format", "JSON");
+			
+			String[] commStr = { "device_id",  "service_id", "resource_instance_id" };
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			operationLogService.insert(param);
+			
+			logger.debug("url: " + url);
+			json = HttpClientUtil.send(url, payload, method);
 			
 		} catch (Exception e) {
 			json.put("statusCode", "500");

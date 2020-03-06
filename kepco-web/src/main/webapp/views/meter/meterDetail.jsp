@@ -19,13 +19,10 @@
 <script src="<%=COMMON_PATH_JS%>/jquery.metisMenu.js"></script>
 <script src="<%=COMMON_PATH_JS%>/jquery.slimscroll.min.js"></script>
 
-
 <!-- angular -->
 <script src="<%=COMMON_PATH_JS%>/angular.min.js"></script>
 <script src="<%=COMMON_PATH_JS%>/angular-route.min.js"></script>
-<script src="<%=COMMON_PATH_JS%>/controller/meterApp.js"></script>
-
-
+<script src="<%=COMMON_PATH_JS%>/controller/meterApp.js?version=0"></script>
 
 <!-- Data picker -->
 <script src="<%=COMMON_PATH_JS%>/bootstrap-datepicker.js"></script>
@@ -80,8 +77,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 <!-- navigator -->
 <!-- body -->
-<div >
-
+<div>
 	<div class="col-lg-12">	
 		<div class="ibox">
 			<div class="ibox-content">
@@ -251,7 +247,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<th style="text-align: left">리소스명</th>
 																		<th>리소스값</th>
 																		<th>단위</th>
-																		<th>값 변경</th>
+																		<th colspan="2">값 설정</th>																		
 																	</tr>
 																</thead>
 																<tbody>
@@ -260,49 +256,51 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<td align="left">{{resource.resource_nm}}</td>
 																		<td>{{resource.resource_val}}</td>
 																		<td style="max-width: 200px;">{{resource.unit}}
-																			<button  ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '105'" ng-model="newValue" name="newValue"
-																					class="btn btn-primary btn-outline" style="margin-right:10px; max-width: 200px;"  type="button" onclick="popupObisCode2();">
+																			<button ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '105'"
+																					class="btn btn-primary btn-outline" style="margin-right:10px; max-width: 300px;"  type="button" onclick="popupObisCode2();">
 																					<i class="fa fa-search"> OBIS 코드 찾기</i>
 																			</button>
 																		</td>
-																		<td>
-																			<select ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'"
-																				ng-model="newValue" name="newValue" 
-																				style="min-width: 200px; " id="command-select" >
-																				<option value="192" selected>GET </option>
-																				<option value="193">SET</option>
-																				<option value="5">READ </option>
-																				<option value="6">WRITE </option>
-																			</select>
-																			<input
-																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_nm.indexOf('OBIS') == -1"
-																				type="text" ng-model="newValue" name="newValue"
-																				style="min-width: 200px; ">
-																			
-																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_nm.indexOf('OBIS') != -1">
-																				<input type="text" ng-model="obis_code" name="obis_code" id="obis_code{{resource.resource_id}}" style="min-width: 200px;" readonly>
+																		<td style="width: 200px;">
+																			<div ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '101'">
+																				<select ng-model="resource.newValue" name="newValue" name="meterSerial" style="min-width: 300px;height:26px;">
+																				    <option ng-repeat="row in meterSerialList" value="{{row.id}}">{{row.name}}</option>
+																				</select>
 																			</div>
-																			
+																			<div ng-if="resource.operation.indexOf('W') != -1 && (resource.resource_id == '102' 
+																				|| resource.resource_id == '103' 
+																				|| resource.resource_id == '106')">
+																				<input type="text" ng-model="resource.newValue" name="resource_val" id="{{resource.resource_nm}}" ng-required="true" style="min-width: 300px;">
+																				</input>																				
+																			</div>																			
+																			<div ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'">
+																				<select ng-model="resource.newValue" name="newValue" id="{{resource.resource_nm}}" ng-required="true" style="min-width: 300px;height:26px;" id="command-select" >
+																					<option value="192" selected>GET </option>
+																					<option value="193" >SET</option>																					
+																					<option value="5">READ </option>
+																					<option value="6">WRITE </option>
+																				</select>
+																			</div>
+																			<div ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '105'">
+																				<input type="text" ng-model="resource.newValue" name="obis_code" id="obis_code{{resource.resource_id}}" ng-required="true" style="min-width: 300px;" readonly>																																																												
+																			</div>
 																		</td>
+																		<td style="width:250px;">{{resource.obis_nm}}<font color="red">{{resource.msg}}</font></td>
 																	</tr>
 																</tbody>
 															</table>
 															<div name="schedule-buttons" class="row" style="margin:0; height:35px">
 																
-																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" onclick="settingBillingDt();">
+																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" ng-click="settingBillingDt(resources);">
 																	<i class="fa"> 정기검침일 설정 </i>
 																</button>
-																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" onclick="settingLpPeriod();">
+																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" ng-click="settingLpPeriod(resources);">
 																	<i class="fa" > LP 주기 설정 </i>
 																</button>
-																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="">
+																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="write(resources)">
 																	<i class="fa fa-play"> 동적 스케줄 실행</i>
 																</button>
-																
 															</div>
-															
-															
-															
 														</div>
 													</div>
 													<!-- ibox-content -->
@@ -314,19 +312,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									</div>
 									
                             </div>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                                                        
                             <div role="tabpanel" id="tab-3" class="tab-pane">
 									<div class="col-lg-10">
 										<h4 style="margin-top: 6px"></h4>
 									</div>
-									<select id="testselect"></select>
+									
 									<div>
 										<div class="row" style="margin-top: 10px">
 											<div class="col-lg-12">
@@ -363,6 +354,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													
 													<div class="ibox-content">
 														<div class="table-responsive"  id="resource">
+														<input type="text" name="object_instance_id" id="object_instance_id" value="">															
 															<table class="table">
 																<thead class ="gray-bg">
 																	<tr align="center" >
@@ -370,7 +362,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<th style="text-align: left">리소스명</th>
 																		<th>리소스값</th>
 																		<th>단위</th>
-																		<th>값 변경</th>
+																		<th colspan="2">값 변경</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -384,30 +376,25 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																					<i class="fa fa-search"> OBIS 코드 찾기</i>
 																			</button>
 																		</td>
-																		<td>
-																			<select ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'"
-																				ng-model="newValue" name="newValue" id="target_meter{{resource.resource_id}}"
-																				style="min-width: 200px; ">
-																				<option value="00000000000">같은 타입 모든 미터</option>
-																			</select>
-																			<input
-																				ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_nm.indexOf('OBIS') == -1"
-																				type="text" ng-model="newValue" name="newValue"
-																				style="min-width: 200px; ">
-																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '112'">
-																				<input type="text" style="min-width: 200px;" readonly>
+																		<td style="width:250px;">
+																			<div ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'">
+																				<select ng-model="resource.newValue" style="min-width: 300px;height:26px;">
+																				    <option ng-repeat="row in meterSerialList" ng-required="true" value="{{row.id}}">{{row.name}}</option>
+																				</select>
 																			</div>
-																			
-																			<div ng-show="resource.operation.indexOf('W') != -1 && resource.resource_id == '113'">
-																				<input type="text" ng-model="obis_code" name="obis_code3" id="obis_code_tab3_{{resource.resource_id}}" style="min-width: 200px;" readonly>
+																			<div ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id != '104' && resource.resource_id != '113'">
+																				<input type="text" ng-model="resource.newValue" ng-required="true" name="newValue" id="{{resource.resource_nm}}" style="min-width: 300px;">
+																			</div>	
+																			<div ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '113'">
+																				<input type="text" ng-model="resource.newValue" ng-required="true" name="obis_code3" id="obis_code_tab3_{{resource.resource_id}}" style="min-width: 300px;" readonly>
 																			</div>
-																			
 																		</td>
+																		<td style="width:200px;">{{resource.obis_nm}} <font color="red">{{resource.msg}}</font></td>
 																	</tr>
 																</tbody>
-															</table>
+															</table>															
 															<div name="schedule-buttons" class="row" style="margin:0; height:35px">
-																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="">
+																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="write(resources)">
 																	<i class="fa fa-play"> 동적 스케줄 실행</i>
 																</button>
 															</div>
@@ -477,10 +464,8 @@ function ajaxSearchForm() {
 }
 
 function resetForm(){
-	$("#search_form")[0].reset();
-	
+	$("#search_form")[0].reset();	
 };
-
 
 function showRequest() {
 	// $("#loading").show();
@@ -538,27 +523,9 @@ function successResultHandler(data, status) {
 	$('#avg_power_period').text(data.result.avg_power_period);
 	
 	
-		 $("#testselect").prepend("<option value="+data.result.meter_serial+">"+data.result.meter_serial+"</option>");
+		 //$("#testselect").prepend("<option value="+data.result.meter_serial+">"+data.result.meter_serial+"</option>");
 	$("#target_meter104").prepend("<option value="+data.result.meter_serial+">"+data.result.meter_serial+"</option>");
 }
-
-function settingBillingDt(){
-	//정기검침일 설정. 
-	//DlmsMethod – Set / OBIS - 001600000F0000FF04 세팅
-
-	 $("#command-select").val("193").attr("selected", "true");
-	 $("#obis_code105").val("001600000F0000FF04");
-};
-
-function settingLpPeriod(){
-	//LP 주기 설정
-	//DlmsMethod – Set / OBIS - 00030101000804FF02 세팅
-	
-	$("#command-select").val("193").attr("selected", "true");
-	 $("#obis_code105").val("00030101000804FF02");
-};
-
-
 
 var winObj;
 function popupObisCode(){ //검침스케줄
@@ -582,19 +549,31 @@ function popupObisCode2(){ //미터설정
 
 function init() {
 	// init
-	
 	// form search
 	ajaxSearchForm();
-
 }
-	
 
 $(document).ready(function() {	
 	init();
-	
-
-	
 });
+
+
+function Scope() {
+    var scope = angular.element(document.getElementById("content")).scope(); 
+    return scope;
+}
+
+function settingObisCode(obis, obis_nm) {	
+	Scope().$apply(function () {
+        Scope().settingObisCode(obis, obis_nm);
+    });
+}
+
+function settingDynamicObisCode(obis, obis_cnt, resource_nm) {	
+	Scope().$apply(function () {
+        Scope().settingDynamicObisCode(obis, obis_cnt, resource_nm);
+    });
+}
 
 </script>
 <!-- 

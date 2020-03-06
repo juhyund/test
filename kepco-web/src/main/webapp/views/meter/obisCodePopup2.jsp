@@ -128,6 +128,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script type="text/javascript" charset="utf-8">	
 var selectedObisCode = '';
+var obis_nm = '';
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", 			field: "no", 	   width:50,suppressSizeToFit: true},
@@ -163,24 +164,27 @@ function ajaxSearchForm() {
 }
 
 onRowClicked = function(event){
-	//선택된 row의 obis_code를 저장한다
 	
+	//선택된 row의 obis_code를 저장한다
 	var selectedRows = dataGrid.getSelectedRow();
     var selectedRowsString = '';
     selectedRows.forEach( function(selectedRow, index) {
     	selectedObisCode = selectedRow.class_id+selectedRow.obis_code+selectedRow.attribute_no
-    	
+    	obis_nm = selectedRow.descr;
     });
 }
 
-selectObis = function(event){
-	opener.document.getElementById("obis_code105").value = selectedObisCode;
-	 window.close();
+onRowDoubleClicked = function(event){
+	alert("double clicked");
+}
+
+selectObis = function() {
+	window.opener.settingObisCode(selectedObisCode, obis_nm);
+	window.close();
 }
 
 function resetForm(){
 	$("#search_form")[0].reset();
-	
 };
 
 function showRequest() {
@@ -188,18 +192,13 @@ function showRequest() {
 }
 
 function successResultHandler(data, status) {
-	
 	dataGrid.setData(data.result);
-	
 }
 
 function init() {
 	// init
-	initGrid();
-	
+	initGrid();	
 	ajaxSearchForm();
-	
-
 }
 	
 
