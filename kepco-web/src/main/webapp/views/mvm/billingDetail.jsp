@@ -119,7 +119,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 								<!--  start : search_area  -->
 								<form name="search_form" id="search_form" method="post">
-									<table class="table table-borderless"
+									<%-- <table class="table table-borderless"
 										style="width: 100%; margin-bottom: 7px;" border="1">
 										<tbody>
 											<tr class="table-border">
@@ -172,7 +172,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</td>
 											</tr>
 										</tbody>
-									</table>
+									</table> --%>
 									<input type="hidden" id="meter_id" name="meter_id"value="${meter_id}" class="form-control">
 									<input type="hidden" id="billing_dt" name="billing_dt"value="${billing_dt}" class="form-control">
 								</form>
@@ -308,39 +308,15 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		});
 
 		function init() {
-			initDate();
-			
 			ajaxSearchForm();
 		}
-		function initDate() {
-
-			var initSdate = $("#sdateView").val();
-			var initEdate = $("#edateView").val();
-
-			setSearchParam2(initSdate, initEdate);
-		}
 		
-		function ajaxChannelList() {
-			var options = {
-				beforeSend : showRequest,
-				success : useChannelList, /*미터가 사용하는 채널에 따라 유동적으로 헤더를 생성*/
-				url : COMMON_URL + "/ajaxChannelList",
-				contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-				type : "post", /* get, post */
-				dataType : "json", /* xml, html, script, json */
-				data : $("#search_form").serialize()
-			};
-
-			$.ajax(options);
-		}
-
 		function ajaxSearchForm() {
-			setSearchParam2($("#sdateView").val(), $("#edateView").val());
 
 			var options = {
 				beforeSend : showRequest,
 				success : successResultHandler,
-				url : COMMON_URL + "/ajaxMeterBilling",
+				url : COMMON_URL + "/ajaxMeterBillingDetail",
 				contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 				type : "post", /* get, post */
 				dataType : "json", /* xml, html, script, json */

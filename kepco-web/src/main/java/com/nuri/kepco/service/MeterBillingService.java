@@ -14,5 +14,6 @@ public interface MeterBillingService extends GenericService {
 
 	Map<String, String> excelMeterBilling(Map<String, Object> param) throws Exception;
 	
+	JSONArray selectListDetail(Map<String, Object> param) throws Exception;
 }
 

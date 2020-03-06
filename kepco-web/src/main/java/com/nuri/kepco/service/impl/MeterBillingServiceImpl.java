@@ -46,6 +46,15 @@ public class MeterBillingServiceImpl implements MeterBillingService {
 
 		return ConversionUtil.getJSONArrayByModel(list,meterBilling.getStart());
 	}
+	
+	@Override
+	public JSONArray selectListDetail(Map<String, Object> param) throws Exception {
+		MeterBilling meterBilling = new MeterBilling();
+		ConversionUtil.getModelByMap(meterBilling, param);
+		List<MeterBilling> list = this.meterBillingDAO.selectListDetail(meterBilling);
+
+		return ConversionUtil.getJSONArrayByModel(list,meterBilling.getStart());
+	}
 
 	@Override
 	public JSONObject selectOne(Map<String, Object> param) throws Exception {
@@ -86,4 +95,6 @@ public class MeterBillingServiceImpl implements MeterBillingService {
 		
 		return output;
 	}
+
+
 }
