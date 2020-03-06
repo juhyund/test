@@ -244,8 +244,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
     $scope.executeWrite = function (path, payload) {
     	
     	var operation_method = "Write";
-    	alert($("#device_serial").text());
-		
+    	
 		$http({
 	    
 			method: 'POST',

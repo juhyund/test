@@ -60,9 +60,17 @@ public class ConnectivityStatisticsDAOImpl implements ConnectivityStatisticsMoni
 		if (param.getDeviceSerial() != null) {
 			query.addCriteria(Criteria.where("deviceSerial").is(param.getDeviceSerial()));
 		}
+		
+		if (param.getDeviceStatus() != null) {
+			query.addCriteria(Criteria.where("deviceStatus").is(param.getDeviceStatus()));
+		}
+		
+		if (param.getBranchId() != null) {
+			query.addCriteria(Criteria.where("branchId").is(param.getBranchId()));
+		}
 
 		if (param.getSdate() != null) {
-			query.addCriteria(Criteria.where("insertDt").gte(param.getSdate()).lte(param.getEdate()));
+			query.addCriteria(Criteria.where("usageTime").gte(param.getSdate()).lte(param.getEdate()));
 		}
 
 		return query;

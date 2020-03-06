@@ -43,7 +43,27 @@ public class NMSController {
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
 			int limit = Integer.parseInt(request.getParameter("limit"));
+			String deviceStatus = request.getParameter("device_status");
+			String branchId = request.getParameter("branch_id");
+			String searchfield = request.getParameter("searchfield");
+			String searchquery = request.getParameter("searchquery");
+			
 			param.put("row", limit);
+			if(deviceStatus != null && !("").equals(deviceStatus)) {
+				param.put("deviceStatus", deviceStatus);
+			}
+			if(branchId != null && !("").equals(branchId)) {
+				param.put("branchId", branchId);
+			}
+			
+			if(searchfield != null && !("").equals(searchfield)) {
+				if(("deviceId").equals(searchfield)) {
+					param.put("deviceId", searchquery);
+				}else if(("deviceSerial").equals(searchfield)) {
+					param.put("deviceSerial", searchquery);
+				}
+				
+			}
 			
 //			param.put("sort", "usageTime");
 //			param.put("dir", "DESC");

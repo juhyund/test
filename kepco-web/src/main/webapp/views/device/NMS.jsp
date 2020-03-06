@@ -78,10 +78,19 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<option value=''>선택</option>
 										</select>
 									</div>
-									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
+									<div class="col-lg-3">
+										<select class="form-control" name="device_status" id="device_status">
+											<option value=''>선택</option>
+												<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
+											<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
+												<% }%>
+										</select>
+									</div>
+									<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
 									<div class="col-lg-3">
 										<select class="form-control" name="model_seq" id="model_seq"></select>
-									</div>
+									</div> -->
 								</div>
 
 								<div class="form-group form-group-end row">
@@ -93,16 +102,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<option value='deviceSerial'>단말 번호</option>
 										</select>
 										<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
-									</div>
-													
-									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
-									<div class="col-lg-3">
-										<select class="form-control" name="device_status" id="device_status">
-											<option value=''>선택</option>
-												<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
-											<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
-												<% }%>
-										</select>
 									</div>
 								</div>
 							</td>
