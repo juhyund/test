@@ -1,6 +1,7 @@
 package com.nuri.kepco.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,8 @@ import com.nuri.kepco.model.MeterValue;
 import com.nuri.kepco.model.dao.MeterValueDAO;
 import com.nuri.kepco.service.MeterValueService;
 import com.nuri.kepco.util.ConversionUtil;
+import com.nuri.kepco.util.DateUtil;
+import com.nuri.kepco.util.ExcelUtil;
 
 @Service
 @Transactional
@@ -106,8 +109,23 @@ public class MeterValueServiceImpl implements MeterValueService {
 
 	@Override
 	public Map<String, String> excelMeterValue(Map<String, Object> param) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> output = new HashMap<String, String>();
+		MeterValue meterValue = new MeterValue();
+		ConversionUtil.getModelByMap(meterValue, param);
+		
+		
+		String template_filepath = "/template/template_meter_value.xlsx";
+		String filename = "meter_value_" + DateUtil.getNowDateTime() + ".xlsx";			
+		String filepath = fileDownloadDir + "/metervalue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+
+		List<MeterValue> result = this.meterValueDAO.getMeterValue(meterValue);
+		
+		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result);
+		
+		output.put("filepath", filepath);
+		output.put("filename", filename);
+		
+		return output;
 	}
 
 	@Override

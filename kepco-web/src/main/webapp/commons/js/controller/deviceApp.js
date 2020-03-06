@@ -64,7 +64,9 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 			$("#deviceserial").val($("#device_serial").val());
 			$("#package_uri").val(event.data.fw_pkg_uri);
 			
-			fwUpgradeModal();
+			if(target == "#firmware"){
+				fwUpgradeModal();	
+			}
 		}
 		
 		initGrid();
@@ -317,7 +319,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         		"device_id" : $("#device_id").val(),
         		"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(),
-	        	"resource" : "4/0/4", 
+	        	"resource" : "4/0/4" 
         	}
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
