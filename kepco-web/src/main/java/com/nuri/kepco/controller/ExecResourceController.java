@@ -132,7 +132,9 @@ public class ExecResourceController {
 			String[] resource = resources.split("/");
 			
 			tid = GeneratorId.getInstance().getId(device_serial);
+			
 			url = cmdUrl + url + device_serial + resources;
+			url += "?format=JSON&tid=" + tid;		
 			
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("request_dt", DateUtil.getNowDateTime());
