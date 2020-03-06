@@ -128,6 +128,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script type="text/javascript" charset="utf-8">	
 var selectedObisCode = '';
+var obis_cnt = 0;
+var obis_nm = '';
+var object_instance_id = "";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", 					field: "no", 					width:50,	suppressSizeToFit: true},
@@ -136,8 +139,7 @@ var columnDefs = [
 	// {headerName: "resource_instance_id",field: "arr_resource_instance_id"},
 	{headerName: "오브젝트 ID",				field: "object_id"},
 	{headerName: "오브젝트 인스턴스 ID",		field: "object_instance_id", 	width:100,	suppressSizeToFit: true},
-	{headerName: "OBIS 코드", 			field: "arr_obis_code",			width:300},
-	{headerName: "OBIS 코드_view", 		field: "arr_obis_code",			valueFormatter:obisListFormatter, width:300}
+	{headerName: "OBIS 코드", 			field: "arr_obis_code",			width:300}
 ];
 
 
@@ -164,26 +166,28 @@ function ajaxSearchForm() {
      $.ajax(options);
 }
 
-onRowClicked = function(event){
+onRowClicked = function(event) {
 	//선택된 row의 obis_code를 저장한다
-	
 	var selectedRows = dataGrid.getSelectedRow();
     var selectedRowsString = '';
     selectedRows.forEach( function(selectedRow, index) {
     	selectedObisCode = selectedRow.arr_obis_code;
-    
-    	
+    	obis_cnt = selectedRow.obis_cnt;    	
+    	obis_nm = selectedRow.metering_type_nm;
+    	object_instance_id = selectedRow.object_instance_id;
     });
 }
 
-selectObis = function(event){
-	opener.document.getElementById("obis_code_tab3_113").value = selectedObisCode;
+selectObis = function() {
+
+	$("#object_instance_id", opener.document).val(object_instance_id);
+	
+	window.opener.settingDynamicObisCode(selectedObisCode, obis_cnt, obis_nm);
 	window.close();
 }
 
 function resetForm(){
 	$("#search_form")[0].reset();
-	
 };
 
 function showRequest() {

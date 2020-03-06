@@ -103,6 +103,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																</span>
 															</div>
 														</div>
+														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">트랜잭션ID</label>
+														<div class="col-lg-3">
+															<input class="form-control" name="tid" id="tid"></input>
+														</div>
 													</div>
 
 													<div class="form-group form-group-end row">
@@ -357,20 +363,18 @@ function successResultHandler(data, status) {
 					data.resultGrid[i].result = '대기중'
 				}
 				
-				if(item[i].object_id != ""){
+				if(item[i].object_id != "" && item[i].object_id != null){
 					item[i].resource_sum = item[i].object_id
 					
-					if(item[i].object_instance_id != ""){
+					if(item[i].object_instance_id != "" && item[i].object_instance_id != null){
 						item[i].resource_sum += "/"+item[i].object_instance_id
 					}	
-				/* }else if(item[i].object_instance_id != null){
-					item[i].resource_sum += "/"+item[i].object_instance_id */
 				}
 				
-				if(item[i].resource_id != ""){
+				if(item[i].resource_id != "" && item[i].resource_id != null){
 					item[i].resource_sum += "/"+item[i].resource_id
 					
-					if(item[i].resource_instance_id != ""){
+					if(item[i].resource_instance_id != "" && item[i].resource_instance_id != null){
 						item[i].resource_sum += "/"+item[i].resource_instance_id
 					}
 				} 

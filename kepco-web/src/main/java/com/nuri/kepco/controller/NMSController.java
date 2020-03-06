@@ -29,7 +29,7 @@ public class NMSController {
 	
 	Logger logger = LoggerFactory.getLogger(NMSController.class);
 
-	private String[] commStr = {"deviceId", "deviceSerial", "sdate", "edate", "data_per_page"};
+	private String[] commStr = {"deviceId", "deviceSerial", "sdate", "edate", "data_per_page", "usageTime"};
 	
 	@Autowired
 	private NMSInfoService nmsInfoService;
@@ -94,13 +94,13 @@ public class NMSController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			int limit = Integer.parseInt(request.getParameter("limit"));
-			param.put("row", limit);
-//			param.put("deviceSerial", request.getParameter("deviceSerial"));
-						
 			List<RamUsageMonitor> ramUsageList = this.nmsInfoService.getRamUsageMonitor(param);
 			List<CpuUsageMonitor> cpuUsageList = this.nmsInfoService.getCpuUsageMonitor(param);
 			List<ConnectivityMonitor> connectivityList = this.nmsInfoService.getConnectivityMonitor(param);
+			
+			System.out.println("ramUsageList : "+ramUsageList.size());
+			System.out.println("cpuUsageList : "+cpuUsageList.size());
+			System.out.println("connectivityList : "+connectivityList.size());
 			
 			json.put("ramUsageList", ramUsageList);
 			json.put("cpuUsageList", cpuUsageList);

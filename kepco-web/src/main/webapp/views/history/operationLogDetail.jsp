@@ -161,18 +161,18 @@ function successResultHandler(data, status) {
 				data.result.result = '대기중'
 			}
 		
-			if(item.object_id != ""){
+			if(item.object_id != "" && item.object_id != null){
 				item.resource_sum = item.object_id
 				
-				if(item.object_instance_id != ""){
+				if(item.object_instance_id != "" && item.object_instance_id != null){
 					item.resource_sum += "/"+item.object_instance_id
 				}	
 			}
 			
-			if(item.resource_id != ""){
+			if(item.resource_id != "" && item.resource_id != null){
 				item.resource_sum += "/"+item.resource_id
 				
-				if(item.resource_instance_id != ""){
+				if(item.resource_instance_id != "" && item.resource_instance_id != null){
 					item.resource_sum += "/"+item.resource_instance_id
 				}
 			}
