@@ -270,7 +270,7 @@ function ajaxSearchForm() {
            data        : $("#search_form").serialize()
      };             
      $.ajax(options);
-}/* 
+}
 
 function excelDownload() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
@@ -285,19 +285,21 @@ function excelDownload() {
 				timer: 1500
 			});
 	}else{
+		alert("엑셀 다운!");
 
-		 $('#search_form').attr('action', "/ewsn-app/downloadMeterValue");
+		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterBilling");
 		 $('#search_form').attr('method',"GET");
 		 $('#search_form').submit();
 		Swal.fire({
 			position: 'center',
 			icon: 'info',
 			text: 'excel 생성중',
-			showConfirmButton: false
+			showConfirmButton: false,
 				timer: 1500
 		});
 	}
-} */
+
+}
 
 onRowClicked = function(event){
 	var meter_id = event.data.meter_id;

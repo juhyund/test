@@ -52,7 +52,7 @@
 		FROM EMI_METER_BILLING a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
-		INNER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
+		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
 		<include refid="base_where_list" /> 
 	</select>
 
@@ -84,7 +84,7 @@
 		FROM EMI_METER_BILLING a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
-		INNER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
+		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
 			
 		<include refid="base_where_list" />
 		

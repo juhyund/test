@@ -112,7 +112,7 @@
 			AND mv.channel = 'CH001'
 		) AS a
 		JOIN EMI_ALL_CODE AS d ON a.meter_type= d.code
-		INNER JOIN emi_branch_info b ON (b.branch_id = a.branch_id)
+		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = a.branch_id)
 		<where>
 			<if test="branch_id != null and branch_id != ''" >     
             	AND b.branch_id = #{branch_id}
@@ -134,7 +134,7 @@
 			<include refid="base_where_list" />
 			AND mv.channel = 'CH001'
 		) AS a
-		INNER JOIN emi_branch_info b ON (b.branch_id = a.branch_id)
+		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = a.branch_id)
 		<where>
 			<if test="branch_id != null and branch_id != ''" >     
             	AND b.branch_id = #{branch_id}

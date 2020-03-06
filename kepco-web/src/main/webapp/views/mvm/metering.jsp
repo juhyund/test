@@ -212,7 +212,7 @@ function ajaxSearchForm() {
 function excelDownload() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
-	if( totalCnt == 0){
+	/* if( totalCnt == 0){
 		Swal.fire({
 			position: 'center',
 			icon: 'error',
@@ -221,9 +221,7 @@ function excelDownload() {
 			showConfirmButton: false,
 				timer: 1500
 			});
-	}else{
-		alert("엑셀 다운?");
-
+	}else{ */
 		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterValue");
 		 $('#search_form').attr('method',"GET");
 		 $('#search_form').submit();
@@ -234,7 +232,7 @@ function excelDownload() {
 			showConfirmButton: false,
 				timer: 1500
 		});
-	}
+	// }
 
 }
 

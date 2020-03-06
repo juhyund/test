@@ -347,7 +347,8 @@ var initGrid = function() {
 };
 
 function ajaxSearchForm() {
-
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
+	
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
@@ -600,7 +601,7 @@ function successResultHandler(data, status) {
 	console.timeEnd('line'); */
 	
 function renderChart(data, status){
-	var format = '{value: %m/%e %H:%M:%S}';
+	var format = '{value: %m/%e %H:%M}';
 
 	var rsrpChartOptions = {
 		  chart: {
@@ -662,7 +663,7 @@ function renderChart(data, status){
 		                y: e.pageY || e.clientY
 		              },
 		              headingText: this.series.name,
-		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M:%S', this.x) + '<br/> ' +
+		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
 		                this.y ,
 		              width: 200
 		            });
@@ -737,7 +738,7 @@ function renderChart(data, status){
 			                y: e.pageY || e.clientY
 			              },
 			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M:%S', this.x) + '<br/> ' +
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
 			                this.y ,
 			              width: 200
 			            });
@@ -812,7 +813,7 @@ function renderChart(data, status){
 			                y: e.pageY || e.clientY
 			              },
 			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M:%S', this.x) + '<br/> ' +
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
 			                this.y ,
 			              width: 200
 			            });
@@ -901,7 +902,7 @@ function renderChart(data, status){
 			                y: e.pageY || e.clientY
 			              },
 			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M:%S', this.x) + '<br/> ' +
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
 			                this.y ,
 			              width: 200
 			            });
@@ -990,7 +991,7 @@ function renderChart(data, status){
 			                y: e.pageY || e.clientY
 			              },
 			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M:%S', this.x) + '<br/> ' +
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
 			                this.y ,
 			              width: 200
 			            });
@@ -1187,7 +1188,7 @@ function initDate() {
 function init() {
 	
 	// init
-	initDate();
+	setSearchPeriod('today');
 	
 	// form search
 	ajaxSearchForm();

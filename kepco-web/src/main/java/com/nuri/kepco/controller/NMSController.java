@@ -94,22 +94,13 @@ public class NMSController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-//			String deviceSerial = request.getParameter("deviceSerial");
-			
-			int limit = Integer.parseInt(request.getParameter("limit"));
-			String usageTime = request.getParameter("usageTime");
-			String sdate = request.getParameter("sdateView");
-			String edate = request.getParameter("edateView");
-//			param.put("row", limit);
-			param.put("usageTime", usageTime);
-			param.put("sdate", sdate);
-			param.put("edate", edate);
-			
-//			param.put("deviceSerial", request.getParameter("deviceSerial"));
-						
 			List<RamUsageMonitor> ramUsageList = this.nmsInfoService.getRamUsageMonitor(param);
 			List<CpuUsageMonitor> cpuUsageList = this.nmsInfoService.getCpuUsageMonitor(param);
 			List<ConnectivityMonitor> connectivityList = this.nmsInfoService.getConnectivityMonitor(param);
+			
+			System.out.println("ramUsageList : "+ramUsageList.size());
+			System.out.println("cpuUsageList : "+cpuUsageList.size());
+			System.out.println("connectivityList : "+connectivityList.size());
 			
 			json.put("ramUsageList", ramUsageList);
 			json.put("cpuUsageList", cpuUsageList);
