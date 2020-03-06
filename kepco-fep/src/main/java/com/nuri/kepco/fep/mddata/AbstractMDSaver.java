@@ -145,11 +145,16 @@ public abstract class AbstractMDSaver {
 
 			if (isNewMeter) {				
 				// default branch id
-				deviceInfo.setBranch_id(defaultBranchId);
+				meter.setBranch_id(defaultBranchId);
 				
 				// insert
 				result = meterInfoDAO.insert(meter);
 			} else {
+				
+				if(meter.getBranch_id() == null) {
+					// default branch id
+					meter.setBranch_id(defaultBranchId);
+				}
 				// update
 				result = meterInfoDAO.update(meter);
 			}

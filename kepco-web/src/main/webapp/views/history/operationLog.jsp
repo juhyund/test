@@ -104,13 +104,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															</div>
 														</div>
 														
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">트랜잭션ID</label>
-														<div class="col-lg-3">
+														<label class="col-lg-1 col-form-label">트랜잭션ID</label>
+														<div style="min-width: 170px; max-width: min-content;">
 															<input class="form-control" name="tid" id="tid"></input>
 														</div>
 													</div>
-
+													
+													<div class="form-group row">
+													
+													</div>
+													
 													<div class="form-group form-group-end row">
 														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label> -->
 														<div style="margin-right: 12px;">
@@ -199,8 +202,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
+	{headerName: "단말ID", field: "device_id"}, 	// detail 조회용 컬럼
+	{headerName: "단말번호", field: "device_serial"}, 	// detail 조회용 컬럼
 	{headerName: "리소스 경로", field: "resource_sum"},
-	{headerName: "_단말ID", field: "device_id", hide:"true"}, 	// detail 조회용 컬럼
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},
 	{headerName: "리소스명", field: "resource_nm", width:150, cellStyle:{'text-align': "center"}},
