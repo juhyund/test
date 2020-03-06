@@ -93,8 +93,11 @@ public class FileDownloadController {
 				try {
 					
 					Map<String, Object> param = ControllerUtil.getCommonParam(request);
+					ControllerUtil.getCustomParam(request, commStr, param);
 					
-
+					List<Map<String, Object>> channelList = this.meterValueService.selectMeterChannel(param);
+					param.put("channelList", channelList);
+					
 			         for(String key : commStr) {
 				          if(request.getParameterMap().containsKey(key)) {
 				        		  param.put(key, request.getParameter(key));	
@@ -102,6 +105,7 @@ public class FileDownloadController {
 			         }
 			       //채널 가져와서 넣기
 			         param.put("limit",0);
+			         logger.info("--------------------downloadMeterValueDetail-------------------------------------\nparam="+param);
 					
 					Map<String, String> output = this.meterValueService.excelMeterValueDetail(param);
 					file_path = output.get("filepath") + "/" + output.get("filename");

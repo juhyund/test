@@ -233,7 +233,7 @@ function useChannelList(data, status) {
 	
 	//grid로딩
 	initGrid();
-	ajaxSearchForm();su
+	ajaxSearchForm();
 }
 
 var initGrid = function() {
@@ -296,17 +296,27 @@ function resetForm(){
 function excelDownload() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
-	 $('#search_form').attr('action', "/ewsn-app/downloadMeterValueDetail");
-	 $('#search_form').attr('method',"GET");
-	 $('#search_form').submit();
-	Swal.fire({
-		position: 'center',
-		icon: 'info',
-		text: 'excel 생성중',
-		showConfirmButton: false,
-			timer: 1500
-	});
-	
+	/* if( totalCnt == 0){
+		Swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: 'excel 다운로드 불가',
+			text: '조회 결과가 없습니다!',
+			showConfirmButton: false,
+				timer: 1500
+			});
+	}else{ */
+		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterValueDetail");
+		 $('#search_form').attr('method',"GET");
+		 $('#search_form').submit();
+		Swal.fire({
+			position: 'center',
+			icon: 'info',
+			text: 'excel 생성중',
+			showConfirmButton: false,
+				timer: 1500
+		});
+	// }
 
 }
 

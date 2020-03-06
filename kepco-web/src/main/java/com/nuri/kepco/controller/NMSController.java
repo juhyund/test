@@ -70,29 +70,24 @@ public class NMSController {
 			
 			long cnt = this.nmsInfoService.getCount(param);
 			JSONArray connectivityStatistics =  nmsInfoService.getConnectivityStatistics(param);
-			
-			/*JSONObject parseResult = new JSONObject();
+			JSONArray jarr = new JSONArray();
+			JSONObject tmp = new JSONObject();
+			JSONObject parseResult = new JSONObject();
 			for (int i = 0; i < connectivityStatistics.size(); i++) {
-				JSONObject tmp = (JSONObject) connectivityStatistics.get(i);
+				tmp = (JSONObject) connectivityStatistics.get(i);
 				String usageTime = (String) tmp.get("usageTime");
 				String saveTime = (String) tmp.get("saveTime");
 				
-//				tmp.put("usageTime", usageTime);
-//				tmp.put("saveTime", saveTime);
-				
-				SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				SimpleDateFormat beforFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				SimpleDateFormat transFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 
-				Date toDate_usageTime = transFormat.parse(usageTime);
-				Date toDate_saveTime = transFormat.parse(saveTime);
+				tmp.put("usageTime", transFormat.format(beforFormat.parse(usageTime)));
+				tmp.put("saveTime", transFormat.format(beforFormat.parse(saveTime)));
 				
-//				tmp.put("usageTime", toDate_usageTime);
-//				tmp.put("saveTime", toDate_saveTime);
+				jarr.add(i, tmp);
 				
-				tmp.put("usageTime", transFormat.parse((String) tmp.get("usageTime")));
-				tmp.put("saveTime", transFormat.parse((String) tmp.get("saveTime")));
-				
-				connectivityStatistics.add(i, tmp);
-			}*/
+			}
+			connectivityStatistics.add(jarr);
 			
 			json.put("totalCount", cnt);
 			json.put("resultGrid", connectivityStatistics);

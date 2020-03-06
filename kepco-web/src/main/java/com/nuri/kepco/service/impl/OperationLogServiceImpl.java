@@ -65,7 +65,7 @@ public class OperationLogServiceImpl implements OperationLogService {
 		ConversionUtil.getModelByMap(operationLog, param);
 		List<OperationLog> list = this.operationLogDAO.getOperationLogList(operationLog);
 		
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list,operationLog.getStart());
 	}
 
 	@Override
