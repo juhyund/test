@@ -34,13 +34,13 @@ public class MeterBillingController {
 	private BranchInfoService branchInfoService;
 	
 	
-	private String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id","billing_dt","itime","mtime"};
-	
 	@RequestMapping(value = "/ajaxMeterBilling")
 	public ResponseEntity<Object> ajaxMeterBilling(HttpServletRequest request) {                
 		
 		JSONObject json = new JSONObject();
 		try {
+			String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id","billing_dt","itime","mtime"};
+			
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
@@ -51,6 +51,32 @@ public class MeterBillingController {
 			JSONArray jarr = this.meterBillingService.selectList(param);
 			
 			json.put("totalCount", cnt);
+			json.put("resultGrid", jarr);
+			
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/ajaxMeterBillingDetail")
+	public ResponseEntity<Object> ajaxMeterBillingDetail(HttpServletRequest request) {                
+		
+		String[] commStr = { "meter_id", "billing_dt"};
+		
+		JSONObject json = new JSONObject();
+		try {
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			param.put("sort", "billing_dt");
+			param.put("dir", "DESC");
+			
+			JSONArray jarr = this.meterBillingService.selectListDetail(param);
+			
 			json.put("resultGrid", jarr);
 			
 		} catch (Exception e) {
