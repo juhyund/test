@@ -18,4 +18,5 @@ public interface OperationLogDAO extends GenericDAO<OperationLog> {
 	
 	OperationLog selectByTID(String tid) throws Exception;
 
+	List<OperationLog> getExcuteRate() throws Exception;
 }

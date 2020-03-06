@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuri.kepco.model.OperationLog;
-import com.nuri.kepco.model.dao.MeterInfoDAO;
 import com.nuri.kepco.model.dao.OperationLogDAO;
 import com.nuri.kepco.service.OperationLogService;
 import com.nuri.kepco.util.ConversionUtil;
@@ -81,5 +80,12 @@ public class OperationLogServiceImpl implements OperationLogService {
 	public JSONObject getOperationLogDetail(Map<String, Object> param) throws Exception {
 		OperationLog operationLog = operationLogDAO.getOperationLogDetail(param);
 		return ConversionUtil.getJSONObjectByModel(operationLog);
+	}
+	
+	@Override
+	public JSONArray getExcuteRate() throws Exception {
+		List<OperationLog> list = operationLogDAO.getExcuteRate();
+		
+		return ConversionUtil.getJSONArrayByModel(list);
 	}
 }

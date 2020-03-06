@@ -79,4 +79,23 @@ public class OperationLogController {
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(value = "/ajaxExcuteRate")
+	public ResponseEntity<Object> ajaxExcuteRate(HttpServletRequest request) {                
+		
+		JSONObject json = new JSONObject();
+		try {
+			
+			JSONArray jarr = this.operationLogService.getExcuteRate();
+			
+			json.put("result", jarr);
+
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
 }

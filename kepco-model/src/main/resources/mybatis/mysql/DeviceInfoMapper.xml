@@ -309,5 +309,35 @@
 		WHERE 
 			a.device_id = #{device_id}
 	</select>
+
+	<select id="getCommunication" resultType="deviceInfo">
+		<![CDATA[
+		SELECT 
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				WHERE a.ALLOW_YN = 1) AS total, 
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT BETWEEN DATE_FORMAT(now(), '%Y-%m-%d 00:00:00') AND DATE_FORMAT(now(), '%Y-%m-%d 23:59:59')
+				AND a.ALLOW_YN = 1) AS d1, 
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT BETWEEN DATE_SUB(DATE_FORMAT(now(), '%Y-%m-%d 00:00:00'), INTERVAL 1 DAY) AND DATE_SUB(DATE_FORMAT(now(), '%Y-%m-%d 23:59:59'), INTERVAL 1 DAY)
+				AND a.ALLOW_YN = 1) AS d2,
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT  < DATE_SUB(DATE_FORMAT(now(), '%Y-%m-%d 23:59:59'), INTERVAL 1 DAY)
+				AND a.ALLOW_YN = 1) AS d3,
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT IS NULL
+				AND a.ALLOW_YN = 1) AS d4
+		FROM DUAL
+		]]>
+	</select>
 	
 </mapper>
