@@ -87,9 +87,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<input type="text" id="obis_code" name="obis_code" value="" class="form-control">
 										</div>
 										<label class="col-lg-2 col-form-label"
-											style="padding-left: 10px;">리소스 명</label>
+											style="padding-left: 10px;">리소스명</label>
 										<div class="col-lg-3">
-											<input type="text" id="descr" name="descr" value="" class="form-control">
+											<input type="text" id="metering_type_nm" name="metering_type_nm" value="" class="form-control">
 										</div>
 									</div>
 								</td>
@@ -160,7 +160,7 @@ function ajaxSearchForm() {
            dataType    : "json", /* xml, html, script, json */
            data        : {meter_type		:'${meter_type}',
         	  			  obis_code			: $("#obis_code").val(),
-        	  			  metering_type_nm 	: $("#descr").val()}
+        	  			  metering_type_nm 	: $("#metering_type_nm").val()}
      };             	
     
      $.ajax(options);
