@@ -202,8 +202,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
+	{headerName: "단말ID", field: "device_id"}, 	// detail 조회용 컬럼
+	{headerName: "단말번호", field: "device_serial"}, 	// detail 조회용 컬럼
 	{headerName: "리소스 경로", field: "resource_sum"},
-	{headerName: "_단말ID", field: "device_id", hide:"true"}, 	// detail 조회용 컬럼
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},
 	{headerName: "리소스명", field: "resource_nm", width:150, cellStyle:{'text-align': "center"}},
