@@ -110,7 +110,7 @@ public class NMSInfoServiceImpl implements NMSInfoService {
 		ConversionUtil.getModelByMap(nmsInfo, param);
 		List<NMSInfo> list = this.nmsInfoDAO.getNMSList(nmsInfo);
 
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list,nmsInfo.getStart());
 	}
 
 	@Override
