@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.nuri.kepco.config.Constants;
 import com.nuri.kepco.model.MeterValue;
+import com.nuri.kepco.service.MeterBillingService;
 import com.nuri.kepco.service.MeterValueService;
 import com.nuri.kepco.util.ControllerUtil;
 
@@ -37,6 +38,9 @@ public class FileDownloadController {
 
 	@Autowired
 	private MeterValueService meterValueService;
+	
+	@Autowired
+	private MeterBillingService meterBillingService;
 
 	/*
 	 * downloadMeterValue
@@ -55,7 +59,7 @@ public class FileDownloadController {
 		         for(String key : commStr) {
 			          if(request.getParameterMap().containsKey(key)) {
 			        		  param.put(key, request.getParameter(key));	
-			      }
+			          }
 		         }
 		         param.put("limit",0);
 				
@@ -77,37 +81,78 @@ public class FileDownloadController {
 	   }
 	 
 	 /*
-	 * downloadMeterValueDetail
-	 * @desc MeterValueDetail 엑셀다운로드
-	 
-	 @GetMapping("/downloadMeterValueDetail")
-	   public ResponseEntity<InputStreamResource> downloadMeterValueDetail(@ModelAttribute MeterValue param) throws IOException {
-		
-		 String file_path = "";
-		 param.setPage(0);
-		 param.setLimit(0);
-
-			try {
-				
-				Map<String, String> channelList = this.meterValueService.selectMeterChannel(param);
-				param.setChannelList(channelList);
-				
-				Map<String, String> output = this.meterValueService.excelMeterValueDetail(param);
-				file_path = output.get("filepath") + "/" + output.get("filename");
-
-			} catch (Exception e) {
-				logger.error("error : " + e);
-			}
+		 * downloadMeterValueDetail
+		 * @desc MeterValueDetail 엑셀다운로드
+		 */
+		 @GetMapping("/downloadMeterValueDetail")
+		   public ResponseEntity<InputStreamResource> downloadMeterValueDetail(HttpServletRequest request) throws IOException {
 			
-	      File file = new File(file_path);
-	      InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+			 String[] commStr = { "meter_id","meter_serial", "device_serial","meter_type","branch_id","itime","mtime"};
+			 String file_path = "";
 
-	      return ResponseEntity.ok()
-	            .header(HttpHeaders.CONTENT_DISPOSITION,
-	                  "attachment;filename=" + file.getName())
-	            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
-	            .body(resource);
-	   }*/
+				try {
+					
+					Map<String, Object> param = ControllerUtil.getCommonParam(request);
+					
 
+			         for(String key : commStr) {
+				          if(request.getParameterMap().containsKey(key)) {
+				        		  param.put(key, request.getParameter(key));	
+				          }
+			         }
+			       //채널 가져와서 넣기
+			         param.put("limit",0);
+					
+					Map<String, String> output = this.meterValueService.excelMeterValueDetail(param);
+					file_path = output.get("filepath") + "/" + output.get("filename");
+
+				} catch (Exception e) {
+					logger.error("error : " + e);
+				}
+				
+		      File file = new File(file_path);
+		      InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		      return ResponseEntity.ok()
+		            .header(HttpHeaders.CONTENT_DISPOSITION,
+		                  "attachment;filename=" + file.getName())
+		            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
+		            .body(resource);
+		   }
+	 
+		 
+		 @GetMapping("/downloadMeterBilling")
+		   public ResponseEntity<InputStreamResource> downloadMeterBilling(HttpServletRequest request) throws IOException {
+			
+			 String[] commStr = { "meter_serial", "device_serial","meter_type","branch_parent_id", "branch_id","billing_dt","itime","mtime"};
+			 String file_path = "";
+
+				try {
+					
+					Map<String, Object> param = ControllerUtil.getCommonParam(request);
+
+			         for(String key : commStr) {
+				          if(request.getParameterMap().containsKey(key)) {
+				        		  param.put(key, request.getParameter(key));	
+				          }
+			         }
+			         param.put("limit",0);
+					
+					Map<String, String> output = this.meterBillingService.excelMeterBilling(param);
+					file_path = output.get("filepath") + "/" + output.get("filename");
+
+				} catch (Exception e) {
+					logger.error("error : " + e);
+				}
+				
+		      File file = new File(file_path);
+		      InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		      return ResponseEntity.ok()
+		            .header(HttpHeaders.CONTENT_DISPOSITION,
+		                  "attachment;filename=" + file.getName())
+		            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
+		            .body(resource);
+		   }
 }
 

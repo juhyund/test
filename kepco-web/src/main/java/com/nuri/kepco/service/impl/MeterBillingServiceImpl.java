@@ -1,6 +1,6 @@
 package com.nuri.kepco.service.impl;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +15,8 @@ import com.nuri.kepco.model.MeterBilling;
 import com.nuri.kepco.model.dao.MeterBillingDAO;
 import com.nuri.kepco.service.MeterBillingService;
 import com.nuri.kepco.util.ConversionUtil;
+import com.nuri.kepco.util.DateUtil;
+import com.nuri.kepco.util.ExcelUtil;
 
 
 @Service
@@ -61,5 +63,27 @@ public class MeterBillingServiceImpl implements MeterBillingService {
 	public int update(Map<String, Object> param) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public Map<String, String> excelMeterBilling(Map<String, Object> param) throws Exception {
+		Map<String, String> output = new HashMap<String, String>();
+		MeterBilling meterBilling = new MeterBilling();
+		ConversionUtil.getModelByMap(meterBilling, param);
+		
+		
+		String template_filepath = "/template/template_meter_billing.xlsx";
+		String filename = "meter_billing_" + DateUtil.getNowDateTime() + ".xlsx";			
+		String filepath = fileDownloadDir + "/meterBiling/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+
+		List<MeterBilling> result = this.meterBillingDAO.selectList(meterBilling);
+		System.out.println("\n=----------------------excelMeterBilling--------------------\n\nresult = "+result);
+		
+		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result);
+		
+		output.put("filepath", filepath);
+		output.put("filename", filename);
+		
+		return output;
 	}
 }
