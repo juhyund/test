@@ -60,7 +60,10 @@ public class RamUsageMonitorDAOImpl implements RamUsageMonitorDAO {
 		if (param.getSdate() != null) {
 			query.addCriteria(Criteria.where("usageTime").gte(param.getSdate()).lte(param.getEdate()));
 		}
-
+		
+		if (param.getUsageTime() != null) {
+			query.addCriteria(Criteria.where("usageTime").gte(param.getUsageTime()).lte(param.getUsageTime()));
+		}
 		return query;
 	}
 
