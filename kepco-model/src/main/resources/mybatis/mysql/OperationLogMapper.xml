@@ -20,6 +20,9 @@
         <if test="result_status != null and result_status != ''" >     
             AND ol.result = #{result_status}
         </if>
+        <if test="tid != null and tid != ''" >     
+            AND ol.tid = #{tid}
+        </if>
         <if test="request_sdate != null and request_edate != null">
 			<!-- AND ol.request_dt between date_format(concat(#{request_sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{request_edate},'235959'), '%Y-%m-%d %H:%i:%s') -->
 			AND ol.request_dt between concat(#{request_sdate},'000000') AND concat(#{request_edate},'235959')
