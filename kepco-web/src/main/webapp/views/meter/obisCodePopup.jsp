@@ -139,8 +139,7 @@ var columnDefs = [
 	// {headerName: "resource_instance_id",field: "arr_resource_instance_id"},
 	{headerName: "오브젝트 ID",				field: "object_id"},
 	{headerName: "오브젝트 인스턴스 ID",		field: "object_instance_id", 	width:100,	suppressSizeToFit: true},
-	{headerName: "OBIS 코드", 			field: "arr_obis_code",			width:300},
-	{headerName: "OBIS 코드_view", 		field: "arr_obis_code",			valueFormatter:obisListFormatter, width:300}
+	{headerName: "OBIS 코드", 			field: "arr_obis_code",			width:300}
 ];
 
 

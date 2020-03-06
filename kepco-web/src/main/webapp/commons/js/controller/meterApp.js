@@ -132,19 +132,21 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	        payload["id"] = object_instance_id;
 	        payload["resources"] = [];
 	           
-			for(i in resources) {			
+			for(i in resources) {
 				
 				var resource = resources[i];
 				
-				if(object_id == 31011 && resource.resource_id == 113) { // multiple				
+				if(object_id == 31011 && resource.resource_id == 113) {// multiple				
 					
 					if(resource.newValue != undefined) {
+						
 						var resourceSplit = resource.newValue.split(',');
 		        		var values = {};
 		        		 
 		        		for ( var i in resourceSplit ) {
 		        			values[i] = resourceSplit[i];                        			                        			
-		        		}     
+		        		}
+		        		
 		        		// 113
 		        		payload.resources.push({
 		                    "id":resource.resource_id,
@@ -160,11 +162,29 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 					
 				} else {
 					
-					if(resource.newValue != undefined) {
-						payload.resources.push({
-			                "id":resource.resource_id,
-			                "value":resource.newValue
-			            });
+					
+					if(object_id == 31012 && resource.resource_id == 106) {
+						
+						var obis = resources[4].newValue;
+						var cmd = resources[3].newValue;
+						
+						console.log(obis + " " + cmd + " " + resource.newValue);
+						var apdu = $scope.makeAPDU(obis, resource.newValue, cmd);
+						console.log(apdu);
+						
+						if(apdu != undefined) {
+							payload.resources.push({
+				                "id":resource.resource_id,
+				                "value":apdu
+				            });
+						}
+					} else {
+						if(resource.newValue != undefined) {
+							payload.resources.push({
+				                "id":resource.resource_id,
+				                "value":resource.newValue
+				            });
+						}
 					}
 				}
 			}
@@ -187,7 +207,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
     				
     				if(resource.resource_id == 106) {
     					if(resources[3].newValue == 193 || resources[3].newValue == 6) {
-    						resource.msg = "설정할 값을 입력해 주세요!!!!";
+    						resource.msg = "설정 값을 입력해 주세요!";
     						return false;
     					}    					
     				} else {
@@ -258,6 +278,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
     	resources[3].newValue = 193;
     	resources[4].newValue = "001600000F0000FF04";
     	resources[4].obis_nm = "정기검침일";
+    	resources[5].strUnit = "일";
     };
     
     $scope.settingLpPeriod = function (resources) {
@@ -265,6 +286,8 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
    	 	resources[4].newValue = "00030101000804FF02";
    	 	resources[4].obis_nm = "LP 주기";
    	 	resources[4].msg = "";
+   	 	resources[5].strUnit = "분";
+   	 	
     };
     
     $scope.settingObisCode = function(obis, obis_nm) {    	
@@ -282,4 +305,41 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
     	resources[8].msg = "";
     	resources[9].msg = "";
     };
+    
+    $scope.makeAPDU = function(obiscode, value, cmd) {
+    	
+    	var apdu = "00";
+    	
+    	if(cmd == 193) { // SET_REQUEST
+    		if(obiscode == "00030101000804FF02") { // lp주기
+    			var hex = $scope.makeHex(value);
+    			apdu += "11" + hex; 
+    		} else if(obiscode == "001600000F0000FF04") {
+    			var hex = $scope.makeHex(value);
+    			apdu += "010102020904000000000905FFFFFF" + hex + "FF"
+    		} 
+    	}
+    	
+    	return apdu;
+    }
+    
+    $scope.makeHex = function(n) {
+    	n = parseInt(n);
+    	var h = (n).toString(16).toUpperCase();    	
+    	return $scope.LPAD(h, '0', 2);
+    } 
+
+    $scope.LPAD = function(s, c, n) {   
+        if (! s || ! c || s.length >= n) {
+            return s;
+        }
+     
+        var max = (n - s.length)/c.length;
+        for (var i = 0; i < max; i++) {
+            s = c + s;
+        }
+     
+        return s;
+    }
 });
+

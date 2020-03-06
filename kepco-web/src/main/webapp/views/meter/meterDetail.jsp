@@ -271,7 +271,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																				|| resource.resource_id == '103' 
 																				|| resource.resource_id == '106')">
 																				<input type="text" ng-model="resource.newValue" name="resource_val" id="{{resource.resource_nm}}" ng-required="true" style="min-width: 300px;">
-																				</input>																				
+																				</input>	
+																																							
 																			</div>																			
 																			<div ng-if="resource.operation.indexOf('W') != -1 && resource.resource_id == '104'">
 																				<select ng-model="resource.newValue" name="newValue" id="{{resource.resource_nm}}" ng-required="true" style="min-width: 300px;height:26px;" id="command-select" >
@@ -285,7 +286,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																				<input type="text" ng-model="resource.newValue" name="obis_code" id="obis_code{{resource.resource_id}}" ng-required="true" style="min-width: 300px;" readonly>																																																												
 																			</div>
 																		</td>
-																		<td style="width:250px;">{{resource.obis_nm}}<font color="red">{{resource.msg}}</font></td>
+																		<td style="width:250px;">{{resource.obis_nm}} {{resource.strUnit}}<font color="red"> {{resource.msg}}</font></td>
 																	</tr>
 																</tbody>
 															</table>
@@ -295,7 +296,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<i class="fa"> 정기검침일 설정 </i>
 																</button>
 																<button class="btn btn-primary" style="margin-right:10px; width: 140px" type="button" ng-click="settingLpPeriod(resources);">
-																	<i class="fa" > LP 주기 설정 </i>
+																	<i class="fa"> LP 주기 설정 </i>
 																</button>
 																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="write(resources)">
 																	<i class="fa fa-play"> 동적 스케줄 실행</i>
@@ -354,7 +355,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													
 													<div class="ibox-content">
 														<div class="table-responsive"  id="resource">
-														<input type="text" name="object_instance_id" id="object_instance_id" value="">															
+														<input type="hidden" name="object_instance_id" id="object_instance_id" value="">															
 															<table class="table">
 																<thead class ="gray-bg">
 																	<tr align="center" >

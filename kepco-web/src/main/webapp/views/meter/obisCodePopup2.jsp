@@ -135,10 +135,10 @@ var columnDefs = [
 	{headerName: "CLASS",		field: "class_id"},
 	{headerName: "OBIS 코드",		field: "obis_code",width:300},
  	{headerName: "OBIS 코드명",	field: "descr"},
+ 	{headerName: "데이터타입",		field: "datatype"},
 	{headerName: "속성",			field: "attribute_no"},
 	{headerName: "권한",			field: "access_right"}
 ];
-
 
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500, true);    
@@ -147,20 +147,19 @@ var initGrid = function() {
 };
  
 function ajaxSearchForm() {
-
-    var options = { 
-           beforeSend  : showRequest,
-           success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxSelectObisList2",
-           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-           type        : "post", /* get, post */
-           dataType    : "json", /* xml, html, script, json */
-           data        : {meter_type:'${meter_type}',
-        	  			  obis_code	: $("#obis_code").val(),
-        	  			  descr 	: $("#descr").val()}
-     };             	
-    
-     $.ajax(options);
+   var options = { 
+          beforeSend  : showRequest,
+          success     : successResultHandler,
+          url         : COMMON_URL + "/ajaxSelectObisList2",
+          contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+          type        : "post", /* get, post */
+          dataType    : "json", /* xml, html, script, json */
+          data        : {meter_type:'${meter_type}',
+       	  			  obis_code	: $("#obis_code").val(),
+       	  			  descr 	: $("#descr").val()}
+    };             	
+   
+    $.ajax(options);
 }
 
 onRowClicked = function(event){
