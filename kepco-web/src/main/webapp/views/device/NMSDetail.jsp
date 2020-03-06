@@ -46,85 +46,21 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
 <style>
-  .highcharts-figure .chart-container {
-		width: 300px;
-		height: 200px;
-		float: left;
-	}
-	
-	.highcharts-figure, .highcharts-data-table table {
-		width: 600px;
-		height: 200px;
-		margin: 0 auto;
-	}
-	
-	.highcharts-line, .highcharts-data-table table {
-	    min-width: 360px; 
-	    max-width: fit-content;
-	    height: 400px;
-	    margin: 1em auto;
-	}
-	
-	.highcharts-data-table table {
-	    font-family: Verdana, sans-serif;
-	    border-collapse: collapse;
-	    border: 1px solid #EBEBEB;
-	    margin: 10px auto;
-	    text-align: center;
-	    width: 100%;
-	    max-width: 500px;
-	}
-	.highcharts-data-table caption {
-	    padding: 1em 0;
-	    font-size: 1.2em;
-	    color: #555;
-	}
-	.highcharts-data-table th {
-		font-weight: 600;
-	    padding: 0.5em;
-	}
-	.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-	    padding: 0.5em;
-	}
-	.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-	    background: #f8f8f8;
-	}
-	.highcharts-data-table tr:hover {
-	    background: #f1f7ff;
-	}
-	
-	@media (max-width: 600px) {
-		.highcharts-figure, .highcharts-data-table table {
-			width: 100%;
-		}
-		.highcharts-figure .chart-container {
-			/* width: 300px; */
-			float: left;
-			margin: 0 auto;
-		}
-	
-	}
-	
 	.chart-container-left{
 		width: 45%;
 		float: left;
 		margin: 5px 20px 10px 40px;
-		/* margin-right: 20px;
-    	margin-left: 40px; */
 	}
 	
 	.chart-container-right{
 		width: 45%;
 		float: right;
 		margin: 5px 40px 10px 20px;
-		/* margin-right: 40px;
-    	margin-left: 20px; */
 	}
 	
 	.long-chart-container-left{
 		width: 95%;
 		float: left;
-		/* margin-right: 20px; */
     	margin: 5px 20px 10px 40px;
 	}
 	
@@ -183,16 +119,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
 								<tr class="text-navy">
+									<th>단말번호</th>
 									<th>단말ID</th>
 									<th>단말상태<th>
-									<th>통신시간</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
+									<td><h3>${deviceSerial}</h3></td>
 									<td><h3>${deviceId}</h3></td>
 									<td><h3>${deviceStatusNm}</h3></td>
-									<td><h3>${usageTime}</h3></td>
 								</tr>
 							</tbody>
 						</table>
@@ -249,6 +185,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<input type="hidden" id="deviceSerial" name="deviceSerial" value="${deviceSerial}" class="form-control">
 					<input type="hidden" id="usageTime" name="usageTime" value="${usageTime}" class="form-control">
 				</form>
+				<div id="loading">
+				        <img SRC="https://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F9950163C5AFE32810A7310">    
+				        <%-- <img id="loading-image" src="<%=COMMON_PATH_IMG%>/loading1.gif" alt="Loading..." /></div> --%>
+				</div>
 				<%-- <form name="search_form" id="search_form" method="post">
 				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
 				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
@@ -368,7 +308,14 @@ function resetForm(){
 };
 
 function showRequest() {
-	// $("#loading").show();
+	/* $("#loading").show(); */
+	$("#loading")
+	.css("position","absolute")
+	.css("z-index","10001")
+	.css("top","300px")
+	.css("left","49%")
+	.show()
+
 }
 
 function successResultHandler(data, status) {
@@ -1169,6 +1116,7 @@ function renderChart(data, status){
 		  return series;
 	}
 	//highcharts 로딩
+	$("#loading").hide();
 	Highcharts.chart('rsrpContainer', rsrpChartOptions);
 	Highcharts.chart('rsrqContainer', rsrqChartOptions);
 	Highcharts.chart('snrContainer', snrChartOptions);
@@ -1192,6 +1140,7 @@ function init() {
 	
 	// form search
 	ajaxSearchForm();
+	
 }
 	
 $(document).ready(function() {	
