@@ -53,7 +53,14 @@ public class PageController {
 	}
 	
 	@RequestMapping("/NMSDetail") 
-	public String NMSDetail() throws Exception {
+	public String NMSDetail(@ModelAttribute(value="deviceSerial") String deviceSerial,
+							@ModelAttribute(value="deviceId") String deviceId,
+							@ModelAttribute(value="usageTime") String usageTime,
+							@ModelAttribute(value="deviceStatusNm") String deviceStatusNm, Model model) throws Exception {
+		model.addAttribute("deviceSerial", deviceSerial);
+		model.addAttribute("deviceId", deviceId);
+		model.addAttribute("usageTime", usageTime);
+		model.addAttribute("deviceStatusNm", deviceStatusNm);
 		return "device/NMSDetail";
 	}
 	
@@ -84,5 +91,10 @@ public class PageController {
 		model.addAttribute("device_id", device_id);
 		model.addAttribute("request_dt", request_dt);
 		return "history/operationLogDetail";
+	}
+	
+	@RequestMapping("/firmware")
+	public String firmware() throws Exception {
+		return "history/deviceFwHistory";
 	}
 }

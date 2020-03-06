@@ -58,7 +58,7 @@ public class ConnectivityMonitorDAOImpl implements ConnectivityMonitorDAO {
 		}
 
 		if (param.getSdate() != null) {
-			query.addCriteria(Criteria.where("insertDt").gte(param.getSdate()).lte(param.getEdate()));
+			query.addCriteria(Criteria.where("usageTime").gte(param.getSdate()).lte(param.getEdate()));
 		}
 
 		return query;

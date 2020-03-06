@@ -20,4 +20,12 @@ public class DeviceFwHistory extends CommonObj {
 	private String reg_id;
 	private String reg_dt;
 
+	private String device_serial;
+	private String device_fw_version;
+	private String fw_version;
+	private String fw_nm;
+	private String fw_file_nm;
+	
+	private String usdate;
+	private String uedate;
 }

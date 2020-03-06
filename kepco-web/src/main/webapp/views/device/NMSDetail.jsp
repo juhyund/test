@@ -98,12 +98,46 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			width: 100%;
 		}
 		.highcharts-figure .chart-container {
-			width: 300px;
-			float: none;
+			/* width: 300px; */
+			float: left;
 			margin: 0 auto;
 		}
 	
 	}
+	
+	.chart-container-left{
+		width: 45%;
+		float: left;
+		margin: 5px 20px 10px 40px;
+		/* margin-right: 20px;
+    	margin-left: 40px; */
+	}
+	
+	.chart-container-right{
+		width: 45%;
+		float: right;
+		margin: 5px 40px 10px 20px;
+		/* margin-right: 40px;
+    	margin-left: 20px; */
+	}
+	
+	.long-chart-container-left{
+		width: 95%;
+		float: left;
+		/* margin-right: 20px; */
+    	margin: 5px 20px 10px 40px;
+	}
+	
+	#search_form {
+		margin-left: 5px;
+	}
+	
+	#contentsFrame {
+		min-height: 1500px !important;
+	}
+	
+	.iframe100 {   display: block;   border: none;   height: 100vh;   width: 100vw; }
+
 	
 </style>
 <link href="<%=COMMON_PATH_CSS%>/style.css" rel="stylesheet">
@@ -135,11 +169,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div style="width:100%">
 
 	<div class="col-lg-12">	
-		<div class="ibox">
-			<div class="ibox-content">
-					<!-- start :summary_area -->
-					
-				<%-- <div class="row m-b-md ">
+		<div>
+				<!-- start :summary_area -->
+				<div class="row m-b-md " style="background: white; margin-bottom: 10px;">
 					<div>
 	                    <div class="widget-left-color-box p-sm m-l-n-sm navy-bg">
 	                        <div >
@@ -147,34 +179,80 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 	                        </div>
 	                	</div>
 	                </div>
-	                <div class=" gray-bg  col-lg-6 "> 
+	                <div class="col-lg-6 "> 
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
 								<tr class="text-navy">
-									<th>제어관리번호</th>
-									<th>띠용<th>
-									<th>인스턴스 구분</th>
-									<th>필수여부</th>
+									<th>단말ID</th>
+									<th>단말상태<th>
+									<th>통신시간</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td><h1>${control_seq}</h1></td>
-									<td><h1>${object_name}</h1></td>
-									<td><h1>${instance}</h1></td>
-									<td><h1>${mandatory}</h1></td>
+									<td><h3>${deviceId}</h3></td>
+									<td><h3>${deviceStatusNm}</h3></td>
+									<td><h3>${usageTime}</h3></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					
-				</div> --%>
+				</div>
 				<!--  end : summary_area  -->
-				
 				<form name="search_form" id="search_form" method="post">
 				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
 				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-				<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
+					<table class="table table-borderless ibox-content"  style="width: 99%; margin-bottom: 7px;" border="1" >
+						<tbody>
+							<tr class="table-border">
+								<td>
+									<div class="form-group row">
+										<label class="col-sm-2 col-form-label" style="text-align: center">검침기간</label>
+			                            <div class="col-sm-6" id="datePicker">
+											<div class="input-group date" style="width: 48%; float: left;">
+												<input type="hidden" id="sdate" name="sdate" value=""> 
+												<input type="text" class="form-control" id="sdateView" name="sdateView" value="${sdate}">
+												<span class="input-group-addon" style="list-style: none;">
+													<i class="fa fa-calendar"></i>
+												</span>
+											</div>
+											<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+											<div class="input-group date" style="width: 48%;">
+												<input type="hidden"  id="edate" name="edate" value=""> 
+												<input type="text" class="form-control"  id="edateView" name="edateView" value="${edate}"> 
+												<span class="input-group-addon" style="list-style: none;">
+													<i class="fa fa-calendar"></i>
+												</span>
+											</div>
+										</div>
+										<div class="col-sm-4 btn-group">
+											<button type="button" class="btn btn-outline btn-primary" clicked onclick="setSearchPeriod('today')">오늘</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('weekly')">주간</button>
+											<button type="button" class="btn btn-outline btn-primary" onclick="setSearchPeriod('montly')">월간</button>
+			                            </div>
+									</div>
+								</td>
+								<td width="180" style="text-align: right">
+									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
+										<i class="fa fa-search"></i>
+									</button>
+									<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
+										<i class="fa fa-undo"></i>
+									</button>
+									<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
+										<i class="fa fa-download"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="hidden" id="deviceSerial" name="deviceSerial" value="${deviceSerial}" class="form-control">
+					<input type="hidden" id="usageTime" name="usageTime" value="${usageTime}" class="form-control">
+				</form>
+				<%-- <form name="search_form" id="search_form" method="post">
+				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
+				<table class="table table-borderless ibox-content" style="height: 100%;" style="margin-bottom: 7px;" border="1">
 					<tbody>
 						<tr class="table-border">
 							<td height="80">
@@ -232,21 +310,26 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						</tr>
 					</tbody>
 				</table>	
-				</form>
-				<div >								
+				</form> --%>
+				<div>								
 				   <!-- chart -->
-				   <figure class="highcharts-figure">
+				 <!--   <figure class="highcharts-figure">
 					   <div id="container-CPU" class="chart-container"></div>
 		    		   <div id="container-RAM" class="chart-container"></div>
-		    	   </figure>
-				   <figure class="highcharts-line">
-		    		   <div id="container"></div>
-		    	    </figure>
+		    	   </figure> -->
+				   <div style="overflow: hidden;">
+		    		   <div class="chart-container-left" id="cpuContainer"></div>
+		    		   <div class="chart-container-right" id="ramContainer"></div>
+		    	    </div>
+		    	    <div style="overflow: hidden;">
+		    		   <div class="long-chart-container-left" id="rsrpContainer"></div>
+		    		   <div class="long-chart-container-left" id="rsrqContainer"></div>
+		    		   <div class="long-chart-container-left" id="snrContainer"></div>
+		    		</div>   
+			    </div>        
 				   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
 						<i class="fa fa-undo"> 목록으로 돌아가기</i>
 					</button>
-			    </div>        
-			</div>
 		</div>
 	</div>
 </div>
@@ -264,7 +347,8 @@ var initGrid = function() {
 };
 
 function ajaxSearchForm() {
-
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
+	
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
@@ -290,19 +374,10 @@ function showRequest() {
 function successResultHandler(data, status) {
 	//chart rendering
 	renderChart(data, status)
-	
-	/* $.each( data, function(index, item) {
-		if(index == 'ramUsageList'){
-			for(var i=0; i<item.length; i++){
-				setInterval(item[i].ramUsage);			
-			}
-		}
-		
-	}); */	
 }
 
 //gauge chart
-var gaugeOptions = {
+/* var gaugeOptions = {
 	    chart: {
 	        type: 'solidgauge'
 	    },
@@ -423,10 +498,10 @@ var gaugeOptions = {
 	        }
 	    }]
 
-	}));
+	})); */
 
 	// Bring life to the dials
-	setInterval(function () {
+/* 	setInterval(function () {
 	    // CPU
 	    var point,
 	        newVal,
@@ -456,7 +531,7 @@ var gaugeOptions = {
 
 	        point.update(newVal);
 	    }
-	}, 2000);
+	}, 2000); */
 	
 /* 	//line chart
 	function getData(n) {
@@ -528,16 +603,16 @@ var gaugeOptions = {
 function renderChart(data, status){
 	var format = '{value: %m/%e %H:%M}';
 
-	var chartOptions = {
+	var rsrpChartOptions = {
 		  chart: {
 		    scrollablePlotArea: {
-		      minWidth: 900
+		      minWidth: 500
 		    },
 		    zoomType: "x"
 		  },
 
 		  title: {
-		    text: ''
+		    text: 'RSRP'
 		  },
 		  xAxis: {
 				type: 'datetime',
@@ -562,21 +637,7 @@ function renderChart(data, status){
 		      format: '{value:.,0f}'
 		    },
 		    showFirstLabel: false
-		  }/* , { // right y axis
-		    linkedTo: 0,
-		    gridLineWidth: 0,
-		    opposite: true,
-		    title: {
-		      text: null
-		    },
-		    labels: {
-		      align: 'right',
-		      x: -3,
-		      y: 16,
-		      format: '{value:.,0f}'
-		    },
-		    showFirstLabel: false
-		  } */],
+		  }],
 		  lang: {
 		        noData: "No data to Display"
 		  },
@@ -614,17 +675,343 @@ function renderChart(data, status){
 		      } */
 		    }
 		  },
-		  series: createSeries(data)
+		  series: rsrpCreateSeries(data)
 		};
 	
+	var rsrqChartOptions = {
+			  chart: {
+			    scrollablePlotArea: {
+			      minWidth: 500
+			    },
+			    zoomType: "x"
+			  },
+
+			  title: {
+			    text: 'RSRQ'
+			  },
+			  xAxis: {
+					type: 'datetime',
+					labels: {
+						format: format,
+						overflow: 'justify'
+						
+					},
+					//minTickInterval: interval,
+					ordinal: false //this sets the fixed time formats 
+				
+				}, 
+
+			  yAxis: [{ // left y axis
+			    title: {
+			      text: null
+			    },
+			    labels: {
+			      align: 'left',
+			      x: 3,
+			      y: 16,
+			      format: '{value:.,0f}'
+			    },
+			    showFirstLabel: false
+			  }],
+			  lang: {
+			        noData: "No data to Display"
+			  },
+			  legend: {
+			    align: 'center',
+			    verticalAlign: 'bottom',
+			    borderWidth: 0
+			  },
+		 
+			  tooltip: {
+			    shared: true
+			  },
+
+			  plotOptions: {
+			    series: {
+			      cursor: 'pointer',
+			      point: {
+			        events: {
+			          click: function (e) {
+			            hs.htmlExpand(null, {
+			              pageOrigin: {
+			                x: e.pageX || e.clientX,
+			                y: e.pageY || e.clientY
+			              },
+			              headingText: this.series.name,
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+			                this.y ,
+			              width: 200
+			            });
+			          }
+			        }
+			      }/* ,
+			      marker: {
+			        lineWidth: 1
+			      } */
+			    }
+			  },
+			  series: rsrqCreateSeries(data)
+			};
 	
-	function createSeries(data) {
+	var snrChartOptions = {
+			  chart: {
+			    scrollablePlotArea: {
+			      minWidth: 500
+			    },
+			    zoomType: "x"
+			  },
+
+			  title: {
+			    text: 'SNR'
+			  },
+			  xAxis: {
+					type: 'datetime',
+					labels: {
+						format: format,
+						overflow: 'justify'
+						
+					},
+					//minTickInterval: interval,
+					ordinal: false //this sets the fixed time formats 
+				
+				}, 
+
+			  yAxis: [{ // left y axis
+			    title: {
+			      text: null
+			    },
+			    labels: {
+			      align: 'left',
+			      x: 3,
+			      y: 16,
+			      format: '{value:.,0f}'
+			    },
+			    showFirstLabel: false
+			  }],
+			  lang: {
+			        noData: "No data to Display"
+			  },
+			  legend: {
+			    align: 'center',
+			    verticalAlign: 'bottom',
+			    borderWidth: 0
+			  },
+		 
+			  tooltip: {
+			    shared: true
+			  },
+
+			  plotOptions: {
+			    series: {
+			      cursor: 'pointer',
+			      point: {
+			        events: {
+			          click: function (e) {
+			            hs.htmlExpand(null, {
+			              pageOrigin: {
+			                x: e.pageX || e.clientX,
+			                y: e.pageY || e.clientY
+			              },
+			              headingText: this.series.name,
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+			                this.y ,
+			              width: 200
+			            });
+			          }
+			        }
+			      }/* ,
+			      marker: {
+			        lineWidth: 1
+			      } */
+			    }
+			  },
+			  series: snrCreateSeries(data)
+			};
+		
+	var cpuChartOptions = {
+			  chart: {
+			    scrollablePlotArea: {
+			      minWidth: 500
+			    },
+			    zoomType: "x"
+			  },
+
+			  title: {
+			    text: 'CPU'
+			  },
+			  xAxis: {
+					type: 'datetime',
+					labels: {
+						format: format,
+						overflow: 'justify'
+						
+					},
+					//minTickInterval: interval,
+					ordinal: false //this sets the fixed time formats 
+				
+				}, 
+
+			  yAxis: [{ // left y axis
+			    title: {
+			      text: null
+			    },
+			    labels: {
+			      align: 'left',
+			      x: 3,
+			      y: 16,
+			      format: '{value:.,0f}'
+			    },
+			    showFirstLabel: false
+			  }/* , { // right y axis
+			    linkedTo: 0,
+			    gridLineWidth: 0,
+			    opposite: true,
+			    title: {
+			      text: null
+			    },
+			    labels: {
+			      align: 'right',
+			      x: -3,
+			      y: 16,
+			      format: '{value:.,0f}'
+			    },
+			    showFirstLabel: false
+			  } */],
+			  lang: {
+			        noData: "No data to Display"
+			  },
+			  legend: {
+			    align: 'center',
+			    verticalAlign: 'bottom',
+			    borderWidth: 0
+			  },
+		 
+			  tooltip: {
+			    shared: true
+			  },
+
+			  plotOptions: {
+			    series: {
+			      cursor: 'pointer',
+			      point: {
+			        events: {
+			          click: function (e) {
+			            hs.htmlExpand(null, {
+			              pageOrigin: {
+			                x: e.pageX || e.clientX,
+			                y: e.pageY || e.clientY
+			              },
+			              headingText: this.series.name,
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+			                this.y ,
+			              width: 200
+			            });
+			          }
+			        }
+			      }/* ,
+			      marker: {
+			        lineWidth: 1
+			      } */
+			    }
+			  },
+			  series: cpuCreateSeries(data)
+			};
+	
+	var ramChartOptions = {
+			  chart: {
+			    scrollablePlotArea: {
+			      minWidth: 500
+			    },
+			    zoomType: "x"
+			  },
+
+			  title: {
+			    text: 'MEMORY'
+			  },
+			  xAxis: {
+					type: 'datetime',
+					labels: {
+						format: format,
+						overflow: 'justify'
+						
+					},
+					//minTickInterval: interval,
+					ordinal: false //this sets the fixed time formats 
+				
+				}, 
+
+			  yAxis: [{ // left y axis
+			    title: {
+			      text: null
+			    },
+			    labels: {
+			      align: 'left',
+			      x: 3,
+			      y: 16,
+			      format: '{value:.,0f}'
+			    },
+			    showFirstLabel: false
+			  }/* , { // right y axis
+			    linkedTo: 0,
+			    gridLineWidth: 0,
+			    opposite: true,
+			    title: {
+			      text: null
+			    },
+			    labels: {
+			      align: 'right',
+			      x: -3,
+			      y: 16,
+			      format: '{value:.,0f}'
+			    },
+			    showFirstLabel: false
+			  } */],
+			  lang: {
+			        noData: "No data to Display"
+			  },
+			  legend: {
+			    align: 'center',
+			    verticalAlign: 'bottom',
+			    borderWidth: 0
+			  },
+		 
+			  tooltip: {
+			    shared: true
+			  },
+
+			  plotOptions: {
+			    series: {
+			      cursor: 'pointer',
+			      point: {
+			        events: {
+			          click: function (e) {
+			            hs.htmlExpand(null, {
+			              pageOrigin: {
+			                x: e.pageX || e.clientX,
+			                y: e.pageY || e.clientY
+			              },
+			              headingText: this.series.name,
+			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+			                this.y ,
+			              width: 200
+			            });
+			          }
+			        }
+			      }/* ,
+			      marker: {
+			        lineWidth: 1
+			      } */
+			    }
+			  },
+			  series: ramCreateSeries(data)
+			};
+		
+	
+	function rsrpCreateSeries(data) {
 		 var series = [];
 		 var rsrpChannelData = [];
 		 var rsrqChannelData = [];
 		 var ssnrChannelData = [];
-		 var cpuChannelData = [];
-		 var ramChannelData = [];
 		 
 			 //데이터 저장 (각 채널의 데이터 배열에 저장)
 			 $.each( data, function(index, item) {
@@ -634,103 +1021,174 @@ function renderChart(data, status){
 							var point = [];
 							var pointData = item[i].rsrp;
 							
-							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 14)));
 							point.push(item[i].rsrp);
 							
 							rsrpChannelData.push(point);			
 						} 
-						
+					}
+				}
+			});
+			 
+			 
+			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
+			 series.push({
+				 name : 'RSRP',
+				 data : rsrpChannelData
+			 });
+			
+		  return series;
+	}
+	
+	function rsrqCreateSeries(data) {
+		 var series = [];
+		 var rsrpChannelData = [];
+		 var rsrqChannelData = [];
+		 var ssnrChannelData = [];
+		 
+			 //데이터 저장 (각 채널의 데이터 배열에 저장)
+			 $.each( data, function(index, item) {
+				if(index == 'connectivityList'){
+					for(var i=0; i<item.length; i++){
 						if(item[i].rsrq.getOwnPropertyNames = "rsrq"){
 							var point = [];
 							var pointData = item[i].rsrq;
 							
-							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 14)));
 							point.push(item[i].rsrq);
 							
 							rsrqChannelData.push(point);
 						}
-						
+					}
+				}
+			});
+			 
+			 
+			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
+			 series.push({
+				 name : 'RSRQ',
+				 data : rsrqChannelData
+			 });
+			
+		  return series;
+	}
+	
+	function snrCreateSeries(data) {
+		 var series = [];
+		 var rsrpChannelData = [];
+		 var rsrqChannelData = [];
+		 var ssnrChannelData = [];
+		 
+			 //데이터 저장 (각 채널의 데이터 배열에 저장)
+			 $.each( data, function(index, item) {
+				if(index == 'connectivityList'){
+					for(var i=0; i<item.length; i++){
 						if(item[i].ssnr.getOwnPropertyNames = "ssnr"){
 							var point = [];
 							var pointData = item[i].ssnr;
 							
-							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 14)));
 							point.push(item[i].ssnr);
 							
 							ssnrChannelData.push(point);
 						}
 					}
 				}
-				
-				if(index == 'ramUsageList'){
-					for(var i=0; i<item.length; i++){
-						if(item[i].ramUsage != ""){
-							var point = [];
-							var pointData = item[i].ramUsage;
-							
-							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
-							point.push(item[i].rsrp);
-							
-							ramChannelData.push(point);			
-						} 
-					}
-				}
-				
+			});
+			 
+			 
+			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
+			 series.push({
+				 name : 'SNR',
+				 data : ssnrChannelData
+			 });
+			
+		  return series;
+	}
+	
+	function cpuCreateSeries(data) {
+		 var series = [];
+		 var cpuChannelData = [];
+		 
+			 //데이터 저장 (각 채널의 데이터 배열에 저장)
+			 $.each( data, function(index, item) {
 				if(index == 'cpuUsageList'){
 					for(var i=0; i<item.length; i++){
-						if(item[i].cpuUsage != ""){
+						/* if(item[i].cpuUsage != ""){ */
 							var point = [];
 							var pointData = item[i].cpuUsage;
 							
-							point.push(getTimeMilisec(item[i].usageTime.substr(0, 12)));
-							point.push(item[i].rsrp);
+							point.push(getTimeMilisec(item[i].usageTime.substr(0, 14)));
+							point.push(item[i].cpuUsage);
 							
 							cpuChannelData.push(point);			
 						} 
-					}
+					/* } */
 					
 				}
 				
 			});
 			 
+			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
+			 series.push({
+				 name : 'CPU',
+				 data : cpuChannelData
+			 });
+			
+		  return series;
+	}
+	
+	function ramCreateSeries(data) {
+		 var series = [];
+		 var ramChannelData = [];
+		 
+			 //데이터 저장 (각 채널의 데이터 배열에 저장)
+			 $.each( data, function(index, item) {
+				if(index == 'ramUsageList'){
+					for(var i=0; i<item.length; i++){
+						/* if(item[i].ramUsage != ""){ */
+							var point = [];
+							var pointData = item[i].ramUsage;
+							
+							point.push(getTimeMilisec(item[i].saveTime.substr(0, 14)));
+							point.push(item[i].ramUsage);
+							
+							ramChannelData.push(point);			
+						} 
+					/* } */
+				}
+			});
+			 
 			 
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
-				 series.push({
-					 name : 'RSRP',
-					 data : rsrpChannelData
-				 });
-			 
-				 series.push({
-					 name : 'RSRQ',
-					 data : rsrqChannelData
-				 });
-				 
-				 series.push({
-					 name : 'SNR',
-					 data : ssnrChannelData
-				 });
-				 
-				 series.push({
-					 name : 'CPU',
-					 data : cpuChannelData
-				 });
-				 
-				 series.push({
-					 name : 'RAM',
-					 data : ramChannelData
-				 });
+			 series.push({
+				 name : 'RAM',
+				 data : ramChannelData
+			 });
 			
 		  return series;
 	}
 	//highcharts 로딩
-	Highcharts.chart('container', chartOptions);
+	Highcharts.chart('rsrpContainer', rsrpChartOptions);
+	Highcharts.chart('rsrqContainer', rsrqChartOptions);
+	Highcharts.chart('snrContainer', snrChartOptions);
+	Highcharts.chart('cpuContainer', cpuChartOptions);
+	Highcharts.chart('ramContainer', ramChartOptions);
 	
 }	
 
+function initDate() {
+
+	var initSdate = $("#sdateView").val();
+	var initEdate = $("#edateView").val();
+
+	setSearchParam2(initSdate, initEdate);
+}	
+	
 function init() {
 	
 	// init
-	//initGrid();
+	setSearchPeriod('today');
 	
 	// form search
 	ajaxSearchForm();

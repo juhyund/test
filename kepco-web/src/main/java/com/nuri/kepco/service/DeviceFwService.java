@@ -1,5 +1,9 @@
 package com.nuri.kepco.service;
 
-public interface DeviceFwService extends GenericService {
+import org.json.simple.JSONObject;
 
+public interface DeviceFwService extends GenericService {
+	
+	JSONObject selectOneByPackageUri(String param) throws Exception;
+	
 }

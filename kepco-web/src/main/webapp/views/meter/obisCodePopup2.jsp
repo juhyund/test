@@ -128,16 +128,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script type="text/javascript" charset="utf-8">	
 var selectedObisCode = '';
+var obis_nm = '';
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", 			field: "no", 	   width:50,suppressSizeToFit: true},
 	{headerName: "CLASS",		field: "class_id"},
 	{headerName: "OBIS 코드",		field: "obis_code",width:300},
  	{headerName: "OBIS 코드명",	field: "descr"},
+ 	{headerName: "데이터타입",		field: "datatype"},
 	{headerName: "속성",			field: "attribute_no"},
 	{headerName: "권한",			field: "access_right"}
 ];
-
 
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500, true);    
@@ -146,41 +147,43 @@ var initGrid = function() {
 };
  
 function ajaxSearchForm() {
-
-    var options = { 
-           beforeSend  : showRequest,
-           success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxSelectObisList2",
-           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-           type        : "post", /* get, post */
-           dataType    : "json", /* xml, html, script, json */
-           data        : {meter_type:'${meter_type}',
-        	  			  obis_code	: $("#obis_code").val(),
-        	  			  descr 	: $("#descr").val()}
-     };             	
-    
-     $.ajax(options);
+   var options = { 
+          beforeSend  : showRequest,
+          success     : successResultHandler,
+          url         : COMMON_URL + "/ajaxSelectObisList2",
+          contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+          type        : "post", /* get, post */
+          dataType    : "json", /* xml, html, script, json */
+          data        : {meter_type:'${meter_type}',
+       	  			  obis_code	: $("#obis_code").val(),
+       	  			  descr 	: $("#descr").val()}
+    };             	
+   
+    $.ajax(options);
 }
 
 onRowClicked = function(event){
-	//선택된 row의 obis_code를 저장한다
 	
+	//선택된 row의 obis_code를 저장한다
 	var selectedRows = dataGrid.getSelectedRow();
     var selectedRowsString = '';
     selectedRows.forEach( function(selectedRow, index) {
     	selectedObisCode = selectedRow.class_id+selectedRow.obis_code+selectedRow.attribute_no
-    	
+    	obis_nm = selectedRow.descr;
     });
 }
 
-selectObis = function(event){
-	opener.document.getElementById("obis_code105").value = selectedObisCode;
-	 window.close();
+onRowDoubleClicked = function(event){
+	alert("double clicked");
+}
+
+selectObis = function() {
+	window.opener.settingObisCode(selectedObisCode, obis_nm);
+	window.close();
 }
 
 function resetForm(){
 	$("#search_form")[0].reset();
-	
 };
 
 function showRequest() {
@@ -188,18 +191,13 @@ function showRequest() {
 }
 
 function successResultHandler(data, status) {
-	
 	dataGrid.setData(data.result);
-	
 }
 
 function init() {
 	// init
-	initGrid();
-	
+	initGrid();	
 	ajaxSearchForm();
-	
-
 }
 	
 

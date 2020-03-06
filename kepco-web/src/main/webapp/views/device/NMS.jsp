@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">Device Monitoring</h3>
+	<h3 style="margin-top:6px">NMS</h3>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
@@ -104,23 +104,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												<% }%>
 										</select>
 									</div>
-													
-									<label class="col-sm-1 col-form-label">검색 일자</label>
-									<div class="col-sm-3" id="datePicker">
-										<div class="input-group date" style="width: 48%; float: left;">
-											<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
-											<span class="input-group-addon" style="list-style: none;">
-												<i class="fa fa-calendar"></i>
-											</span>
-										</div>
-										<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
-										<div class="input-group date" style="width: 48%;">
-											<input type="text" class="form-control"  id="ledate" name="ledate" value=""> 
-											<span class="input-group-addon" style="list-style: none;">
-												<i class="fa fa-calendar"></i>
-											</span>
-										</div>
-									</div>
 								</div>
 							</td>
 							<td width="180" height="80" style="text-align: right">
@@ -178,6 +161,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "단말 번호", field: "deviceSerial"},
+	{headerName: "단말 번호", field: "deviceId", hide:"true"},
 	{headerName: "지역본부", field: "branchNm"},
 	{headerName: "단말상태", field: "deviceStatusNm"},
 	{headerName: "CPU(%)", field: "cpuUsage", cellStyle:{'text-align': "right"}},
@@ -276,7 +260,11 @@ function ajaxExcelDownload() {
 //grid row click
 onRowClicked = function(event){
 	var deviceSerial = event.data.deviceSerial;
-	location.href = CONTEXT_PATH + "/NMSDetail?deviceSerial="+deviceSerial;
+	var deviceId = event.data.deviceId;
+	var usageTime = event.data.usageTime;
+	var deviceStatusNm = event.data.deviceStatusNm;
+	location.href = CONTEXT_PATH + "/NMSDetail?deviceSerial="+deviceSerial+"&deviceId="
+			+deviceId+"&usageTime="+usageTime+"&deviceStatusNm="+deviceStatusNm;
 }
 
 /* 

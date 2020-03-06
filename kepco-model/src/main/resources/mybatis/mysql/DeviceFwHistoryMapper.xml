@@ -4,8 +4,14 @@
 
 	<sql id="base_where_list">
 		<where>
-		<if test="fw_history_seq != null" >     
-            AND a.fw_history_seq = #{fw_history_seq}
+		<if test="device_serial != null" >     
+			AND d.device_serial like concat('%', #{device_serial},'%')
+        </if>
+		<if test="fw_file_nm != null" >
+			AND b.fw_file_nm like concat('%', #{fw_file_nm},'%')
+        </if>
+		<if test="fw_version != null" >
+			AND b.fw_version like concat('%', #{fw_version},'%')     
         </if>
 		<if test="device_id != null" >     
             AND a.device_id = #{device_id}
@@ -22,6 +28,10 @@
 		</if>
 		<if test="sdate != null and edate != null">
 			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
+		</if>
+
+		<if test="usdate != null and uedate != null">
+			AND a.fw_success_dt between date_format(concat(#{usdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{uedate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
 		</where>
 	</sql>
@@ -40,7 +50,9 @@
 	
 	<select id="selectCount" resultType="java.lang.Integer" parameterType="deviceFwHistory">	
 		SELECT COUNT(*) co
-		FROM EMI_DEVICE_FW_HISTORY a		
+		FROM EMI_DEVICE_FW_HISTORY a
+		INNER JOIN EMI_DEVICE_FW b ON (a.fw_id = b.fw_id)
+		INNER JOIN EMI_DEVICE_INFO d ON (a.device_id = d.device_id)	
 		<include refid="base_where_list" /> 
 	</select>
 
@@ -54,12 +66,12 @@
 			, b.fw_version
 			, b.fw_nm
 			, b.fw_file_nm						
-			, DATE_FORMAT(a.fw_write_dt,'${prop.dt}')
-			, DATE_FORMAT(a.fw_success_dt,'${prop.dt}') 
+			, DATE_FORMAT(a.fw_write_dt,'${prop.dt}') as fw_write_dt
+			, DATE_FORMAT(a.fw_success_dt,'${prop.dt}') as fw_success_dt
 			, a.fw_issue_status
 			, FNC_GET_CODE_NM(a.fw_issue_status) as fw_issue_status_nm
 			, a.tid			
-			, DATE_FORMAT(a.result_dt,'${prop.dt}')
+			, DATE_FORMAT(a.result_dt,'${prop.dt}') as result_dt
 			, a.reg_id
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
 		FROM EMI_DEVICE_FW_HISTORY a
@@ -131,6 +143,7 @@
 			, tid
 			, result_dt
 			, reg_id
+			, reg_dt
 		) VALUES (
 			#{device_id}
 			, #{fw_id}
@@ -156,5 +169,4 @@
 			, reg_id = #{reg_id}
 		WHERE fw_history_seq = #{fw_history_seq}
 	</update>
-	
 </mapper>

@@ -36,7 +36,7 @@ public class DeviceFwHistoryServiceImpl implements DeviceFwHistoryService {
 		ConversionUtil.getModelByMap(deviceFwHistory, param);
 		List<DeviceFwHistory> list = this.deviceFwHistoryDAO.selectList(deviceFwHistory);
 		
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list, deviceFwHistory.getStart());
 	}
 
 	@Override
