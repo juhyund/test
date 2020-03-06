@@ -24,7 +24,7 @@ public class OperationLogController {
 	
 	Logger logger = LoggerFactory.getLogger(OperationLogController.class);
 
-	private String[] commStr = { "device_id", "method_type", "result_status", "request_sdate", "request_edate", "result_sdate", "result_edate" };
+	private String[] commStr = { "device_id", "method_type", "result_status", "tid", "request_sdate", "request_edate", "result_sdate", "result_edate" };
 	
 	@Autowired
 	private OperationLogService operationLogService;

@@ -25,8 +25,8 @@ public class CpuUsageMonitor {
 	private String saveTime; // 서버 저장 시간
 	
 	// 조회조건
-	private Date sdate;
-	private Date edate;
+	private String sdate;
+	private String edate;
 	private int page;
 	private int row;
 	
