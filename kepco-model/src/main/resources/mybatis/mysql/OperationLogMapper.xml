@@ -267,7 +267,7 @@
 		WHERE tid = #{tid} 
 	</select>
 	
-	<select id="getExcuteRate" resultType="operationLog">	
+	<!-- select id="getExcuteRate" resultType="operationLog">	
 		SELECT 
 		 	ifnull(method, 'UNKNOWN') AS m_type, 
 		 	SUM(case when result = 1 then 1 else 0 END) AS succ_cnt, 
@@ -276,7 +276,16 @@
 		FROM emi_operation_log
 		WHERE request_dt BETWEEN DATE_FORMAT(now(), '%Y%m%d000000') AND DATE_FORMAT(now(), '%Y%m%d235959') 
 		GROUP BY method;
+	</select -->
+	<select id="getExcuteRate" resultType="operationLog">	
+		SELECT 
+		 	ifnull(method, 'UNKNOWN') AS m_type, 
+		 	SUM(case when result = 1 then 1 else 0 END) AS succ_cnt, 
+		 	SUM(case when result = 0 then 1 else 0 END) AS fail_cnt, 
+			SUM(case when result IS NULL then 1 else 0 END) AS wait_cnt
+		FROM emi_operation_log
+		WHERE request_dt BETWEEN DATE_FORMAT('20200306', '%Y%m%d000000') AND DATE_FORMAT(now(), '%Y%m%d235959') 
+		GROUP BY method;
 	</select>
-	
 	
 </mapper>

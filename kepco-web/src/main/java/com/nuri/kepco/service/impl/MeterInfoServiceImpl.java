@@ -79,4 +79,12 @@ public class MeterInfoServiceImpl implements MeterInfoService {
 		MeterInfo meterInfo = meterInfoDAO.getMeterDetailInfo(meter_serial);
 		return ConversionUtil.getJSONObjectByModel(meterInfo);
 	}
+
+	@Override
+	public JSONArray getLpRate() throws Exception {
+		MeterInfo meterInfo = new MeterInfo();
+		List<MeterInfo> list = null;
+		
+		return ConversionUtil.getJSONArrayByModel(list);
+	}
 }
