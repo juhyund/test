@@ -90,7 +90,7 @@ public class MeterBillingServiceImpl implements MeterBillingService {
 		
 		ExcelRef excelRef = new ExcelRef();
 		excelRef.setTitle("정기검침정보 다운로드");
-		excelRef.setHeaders(new String[] {"검침일자", "계기번호", "본부", "지사", "계기타입","모뎀번호", "순방향 유효전력 TOT", "순방향 유효전력 T1", "순방향 유효전력 T2", "순방향 유효전력 T3", "순방향 유효전력 T4", "역방향 유효전력 TOT", "역방향 유효전력 T1", "역방향 유효전력 T2", "역방향 유효전력 T3", "역방향 유효전력 T4","저장일시"});
+		excelRef.setHeaders(new String[] {"검침일자", "계기번호", "본부", "지사", "계기타입","모뎀번호", "순방향 유효전력 TOT(kW)", "순방향 유효전력 T1(kW)", "순방향 유효전력 T2(kW)", "순방향 유효전력 T3(kW)", "순방향 유효전력 T4(kW)", "역방향 유효전력 TOT(kW)", "역방향 유효전력 T1(kW)", "역방향 유효전력 T2(kW)", "역방향 유효전력 T3(kW)", "역방향 유효전력 T4(kW)","저장일시"});
 		excelRef.setCells("billing_dt,meter_serial,parent_branch_nm,branch_nm,meter_type,device_serial,active_imp_tot,active_imp_rate1,active_imp_rate2,active_imp_rate3,active_imp_rate4,active_exp_tot,active_exp_rate1,active_exp_rate2,active_exp_rate3,active_exp_rate4,reg_dt");
 		
 		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result, excelRef);
