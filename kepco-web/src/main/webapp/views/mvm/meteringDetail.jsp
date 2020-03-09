@@ -27,6 +27,9 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=22"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="components/angular-sweetalert/SweetAlert.js"></script>
+https://cdnjs.cloudflare.com/ajax/libs/angular-sweetalert/1.1.2/SweetAlert.min.js
+
 
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -41,7 +44,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
@@ -415,10 +417,11 @@ function loadChart(data, status){
 		            });
 		          }
 		        }
-		      }/* ,
+		      },
 		      marker: {
-		        lineWidth: 1
-		      } */
+		    	enabled  :true,
+		        symbol   :"circle"
+		      }
 		    }
 		  },
 		  series: createSeries(data)
