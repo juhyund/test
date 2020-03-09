@@ -117,9 +117,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<th class="text-navy" scope="row">모뎀 번호:</th>
 														<td id = "device_serial"></td>
 														<th class="text-navy" scope="row">운전 상태:</th>
-														<td id = "device_status"></td>
+														<td id = "op_status"></td>
 														<th class="text-navy" scope="row">최종 통신 일시:</th>
-														<!-- <td id = ""></td> -->
 														<td id = "last_comm_dt"></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
@@ -495,9 +494,9 @@ function successResultHandler(data, status) {
 	$('#meter_type').text(data.result.meter_type);	
 	$('#meter_type_tab2').text(data.result.meter_type);	
 	$('#meter_type_tab3').text(data.result.meter_type);	
+	$('#op_status').text(data.result.code_local_nm);	
 	meterTypeCode = data.result.meter_type_code;	
 	$('#device_id').val(data.result.device_id);	
-	$('#device_status').val(data.result.code_local_nm);	
 	
 	$('#meter_phase').text(data.result.meter_phase);
 	$('#ip').text(data.result.ip);

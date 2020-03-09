@@ -118,7 +118,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<div class="col-sm-4" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
 																<input type="hidden" id="sdate" name="sdate" value=""> 
-																<input type="text" class="form-control" id="sdate" name="sdate" value="">
+																<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
@@ -126,7 +126,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 															<div class="input-group date" style="width: 48%;">
 																<input type="hidden" id="edate" name="edate" value=""> 
-																<input type="text" class="form-control" id="edate" name="edate" value="">
+																<input type="text" class="form-control" id="edateView" name="edateView" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
 																</span>
@@ -272,6 +272,7 @@ onRowClicked = function(event){
 }
 
 function ajaxSearchForm() {
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
     var options = { 
            beforeSend  : showRequest,
@@ -342,6 +343,13 @@ function resetForm() {
 	$("#device_serial").val("");
 }
 
+function initDate() {
+
+	var initSdate = $("#sdateView").val();
+	var initEdate = $("#edateView").val();
+
+	setSearchParam2(initSdate, initEdate);
+}
 
 function init() {
 	
@@ -350,6 +358,7 @@ function init() {
 	comboMeterType();
 	comboDeviceStatus();
 	comboBranch();
+	setSearchPeriod('today');
 	
 	// Grid
 	initGrid();
