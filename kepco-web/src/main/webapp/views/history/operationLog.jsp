@@ -75,12 +75,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">단말 검색</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">모뎀 검색</label>
 															<div class="col-lg-3">
 																<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 																	<option value=''>선택</option>
-																	<option value='device_id'>단말ID</option>
-																	<option value='device_serial'>단말 번호</option>
+																	<option value='device_id'>모뎀ID</option>
+																	<option value='device_serial'>모뎀 번호</option>
 																	<option value='object_id'>Object ID</option>
 																</select>
 																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
@@ -115,7 +115,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													
 													<div class="form-group form-group-end row">
-														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label> -->
+														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label>
 														<div style="margin-right: 12px;">
 															<select class="form-control" name="method_type"
 																id="method_type"></select>
@@ -123,7 +123,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														
 														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어결과</label> -->
 														<div>
-															<select class="form-control" name="result_status" id="result_status" style="margin-right: 45px;">
+															<select class="form-control" name="result_status" id="result_status">
 																<option value=''>제어결과</option>
 																<option value='1'>성공</option>
 																<option value='2'>실패</option>
@@ -202,8 +202,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
-	{headerName: "단말ID", field: "device_id"}, 	// detail 조회용 컬럼
-	{headerName: "단말번호", field: "device_serial"}, 	// detail 조회용 컬럼
+	{headerName: "모뎀ID", field: "device_id"}, 	// detail 조회용 컬럼
+	{headerName: "모뎀번호", field: "device_serial"}, 	// detail 조회용 컬럼
 	{headerName: "리소스 경로", field: "resource_sum"},
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},

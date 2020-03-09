@@ -71,7 +71,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<tr class="table-border">
 								<td height="80">
 									<div class="form-group row">
-										<label class="col-lg-1 col-form-label">단말 ID</label>
+										<label class="col-lg-1 col-form-label">모뎀 ID</label>
 										<div class="col-lg-3">
 											<input type="text" id="device_id" name="device_id" value="" class="form-control">
 										</div>
@@ -185,7 +185,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "서비스명", field: "service_name"},
-	{headerName: "단말 ID", field: "device_id"},
+	{headerName: "모뎀 ID", field: "device_id"},
 	{headerName: "리소스 경로", field: "resource_path"},
 	{headerName: "제어항목", field: "control_type"},
 	{headerName: "트랜잭션 ID", field: "tid"},
