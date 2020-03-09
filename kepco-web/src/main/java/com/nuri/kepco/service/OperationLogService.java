@@ -15,4 +15,6 @@ public interface OperationLogService extends GenericService {
 
 	JSONObject getOperationLogDetail(Map<String, Object> param) throws Exception;
 	
+	JSONArray getExcuteRate() throws Exception;
+	
 }

@@ -208,6 +208,7 @@ var columnDefs = [
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},
 	{headerName: "리소스명", field: "resource_nm", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "타겟ID", field: "target_meter", cellStyle:{'text-align': "center"}},
 	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
 	{headerName: "제어결과", field: "result", width:120},
 	{headerName: "트랜잭션ID", field: "tid"},

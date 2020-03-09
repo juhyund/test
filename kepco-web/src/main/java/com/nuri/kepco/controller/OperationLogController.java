@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.nuri.kepco.service.MeterInfoService;
 import com.nuri.kepco.service.OperationLogService;
 import com.nuri.kepco.util.ControllerUtil;
 
@@ -68,6 +67,25 @@ public class OperationLogController {
 			param.put("request_dt", request_dt);
 			
 			JSONObject jarr = this.operationLogService.getOperationLogDetail(param);
+			
+			json.put("result", jarr);
+
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/ajaxExcuteRate")
+	public ResponseEntity<Object> ajaxExcuteRate(HttpServletRequest request) {                
+		
+		JSONObject json = new JSONObject();
+		try {
+			
+			JSONArray jarr = this.operationLogService.getExcuteRate();
 			
 			json.put("result", jarr);
 

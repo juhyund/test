@@ -21,6 +21,7 @@ public class OperationLog extends CommonObj {
 	private String mid;
 	private String tid;
 	private String payload;
+	private String target_meter;
 	private Integer result;
 	private String result_dt;
 	private String _request_dt;
@@ -34,5 +35,9 @@ public class OperationLog extends CommonObj {
 	private String request_edate;
 	private String result_sdate;
 	private String result_edate;
-
+	
+	private String m_type;
+	private int succ_rate;
+	private int fail_rate;
+	private int wait_cnt;
 }
