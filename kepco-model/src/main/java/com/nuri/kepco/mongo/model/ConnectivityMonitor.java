@@ -13,6 +13,9 @@ public class ConnectivityMonitor {
 	
 	@Id
 	private String id;
+
+	private String parentBranchId; // branch id
+	private String parentBranchNm; // branch name
 	
 	String branchId; // branch id
 	String branchNm; // branch name

@@ -18,6 +18,10 @@ public class ConnectivityStatisticsMonitor {
 	
 	private String branchId; // branch id
 	private String branchNm; // branch name
+	
+	private String parentBranchId; // branch id
+	private String parentBranchNm; // branch name
+	
 	private String deviceId;
 	private String deviceSerial;
 	private String deviceStatus; // 단말상태

@@ -23,6 +23,9 @@ public class CpuUsageMonitor {
 	private String deviceStatusNm;
 	private String usageTime; // usage 수신 시간(통신일자)
 	private String saveTime; // 서버 저장 시간
+
+	private String parentBranchId; // branch id
+	private String parentBranchNm; // branch name
 	
 	// 조회조건
 	private String sdate;
