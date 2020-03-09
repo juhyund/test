@@ -150,13 +150,15 @@
 			, a.service_id
 			, a.branch_id
 			, c.branch_nm
+			, c.branch_parent_id
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = c.branch_parent_id) AS parent_branch_nm
 			, a.model_seq
 			, a.device_oid
 			, a.comm_type
-			, FNC_GET_CODE_NM(a.comm_type) as comm_type_nm
+			, FNC_GET_CODE_NM(a.comm_type) AS comm_type_nm
 			, a.device_type
-			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
-			, INET_NTOA(ip) as ip
+			, FNC_GET_CODE_NM(a.device_type) AS device_type_nm
+			, INET_NTOA(ip) AS ip
 			, a.port
 			, a.fw_version
 			, a.hw_version
@@ -171,10 +173,11 @@
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, b.device_status
-			, FNC_GET_CODE_NM(b.device_status) as device_status_nm
+			, FNC_GET_CODE_NM(b.device_status) AS device_status_nm
+			, FNC_GET_CODE_LOCAL_NM(b.device_status) AS device_status_local_nm
 		FROM EMI_DEVICE_INFO a	
 		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
-		LEFT OUTER JOIN EMI_BRANCH_INFO c ON (a.branch_id = c.branch_id)	
+		LEFT OUTER JOIN EMI_BRANCH_INFO c ON (a.branch_id = c.branch_id)
 		WHERE a.device_serial = #{device_serial}		
 	</select>
 	

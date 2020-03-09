@@ -22,6 +22,7 @@ import com.nuri.kepco.config.Constants;
 import com.nuri.kepco.model.MeterValue;
 import com.nuri.kepco.service.DeviceInfoService;
 import com.nuri.kepco.service.MeterBillingService;
+import com.nuri.kepco.service.MeterInfoService;
 import com.nuri.kepco.service.MeterValueService;
 import com.nuri.kepco.util.ControllerUtil;
 
@@ -45,6 +46,9 @@ public class FileDownloadController {
 	
 	@Autowired
 	private DeviceInfoService deviceInfoService;
+	
+	@Autowired
+	private MeterInfoService meterInfoService;
 
 	/*
 	 * downloadMeterValue
@@ -194,5 +198,39 @@ public class FileDownloadController {
 		            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
 		            .body(resource);
 		   }
+		 
+		 @GetMapping("/downloadMeterlist")
+		   public ResponseEntity<InputStreamResource> downloadMeterlist(HttpServletRequest request) throws IOException {
+			
+			 String file_path = "";
+				try {
+					String[] commStr = { "branch_parent_id", "branch_id", "meter_type", "meter_serial", "device_serial", "device_status", "sdate", "edate" };
+					        
+					Map<String, Object> param = ControllerUtil.getCommonParam(request);
+
+			         for(String key : commStr) {
+				          if(request.getParameterMap().containsKey(key)) {
+				        		  param.put(key, request.getParameter(key));	
+				          }
+			         }
+			         param.put("limit",0);
+					
+			         Map<String, String> output = this.meterInfoService.excelMeterList(param);
+					file_path = output.get("filepath") + "/" + output.get("filename");
+
+				} catch (Exception e) {
+					logger.error("error : " + e);
+				}
+				
+		      File file = new File(file_path);
+		      InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		      return ResponseEntity.ok()
+		            .header(HttpHeaders.CONTENT_DISPOSITION,
+		                  "attachment;filename=" + file.getName())
+		            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
+		            .body(resource);
+		   }
+
 }
 

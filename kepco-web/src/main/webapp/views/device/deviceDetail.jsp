@@ -135,12 +135,12 @@ function firmwarelist() {
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">단말 관리</h3>
+						<h3 style="margin-top: 6px">모뎀 관리</h3>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active"><strong>단말 관리</strong>
+							<li class="breadcrumb-item active"><strong>모뎀 관리</strong>
 							</li>
 						</ol>
 					</div>
@@ -173,24 +173,24 @@ function firmwarelist() {
 					<div class="tab-content" style="width: 100%">
 						<div class="tab-pane fade show active" id="info" ng-init="deviceInfo()">
 							<div class="col-lg-10">
-								<h4 style="margin-top: 6px">단말상세정보</h4>
+								<h4 style="margin-top: 6px">모뎀상세정보</h4>
 							</div>
 							<table class="table table-bordered white-bg" style="width: 100%">
 								<thead>
 									<tr>
-										<th class="device-detail-head">단말ID</th>
+										<th class="device-detail-head">모뎀ID</th>
 										<td class="device-detail-body"><span id="device_id_span" style="display: none;">{{device_info.device_id}}</span></td>
 										<th class="device-detail-head">지역본부</th>
 										<td class="device-detail-body"><span id="branch_span" style="display: none;">{{device_info.parent_branch_nm}} {{device_info.branch_nm}}</span></td>
 									</tr>
 									<tr>
-										<th class="device-detail-head">단말번호</th>
+										<th class="device-detail-head">모뎀번호</th>
 										<td class="device-detail-body"><span id="device_serial_span" style="display: none;">{{device_info.device_serial}}</span></td>
 										<th class="device-detail-head">제조사</th>
 										<td class="device-detail-body"><span id="vendor_nm_span" style="display: none;">{{device_info.vendor_nm}}</span></td>
 									</tr>
 									<tr>
-										<th class="device-detail-head">단말IP/PORT</th>
+										<th class="device-detail-head">모뎀IP/PORT</th>
 										<td class="device-detail-body"><input type="text" id="di_ip" style="width:80px; display:none; border: none" value="{{device_info.ip}}" readonly="readonly" > /
 											<input type="text" id="di_port" style="width:80px; display:none; border: none" value="{{device_info.port}}" readonly="readonly" ></td>
 										<th class="device-detail-head">모델명</th>
@@ -209,11 +209,9 @@ function firmwarelist() {
 										<td class="device-detail-body"><input type="text" id="di_sw_version2" style="width:80px; display:none; border: none" value="{{device_info.sw_version2}}" readonly="readonly"></td>
 									</tr>
 									<tr>
-										<!-- 
 										<th class="device-detail-head">인증방식</th>
 										<td class="device-detail-body"><span id="security_mode_span" style="display: none;">{{device_info.security_mode}}</span></td>
-										 -->
-										<th class="device-detail-head">단말상태</th>
+										<th class="device-detail-head">모뎀상태</th>
 										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
 									</tr>
 									<tr>
@@ -302,7 +300,7 @@ function firmwarelist() {
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="ibox-title" style="border: 0px #f3f3f4; background-color: #f3f3f4">
-										<h5 style="margin-top: 6px; margin-right: 50px">단말 ID : {{device_info.device_id}}</h>
+										<h5 style="margin-top: 6px; margin-right: 50px">모뎀 ID : {{device_info.device_id}}</h>
 										<h5 style="margin-top: 6px; margin-right: 50px">OID : {{device_info.device_oid}}</h>
 										<h5 style="margin-top: 6px; margin-right: 50px">제조사 : {{device_info.vendor_nm}}</h>
 										<h5 style="margin-top: 6px">모델 : {{device_info.model_nm}}</h>

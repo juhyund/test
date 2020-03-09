@@ -67,11 +67,11 @@
 		<tr class="table-border">
 			<td height="80" >
 			<div class="form-group row">				
-				<label class="col-lg-1 col-form-label" style="width:80px;">단말명</label>
+				<label class="col-lg-1 col-form-label" style="width:80px;">모뎀명</label>
 				<div class="col-lg-3"><input type="text" class="form-control"></div>
-				<label class="col-lg-1 col-form-label" style="width:80px;">단말시리얼</label>
+				<label class="col-lg-1 col-form-label" style="width:80px;">모뎀시리얼</label>
 				<div class="col-lg-3"><input type="text" class="form-control"></div>	
-				<label class="col-lg-1 col-form-label" style="width:80px;">단말구분</label>
+				<label class="col-lg-1 col-form-label" style="width:80px;">모뎀구분</label>
 				<div class="col-lg-3"><input type="text" class="form-control"></div>		    			
   			</div>
   			

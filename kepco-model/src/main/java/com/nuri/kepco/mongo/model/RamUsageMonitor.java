@@ -14,6 +14,7 @@ public class RamUsageMonitor {
 	@Id
 	private String id;
 	
+	
 	private String branchId; // branch id
 	private String branchNm; // branch name
 	private String deviceId;
@@ -23,6 +24,9 @@ public class RamUsageMonitor {
 	private Integer ramUsage;
 	private String usageTime;	// usage 수신 시간
 	private String saveTime;	// 서버 저장 시간
+	
+	private String parentBranchId; // branch id
+	private String parentBranchNm; // branch name
 	
 	// 조회조건
 	private String sdate;
