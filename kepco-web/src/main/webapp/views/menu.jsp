@@ -20,9 +20,9 @@
 	        </ul>
 	    </li>
 	    <li>
-	        <a href="#"><i class="fa  fa-database"></i> <span class="nav-label">미터관리</span> <span class="fa arrow"></span></a>
+	        <a href="#"><i class="fa  fa-database"></i> <span class="nav-label">계기관리</span> <span class="fa arrow"></span></a>
 	        <ul class="nav nav-second-level collapse" aria-expanded="false">
-	            <li><a href="<%=COMMON_URL%>/meter" target="contentsFrame">미터정보</a></li>                           
+	            <li><a href="<%=COMMON_URL%>/meter" target="contentsFrame">계기정보</a></li>                           
 	        </ul>
 	    </li>
    	    <li>
