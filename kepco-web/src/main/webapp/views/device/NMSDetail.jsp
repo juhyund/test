@@ -95,7 +95,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 		</li>
 		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
+			<strong>NMS 상세정보</strong>
 		</li>
 		</ol>
 	</div>						

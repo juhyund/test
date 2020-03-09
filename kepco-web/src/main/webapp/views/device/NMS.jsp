@@ -77,7 +77,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 		</li>
 		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
+			<strong>NMS</strong>
 		</li>
 		</ol>
 	</div>						
@@ -183,14 +183,14 @@ var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "모뎀 번호", field: "deviceSerial"},
 	{headerName: "모뎀 번호", field: "deviceId", hide:"true"},
-	{headerName: "본부", field: "parentBranchNm", width:100},
-	{headerName: "지사", field: "branchNm", width:100},
+	{headerName: "본부", field: "parentBranchNm", width:140},
+	{headerName: "지사", field: "branchNm", width:140},
 	{headerName: "모뎀상태", field: "deviceStatusNm", width:140},
-	{headerName: "CPU(%)", field: "cpuUsage", cellStyle:{'text-align': "right"}},
-	{headerName: "Memory(%)", field: "ramUsage", cellStyle:{'text-align': "right"}},
-	{headerName: "RSRP(dBm)", field: "rsrp", cellStyle:{'text-align': "right"}},
-	{headerName: "RSRQ(dB)", field: "rsrq", cellStyle:{'text-align': "right"}},
-	{headerName: "SNR(dB)", field: "ssnr", cellStyle:{'text-align': "right"}},
+	{headerName: "CPU(%)", field: "cpuUsage", width:150, cellStyle:{'text-align': "right"}},
+	{headerName: "Memory(%)", field: "ramUsage", width:170, cellStyle:{'text-align': "right"}},
+	{headerName: "RSRP(dBm)", field: "rsrp", width:150, cellStyle:{'text-align': "right"}},
+	{headerName: "RSRQ(dB)", field: "rsrq", width:150, cellStyle:{'text-align': "right"}},
+	{headerName: "SNR(dB)", field: "ssnr", width:150, cellStyle:{'text-align': "right"}},
 	{headerName: "최종 통신일자", field: "usageTime"},
 	{headerName: "등록일자", field: "saveTime"}
 ];

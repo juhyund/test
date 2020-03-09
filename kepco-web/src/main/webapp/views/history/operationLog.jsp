@@ -56,7 +56,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<li class="breadcrumb-item"><a
 								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 							</li>
-							<li class="breadcrumb-item active"><strong>Layouts</strong>
+							<li class="breadcrumb-item active"><strong>제어 이력 조회</strong>
 							</li>
 						</ol>
 					</div>

@@ -70,7 +70,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 		</li>
 		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
+			<strong>계기 상세 정보</strong>
 		</li>
 		</ol>
 	</div>						
@@ -120,8 +120,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<td id = "device_status"></td>
 														<th class="text-navy" scope="row">최종 통신 일시:</th>
 														<td id = "last_comm_dt"></td>
-														<th class="text-navy" scope="row">통신 방식:</th>
-														<td id = "comm_type"></td>
+														<th class="text-navy" scope="row"></th>
+														<td id = ""></td>
 													</tr>
 													<tr>
 														<th class="text-navy" scope="row">통신사:</th>
@@ -131,8 +131,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<!-- 
 														<th class="text-navy" scope="row">수신감도 레벨:</th>
 														-->
-														<th class="text-navy" scope="row"></th>
-														<td id = ""></td>
+														<th class="text-navy" scope="row">통신 방식:</th>
+														<td id = "comm_type"></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
 													</tr>
@@ -499,10 +499,8 @@ function successResultHandler(data, status) {
 	$('#meter_type_tab3').text(data.result.meter_type);	
 	meterTypeCode = data.result.meter_type_code;	
 	$('#device_id').val(data.result.device_id);	
-	$('#device_status').val(data.result.code_local_nm);	
+	$('#device_status').val(data.result.device_id);	
 	
-	$('#prog_id').text(data.result.prog_id);	
-	$('#prog_version').text(data.result.prog_version);	
 	$('#meter_phase').text(data.result.meter_phase);
 	$('#ip').text(data.result.ip);
 	$('#vendor_nm').text(data.result.vendor_nm);
