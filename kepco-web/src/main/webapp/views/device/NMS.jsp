@@ -183,8 +183,9 @@ var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
 	{headerName: "모뎀 번호", field: "deviceSerial"},
 	{headerName: "모뎀 번호", field: "deviceId", hide:"true"},
-	{headerName: "지역본부", field: "branchNm"},
-	{headerName: "모뎀상태", field: "deviceStatusNm"},
+	{headerName: "본부", field: "parentBranchNm", width:100},
+	{headerName: "지사", field: "branchNm", width:100},
+	{headerName: "모뎀상태", field: "deviceStatusNm", width:140},
 	{headerName: "CPU(%)", field: "cpuUsage", cellStyle:{'text-align': "right"}},
 	{headerName: "Memory(%)", field: "ramUsage", cellStyle:{'text-align': "right"}},
 	{headerName: "RSRP(dBm)", field: "rsrp", cellStyle:{'text-align': "right"}},
@@ -314,7 +315,7 @@ function successResultHandler(data, status) {
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
 	
-	warningByColor(data);
+	//warningByColor(data);
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }

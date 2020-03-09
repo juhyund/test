@@ -736,7 +736,7 @@ function renderChart(data, status){
 			    },
 			    showFirstLabel: false,
 			    lineWidth: 1,
-			    max: 20, min: -10
+			    max: 30, min: -10
 			  }],
 			  lang: {
 			        noData: "No data to Display"

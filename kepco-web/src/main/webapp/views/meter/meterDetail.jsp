@@ -162,16 +162,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "meter_serial"></td>
 													<th class="text-navy" scope="row"> COSEM 계기 식별자:</th>
 													<td id = "cosem_device_name"></td>
-													<th class="text-navy" scope="row">마지막 검침 일시:</th>
-													<td id = "last_comm_dt"></td>
 													<th class="text-navy" scope="row">검침 주기(분):</th>
 													<td id = "lp_period"></td>
+													<th class="text-navy" scope="row">마지막 검침 일시:</th>
+													<td id = "last_lp_dt" colspan="3"></td>
 													<!--  
 													<th class="text-navy" scope="row">계기 시간:</th>
 													<td id = "mtime"></td>
 													-->
-													<th class="text-navy" scope="row"></th>
-													<td id = ""></td>
 												</tr>
 												<tr>
 													<th class="text-navy" scope="row">계기타입:</th>
@@ -483,19 +481,6 @@ function showRequest() {
 
 function successResultHandler(data, status) {	
 	
-	/* var device_serial = data.result.device_serial;
-	var meter_serial = data.result.meter_serial;
-	var reg_dt = data.result.reg_dt;
- 	var last_comm_dt = data.result.last_comm_dt;
-	var lp_period = data.result.lp_period;	
-	var meter_type = data.result.meter_type;	
-	var prog_id = data.result.prog_id;
-	var prog_version = data.result.prog_version;	
-	var meter_phase = data.result.meter_phase;
-	var ip = data.result.ip;
-	var vendor_nm = data.result.vendor_nm;
-	var comm_type = data.result.comm_type; */
-	
 	$('#device_serial').text(data.result.device_serial);
 	$('#device_serial_tab2').text(data.result.device_serial);
 	$('#device_serial_tab3').text(data.result.device_serial);
@@ -505,6 +490,7 @@ function successResultHandler(data, status) {
 	$('#meter_serial_tab3').text(data.result.meter_serial);
 	$('#reg_dt').text(data.result.reg_dt);
  	$('#last_comm_dt').text(data.result.last_comm_dt);
+ 	$('#last_lp_dt').text(data.result.last_comm_dt);
 	$('#lp_period').text(data.result.lp_period);
 	$('#lp_period_tab2').text(data.result.lp_period);
 	$('#lp_period_tab3').text(data.result.lp_period);
@@ -513,6 +499,7 @@ function successResultHandler(data, status) {
 	$('#meter_type_tab3').text(data.result.meter_type);	
 	meterTypeCode = data.result.meter_type_code;	
 	$('#device_id').val(data.result.device_id);	
+	$('#device_status').val(data.result.code_local_nm);	
 	
 	$('#prog_id').text(data.result.prog_id);	
 	$('#prog_version').text(data.result.prog_version);	

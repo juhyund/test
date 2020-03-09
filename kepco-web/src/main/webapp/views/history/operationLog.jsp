@@ -207,14 +207,14 @@ var columnDefs = [
 	{headerName: "리소스 경로", field: "resource_sum"},
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},
-	{headerName: "리소스명", field: "resource_nm", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "리소스명", field: "resource_nm", width:160, cellStyle:{'text-align': "center"}},
 	{headerName: "타겟ID", field: "target_meter", cellStyle:{'text-align': "center"}},
 	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
-	{headerName: "제어결과", field: "result", width:120},
+	{headerName: "제어결과", field: "result", width:130},
 	{headerName: "트랜잭션ID", field: "tid"},
-	{headerName: "제어 전송 일시", field: "request_dt"},
+	{headerName: "전송 일시", field: "request_dt"},
 	{headerName: "응답 일시", field: "result_dt"},
-	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
+	{headerName: "요청자", field: "reg_id", width:150, cellStyle:{'text-align': "center"}}		
 ];
 
 // init selectComboBox
