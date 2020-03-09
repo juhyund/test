@@ -160,7 +160,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<label id="cur_page_num" class="col-form-label"></label>
 								<div style ="float:right; margin-bottom:5px">
 									<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-										<option valuesearch_num=10 selected>10개씩</option>
+										<option value=10 selected>10개씩</option>
 										<option value=100>100개씩 </option>
 										<option value=250>250개씩 </option>
 									</select>
