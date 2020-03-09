@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 import com.nuri.kepco.fep.process.CmdResultDataProcess;
+import com.nuri.kepco.fep.process.LwM2mEventLogProcess;
 import com.nuri.kepco.fep.process.MDDataProcess;
 
 @Service
@@ -21,6 +22,9 @@ public class KafkaReceiver {
 	@Autowired
 	CmdResultDataProcess cmdResultProcess;
 	
+	@Autowired
+	LwM2mEventLogProcess lwM2mEventLogProcess;
+	
 	// command 요청에 대한 응답 처리
     @KafkaListener(topics = "${kafka.topic.mddata}")
     public void listen(@Payload String message) {    	
@@ -33,11 +37,10 @@ public class KafkaReceiver {
     	mdDataProcess.process(message);
     }
     
-//    @KafkaListener(topics = "${kafka.topic.eventdata}")
-//    public void eventDatalisten(@Payload String message) {   
-//    	LOG.debug("message : {}", message);
-////    	mdDataProcess.process(message);
-//    }
+    @KafkaListener(topics = "${kafka.topic.eventdata}")
+    public void eventDatalisten(@Payload String message) {
+    	lwM2mEventLogProcess.process(message);
+    }
     
     @KafkaListener(topics = "${kafka.topic.objectlinkdata}")
     public void objectlinkDatalisten(@Payload String message) {    	
