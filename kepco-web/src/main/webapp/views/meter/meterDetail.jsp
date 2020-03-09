@@ -302,7 +302,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<i class="fa"> LP 주기 설정 </i>
 																</button>
 																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="write(resources)">
-																	<i class="fa fa-play"> 동적 스케줄 실행</i>
+																	<i class="fa fa-play"> 미터 Access 실행</i>
 																</button>
 															</div>
 														</div>
