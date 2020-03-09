@@ -13,6 +13,8 @@ import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
 import com.nuri.kepco.fep.parser.KepcoDLMSParser;
 import com.nuri.kepco.fep.parser.NotifyDataParser;
+import com.nuri.kepco.model.DeviceInfo;
+import com.nuri.kepco.model.dao.DeviceInfoDAO;
 import com.nuri.kepco.mongo.model.ConnectivityMonitor;
 import com.nuri.kepco.mongo.model.ConnectivityStatisticsMonitor;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
@@ -39,6 +41,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	@Autowired
 	ConnectivityStatisticsMonitorDAO connectivityStatisticsMonitorDAO;
 	
+	@Autowired
+	DeviceInfoDAO deviceInfoDAO;
+	
+	DeviceInfo deviceInfo = null;
+	
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
 		
@@ -50,7 +57,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		String deviceSerial = md.getDeviceId();
 		
 		// checkDevice
-		checkDevice(deviceSerial, md.getModemTime());
+		getDeviceInfo(deviceSerial);
 		
 		if(getDeviceInfo() != null) {			
 			
@@ -101,7 +108,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();			
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -147,7 +154,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -192,7 +199,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -240,7 +247,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -313,7 +320,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -377,7 +384,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -427,6 +434,19 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		}
 		
 		return result;
+	}
+	
+	DeviceInfo getDeviceInfo(String deviceSerial) {
+		
+		if(deviceInfo == null) {
+			try {
+				this.deviceInfo = deviceInfoDAO.selectByDeviceSerial(deviceSerial);
+			} catch (Exception e) {
+				LOG.error("error", e);
+			}
+		}
+		
+		return this.deviceInfo;
 	}
 
 }
