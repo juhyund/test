@@ -11,44 +11,44 @@
 
 	<sql id="base_where_list">
 		<where>
-		<if test="device_id != null" >     
+		<if test="device_id != null and device_id != ''" >     
             AND a.device_id = #{device_id}
         </if>
-		<if test="service_id != null" >     
+		<if test="service_id != null and service_id != ''" >     
             AND a.service_id = #{service_id}
         </if>
-		<if test="branch_parent_id != null" >     
+		<if test="branch_parent_id != null and branch_parent_id != ''" >     
             AND d.branch_parent_id = #{branch_parent_id}
         </if>
-        <if test="branch_id != null" >     
+        <if test="branch_id != null and branch_id != ''" >     
             AND a.branch_id = #{branch_id}
         </if>
-        <if test="model_seq != null" >     
+        <if test="model_seq != null and model_seq != ''" >     
             AND a.model_seq = #{model_seq}
         </if>
-        <if test="device_oid != null" >     
+        <if test="device_oid != null and device_oid != ''" >     
             AND a.device_oid = #{device_oid}
         </if>
-        <if test="comm_type != null" >     
+        <if test="comm_type != null and comm_type != ''" >     
             AND a.comm_type = #{comm_type}
         </if>
-        <if test="allow_yn != null" >     
+        <if test="allow_yn != null and allow_yn != ''" >     
             AND a.allow_yn = #{allow_yn}
         </if>
-        <if test="mobile_no != null" >     
+        <if test="mobile_no != null and mobile_no != ''" >     
             AND a.mobile_no = #{mobile_no}
         </if>
-		<if test="searchfield != null and searchquery != null " >
+		<if test="searchfield != null and searchquery != null  and searchfield != '' and searchquery != ''" >
 			AND a.${searchfield} like concat(#{searchquery},'%')
 		</if>
 		<!-- DeviceInfoList -->		
-		<if test="device_status != null" >     
+		<if test="device_status != null and device_status != ''" >     
             AND c.device_status = #{device_status}
         </if>
-		<if test="sdate != null and edate != null">
+		<if test="sdate != null and edate != null and ledate != '' and edate != ''">
 			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="lsdate != null and ledate != null">
+		<if test="lsdate != null and ledate != null and lsdate != '' and ledate != ''">
 			AND c.last_comm_dt between date_format(concat(#{lsdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{ledate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
 		

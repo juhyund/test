@@ -23,6 +23,7 @@
 
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css">
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
@@ -194,7 +195,7 @@ var columnDefs = [
 	{headerName: "단말번호", field: "device_serial"},
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
-	{headerName: "단말모뎀", field: "model_nm"},
+	{headerName: "단말모델", field: "model_nm"},
 	{headerName: "제조사", field: "vendor_nm"},
 	{headerName: "단말상태", field: "code_local_nm"},
 	{headerName: "최종통신일시", field: "last_comm_dt"},
@@ -225,6 +226,21 @@ function ajaxSearchForm() {
      };             
     
      $.ajax(options);
+}
+
+function excelDownload() {
+	
+	 $('#search_form').attr('action', COMMON_URL + "/downloadDevicelist");
+	 $('#search_form').attr('method',"GET");
+	 $('#search_form').submit();
+	Swal.fire({
+		position: 'center',
+		icon: 'info',
+		text: 'excel 생성중',
+		showConfirmButton: false,
+			timer: 1500
+	});
+
 }
 
 function showRequest() {
