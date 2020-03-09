@@ -110,26 +110,20 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 													</div>
 													
-													<div class="form-group row">
-													
-													</div>
-													
 													<div class="form-group form-group-end row">
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label>
-														<div style="margin-right: 12px;">
-															<select class="form-control" name="method_type"
-																id="method_type"></select>
-														</div>
-														
-														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어결과</label> -->
-														<div>
-															<select class="form-control" name="result_status" id="result_status">
-																<option value=''>제어결과</option>
-																<option value='1'>성공</option>
-																<option value='2'>실패</option>
-																<option value='0'>대기중</option>
-															</select>
-														</div>
+														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label> -->
+															<div class="col-lg-1">
+																<select class="form-control" name="result_status" id="result_status">
+																	<option value=''>제어결과</option>
+																	<option value='1'>성공</option>
+																	<option value='2'>실패</option>
+																	<option value='0'>대기중</option>
+																</select>
+															</div>
+															<div class="col-lg-3">
+																<select class="form-control" name="method_type"
+																	id="method_type" style=" width: inherit;"></select>
+															</div>
 														
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">응답일시</label>
@@ -147,6 +141,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<i class="fa fa-calendar"></i>
 																</span>
 															</div>
+														</div>
+														
+														<label class="col-lg-1 col-form-label">타겟ID</label>
+														<div style="min-width: 170px; max-width: min-content;">
+															<input class="form-control" name="target_meter" id="target_meter"></input>
 														</div>
 													</div>
 												</td>

@@ -134,6 +134,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
 									<i class="fa fa-undo"></i>
 								</button>
+								<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
+									<i class="fa fa-download"></i>
+								</button>
 							</td>
 						</tr>
 					</tbody>
