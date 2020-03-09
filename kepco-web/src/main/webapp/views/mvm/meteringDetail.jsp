@@ -98,8 +98,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</thead>
 							<tbody>
 								<tr>
-									<td><h3>${meter_id}</h3></td>
-									<td><h3 id = "device_id"></h3></td>
+									<td><h3 id = "meter_serial"></h3></td>
+									<td><h3 id = "device_serial"></h3></td>
 									<td><h3 id = "meter_type"></h3></td>
 									<td><h3 id = "last_comm_dt"></h3></td>
 								</tr>
@@ -321,15 +321,18 @@ function successResultHandler(data, status) {
 
 function loadMeterInfo(data, status) {	
 	//받아온 데이터를 미터Info에 로딩
-	var device_id; 
+	var device_serial; 
+	var meter_serial;
 	var meter_type;
 	var last_comm_dt; 
 	
-	device_id = data.resultGrid[0].device_id;
+	device_serial = data.resultGrid[0].device_serial;
+	meter_serial = data.resultGrid[0].meter_serial;
 	meter_type = data.resultGrid[0].meter_type;
 	last_comm_dt = data.resultGrid[0].last_comm_dt;
 	
-	$('#device_id').text(device_id);
+	$('#device_serial').text(device_serial);
+	$('#meter_serial').text(meter_serial);
 	$('#meter_type').text(meter_type);
 	$('#last_comm_dt').text(last_comm_dt);
 }
