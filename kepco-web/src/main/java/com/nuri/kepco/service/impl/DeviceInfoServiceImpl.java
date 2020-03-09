@@ -93,6 +93,12 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 
 		return ConversionUtil.getJSONObjectByModel(deviceInfo);
 	}
-	
+
+	@Override
+	public JSONObject getCommunication() throws Exception {
+		DeviceInfo deviceInfo = deviceInfoDAO.getCommunication();
+
+		return ConversionUtil.getJSONObjectByModel(deviceInfo);
+	}
 }
 
