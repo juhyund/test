@@ -418,7 +418,7 @@ function firmwarelist() {
 																		style="width: 100px;">
 																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
-																		style="background-color: #0040FF;border-color: #0040FF"
+																		style="background-color: #2E64FE;border-color: #2E64FE"
 																		ng-click="write(resource, newValue);">Write</button>
 																	</div>
 																	<div ng-show="object.object_id == 5 && resource.resource_id == 1">
@@ -427,13 +427,13 @@ function firmwarelist() {
 																		style="width: 100px;">
 																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
-																		style="background-color: #2E2EFE;border-color: #2E2EFE"
+																		style="background-color: #2E64FE;border-color: #2E64FE"
 																		ng-click="write(resource, newValue);">Write</button>
 																	</div>
 																	<div ng-show="object.object_id == 5 && resource.resource_id == 0">
 																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
-																		style="background-color: #2E2EFE;border-color: #2E2EFE"
+																		style="background-color: #2E64FE;border-color: #2E64FE"
 																		onclick="fwListModal()">List</button>
 																	</div>
 																</td>
