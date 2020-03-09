@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nuri.kepco.config.CodeConstants.FW_STATUS;
 import com.nuri.kepco.generator.util.GeneratorId;
-import com.nuri.kepco.service.OperationLogService;
-import com.nuri.kepco.service.DeviceFwService;
 import com.nuri.kepco.service.DeviceFwHistoryService;
+import com.nuri.kepco.service.DeviceFwService;
+import com.nuri.kepco.service.OperationLogService;
 import com.nuri.kepco.util.ControllerUtil;
 import com.nuri.kepco.util.DateUtil;
 import com.nuri.kepco.util.HttpClientUtil;
@@ -83,8 +83,7 @@ public class ExecResourceController {
 			param.put("resource_id", Integer.parseInt(resource[3]));
 			param.put("reg_id", ControllerUtil.getLoginUser());
 			param.put("format", "JSON");
-			
-			String[] commStr = { "device_id",  "service_id", "resource_instance_id" };
+			String[] commStr = { "device_id",  "service_id", "resource_instance_id", "target_meter" };
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
 			operationLogService.insert(param);

@@ -86,7 +86,6 @@ public class MeterBillingServiceImpl implements MeterBillingService {
 		String filepath = fileDownloadDir + "/meterBiling/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 
 		List<MeterBilling> result = this.meterBillingDAO.selectList(meterBilling);
-		System.out.println("\n=----------------------excelMeterBilling--------------------\n\nresult = "+result);
 		
 		
 		ExcelRef excelRef = new ExcelRef();

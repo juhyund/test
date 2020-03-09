@@ -19,6 +19,8 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	$("#model_nm_span").show();
 	    	$("#di_fw_version").show();
 	    	$("#di_hw_version").show();
+	    	$("#di_sw_version1").show();
+	    	$("#di_sw_version2").show();
 	    	$("#security_mode_span").show();
 	    	$("#code_local_nm_span").show();
 	    	$("#last_comm_dt_span").show();
