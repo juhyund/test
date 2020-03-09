@@ -303,6 +303,8 @@
 			, a.port
 			, a.fw_version
 			, a.hw_version
+			, a.sw_version1
+			, a.sw_version2
 			, b.model_nm
 			, g.security_mode
 			, f.code_local_nm

@@ -44,11 +44,11 @@ public class DeviceInfo extends CommonObj {
 	private String device_status_nm; // add
 	
 	
-	private int total; // all device
-	private int d1; // d1 < 24
-	private int d2; // 24 < d2 < 48
-	private int d3; // 48 > d3
-	private int d4; // not data
+	private long total; // all device
+	private long d1; // d1 < 24
+	private long d2; // 24 < d2 < 48
+	private long d3; // 48 > d3
+	private long d4; // not data
 	
 }
 
