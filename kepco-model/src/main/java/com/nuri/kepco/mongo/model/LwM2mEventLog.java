@@ -14,9 +14,13 @@ public class LwM2mEventLog {
 	@Id
 	private String id;	
 	private String enpoint;
+	private String ep;
+	private String date;
 	private String saveTime;
 	private String method;
-	private String payload;	
+	private String payload;
+	private String ip;
+	private Integer port;
 	
 	// 조회조건
 	private Date sdate;
