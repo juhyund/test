@@ -342,36 +342,48 @@ function successLpRate(data, status) {
     var succ = new Array();
     var fail = new Array();
     
-    for(var i=0 ; i < data.result.length ; i++){
-    	var value = data.result[i];
-    	var tr = '<tr>'
-    	tr += '<td class="text-center">' + value.m_type + '</td>';
-    	tr += '<td class="text-right">' + value.succ_rate + '</td>';
-    	tr += '<td class="text-right">' + value.fail_rate + '</td>';
-    	tr += '</tr>';
+    if(data.result.length > 0){
 
-    	$("#lp_body").append(tr);
+        for(var i=0 ; i < data.result.length ; i++){
+        	var value = data.result[i];
+        	var tr = '<tr>'
+        	tr += '<td class="text-center">' + value.m_type + '</td>';
+        	tr += '<td class="text-right">' + value.succ_rate + '</td>';
+        	tr += '<td class="text-right">' + value.fail_rate + '</td>';
+        	tr += '</tr>';
 
-        succ_rate += value.succ_rate;
-        fail_rate += value.fail_rate;
+        	$("#lp_body").append(tr);
 
-        types[i] = value.m_type;
-        succ[i] = value.succ_rate;
-        fail[i] = value.fail_rate;
+            succ_rate += value.succ_rate;
+            fail_rate += value.fail_rate;
+
+            types[i] = value.m_type;
+            succ[i] = value.succ_rate;
+            fail[i] = value.fail_rate;
+        }
+
+       	var total_succ = succ_rate / types.length * 100;
+       	var total_fail = fail_rate / types.length * 100;
+        
+        var last_tr = '<tr class="table-active">'
+       	last_tr += '<th class="text-center">TOTAL</th>';
+       	last_tr += '<th class="text-right">' + Math.round(total_succ) + '</th>';
+       	last_tr += '<th class="text-right">' + Math.round(total_fail) + '</th>';
+       	last_tr += '</tr>';
+
+       	$("#lp_rate").html(Math.round(total_succ));
+       	$("#lp_body").append(last_tr);
+       	
+    } else {
+        var last_tr = '<tr>'
+       	last_tr += '<th class="text-center" colspan="3">No Data.</th>';
+       	last_tr += '</tr>';
+
+       	$("#lp_rate").html(0);
+       	$("#lp_body").append(last_tr);    	
     }
-
-   	var total_succ = succ_rate / types.length * 100;
-   	var total_fail = fail_rate / types.length * 100;
     
-    var last_tr = '<tr class="table-active">'
-   	last_tr += '<th class="text-center">TOTAL</th>';
-   	last_tr += '<th class="text-right">' + Math.round(total_succ) + '</th>';
-   	last_tr += '<th class="text-right">' + Math.round(total_fail) + '</th>';
-   	last_tr += '</tr>';
-
-   	$("#lp_rate").html(Math.round(total_succ));
-   	$("#lp_date").html(toDay.yyyymmdd());
-   	$("#lp_body").append(last_tr);
+    $("#lp_date").html(toDay.yyyymmdd());
    	
    	Highcharts.chart('lp_chart', {
    	    chart: {
@@ -434,42 +446,51 @@ function successExcuteRate(data, status) {
     var fail = new Array();
     var wait = new Array();
     
-    for(var i=0 ; i < data.result.length ; i++){
-    	var value = data.result[i];
-    	var tr = '<tr>'
-    	tr += '<td class="text-center">' + value.m_type + '</td>';
-    	tr += '<td class="text-right">' + value.succ_cnt + '</td>';
-    	tr += '<td class="text-right">' + value.fail_cnt + '</td>';
-    	tr += '<td class="text-right">' + value.wait_cnt + '</td>';
-    	tr += '</tr>';
-    	
-    	$("#exec_body").append(tr);
-    	
-        succ_cnt += value.succ_cnt;
-        fail_cnt += value.fail_cnt;
-        wait_cnt += value.wait_cnt;
+    if(data.result.length > 0){
+    	for(var i=0 ; i < data.result.length ; i++){
+        	var value = data.result[i];
+        	var tr = '<tr>'
+        	tr += '<td class="text-center">' + value.m_type + '</td>';
+        	tr += '<td class="text-right">' + value.succ_cnt + '</td>';
+        	tr += '<td class="text-right">' + value.fail_cnt + '</td>';
+        	tr += '<td class="text-right">' + value.wait_cnt + '</td>';
+        	tr += '</tr>';
+        	
+        	$("#exec_body").append(tr);
+        	
+            succ_cnt += value.succ_cnt;
+            fail_cnt += value.fail_cnt;
+            wait_cnt += value.wait_cnt;
+            
+            
+            types[i] = value.m_type;
+            succ[i] = value.succ_cnt;
+            fail[i] = value.fail_cnt;
+            wait[i] = value.wait_cnt;
+        }
         
-        
-        types[i] = value.m_type;
-        succ[i] = value.succ_cnt;
-        fail[i] = value.fail_cnt;
-        wait[i] = value.wait_cnt;
+        var last_tr = '<tr class="table-active">'
+       	last_tr += '<th class="text-center">TOTAL</th>';
+       	last_tr += '<th class="text-right">' + succ_cnt + '</th>';
+       	last_tr += '<th class="text-right">' + fail_cnt + '</th>';
+       	last_tr += '<th class="text-right">' + wait_cnt + '</th>';
+       	last_tr += '</tr>';
+       	
+       	var total_cnt = succ_cnt + fail_cnt + wait_cnt;
+       	var exec_rate = succ_cnt / total_cnt * 100;
+       	
+       	$("#exec_body").append(last_tr);
+       	$("#exec_rate").html(Math.round(exec_rate));
+    } else {
+    	var last_tr = '<tr>'
+           	last_tr += '<td class="text-center" colspan="4">No Data.</td>';
+           	last_tr += '</tr>';
+           	
+           	$("#exec_body").append(last_tr);
+           	$("#exec_rate").html("0");
     }
-    
-    var last_tr = '<tr class="table-active">'
-   	last_tr += '<th class="text-center">TOTAL</th>';
-   	last_tr += '<th class="text-right">' + succ_cnt + '</th>';
-   	last_tr += '<th class="text-right">' + fail_cnt + '</th>';
-   	last_tr += '<th class="text-right">' + wait_cnt + '</th>';
-   	last_tr += '</tr>';
    	
-   	var total_cnt = succ_cnt + fail_cnt + wait_cnt;
-   	var exec_rate = succ_cnt / total_cnt * 100;
-   	
-   	$("#exec_rate").html(Math.round(exec_rate));
    	$("#exec_date").html(toDay.yyyymmdd());
-   	$("#exec_body").append(last_tr);
-   	
    	
    	Highcharts.chart('exec_chart', {
    	    chart: {

@@ -62,12 +62,16 @@ function updateForm() {
 	$('#di_port').attr("readonly", false);	
 	$('#di_hw_version').attr("readonly", false);	
 	$('#di_fw_version').attr("readonly", false);	
+	$('#di_sw_version1').attr("readonly", false);	
+	$('#di_sw_version2').attr("readonly", false);	
 	$('#di_remark').attr("readonly", false);
 	
 	$('#di_ip').css({'border' : ''});
 	$('#di_port').css({'border' : ''});
 	$('#di_hw_version').css({'border' : ''});
 	$('#di_fw_version').css({'border' : ''});
+	$('#di_sw_version1').css({'border' : ''});
+	$('#di_sw_version2').css({'border' : ''});
 	$('#di_remark').css({'border' : ''});
 }
 
@@ -87,6 +91,8 @@ function updateData() {
 	        	"port" : $("#di_port").val(),
 	        	"hw_version" : $("#di_hw_version").val(),
 	        	"fw_version" : $("#di_fw_version").val(),
+	        	"sw_version1" : $("#di_sw_version1").val(),
+	        	"sw_version2" : $("#di_sw_version2").val(),
 	        	"remark" : $("#di_remark").val()
 	       }
      };             
@@ -97,12 +103,16 @@ function updateData() {
 	$('#di_port').attr("readonly", true);	
 	$('#di_hw_version').attr("readonly", true);	
 	$('#di_fw_version').attr("readonly", true);	
+	$('#di_sw_version1').attr("readonly", true);	
+	$('#di_sw_version2').attr("readonly", true);	
 	$('#di_remark').attr("readonly", true);
 	
 	$('#di_ip').css({'border' : 'none'});
 	$('#di_port').css({'border' : 'none'});
 	$('#di_hw_version').css({'border' : 'none'});
 	$('#di_fw_version').css({'border' : 'none'});
+	$('#di_sw_version1').css({'border' : 'none'});
+	$('#di_sw_version2').css({'border' : 'none'});
 	$('#di_remark').css({'border' : 'none'});
 }
 
@@ -191,6 +201,12 @@ function firmwarelist() {
 										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:80px; display:none; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
 										<th class="device-detail-head">펌웨어 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:80px; display:none; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
+									</tr>
+									<tr>
+										<th class="device-detail-head">DLMS AGENT SW 버전</th>
+										<td class="device-detail-body"><input type="text" id="di_sw_version1" style="width:80px; display:none; border: none" value="{{device_info.sw_version1}}" readonly="readonly"></td>
+										<th class="device-detail-head">LWM2M CLIENT SW 버전</th>
+										<td class="device-detail-body"><input type="text" id="di_sw_version2" style="width:80px; display:none; border: none" value="{{device_info.sw_version2}}" readonly="readonly"></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">인증방식</th>
