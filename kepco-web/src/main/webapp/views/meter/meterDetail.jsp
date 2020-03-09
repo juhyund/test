@@ -35,7 +35,7 @@
 <style>
   div .ibox-title {
 		/* background-color: #dee2e6; */
-		background-color: #5fa4ef47;
+		background-color: #F3F3F4;
 	}
   table th.text-navy {
   	color: #676a6c !important;
