@@ -277,8 +277,6 @@ function renderChart(data, status){
 				type: 'datetime',
 				labels: {
 					format: format,
-					overflow: 'justify'
-					
 				},
 				//minTickInterval: interval,
 				ordinal: false //this sets the fixed time formats 
@@ -339,8 +337,6 @@ function renderChart(data, status){
 					type: 'datetime',
 					labels: {
 						format: format,
-						overflow: 'justify'
-						
 					},
 					//minTickInterval: interval,
 					ordinal: false //this sets the fixed time formats 
@@ -401,8 +397,6 @@ function renderChart(data, status){
 					type: 'datetime',
 					labels: {
 						format: format,
-						overflow: 'justify'
-						
 					},
 					//minTickInterval: interval,
 					ordinal: false //this sets the fixed time formats 
