@@ -335,7 +335,7 @@ function loadMeterInfo(data, status) {
 }
 
 function loadChart(data, status){
-	var format = '{value: %m/%e %H:%M}';
+	var format = '{value: %m/%d <br> %H:%M}';
 
 	var chartOptions = {
 		  chart: {
@@ -349,6 +349,7 @@ function loadChart(data, status){
 		    text: ''
 		  },
 		  xAxis: {
+			  	useHTML : true,
 				type: 'datetime',
 				labels: {
 					format: format,
@@ -402,6 +403,7 @@ function loadChart(data, status){
 		  plotOptions: {
 		    series: {
 		      cursor: 'pointer',
+		      //lineWidth: 1,
 		      point: {
 		        events: {
 		          click: function (e) {
@@ -411,7 +413,7 @@ function loadChart(data, status){
 		                y: e.pageY || e.clientY
 		              },
 		              headingText: this.series.name,
-		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+		              maincontentText: Highcharts.dateFormat('%Y/%m/%d %H:%M', this.x) + '<br/> ' +
 		                this.y ,
 		              width: 200
 		            });
@@ -419,8 +421,9 @@ function loadChart(data, status){
 		        }
 		      },
 		      marker: {
-		    	enabled  :true,
-		        symbol   :"circle"
+		        symbol   :"circle",
+		        radius: 1.5
+		        
 		      }
 		    }
 		  },
