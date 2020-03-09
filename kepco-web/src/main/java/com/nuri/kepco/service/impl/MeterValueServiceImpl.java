@@ -135,12 +135,12 @@ public class MeterValueServiceImpl implements MeterValueService {
 		ConversionUtil.getModelByMap(meterValue, param);
 		
 		
-		String template_filepath = "/template/template_meter_value_Detail.xlsx";
+		String template_filepath = "/template/template_meter_value_detail.xlsx";
 		String filename = "meter_value_detail_" + DateUtil.getNowDateTime() + ".xlsx";			
 		String filepath = fileDownloadDir + "/metervalue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+		
 
 		List<Map<String, Object>> result = this.meterValueDAO.getMeterValueDetail(meterValue);
-		System.out.println("\n=----------------------excelMeterValueDetail--------------------\n\nresult = "+result);
 		
 		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result);
 		

@@ -26,7 +26,32 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
-
+<style>
+	.warning-red{
+		background-color: red;
+	}
+	
+	.warning-green{
+		background-color: green;
+	}
+	
+	.warning-yellow{
+		background-color: yellow;
+	}
+	
+	.warning-orange{
+		background-color: orange;
+	}
+	
+	.col-custom{
+		position: relative;
+	    width: max-content;
+	    min-height: 1px;
+	    padding-right: 7px;
+	    padding-left: 7px;
+	}	
+	
+</style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
@@ -69,7 +94,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
 					<tbody>
 						<tr class="table-border">
-							<td height="80">
+							<td>
 								<div class="form-group row">
 									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 									<div class="col-lg-3">
@@ -79,23 +104,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</select>
 									</div>
 									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
-									<div class="col-lg-3">
-										<select class="form-control" name="device_status" id="device_status">
+									<div class="col-custom">
+										<select class="form-control" name="device_status" id="device_status" style="width: max-content;">
 											<option value=''>선택</option>
 												<% for(CodeConstants.DEVICE_STAT ds : CodeConstants.DEVICE_STAT.values()){ %> 
 											<option value='<%= ds.getDcodeId() %>'><%= ds.getDescr()%></option>
 												<% }%>
 										</select>
 									</div>
-									<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
-									<div class="col-lg-3">
-										<select class="form-control" name="model_seq" id="model_seq"></select>
-									</div> -->
-								</div>
-
-								<div class="form-group form-group-end row">
-									<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
-									<div class="col-lg-3">
+									<label class="col-sm-1 col-form-label" style="padding-left: 10px; text-align: center;">검색</label>
+									<div class="col-custom">
 										<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 											<option value=''>선택</option>
 											<option value='deviceId'>단말ID</option>
@@ -103,9 +121,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</select>
 										<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 									</div>
+									<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+									<div class="col-lg-3">
+										<select class="form-control" name="model_seq" id="model_seq"></select>
+									</div> -->
 								</div>
 							</td>
-							<td width="180" height="80" style="text-align: right">
+							<td width="180" style="text-align: right">
 								<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
 									<i class="fa fa-search"></i>
 								</button>
@@ -292,8 +314,30 @@ function successResultHandler(data, status) {
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
 	
+	warningByColor(data);
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
+}
+
+function warningByColor(data) {
+	 //그리드 색 addClass
+	 $.each( data, function(index, item) {
+		if(index == 'resultGrid'){
+			for(var i=0; i<item.length; i++){
+				if(item[i].cpuUsage >= 80){
+					$('#cpuUsage').addClass('warning-red');
+				}else if(item[i].cpuUsage >= 60){
+					$('#cpuUsage').addClass('warning-orange');
+				}else if(item[i].cpuUsage >= 40){
+					$('#cpuUsage').addClass('warning-yellow');
+				}else if(item[i].cpuUsage >= 60){
+					$('#cpuUsage').addClass('warning-green');
+				}			
+			} 
+		}
+		
+	});
+	
 }
 
 
