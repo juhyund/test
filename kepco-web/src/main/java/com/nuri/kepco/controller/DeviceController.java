@@ -52,6 +52,10 @@ public class DeviceController {
 			param.put("sort", "reg_dt");
 			param.put("dir", "DESC");
 			
+        	if(param.containsKey("model_seq")) {
+        		param.put("model_seq", (Integer.parseInt((String) param.get("model_seq"))));		        		
+        	}
+
 			int cnt = this.deviceInfoService.getDeviceListCnt(param);
 			JSONArray jarr = this.deviceInfoService.getDeviceList(param);
 			

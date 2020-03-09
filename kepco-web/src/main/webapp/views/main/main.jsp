@@ -58,7 +58,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<li class="breadcrumb-item"><a
 								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 							</li>
-							<li class="breadcrumb-item active"><strong>Main</strong></li>
+							<li class="breadcrumb-item active"><strong>Dashboard</strong></li>
 						</ol>
 					</div>
 				</div>
@@ -76,7 +76,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<h2 class="font-bold">
 											통신현황 -
 											<div style="display: inline;" id="com_rate"></div>
-											%
 										</h2>
 										<h3>
 											24시간 이내 통신 성공 
@@ -108,7 +107,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<i class="fa fa-chart-line fa-5x"></i>
 									</div>
 									<div class="col-8 text-right">
-										<h2 class="font-bold">제어현황 - <div style="display: inline;" id="exec_rate"></div>%</h2>
+										<h2 class="font-bold">제어현황 - <div style="display: inline;" id="exec_rate"></div></h2>
 										<h3><div style="display: inline;" id="exec_date"></div> 기준 제어율</h3>
 									</div>
 								</div>
@@ -231,6 +230,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {	
 	communication();
+	lpRate();
 	excuteRate();
 });	
 	
@@ -257,19 +257,19 @@ function successCommunication(data, status) {
 	var t_cnt = data.d1 + data.d2 + data.d3 + data.d4;
 	var t_rate = t_cnt / data.total * 100;
 	
-	$("#com_rate").html(Math.round(d1_rate));
+	$("#com_rate").html(removeZero(d1_rate.toFixed(1))+"%");
 	$("#com_cnt").html(com_cnt);
 
 	$("#d1_cnt").html(data.d1);
-	$("#d1_rate").html(Math.round(d1_rate) + "%");
+	$("#d1_rate").html(removeZero(d1_rate.toFixed(1)) + "%");
 	$("#d2_cnt").html(data.d2);
-	$("#d2_rate").html(Math.round(d2_rate) + "%");
+	$("#d2_rate").html(removeZero(d2_rate.toFixed(1)) + "%");
 	$("#d3_cnt").html(data.d3);
-	$("#d3_rate").html(Math.round(d3_rate) + "%");
+	$("#d3_rate").html(removeZero(d3_rate.toFixed(1)) + "%");
 	$("#d4_cnt").html(data.d4);
-	$("#d4_rate").html(Math.round(d4_rate) + "%");
+	$("#d4_rate").html(removeZero(d4_rate.toFixed(1)) + "%");
 	$("#t_cnt").html(t_cnt);
-	$("#t_rate").html(Math.round(t_rate) + "%");
+	$("#t_rate").html(removeZero(t_rate.toFixed(1)) + "%");
 	
 	Highcharts.chart('comm_chart', {
 	    chart: {
@@ -306,11 +306,11 @@ function successCommunication(data, status) {
 	        }, {
 	            name: '24H ~ 48H 이내',
 	            y: data.d2,
-	            color: '#01EB08'
+	            color: '#FFE510'
 	        }, {
 	            name: '48H 초과',
 	            y: data.d3,
-	            color: '#FFE510'
+	            color: '#FF0900',
 	        }, {
 	            name: '통신기록 없음',
 	            y: data.d4,
@@ -335,9 +335,9 @@ function lpRate(){
 
 function successLpRate(data, status) {
 	var toDay = new Date();
-    var succ_rate = 0;
-    var fail_rate = 0;
-    
+	var total_succ = 0;
+   	var total_fail = 0;
+	
     var types = new Array();
     var succ = new Array();
     var fail = new Array();
@@ -346,32 +346,40 @@ function successLpRate(data, status) {
 
         for(var i=0 ; i < data.result.length ; i++){
         	var value = data.result[i];
+        	
+        	var total_cnt = value.total_cnt;
+        	var succ_cnt = value.succ_cnt;
+        	var fail_cnt = total_cnt - succ_cnt;
+        	
+        	var succ_rate = succ_cnt / total_cnt * 100;
+        	var fail_rate = fail_cnt / total_cnt * 100;
+        	
         	var tr = '<tr>'
         	tr += '<td class="text-center">' + value.m_type + '</td>';
-        	tr += '<td class="text-right">' + value.succ_rate + '</td>';
-        	tr += '<td class="text-right">' + value.fail_rate + '</td>';
+        	tr += '<td class="text-right">' + removeZero(succ_rate.toFixed(1)) + '%</td>';
+        	tr += '<td class="text-right">' + removeZero(fail_rate.toFixed(1)) + '%</td>';
         	tr += '</tr>';
 
         	$("#lp_body").append(tr);
 
-            succ_rate += value.succ_rate;
-            fail_rate += value.fail_rate;
-
+        	total_succ += succ_rate;
+        	total_fail += fail_rate;
+        	
             types[i] = value.m_type;
-            succ[i] = value.succ_rate;
-            fail[i] = value.fail_rate;
+            succ[i] = Math.round(succ_rate);
+            fail[i] = Math.round(fail_rate);
         }
 
-       	var total_succ = succ_rate / types.length * 100;
-       	var total_fail = fail_rate / types.length * 100;
+       	var total_succ_rate = total_succ / types.length;
+       	var total_fail_rate = total_fail / types.length;
         
         var last_tr = '<tr class="table-active">'
        	last_tr += '<th class="text-center">TOTAL</th>';
-       	last_tr += '<th class="text-right">' + Math.round(total_succ) + '</th>';
-       	last_tr += '<th class="text-right">' + Math.round(total_fail) + '</th>';
+       	last_tr += '<th class="text-right">' + removeZero(total_succ_rate.toFixed(1)) + '%</th>';
+       	last_tr += '<th class="text-right">' + removeZero(total_fail_rate.toFixed(1)) + '%</th>';
        	last_tr += '</tr>';
 
-       	$("#lp_rate").html(Math.round(total_succ));
+       	$("#lp_rate").html(total_succ_rate.toFixed(1));
        	$("#lp_body").append(last_tr);
        	
     } else {
@@ -398,6 +406,7 @@ function successLpRate(data, status) {
    	    },
    	    yAxis: {
    	        min: 0,
+   	        max: 100,
    	        title: {
    	            text: '%'
    	        }
@@ -405,7 +414,7 @@ function successLpRate(data, status) {
    	    tooltip: {
    	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
    	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-   	            '<td style="padding:5"><b>{point.y}</b></td></tr>',
+   	            '<td style="padding:5"><b>{point.y}%</b></td></tr>',
    	        footerFormat: '</table>',
    	        shared: true,
    	        useHTML: true
@@ -462,7 +471,6 @@ function successExcuteRate(data, status) {
             fail_cnt += value.fail_cnt;
             wait_cnt += value.wait_cnt;
             
-            
             types[i] = value.m_type;
             succ[i] = value.succ_cnt;
             fail[i] = value.fail_cnt;
@@ -480,14 +488,14 @@ function successExcuteRate(data, status) {
        	var exec_rate = succ_cnt / total_cnt * 100;
        	
        	$("#exec_body").append(last_tr);
-       	$("#exec_rate").html(Math.round(exec_rate));
+       	$("#exec_rate").html(Math.round(exec_rate)+"%");
     } else {
     	var last_tr = '<tr>'
            	last_tr += '<td class="text-center" colspan="4">No Data.</td>';
            	last_tr += '</tr>';
            	
            	$("#exec_body").append(last_tr);
-           	$("#exec_rate").html("0");
+           	$("#exec_rate").html("0%");
     }
    	
    	$("#exec_date").html(toDay.yyyymmdd());
@@ -504,6 +512,7 @@ function successExcuteRate(data, status) {
    	        crosshair: true
    	    },
    	    yAxis: {
+   	    	allowDecimals: false,
    	        min: 0,
    	        title: {
    	            text: 'Count'
@@ -535,6 +544,9 @@ function successExcuteRate(data, status) {
    	
 }
 
+function removeZero(val){
+	return val.replace(".0", "");
+}
 </script>
 	<!--  wrapper -->
 </body>

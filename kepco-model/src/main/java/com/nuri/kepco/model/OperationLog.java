@@ -37,7 +37,7 @@ public class OperationLog extends CommonObj {
 	private String result_edate;
 	
 	private String m_type;
-	private int succ_rate;
-	private int fail_rate;
+	private int succ_cnt;
+	private int fail_cnt;
 	private int wait_cnt;
 }
