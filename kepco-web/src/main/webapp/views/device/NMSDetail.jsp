@@ -119,9 +119,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
 								<tr class="text-navy">
-									<th>단말번호</th>
-									<th>단말ID</th>
-									<th>단말상태<th>
+									<th>모뎀번호</th>
+									<th>모뎀ID</th>
+									<th>모뎀상태<th>
 								</tr>
 							</thead>
 							<tbody>
@@ -204,7 +204,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<option value=''>선택</option>
 										</select>
 									</div>
-									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
 									<div class="col-lg-3">
 										<select class="form-control" name="model_seq" id="model_seq"></select>
 									</div>
@@ -215,8 +215,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div class="col-lg-3">
 										<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 											<option value=''>선택</option>
-											<option value='deviceId'>단말ID</option>
-											<option value='deviceSerial'>단말 번호</option>
+											<option value='deviceId'>모뎀ID</option>
+											<option value='deviceSerial'>모뎀 번호</option>
 										</select>
 										<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" value="${deviceSerial}" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 									</div>

@@ -68,9 +68,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<table class="table table-bordered white-bg" style="width: 100%">
 									<thead>
 										<tr>
-											<th class="device-detail-head">단말번호</th>
+											<th class="device-detail-head">모뎀번호</th>
 											<td class="device-detail-body" id="device_serial"></td>
-											<th class="device-detail-head">단말ID</th>
+											<th class="device-detail-head">모뎀ID</th>
 											<td class="device-detail-body" id="device_id"></td>
 										</tr>
 										<tr>

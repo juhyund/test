@@ -75,7 +75,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">단말 번호</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">모뎀 번호</label>
 														<div class="col-lg-3">
 															<input type="text" class="form-control" name="device_serial" id="device_serial" style="height: 33px; vertical-align: top; display: inline;">
 														</div>
@@ -184,7 +184,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
-	{headerName: "단말 번호", field: "device_serial", cellStyle:{'text-align': "center"}},
+	{headerName: "모뎀 번호", field: "device_serial", cellStyle:{'text-align': "center"}},
 	{headerName: "펌웨어 파일", field: "fw_file_nm", cellStyle:{'text-align': "center"}},
 	{headerName: "펌웨어 버전", field: "fw_version", cellStyle:{'text-align': "center"}},
 	{headerName: "TID", field: "tid", cellStyle:{'text-align': "center"}},

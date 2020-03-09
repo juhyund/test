@@ -125,7 +125,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</tr>
 													<tr>
 														<th class="text-navy" scope="row">통신사:</th>
-														<td id = ""></td>
+														<td id = "">SKT</td>
 														<th class="text-navy" scope="row">모뎀 아이피:</th>
 														<td id = "ip"></td>
 														<!-- 
@@ -224,10 +224,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											                <table class="table-borderless text-center m-t" style="width:100%" >
 																<thead>
 																	<tr class="text-navy">
-																		<th>단말번호</th>
+																		<th>모뎀번호</th>
 																		<th>계기타입</th>
 																		<th>계기번호</th>
-																		<th>검침주기</th>
+																		<th>검침주기(분)</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -343,10 +343,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											                <table class="table-borderless text-center m-t" style="width:100%" >
 																<thead>
 																	<tr class="text-navy">
-																		<th>단말번호</th>
+																		<th>모뎀번호</th>
 																		<th>계기타입</th>
 																		<th>계기번호</th>
-																		<th>검침주기</th>
+																		<th>검침주기(분)</th>
 																	</tr>
 																</thead>
 																<tbody>
