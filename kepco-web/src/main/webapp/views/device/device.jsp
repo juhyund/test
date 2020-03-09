@@ -45,14 +45,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">단말 목록 조회</h3>
+						<h3 style="margin-top: 6px">모뎀 목록 조회</h3>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
 							<li class="breadcrumb-item"><a
 								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 							</li>
-							<li class="breadcrumb-item active"><strong>단말 관리</strong>
+							<li class="breadcrumb-item active"><strong>모뎀 관리</strong>
 							</li>
 						</ol>
 					</div>
@@ -78,7 +78,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<option value=''>선택</option>
 														</select>
 													</div>
-													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
 													<div class="col-lg-3">
 														<select class="form-control" name="model_seq" id="model_seq"></select>
 													</div>
@@ -106,13 +106,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="col-lg-3">
 														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 															<option value=''>선택</option>
-															<option value='device_id'>단말ID</option>
-															<option value='device_serial'>단말 번호</option>
+															<option value='device_id'>모뎀ID</option>
+															<option value='device_serial'>모뎀 번호</option>
 														</select>
 														<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 													</div>
 													
-													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
+													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀상태</label>
 													<div class="col-lg-3">
 														<select class="form-control" name="device_status" id="device_status">
 															<option value=''>선택</option>
@@ -192,12 +192,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "단말번호", field: "device_serial"},
+	{headerName: "모뎀번호", field: "device_serial"},
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
-	{headerName: "단말모델", field: "model_nm"},
+	{headerName: "모뎀모델", field: "model_nm"},
 	{headerName: "제조사", field: "vendor_nm"},
-	{headerName: "단말상태", field: "code_local_nm"},
+	{headerName: "모뎀상태", field: "code_local_nm"},
 	{headerName: "최종통신일시", field: "last_comm_dt"},
 	{headerName: "등록일자", field: "reg_dt"}
 ];

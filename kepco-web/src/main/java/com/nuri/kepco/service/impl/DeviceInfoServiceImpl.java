@@ -125,8 +125,8 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		
 		
 		ExcelRef excelRef = new ExcelRef();
-		excelRef.setTitle("단말목록 다운로드");
-		excelRef.setHeaders(new String[] {"단말번호","본부","지사","단말 모델","제조사","단말상태","최종통신일시","등록일자"});
+		excelRef.setTitle("모뎀목록 다운로드");
+		excelRef.setHeaders(new String[] {"모뎀번호","본부","지사","모뎀 모델","제조사","모뎀상태","최종통신일시","등록일자"});
 		excelRef.setCells("device_serial,parent_branch_nm,branch_nm,model_nm,vendor_nm,code_local_nm,last_comm_dt,reg_dt");
 		
 		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result, excelRef);

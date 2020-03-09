@@ -89,7 +89,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<thead>
 								<tr class="text-navy">
 									<th>미터ID</th>
-									<th>단말ID</th>
+									<th>모뎀ID</th>
 									<th>계기타입</th>
 									<th>최종통신일자</th>
 								</tr>

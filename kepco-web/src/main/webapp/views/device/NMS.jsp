@@ -103,7 +103,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<option value=''>선택</option>
 										</select>
 									</div>
-									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
+									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀상태</label>
 									<div class="col-custom">
 										<select class="form-control" name="device_status" id="device_status" style="width: max-content;">
 											<option value=''>선택</option>
@@ -116,12 +116,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div class="col-custom">
 										<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 											<option value=''>선택</option>
-											<option value='deviceId'>단말ID</option>
-											<option value='deviceSerial'>단말 번호</option>
+											<option value='deviceId'>모뎀ID</option>
+											<option value='deviceSerial'>모뎀 번호</option>
 										</select>
 										<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 									</div>
-									<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+									<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
 									<div class="col-lg-3">
 										<select class="form-control" name="model_seq" id="model_seq"></select>
 									</div> -->
@@ -181,10 +181,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "단말 번호", field: "deviceSerial"},
-	{headerName: "단말 번호", field: "deviceId", hide:"true"},
+	{headerName: "모뎀 번호", field: "deviceSerial"},
+	{headerName: "모뎀 번호", field: "deviceId", hide:"true"},
 	{headerName: "지역본부", field: "branchNm"},
-	{headerName: "단말상태", field: "deviceStatusNm"},
+	{headerName: "모뎀상태", field: "deviceStatusNm"},
 	{headerName: "CPU(%)", field: "cpuUsage", cellStyle:{'text-align': "right"}},
 	{headerName: "Memory(%)", field: "ramUsage", cellStyle:{'text-align': "right"}},
 	{headerName: "RSRP(dBm)", field: "rsrp", cellStyle:{'text-align': "right"}},

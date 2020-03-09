@@ -119,9 +119,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
 								<tr class="text-navy">
-									<th>단말번호</th>
-									<th>단말ID</th>
-									<th>단말상태<th>
+									<th>모뎀번호</th>
+									<th>모뎀ID</th>
+									<th>모뎀상태<th>
 								</tr>
 							</thead>
 							<tbody>
@@ -204,7 +204,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<option value=''>선택</option>
 										</select>
 									</div>
-									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
 									<div class="col-lg-3">
 										<select class="form-control" name="model_seq" id="model_seq"></select>
 									</div>
@@ -215,8 +215,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<div class="col-lg-3">
 										<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 											<option value=''>선택</option>
-											<option value='deviceId'>단말ID</option>
-											<option value='deviceSerial'>단말 번호</option>
+											<option value='deviceId'>모뎀ID</option>
+											<option value='deviceSerial'>모뎀 번호</option>
 										</select>
 										<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" value="${deviceSerial}" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 									</div>
@@ -583,7 +583,8 @@ function renderChart(data, status){
 		      y: 16,
 		      format: '{value:.,0f}'
 		    },
-		    showFirstLabel: false
+		    showFirstLabel: false,
+		    lineWidth: 1,
 		  }],
 		  lang: {
 		        noData: "No data to Display"
@@ -658,7 +659,8 @@ function renderChart(data, status){
 			      y: 16,
 			      format: '{value:.,0f}'
 			    },
-			    showFirstLabel: false
+			    showFirstLabel: false,
+			    lineWidth: 1,
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -733,7 +735,8 @@ function renderChart(data, status){
 			      y: 16,
 			      format: '{value:.,0f}'
 			    },
-			    showFirstLabel: false
+			    showFirstLabel: false,
+			    lineWidth: 1,
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -800,7 +803,7 @@ function renderChart(data, status){
 
 			  yAxis: [{ // left y axis
 			    title: {
-			      text: null
+			      text: 'CPU Usage Monitor'			      
 			    },
 			    labels: {
 			      align: 'left',
@@ -808,22 +811,10 @@ function renderChart(data, status){
 			      y: 16,
 			      format: '{value:.,0f}'
 			    },
-			    showFirstLabel: false
-			  }/* , { // right y axis
-			    linkedTo: 0,
-			    gridLineWidth: 0,
-			    opposite: true,
-			    title: {
-			      text: null
-			    },
-			    labels: {
-			      align: 'right',
-			      x: -3,
-			      y: 16,
-			      format: '{value:.,0f}'
-			    },
-			    showFirstLabel: false
-			  } */],
+			    showFirstLabel: false,
+			    lineWidth: 1,
+			    max: 100, min: 0
+			  }],
 			  lang: {
 			        noData: "No data to Display"
 			  },
@@ -889,7 +880,7 @@ function renderChart(data, status){
 
 			  yAxis: [{ // left y axis
 			    title: {
-			      text: null
+			    	text: 'RAM Usage Monitor'
 			    },
 			    labels: {
 			      align: 'left',
@@ -897,22 +888,10 @@ function renderChart(data, status){
 			      y: 16,
 			      format: '{value:.,0f}'
 			    },
-			    showFirstLabel: false
-			  }/* , { // right y axis
-			    linkedTo: 0,
-			    gridLineWidth: 0,
-			    opposite: true,
-			    title: {
-			      text: null
-			    },
-			    labels: {
-			      align: 'right',
-			      x: -3,
-			      y: 16,
-			      format: '{value:.,0f}'
-			    },
-			    showFirstLabel: false
-			  } */],
+			    showFirstLabel: false,
+			    lineWidth: 1,
+			    max: 100, min: 0
+			  }],
 			  lang: {
 			        noData: "No data to Display"
 			  },
@@ -981,6 +960,7 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'RSRP',
+				 lineWidth: 0.5,
 				 data : rsrpChannelData
 			 });
 			
@@ -1014,6 +994,7 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'RSRQ',
+				 lineWidth: 0.5,
 				 data : rsrqChannelData
 			 });
 			
@@ -1047,6 +1028,7 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'SNR',
+				 lineWidth: 0.5,
 				 data : ssnrChannelData
 			 });
 			
@@ -1061,7 +1043,6 @@ function renderChart(data, status){
 			 $.each( data, function(index, item) {
 				if(index == 'cpuUsageList'){
 					for(var i=0; i<item.length; i++){
-						/* if(item[i].cpuUsage != ""){ */
 							var point = [];
 							var pointData = item[i].cpuUsage;
 							
@@ -1069,9 +1050,7 @@ function renderChart(data, status){
 							point.push(item[i].cpuUsage);
 							
 							cpuChannelData.push(point);			
-						} 
-					/* } */
-					
+					} 
 				}
 				
 			});
@@ -1093,7 +1072,6 @@ function renderChart(data, status){
 			 $.each( data, function(index, item) {
 				if(index == 'ramUsageList'){
 					for(var i=0; i<item.length; i++){
-						/* if(item[i].ramUsage != ""){ */
 							var point = [];
 							var pointData = item[i].ramUsage;
 							
@@ -1101,8 +1079,7 @@ function renderChart(data, status){
 							point.push(item[i].ramUsage);
 							
 							ramChannelData.push(point);			
-						} 
-					/* } */
+					} 
 				}
 			});
 			 

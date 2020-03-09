@@ -246,7 +246,7 @@ function ajaxDeviceFwUpgrade() {
 			<div class="modal-body">		
 			<form class="form-horizontal" role="form" method="post" id="fwUpgradeform">
 				<div class="form-group row">
-					<label class="col-lg-2 col-form-label">단말번호</label>
+					<label class="col-lg-2 col-form-label">모뎀번호</label>
 					<div class="col-lg-9"><input type="text" name="deviceserial" id="deviceserial" class="form-control" style="border: none" readonly="readonly"></div>
 				</div>
 				<div class="form-group row">

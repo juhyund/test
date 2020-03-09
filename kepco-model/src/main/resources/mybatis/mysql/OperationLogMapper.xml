@@ -186,6 +186,7 @@
 			, ol.payload
 			, ol.target_meter
 			, ol.result
+			, ol.target_meter
 			, ol.request_dt as _request_dt
 			, ifnull(date_format(ol.request_dt, '%y-%m-%d %H:%i:%s'),'') as request_dt
 			, ifnull(date_format(ol.result_dt, '%y-%m-%d %H:%i:%s'),'') as result_dt
