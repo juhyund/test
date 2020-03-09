@@ -80,7 +80,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<td id = "app_id"></td>
 							</tr>
 							<tr>
-								<th class="text-navy" scope="row">단말 ID</th><!-- 단말아이디 -->
+								<th class="text-navy" scope="row">모뎀 ID</th><!-- 모뎀아이디 -->
 								<td id = "device_id"></td>
 								<th class="text-navy" scope="row">요청자아이디</th><!-- 등록자아이디 -->
 								<td id = "reg_id"></td>

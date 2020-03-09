@@ -125,10 +125,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</tr>
 													<tr>
 														<th class="text-navy" scope="row">통신사:</th>
-														<td id = ""></td>
+														<td id = "">SKT</td>
 														<th class="text-navy" scope="row">모뎀 아이피:</th>
 														<td id = "ip"></td>
+														<!-- 
 														<th class="text-navy" scope="row">수신감도 레벨:</th>
+														-->
+														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
@@ -161,10 +164,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "cosem_device_name"></td>
 													<th class="text-navy" scope="row">마지막 검침 일시:</th>
 													<td id = "last_comm_dt"></td>
-													<th class="text-navy" scope="row">검침 주기:</th>
+													<th class="text-navy" scope="row">검침 주기(분):</th>
 													<td id = "lp_period"></td>
+													<!--  
 													<th class="text-navy" scope="row">계기 시간:</th>
 													<td id = "mtime"></td>
+													-->
+													<th class="text-navy" scope="row"></th>
+													<td id = ""></td>
 												</tr>
 												<tr>
 													<th class="text-navy" scope="row">계기타입:</th>
@@ -186,9 +193,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th class="text-navy" scope="row">평균전압전류주기:</th>
 													<td id = "avg_power_period"></td>
 													<th class="text-navy" scope="row">선식구분:</th>
-													<td id = "meter_phase"></td>
-													<th class="text-navy" scope="row">계기프로그램버전:</th>
+													<td id = "meter_phase" colspan="3"></td>
+													<!--<th class="text-navy" scope="row">계기프로그램버전:</th>
 													<td id = "prog_version"></td>
+													-->
 												</tr>
 											</tbody>
 										</table>
@@ -216,10 +224,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											                <table class="table-borderless text-center m-t" style="width:100%" >
 																<thead>
 																	<tr class="text-navy">
-																		<th>단말번호</th>
+																		<th>모뎀번호</th>
 																		<th>계기타입</th>
 																		<th>계기번호</th>
-																		<th>검침주기</th>
+																		<th>검침주기(분)</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -335,10 +343,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											                <table class="table-borderless text-center m-t" style="width:100%" >
 																<thead>
 																	<tr class="text-navy">
-																		<th>단말번호</th>
+																		<th>모뎀번호</th>
 																		<th>계기타입</th>
 																		<th>계기번호</th>
-																		<th>검침주기</th>
+																		<th>검침주기(분)</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -514,13 +522,22 @@ function successResultHandler(data, status) {
 	$('#comm_type').text(data.result.comm_type);
 	
 	$('#cosem_device_name').text(data.result.cosem_device_name);
-	$('#acon').text(data.result.acon);
-	$('#rcon').text(data.result.rcon);
-	$('#pcon').text(data.result.pcon);
+	
+	// todo
+	$('#acon').text(data.result.acon.format(1));	
+	$('#rcon').text(data.result.rcon.format(1));	
+	$('#pcon').text(data.result.pcon.format(1));
+	
 	$('#billing_dt').text(data.result.billing_dt);
 	$('#itime').text(data.result.itime);
 	$('#mtime').text(data.result.mtime);
-	$('#net_metering').text(data.result.net_metering);
+	
+	if(data.result.net_metering == "0") {
+		$('#net_metering').text("단방향 계량");
+	} else {
+		$('#net_metering').text("양방향 계량");
+	}
+	
 	$('#avg_power_period').text(data.result.avg_power_period);
 	
 	
