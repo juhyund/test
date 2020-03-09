@@ -398,7 +398,7 @@
 	
 	<select id="getLpRate" resultType="meterInfo" parameterType="meterInfo">
 			SELECT
-				m.METER_TYPE AS m_type, 
+				FNC_GET_CODE_NM(m.METER_TYPE) AS m_type, 
 				COUNT(m.METER_ID) AS total_cnt, 
 				COUNT(mv.meter_Id) AS succ_cnt
 				FROM emi_meter_info m

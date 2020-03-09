@@ -208,12 +208,14 @@ function firmwarelist() {
 										<th class="device-detail-head">LWM2M CLIENT SW 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_sw_version2" style="width:80px; display:none; border: none" value="{{device_info.sw_version2}}" readonly="readonly"></td>
 									</tr>
+									<!-- 
 									<tr>
 										<th class="device-detail-head">인증방식</th>
 										<td class="device-detail-body"><span id="security_mode_span" style="display: none;">{{device_info.security_mode}}</span></td>
 										<th class="device-detail-head">모뎀상태</th>
 										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
 									</tr>
+									-->
 									<tr>
 										<th class="device-detail-head">최종통신일시</th>
 										<td class="device-detail-body"><span id="last_comm_dt_span" style="display: none;">{{device_info.last_comm_dt}}</span></td>
@@ -221,8 +223,10 @@ function firmwarelist() {
 										<td class="device-detail-body"><span id="reg_dt_span" style="display: none;">{{device_info.reg_dt}}</span></td>
 									</tr>
 									<tr>
+										<th class="device-detail-head">모뎀상태</th>
+										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
 										<th class="device-detail-head">설명</th>
-										<td class="device-detail-body" colspan="3"><input type="text" id="di_remark" style="border: none; display:none; width: 100%" value="{{device_info.remark}}" readonly="readonly"></td>
+										<td class="device-detail-body"><input type="text" id="di_remark" style="border: none; display:none; width: 100%" value="{{device_info.remark}}" readonly="readonly"></td>
 									</tr>
 								</thead>
 							</table>
@@ -390,6 +394,7 @@ function firmwarelist() {
 																		ng-click="read(resource);">Read</button>
 																	<button ng-show="resource.operation.indexOf('E') != -1"
 																		class="btn btn-primary btn-xs" type="button"
+																		style="background-color: #FA5858;border-color: #FA5858"
 																		ng-click="execute(resource);">Execute</button>
 																</td>
 																<!-- td>
@@ -413,6 +418,7 @@ function firmwarelist() {
 																		style="width: 100px;">
 																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
+																		style="background-color: #0040FF;border-color: #0040FF"
 																		ng-click="write(resource, newValue);">Write</button>
 																	</div>
 																	<div ng-show="object.object_id == 5 && resource.resource_id == 1">
@@ -421,11 +427,13 @@ function firmwarelist() {
 																		style="width: 100px;">
 																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
+																		style="background-color: #2E2EFE;border-color: #2E2EFE"
 																		ng-click="write(resource, newValue);">Write</button>
 																	</div>
 																	<div ng-show="object.object_id == 5 && resource.resource_id == 0">
 																		<button ng-show="resource.operation.indexOf('W') != -1"
 																		class="btn btn-primary btn-xs" type="button"
+																		style="background-color: #2E2EFE;border-color: #2E2EFE"
 																		onclick="fwListModal()">List</button>
 																	</div>
 																</td>
