@@ -89,6 +89,8 @@
 			, a.port
 			, a.fw_version
 			, a.hw_version
+			, a.sw_version1
+			, a.sw_version2
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
@@ -125,6 +127,8 @@
 			, a.port
 			, a.fw_version
 			, a.hw_version
+			, a.sw_version1
+			, a.sw_version2
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
@@ -156,6 +160,8 @@
 			, a.port
 			, a.fw_version
 			, a.hw_version
+			, a.sw_version1
+			, a.sw_version2
 			, a.allow_yn	
 			, a.mobile_no		
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
@@ -191,6 +197,8 @@
 			, port
 			, fw_version
 			, hw_version
+			, sw_version1
+			, sw_version2
 			, mobile_no
 			, allow_yn			
 			, remark
@@ -209,6 +217,8 @@
 			, #{port}
 			, #{fw_version}
 			, #{hw_version}
+			, #{sw_version1}
+			, #{sw_version2}
 			, #{mobile_no}
 			, #{allow_yn}			
 			, #{remark}
@@ -230,6 +240,8 @@
 			<if test="port != null" > , port = #{port}</if>
 			<if test="fw_version != null" > , fw_version = #{fw_version}</if>
 			<if test="hw_version != null" > , hw_version = #{hw_version}</if>
+			<if test="sw_version1 != null" > , sw_version1 = #{sw_version1}</if>
+			<if test="sw_version2 != null" > , sw_version2 = #{sw_version2}</if>
 			<if test="allow_yn != null" > , allow_yn = #{allow_yn}</if>			
 			<if test="remark != null" > , remark = #{remark}</if>	
 			<if test="mobile_no != null" > , mobile_no = #{mobile_no}</if>	

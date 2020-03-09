@@ -83,8 +83,7 @@ public class ExecResourceController {
 			param.put("resource_id", Integer.parseInt(resource[3]));
 			param.put("reg_id", ControllerUtil.getLoginUser());
 			param.put("format", "JSON");
-			
-			String[] commStr = { "device_id",  "service_id", "resource_instance_id" };
+			String[] commStr = { "device_id",  "service_id", "resource_instance_id", "target_meter" };
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
 			operationLogService.insert(param);

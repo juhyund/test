@@ -21,6 +21,7 @@ public class OperationLog extends CommonObj {
 	private String mid;
 	private String tid;
 	private String payload;
+	private String target_meter;
 	private Integer result;
 	private String result_dt;
 	private String _request_dt;

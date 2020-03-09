@@ -19,6 +19,8 @@ public class DeviceInfo extends CommonObj {
 	private String port;
 	private String fw_version;
 	private String hw_version;
+	private String sw_version1;
+	private String sw_version2;
 	private String allow_yn;
 	private String init_reg_dt;
 	private String remark;
