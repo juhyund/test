@@ -302,13 +302,15 @@
 			, ifnull(date_format(DS.last_renw_dt, '%y-%m-%d %h:%i:%s'),'')   as last_renw_dt			
 			, FNC_GET_CODE_NM(DS.device_status) as device_status
 			, DATE_FORMAT(DS.last_comm_dt,'${prop.dt}') AS last_comm_dt
-			, VI.vendor_nm			
+			, VI.vendor_nm
+			, f.code_local_nm			
 		FROM EMI_METER_INFO A 
 		INNER JOIN EMI_DEVICE_INFO DI ON (A.DEVICE_ID = DI.DEVICE_ID)
 		LEFT OUTER JOIN EMI_DEVICE_STATUS DS ON (A.METER_ID = DS.DEVICE_ID AND DEVICE_FLAG = 'M')
 		LEFT OUTER JOIN EMI_DEVICE_MODEL DM ON DI.MODEL_SEQ = DM.MODEL_SEQ
 		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
 		LEFT OUTER JOIN EMI_VENDOR_INFO VI ON DM.VENDOR_SEQ = VI.VENDOR_SEQ
+		LEFT OUTER JOIN EMI_ALL_CODE F ON DS.DEVICE_STATUS = F.CODE
 		
 		<include refid="base_where_list" />
 		
@@ -327,6 +329,7 @@
 		LEFT OUTER JOIN EMI_DEVICE_MODEL DM ON DI.MODEL_SEQ = DM.MODEL_SEQ
 		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
 		LEFT OUTER JOIN EMI_VENDOR_INFO VI ON DM.VENDOR_SEQ = VI.VENDOR_SEQ
+		LEFT OUTER JOIN EMI_ALL_CODE F ON DS.DEVICE_STATUS = F.CODE
 		
 		<include refid="base_where_list" />
 		
@@ -351,6 +354,7 @@
 			, dm.model_nm
 			, dm.vendor_seq
 			, ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type
+			, ifnull(fnc_get_code_nm(ds.device_status),'') as device_status
 			, a.meter_type as meter_type_code
 			, ifnull(fnc_get_code_nm(a.meter_phase),'') as meter_phase
 			, ifnull(fnc_get_code_nm(di.comm_type),'') as comm_type
@@ -362,16 +366,17 @@
 			, date_format(a.reg_dt, '%y-%m-%d %h:%i:%s')   as reg_dt
 			, ifnull(date_format(ds.last_renw_dt, '%y-%m-%d %h:%i:%s'),'')   as last_renw_dt			
 			, ifnull(date_format(ds.last_comm_dt, '%y-%m-%d %h:%i:%s'),'')   as last_comm_dt
-			, ds.device_status
 			, di.comm_type
 			, di.ip
-			, vi.vendor_nm			
+			, vi.vendor_nm
+			, f.code_local_nm			
 		FROM EMI_METER_INFO A 
 		INNER JOIN EMI_DEVICE_INFO DI ON (A.DEVICE_ID = DI.DEVICE_ID)
 		LEFT OUTER JOIN EMI_DEVICE_STATUS DS ON (A.METER_ID = DS.DEVICE_ID AND DEVICE_FLAG = 'M')
 		LEFT OUTER JOIN EMI_DEVICE_MODEL DM ON DI.MODEL_SEQ = DM.MODEL_SEQ
 		LEFT OUTER JOIN EMI_BRANCH_INFO BR ON A.BRANCH_ID = BR.BRANCH_ID
 		LEFT OUTER JOIN EMI_VENDOR_INFO VI ON DM.VENDOR_SEQ = VI.VENDOR_SEQ
+		LEFT OUTER JOIN EMI_ALL_CODE F ON DS.DEVICE_STATUS = F.CODE
 		WHERE A.METER_SERIAL = #{meter_serial}
 	</select>
 	

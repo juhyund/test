@@ -1909,9 +1909,9 @@ function popupDeliveryTrack(invoice_no, cop)
 }
 
 /**
- * 포매팅 추가 (프로토타입 추가)
- * @param param
- * @descr 천 단위 표현(,) 및 소수점 표현(param째 자리까지 표현 )
+ * formatNumber(value, n)
+ * @param value,n
+ * @descr 
  * @returns
  */
 function formatNumber(value, n){
@@ -1920,10 +1920,21 @@ function formatNumber(value, n){
 	  }else{
 	    return "";
 	  }
-	}
+}
 
+/**
+ * 포매팅 추가 (프로토타입 추가)
+ * @param n
+ * @descr 천 단위 표현(,) 및 소수점 표현(n째 자리까지 표현 )
+ * @returns
+ */
 Number.prototype.format = function(n){
   var reg = /\B(?=(\d{3})+(?!\d))/g;
   var strNum = this.toFixed(Math.max(0, ~~n)).replace(reg,',');
-  return strNum.split(".")[0] + "." + strNum.split(".")[1].replace(/,/gi,'');
+  if (n!=0){
+	  return strNum.split(".")[0] + "." + strNum.split(".")[1].replace(/,/gi,'');
+  }else{
+	  return strNum.split(".")[0];
+  }
+	  
 }

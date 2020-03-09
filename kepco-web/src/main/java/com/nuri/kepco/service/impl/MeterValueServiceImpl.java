@@ -125,7 +125,6 @@ public class MeterValueServiceImpl implements MeterValueService {
 		
 		String cells = "read_dt,meter_serial,parent_branch_nm,branch_nm,meter_type,device_serial,meter_value,reg_dt";
 		
-		
 		ExcelRef excelRef = new ExcelRef();
 		excelRef.setTitle("LP검침 다운로드");
 		excelRef.setHeaders(header);

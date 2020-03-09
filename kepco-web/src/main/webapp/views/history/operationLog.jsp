@@ -56,7 +56,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<li class="breadcrumb-item"><a
 								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
 							</li>
-							<li class="breadcrumb-item active"><strong>Layouts</strong>
+							<li class="breadcrumb-item active"><strong>제어 이력 조회</strong>
 							</li>
 						</ol>
 					</div>
@@ -110,26 +110,20 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 													</div>
 													
-													<div class="form-group row">
-													
-													</div>
-													
 													<div class="form-group form-group-end row">
-														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label>
-														<div style="margin-right: 12px;">
-															<select class="form-control" name="method_type"
-																id="method_type"></select>
-														</div>
-														
-														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어결과</label> -->
-														<div>
-															<select class="form-control" name="result_status" id="result_status">
-																<option value=''>제어결과</option>
-																<option value='1'>성공</option>
-																<option value='2'>실패</option>
-																<option value='0'>대기중</option>
-															</select>
-														</div>
+														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label> -->
+															<div class="col-lg-1">
+																<select class="form-control" name="result_status" id="result_status">
+																	<option value=''>제어결과</option>
+																	<option value='1'>성공</option>
+																	<option value='2'>실패</option>
+																	<option value='0'>대기중</option>
+																</select>
+															</div>
+															<div class="col-lg-3">
+																<select class="form-control" name="method_type"
+																	id="method_type" style=" width: inherit;"></select>
+															</div>
 														
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">응답일시</label>
@@ -147,6 +141,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<i class="fa fa-calendar"></i>
 																</span>
 															</div>
+														</div>
+														
+														<label class="col-lg-1 col-form-label">타겟ID</label>
+														<div style="min-width: 170px; max-width: min-content;">
+															<input class="form-control" name="target_meter" id="target_meter"></input>
 														</div>
 													</div>
 												</td>
@@ -207,14 +206,14 @@ var columnDefs = [
 	{headerName: "리소스 경로", field: "resource_sum"},
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},
-	{headerName: "리소스명", field: "resource_nm", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "리소스명", field: "resource_nm", width:160, cellStyle:{'text-align': "center"}},
 	{headerName: "타겟ID", field: "target_meter", cellStyle:{'text-align': "center"}},
 	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
-	{headerName: "제어결과", field: "result", width:120},
+	{headerName: "제어결과", field: "result", width:130},
 	{headerName: "트랜잭션ID", field: "tid"},
-	{headerName: "제어 전송 일시", field: "request_dt"},
+	{headerName: "전송 일시", field: "request_dt"},
 	{headerName: "응답 일시", field: "result_dt"},
-	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
+	{headerName: "요청자", field: "reg_id", width:150, cellStyle:{'text-align': "center"}}		
 ];
 
 // init selectComboBox
