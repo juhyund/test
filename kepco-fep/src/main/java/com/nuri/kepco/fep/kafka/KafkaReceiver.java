@@ -38,8 +38,7 @@ public class KafkaReceiver {
     }
     
     @KafkaListener(topics = "${kafka.topic.eventdata}")
-    public void eventDatalisten(@Payload String message) {   
-    	LOG.debug("message : {}", message);
+    public void eventDatalisten(@Payload String message) {
     	lwM2mEventLogProcess.process(message);
     }
     
