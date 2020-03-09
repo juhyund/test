@@ -354,7 +354,6 @@
 			, dm.model_nm
 			, dm.vendor_seq
 			, ifnull(fnc_get_code_nm(a.meter_type),'') as meter_type
-			, ifnull(fnc_get_code_nm(ds.device_status),'') as device_status
 			, a.meter_type as meter_type_code
 			, ifnull(fnc_get_code_nm(a.meter_phase),'') as meter_phase
 			, ifnull(fnc_get_code_nm(di.comm_type),'') as comm_type
