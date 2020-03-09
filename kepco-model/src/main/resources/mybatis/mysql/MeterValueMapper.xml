@@ -148,18 +148,22 @@
 		SELECT 
 			a.meter_id,
 			a.device_id,
+			a.meter_serial,
+			a.device_serial,
 			d.code_nm meter_type, 
 			DATE_FORMAT(a.last_comm_dt,'${prop.dt}') AS last_comm_dt
 		FROM (
 			SELECT  
 				mi.meter_id,
 				mi.device_id,
+				mi.meter_serial,
+				di.device_serial,
 				mi.meter_type, 
 				ds.last_comm_dt
 				
 			FROM emi_METER_INFO AS mi
-			LEFT JOIN emi_device_status AS ds
-			ON mi.device_id = ds.device_id
+			LEFT JOIN emi_device_status AS ds	ON mi.device_id = ds.device_id
+			LEFT JOIN emi_device_info AS di	ON mi.device_id = di.device_id
 			WHERE mi.meter_id = #{meter_id}
 		) AS a
 		JOIN emi_ALL_CODE AS d

@@ -148,7 +148,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			                            <div class="col-sm-6" id="datePicker">
 											<div class="input-group date" style="width: 48%; float: left;">
 												<input type="hidden" id="sdate" name="sdate" value=""> 
-												<input type="text" class="form-control" id="sdateView" name="sdateView" value="${sdate}">
+												<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
 												</span>
@@ -156,7 +156,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 											<div class="input-group date" style="width: 48%;">
 												<input type="hidden"  id="edate" name="edate" value=""> 
-												<input type="text" class="form-control"  id="edateView" name="edateView" value="${edate}"> 
+												<input type="text" class="form-control"  id="edateView" name="edateView" value=""> 
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
 												</span>

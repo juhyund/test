@@ -387,14 +387,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			$('#LAGGING_EXP_T3').text(formatNumber(data.resultGrid[0].lagging_exp_rate3,4));
 			
 			//평균 역률
-			$('#PF_IMP_TOT'		).text(formatNumber(data.resultGrid[0].pf_imp_tot,4));		
-			$('#PF_IMP_T1'		).text(formatNumber(data.resultGrid[0].pf_imp_rate1,4));		
-			$('#PF_IMP_T2'		).text(formatNumber(data.resultGrid[0].pf_imp_rate2,4));		
-			$('#PF_IMP_T3'		).text(formatNumber(data.resultGrid[0].pf_imp_rate3,4));	
-			$('#PF_EXP_TOT'		).text(formatNumber(data.resultGrid[0].pf_exp_tot,4));		
-			$('#PF_EXP_T1'		).text(formatNumber(data.resultGrid[0].pf_exp_rate1,4));		
-			$('#PF_EXP_T2'		).text(formatNumber(data.resultGrid[0].pf_exp_rate2,4));		
-			$('#PF_EXP_T3'		).text(formatNumber(data.resultGrid[0].pf_exp_rate3,4));
+			$('#PF_IMP_TOT'		).text(formatNumber(data.resultGrid[0].pf_imp_tot,2));		
+			$('#PF_IMP_T1'		).text(formatNumber(data.resultGrid[0].pf_imp_rate1,2));		
+			$('#PF_IMP_T2'		).text(formatNumber(data.resultGrid[0].pf_imp_rate2,2));		
+			$('#PF_IMP_T3'		).text(formatNumber(data.resultGrid[0].pf_imp_rate3,2));	
+			$('#PF_EXP_TOT'		).text(formatNumber(data.resultGrid[0].pf_exp_tot,2));		
+			$('#PF_EXP_T1'		).text(formatNumber(data.resultGrid[0].pf_exp_rate1,2));		
+			$('#PF_EXP_T2'		).text(formatNumber(data.resultGrid[0].pf_exp_rate2,2));		
+			$('#PF_EXP_T3'		).text(formatNumber(data.resultGrid[0].pf_exp_rate3,2));
 			
 		}
 

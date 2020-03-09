@@ -88,7 +88,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                     <div class="tabs-container" style=width:200%;>
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a class="nav-link active" data-toggle="tab" href="#tab-1">기본정보</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-2" ng-click="meterResourceList(2);">동적 미터 설정</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-2" ng-click="meterResourceList(2);">동적 계기 설정</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-3" ng-click="meterResourceList(3);">동적 스케줄 설정</a></li>
                           <!--   <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-5">TOU설정 조회</a></li>
@@ -117,9 +117,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<th class="text-navy" scope="row">모뎀 번호:</th>
 														<td id = "device_serial"></td>
 														<th class="text-navy" scope="row">운전 상태:</th>
-														<td id = "device_status"></td>
+														<td id = "op_status"></td>
 														<th class="text-navy" scope="row">최종 통신 일시:</th>
-														<!-- <td id = ""></td> -->
 														<td id = "last_comm_dt"></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
@@ -303,7 +302,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<i class="fa"> LP 주기 설정 </i>
 																</button>
 																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="write(resources)">
-																	<i class="fa fa-play"> 동적 스케줄 실행</i>
+																	<i class="fa fa-play"> 미터 Access 실행</i>
 																</button>
 															</div>
 														</div>
@@ -495,9 +494,9 @@ function successResultHandler(data, status) {
 	$('#meter_type').text(data.result.meter_type);	
 	$('#meter_type_tab2').text(data.result.meter_type);	
 	$('#meter_type_tab3').text(data.result.meter_type);	
+	$('#op_status').text(data.result.code_local_nm);	
 	meterTypeCode = data.result.meter_type_code;	
 	$('#device_id').val(data.result.device_id);	
-	$('#device_status').val(data.result.code_local_nm);	
 	
 	$('#meter_phase').text(data.result.meter_phase);
 	$('#ip').text(data.result.ip);
