@@ -18,6 +18,7 @@ import com.nuri.kepco.model.dao.MeterValueDAO;
 import com.nuri.kepco.service.MeterValueService;
 import com.nuri.kepco.util.ConversionUtil;
 import com.nuri.kepco.util.DateUtil;
+import com.nuri.kepco.util.ExcelRef;
 import com.nuri.kepco.util.ExcelUtil;
 
 @Service
@@ -113,14 +114,24 @@ public class MeterValueServiceImpl implements MeterValueService {
 		MeterValue meterValue = new MeterValue();
 		ConversionUtil.getModelByMap(meterValue, param);
 		
-		
-		String template_filepath = "/template/template_meter_value.xlsx";
+		String template_filepath = "/template/template_excel.xlsx";
 		String filename = "meter_value_" + DateUtil.getNowDateTime() + ".xlsx";			
 		String filepath = fileDownloadDir + "/meterValue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 
 		List<MeterValue> result = this.meterValueDAO.getMeterValue(meterValue);
+
+		String[] header = {"검침일시", "계기번호", "본부", "지사", "계기타입", "모뎀번호", "누적검침값 (kWh)","등록시간"};
 		
-		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result);
+		
+		String cells = "read_dt,meter_serial,parent_branch_nm,branch_nm,meter_type,device_serial,meter_value,reg_dt";
+		
+		
+		ExcelRef excelRef = new ExcelRef();
+		excelRef.setTitle("LP검침 다운로드");
+		excelRef.setHeaders(header);
+		excelRef.setCells(cells);
+		
+		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result, excelRef);
 		
 		output.put("filepath", filepath);
 		output.put("filename", filename);
@@ -135,14 +146,23 @@ public class MeterValueServiceImpl implements MeterValueService {
 		ConversionUtil.getModelByMap(meterValue, param);
 		
 		
-		String template_filepath = "/template/template_meter_value_detail.xlsx";
+		String template_filepath = "/template/template_excel.xlsx";
 		String filename = "meter_value_detail_" + DateUtil.getNowDateTime() + ".xlsx";			
 		String filepath = fileDownloadDir + "/metervalue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 		
 
 		List<Map<String, Object>> result = this.meterValueDAO.getMeterValueDetail(meterValue);
 		
-		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result);
+		String[] header = {"검침일시", "모뎀시간"};
+		String cells = "read_dt,itime";
+		
+		
+		ExcelRef excelRef = new ExcelRef();
+		excelRef.setTitle("검침 상세 다운로드");
+		excelRef.setHeaders(header);
+		excelRef.setCells(cells);
+		
+		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result, excelRef);
 		
 		output.put("filepath", filepath);
 		output.put("filename", filename);

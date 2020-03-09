@@ -44,7 +44,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">검침데이터 조회</h3>
+	<h3 style="margin-top:6px">LP검침 데이터 조회</h3>
+</div>
+<div class="col-lg-2">
+	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
+		<li class="breadcrumb-item"><a
+			href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
+		</li>
+		<li class="breadcrumb-item active"><strong>LP검침</strong>
+		</li>
+	</ol>
 </div>
 </div>
 <!-- navigator -->
@@ -174,7 +183,7 @@ var columnDefs = [
 	{headerName: "본부", 	  	field: "parent_branch_nm", 	width:200},
 	{headerName: "지사", 		field: "branch_nm",			width:100},
 	{headerName: "계기타입", 	field: "meter_type", 		width:100},
-	{headerName: "모뎀 번호", 	field: "device_serial", 	width:200},
+	{headerName: "모뎀번호", 	field: "device_serial", 	width:200},
    	{headerName: "누적검침값 (kWh)", width:100,	
 			   	field: "meter_value", 
 			   	suppressSizeToFit: true,

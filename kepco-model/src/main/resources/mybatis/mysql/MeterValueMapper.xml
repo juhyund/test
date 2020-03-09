@@ -191,9 +191,9 @@
 		SELECT
 		    meter_id
 		    , DATE_FORMAT(CONCAT(T.read_dt,'00'), '${prop.dt}') AS read_dt 
-		    ,T.read_dt AS read_dt_int
-		    ,T.itime
-			,T.mtime
+		    , T.read_dt AS read_dt_int
+		    , DATE_FORMAT(CONCAT(T.itime,'00'), '${prop.dt}') AS itime
+			, DATE_FORMAT(CONCAT(T.mtime,'00'), '${prop.dt}') AS mtime
 		<foreach item="item" collection="channelList" >
 			, SUM(CASE WHEN T.channel = '${item.channel_code}' THEN meter_value END) AS c${item.channel_idx}_metervalue
 		</foreach>

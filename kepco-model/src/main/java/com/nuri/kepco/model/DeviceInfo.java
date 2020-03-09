@@ -42,6 +42,7 @@ public class DeviceInfo extends CommonObj {
 	private String ledate;
 	
 	private String device_status_nm; // add
+	private String device_status_local_nm; // add
 	
 	
 	private long total; // all device

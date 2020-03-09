@@ -17,7 +17,7 @@ public class MeasurementData implements IMeasurementData {
 
 	private DataParser parser = null;
 	private String deviceId;
-	private String modemTime;
+	private String modemTime; // 모뎀으로부터 서버가 수신한 시간
 
 	@Override
 	public DataParser getMeterDataParser() {
@@ -43,6 +43,10 @@ public class MeasurementData implements IMeasurementData {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			this.modemTime = sdf.format(modemTime);
 		}
+	}
+	
+	public void setModemTime(String modemTime) {		
+		this.modemTime = modemTime;
 	}
 
 	public void setMeterDataParser(String parserClassName) {
