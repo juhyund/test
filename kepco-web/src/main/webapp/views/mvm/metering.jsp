@@ -183,7 +183,7 @@ var columnDefs = [
 	{headerName: "본부", 	  	field: "parent_branch_nm", 	width:200},
 	{headerName: "지사", 		field: "branch_nm",			width:100},
 	{headerName: "계기타입", 	field: "meter_type", 		width:100},
-	{headerName: "모뎀 번호", 	field: "device_serial", 	width:200},
+	{headerName: "모뎀번호", 	field: "device_serial", 	width:200},
    	{headerName: "누적검침값 (kWh)", width:100,	
 			   	field: "meter_value", 
 			   	suppressSizeToFit: true,

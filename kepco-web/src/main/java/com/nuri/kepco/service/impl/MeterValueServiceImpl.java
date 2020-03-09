@@ -114,14 +114,24 @@ public class MeterValueServiceImpl implements MeterValueService {
 		MeterValue meterValue = new MeterValue();
 		ConversionUtil.getModelByMap(meterValue, param);
 		
-		
-		String template_filepath = "/template/template_meter_value.xlsx";
+		String template_filepath = "/template/template_excel.xlsx";
 		String filename = "meter_value_" + DateUtil.getNowDateTime() + ".xlsx";			
 		String filepath = fileDownloadDir + "/meterValue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 
 		List<MeterValue> result = this.meterValueDAO.getMeterValue(meterValue);
+
+		String[] header = {"검침일시", "계기번호", "본부", "지사", "계기타입", "모뎀번호", "누적검침값 (kWh)","등록시간"};
 		
-		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result);
+		
+		String cells = "read_dt,meter_serial,parent_branch_nm,branch_nm,meter_type,device_serial,meter_value,reg_dt";
+		
+		
+		ExcelRef excelRef = new ExcelRef();
+		excelRef.setTitle("LP검침 다운로드");
+		excelRef.setHeaders(header);
+		excelRef.setCells(cells);
+		
+		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result, excelRef);
 		
 		output.put("filepath", filepath);
 		output.put("filename", filename);
@@ -143,8 +153,8 @@ public class MeterValueServiceImpl implements MeterValueService {
 
 		List<Map<String, Object>> result = this.meterValueDAO.getMeterValueDetail(meterValue);
 		
-		String[] header = {"검침일시", "모뎀시간", "미터시간"};
-		String cells = "read_dt,itime,mtime";
+		String[] header = {"검침일시", "모뎀시간"};
+		String cells = "read_dt,itime";
 		
 		
 		ExcelRef excelRef = new ExcelRef();

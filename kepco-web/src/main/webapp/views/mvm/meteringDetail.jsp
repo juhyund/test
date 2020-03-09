@@ -88,8 +88,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
 								<tr class="text-navy">
-									<th>미터ID</th>
-									<th>모뎀ID</th>
+									<th>계기번호</th>
+									<th>모뎀번호</th>
 									<th>계기타입</th>
 									<th>최종통신일자</th>
 								</tr>
@@ -154,8 +154,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</table>
 					<input type="hidden" id="meter_id" name="meter_id" value="${meter_id}" class="form-control">
 				</form>
-							
-				
 			  	<!-- <div class="text-center" style="padding-bottom:15px">
 					<button class="btn btn-primary " type="button"><i class="fa fa-search"></i>&nbsp;&nbsp;<span class="bold">검색</span></button>
 					<button class="btn btn-primary " type="button"><i class="fa fa-undo"></i>&nbsp;&nbsp;<span class="bold">새로고침</span></button>
@@ -212,9 +210,7 @@ var columnDefs = [
 //specify the columns  
 	{headerName: "번호",		field: "no",		width:50,	suppressSizeToFit: true, pinned:"left"},
 	{headerName: "검침일시", 	field: "read_dt",	width:100,	suppressSizeToFit: true, pinned:"left"},
-	{headerName: "모뎀시간 ", 	field: "itime",		width:100,	suppressSizeToFit: true, pinned:"left"},
-	{headerName: "미터시간", 	field: "mtime",		width:100,	suppressSizeToFit: true, pinned:"left"}	]
-	
+	{headerName: "모뎀시간 ", 	field: "itime",		width:100,	suppressSizeToFit: true, pinned:"left"}	]
 	
 function useChannelList(data, status) {
 	//미터가 사용하는 채널에 따라 유동적으로 헤더를 생성
