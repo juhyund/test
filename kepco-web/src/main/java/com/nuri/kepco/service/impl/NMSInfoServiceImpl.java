@@ -133,7 +133,9 @@ public class NMSInfoServiceImpl implements NMSInfoService {
 		ConversionUtil.getModelByMap(connectivityStatistics, param);
 		List<ConnectivityStatisticsMonitor> list = this.connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(connectivityStatistics);
 		
-		return ConversionUtil.getJSONArrayByModel(list);
+		
+		
+		return ConversionUtil.getJSONArrayByModel(list, (int) connectivityStatistics.getOffset());
 	}
 
 	@Override

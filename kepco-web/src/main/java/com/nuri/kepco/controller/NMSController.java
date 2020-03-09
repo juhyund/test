@@ -91,10 +91,9 @@ public class NMSController {
 				jarr.add(i, tmp);
 				
 			}
-			connectivityStatistics.add(jarr);
 			
 			json.put("totalCount", cnt);
-			json.put("resultGrid", connectivityStatistics);
+			json.put("resultGrid", jarr);
 			
 		} catch (Exception e) {
 			logger.error(e.toString(),e);

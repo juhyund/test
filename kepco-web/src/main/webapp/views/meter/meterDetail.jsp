@@ -119,6 +119,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<th class="text-navy" scope="row">운전 상태:</th>
 														<td id = "device_status"></td>
 														<th class="text-navy" scope="row">최종 통신 일시:</th>
+														<!-- <td id = ""></td> -->
 														<td id = "last_comm_dt"></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
@@ -128,9 +129,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<td id = "">SKT</td>
 														<th class="text-navy" scope="row">모뎀 아이피:</th>
 														<td id = "ip"></td>
-														<!-- 
-														<th class="text-navy" scope="row">수신감도 레벨:</th>
-														-->
 														<th class="text-navy" scope="row">통신 방식:</th>
 														<td id = "comm_type"></td>
 														<th class="text-navy" scope="row"></th>
@@ -499,7 +497,7 @@ function successResultHandler(data, status) {
 	$('#meter_type_tab3').text(data.result.meter_type);	
 	meterTypeCode = data.result.meter_type_code;	
 	$('#device_id').val(data.result.device_id);	
-	$('#device_status').val(data.result.device_id);	
+	$('#device_status').val(data.result.code_local_nm);	
 	
 	$('#meter_phase').text(data.result.meter_phase);
 	$('#ip').text(data.result.ip);
@@ -508,10 +506,9 @@ function successResultHandler(data, status) {
 	
 	$('#cosem_device_name').text(data.result.cosem_device_name);
 	
-	// todo
-	$('#acon').text(data.result.acon.format(1));	
-	$('#rcon').text(data.result.rcon.format(1));	
-	$('#pcon').text(data.result.pcon.format(1));
+	$('#acon').text(formatNumber(data.result.acon,0));	
+	$('#rcon').text(formatNumber(data.result.rcon,0));	
+	$('#pcon').text(formatNumber(data.result.pcon,0));
 	
 	$('#billing_dt').text(data.result.billing_dt);
 	$('#itime').text(data.result.itime);
