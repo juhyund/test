@@ -523,10 +523,9 @@ function successResultHandler(data, status) {
 	
 	$('#cosem_device_name').text(data.result.cosem_device_name);
 	
-	// todo
-	$('#acon').text(data.result.acon.format(1));	
-	$('#rcon').text(data.result.rcon.format(1));	
-	$('#pcon').text(data.result.pcon.format(1));
+	$('#acon').text(formatNumber(data.result.acon,0));	
+	$('#rcon').text(formatNumber(data.result.rcon,0));	
+	$('#pcon').text(formatNumber(data.result.pcon,0));
 	
 	$('#billing_dt').text(data.result.billing_dt);
 	$('#itime').text(data.result.itime);
