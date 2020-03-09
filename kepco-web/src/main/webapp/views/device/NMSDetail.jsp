@@ -175,9 +175,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
 										<i class="fa fa-undo"></i>
 									</button>
-									<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
-										<i class="fa fa-download"></i>
-									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -559,7 +556,7 @@ function renderChart(data, status){
 		  },
 
 		  title: {
-		    text: 'RSRP'
+		    text: 'RSRP(dBm)'
 		  },
 		  xAxis: {
 				type: 'datetime',
@@ -575,7 +572,7 @@ function renderChart(data, status){
 
 		  yAxis: [{ // left y axis
 		    title: {
-		      text: null
+		      text: 'Reference Signal Received Power'
 		    },
 		    labels: {
 		      align: 'left',
@@ -585,6 +582,7 @@ function renderChart(data, status){
 		    },
 		    showFirstLabel: false,
 		    lineWidth: 1,
+		    max: -60, min: -90
 		  }],
 		  lang: {
 		        noData: "No data to Display"
@@ -635,7 +633,7 @@ function renderChart(data, status){
 			  },
 
 			  title: {
-			    text: 'RSRQ'
+			    text: 'RSRQ(dB)'
 			  },
 			  xAxis: {
 					type: 'datetime',
@@ -651,7 +649,7 @@ function renderChart(data, status){
 
 			  yAxis: [{ // left y axis
 			    title: {
-			      text: null
+			      text: 'Reference Signal Received Quality'
 			    },
 			    labels: {
 			      align: 'left',
@@ -661,6 +659,7 @@ function renderChart(data, status){
 			    },
 			    showFirstLabel: false,
 			    lineWidth: 1,
+			    max: 0, min: -20
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -711,7 +710,7 @@ function renderChart(data, status){
 			  },
 
 			  title: {
-			    text: 'SNR'
+			    text: 'SNR(dB)'
 			  },
 			  xAxis: {
 					type: 'datetime',
@@ -727,7 +726,7 @@ function renderChart(data, status){
 
 			  yAxis: [{ // left y axis
 			    title: {
-			      text: null
+			      text: 'Signal to Interference Noise Ratio'
 			    },
 			    labels: {
 			      align: 'left',
@@ -737,6 +736,7 @@ function renderChart(data, status){
 			    },
 			    showFirstLabel: false,
 			    lineWidth: 1,
+			    max: 20, min: -10
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -787,7 +787,7 @@ function renderChart(data, status){
 			  },
 
 			  title: {
-			    text: 'CPU'
+			    text: 'CPU(%)'
 			  },
 			  xAxis: {
 					type: 'datetime',
@@ -864,7 +864,7 @@ function renderChart(data, status){
 			  },
 
 			  title: {
-			    text: 'MEMORY'
+			    text: 'MEMORY(%)'
 			  },
 			  xAxis: {
 					type: 'datetime',

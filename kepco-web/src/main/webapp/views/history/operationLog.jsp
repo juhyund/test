@@ -115,7 +115,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													
 													<div class="form-group form-group-end row">
-														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label> -->
+														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어항목</label>
 														<div style="margin-right: 12px;">
 															<select class="form-control" name="method_type"
 																id="method_type"></select>
@@ -123,7 +123,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														
 														<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">제어결과</label> -->
 														<div>
-															<select class="form-control" name="result_status" id="result_status" style="margin-right: 45px;">
+															<select class="form-control" name="result_status" id="result_status">
 																<option value=''>제어결과</option>
 																<option value='1'>성공</option>
 																<option value='2'>실패</option>
