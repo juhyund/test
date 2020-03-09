@@ -88,7 +88,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                     <div class="tabs-container" style=width:200%;>
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a class="nav-link active" data-toggle="tab" href="#tab-1">기본정보</a></li>
-                            <li><a class="nav-link" data-toggle="tab" href="#tab-2" ng-click="meterResourceList(2);">동적 미터 설정</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-2" ng-click="meterResourceList(2);">동적 계기 설정</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-3" ng-click="meterResourceList(3);">동적 스케줄 설정</a></li>
                           <!--   <li><a class="nav-link" data-toggle="tab" href="#tab-4">OBIS 제어</a></li>
                             <li><a class="nav-link" data-toggle="tab" href="#tab-5">TOU설정 조회</a></li>
