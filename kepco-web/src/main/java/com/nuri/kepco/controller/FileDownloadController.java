@@ -103,9 +103,7 @@ public class FileDownloadController {
 				        		  param.put(key, request.getParameter(key));	
 				          }
 			         }
-			       //채널 가져와서 넣기
 			         param.put("limit",0);
-			         logger.info("--------------------downloadMeterValueDetail-------------------------------------\nparam="+param);
 					
 					Map<String, String> output = this.meterValueService.excelMeterValueDetail(param);
 					file_path = output.get("filepath") + "/" + output.get("filename");

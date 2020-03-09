@@ -285,8 +285,6 @@ function excelDownload() {
 				timer: 1500
 			});
 	}else{
-		alert("엑셀 다운!");
-
 		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterBilling");
 		 $('#search_form').attr('method',"GET");
 		 $('#search_form').submit();
