@@ -83,7 +83,7 @@ public class MeterInfoServiceImpl implements MeterInfoService {
 	@Override
 	public JSONArray getLpRate() throws Exception {
 		MeterInfo meterInfo = new MeterInfo();
-		List<MeterInfo> list = null;
+		List<MeterInfo> list = meterInfoDAO.getLpRate();
 		
 		return ConversionUtil.getJSONArrayByModel(list);
 	}

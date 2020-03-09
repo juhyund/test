@@ -209,8 +209,10 @@ function firmwarelist() {
 										<td class="device-detail-body"><input type="text" id="di_sw_version2" style="width:80px; display:none; border: none" value="{{device_info.sw_version2}}" readonly="readonly"></td>
 									</tr>
 									<tr>
+										<!-- 
 										<th class="device-detail-head">인증방식</th>
 										<td class="device-detail-body"><span id="security_mode_span" style="display: none;">{{device_info.security_mode}}</span></td>
+										 -->
 										<th class="device-detail-head">단말상태</th>
 										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
 									</tr>

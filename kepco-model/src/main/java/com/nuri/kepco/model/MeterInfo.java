@@ -56,8 +56,8 @@ public class MeterInfo extends CommonObj {
 	private int avg_power_period;
 	
 	private String m_type;
-	private int succ_rate;
-	private int fail_rate;
+	private long total_cnt;
+	private long succ_cnt;
 	
 	/**
 	 * 미터 모델 정보

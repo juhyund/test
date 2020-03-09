@@ -399,5 +399,19 @@
 		AND DI.DEVICE_SERIAL = #{device_serial}
 	</select>
 	
-	
+	<select id="getLpRate" resultType="meterInfo" parameterType="meterInfo">
+			SELECT
+				m.METER_TYPE AS m_type, 
+				COUNT(m.METER_ID) AS total_cnt, 
+				COUNT(mv.meter_Id) AS succ_cnt
+				FROM emi_meter_info m
+				LEFT OUTER JOIN (
+				SELECT meter_id, COUNT(*)
+			FROM emi_meter_value 
+			WHERE reg_dt BETWEEN DATE_FORMAT(now(), '%Y%m%d000000') AND DATE_FORMAT(now(), '%Y%m%d235959') 
+				GROUP BY meter_id
+				) mv ON m.meter_id = mv.meter_id
+			GROUP BY m.METER_TYPE;
+	</select>
+
 </mapper>
