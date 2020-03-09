@@ -68,7 +68,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">정기검침 > 상세정보</h3>
+						<h3 style="margin-top: 6px">정기검침 > 상세 데이터 조회</h3>
 					</div>
 				</div>
 				<!-- navigator -->
@@ -93,12 +93,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<thead>
 												<tr class="text-navy">
 													<th>검침일</th>
-													<th>모뎀시간</th>
-													<th>미터시간</th>
+													<th>모뎀 시간</th>
+													<th>계기 시간</th>
 													<th>(본부)지사 </th>
-													<th>계기타입</th>
-													<th>계기번호</th>
-													<th>모뎀번호</th>
+													<th>계기 타입</th>
+													<th>계기 번호</th>
+													<th>모뎀 번호</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -184,7 +184,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<table name="순방향 " class="table table-bordered white-bg billing-detail-table" style="width: 49.5%">
 											<thead>
 												<tr>
-													<th class="text-navy" colspan="5">순방향</th>
+													<th class="text-navy" colspan="5">순방향(kW)</th>
 												</tr>
 												<tr>
 													<th></th>
@@ -234,11 +234,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<table name="table2" class="table table-bordered white-bg billing-detail-table" style="width: 49.5%">
 											<thead>
 												<tr>
-													<th class="text-navy" colspan="5">역방향</th>
+													<th class="text-navy" colspan="5">역방향(kW)</th>
 												</tr>
 												<tr>
 													<th></th>
-													<th>Total</th>
+												<th>Total</th>
 													<th>T1</th>
 													<th>T2</th>
 													<th>T3</th>

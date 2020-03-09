@@ -46,6 +46,15 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">정기검침 데이터 조회</h3>
 </div>					
+<div class="col-lg-2">
+	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
+		<li class="breadcrumb-item"><a
+			href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
+		</li>
+		<li class="breadcrumb-item active"><strong>정기검침</strong>
+		</li>
+	</ol>
+</div>
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -189,7 +198,7 @@ var columnDefs = [
 	{headerName: "지사", 		field: "branch_nm",		width:100,	suppressSizeToFit: true},
 	{headerName: "계기타입", 	field: "meter_type", 	width:100,	suppressSizeToFit: true},
 	{headerName: "모뎀 번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
-	{headerName: '순방향 유효전력',
+	{headerName: '순방향 유효전력(kW)',
        children: [{headerName: "전체",  width:100, 
     	   				suppressSizeToFit: true,
 					   	field: "active_imp_tot", 
@@ -217,7 +226,7 @@ var columnDefs = [
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}]
 	},
-	{headerName: '역방향 유효전력',
+	{headerName: '역방향 유효전력(kW)',
        children: [{headerName: "전체", width:100,
 					   	field: "active_exp_tot", 
 					   	valueFormatter: numberFormatter, 
