@@ -47,6 +47,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="col-lg-10">
 						<h3 style="margin-top: 6px">미터 정보 조회</h3>
 					</div>
+					<div class="col-lg-2" >
+					<ol class="breadcrumb" style="float:right;margin-top:10px;">
+						<li class="breadcrumb-item">
+							<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
+						</li>
+						<li class="breadcrumb-item active">
+							<strong>미터 정보 조회</strong>
+						</li>
+						</ol>
+					</div>
 				</div>
 				<!-- navigator -->
 				<!-- body -->
@@ -177,18 +187,18 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},
+	{headerName: "번호", field: "no", width:90, cellStyle:{'text-align': "center"}},
 	{headerName: "본부", field: "parent_branch_nm", width:100, cellStyle:{'text-align': "center"}},
 	{headerName: "지사", field: "branch_nm", width:100, cellStyle:{'text-align': "center"}},
 	{headerName: "계기타입", field: "meter_type", width:150, cellStyle:{'text-align': "center"}},
-	{headerName: "계기번호", field: "meter_serial", cellStyle:{'text-align': "center"}},
-	{headerName: "검침주기(분)", field: "lp_period", cellStyle:{'text-align': "center"}},
-	{headerName: "통신상태", field: "device_status", cellStyle:{'text-align': "center"}},
-	{headerName: "제조사", field: "vendor_nm"},
+	{headerName: "계기번호", field: "meter_serial", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "검침주기(분)", field: "lp_period", width:140, cellStyle:{'text-align': "center"}},
+	{headerName: "통신상태", field: "code_local_nm", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "제조사", field: "vendor_nm", width:150},
 	{headerName: "마지막 검침 일시", field: "last_comm_dt"},
-	{headerName: "모뎀번호", field: "device_serial", width:120},
+	{headerName: "모뎀번호", field: "device_serial"},
 	{headerName: "모뎀 최종통신일자", field: "last_comm_dt"},
-	{headerName: "인가여부", field: "allow_yn", cellStyle:{'text-align': "center"}}
+	{headerName: "인가여부", field: "allow_yn", width:130, cellStyle:{'text-align': "center"}}
 	/* {headerName: "계약상태", field: ""},
 	{headerName: "고객번호", field: ""} */
 ];

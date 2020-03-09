@@ -44,6 +44,7 @@ public class NMSController {
 			
 			int limit = Integer.parseInt(request.getParameter("limit"));
 			String deviceStatus = request.getParameter("device_status");
+			String branch_parent_id = request.getParameter("branch_parent_id");
 			String branchId = request.getParameter("branch_id");
 			String searchfield = request.getParameter("searchfield");
 			String searchquery = request.getParameter("searchquery");
@@ -51,6 +52,9 @@ public class NMSController {
 			param.put("row", limit);
 			if(deviceStatus != null && !("").equals(deviceStatus)) {
 				param.put("deviceStatus", deviceStatus);
+			}
+			if(branch_parent_id != null && !("").equals(branch_parent_id)) {
+				param.put("parentBranchId", branch_parent_id);
 			}
 			if(branchId != null && !("").equals(branchId)) {
 				param.put("branchId", branchId);

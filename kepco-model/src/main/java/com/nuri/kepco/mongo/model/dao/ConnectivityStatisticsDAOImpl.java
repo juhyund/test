@@ -65,6 +65,10 @@ public class ConnectivityStatisticsDAOImpl implements ConnectivityStatisticsMoni
 			query.addCriteria(Criteria.where("deviceStatus").is(param.getDeviceStatus()));
 		}
 		
+		if (param.getParentBranchId() != null) {
+			query.addCriteria(Criteria.where("parentBranchId").is(param.getParentBranchId()));
+		}
+		
 		if (param.getBranchId() != null) {
 			query.addCriteria(Criteria.where("branchId").is(param.getBranchId()));
 		}

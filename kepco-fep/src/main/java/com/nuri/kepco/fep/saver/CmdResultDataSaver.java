@@ -24,7 +24,7 @@ import com.nuri.kepco.mongo.model.dao.CmdResultDataDAO;
 @Service
 public class CmdResultDataSaver extends AbstractMDSaver {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(KepcoDLMSParser.class);
+	private static final Logger LOG = LoggerFactory.getLogger(CmdResultDataSaver.class);
 	
 	private static final Integer FIRMWARE_OBJECT_ID = 5;
 	

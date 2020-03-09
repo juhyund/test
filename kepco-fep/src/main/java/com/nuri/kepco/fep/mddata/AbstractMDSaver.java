@@ -290,6 +290,7 @@ public abstract class AbstractMDSaver {
 			deviceInfo.setDevice_type(DEVICETYPE.DEVICE.getCode()); // DEVICE
 			deviceInfo.setAllow_yn("1");
 			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
+			
 			if(mobileNo != null) deviceInfo.setMobile_no(mobileNo);
 
 			if (isNewDevice) {			
@@ -314,7 +315,79 @@ public abstract class AbstractMDSaver {
 				result = deviceInfoDAO.update(deviceInfo);
 			}
 			
-			updateDeviceStatus(deviceInfo);
+			updateDeviceStatus(deviceInfo, DEVICESTATUS.NORMAL);
+			this.deviceInfo = deviceInfo;
+
+		} catch (Exception e) {
+			logger.error("error", e);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * checkDevice
+	 * @param deviceSerial
+	 * @param modemTime
+	 * @param ip
+	 * @param port
+	 * @param init_reg_dt
+	 * @param deviceStatus
+	 * @return
+	 */
+	protected int checkDevice(String deviceSerial, String modemTime, String ip, String port, String init_reg_dt, DEVICESTATUS deviceStatus) {
+
+		int result = 0;
+		boolean isNewDevice = false;
+		this.modemTime = modemTime;
+
+		try {
+			// device id
+			DeviceInfo deviceInfo = null;
+			deviceInfo = deviceInfoDAO.selectByDeviceSerial(deviceSerial);
+
+			if (deviceInfo == null) {
+				deviceInfo = new DeviceInfo();
+				isNewDevice = true;
+			}
+
+			deviceInfo.setDevice_serial(deviceSerial);
+			deviceInfo.setDevice_type(DEVICETYPE.DEVICE.getCode()); // DEVICE
+			deviceInfo.setAllow_yn("1");
+			deviceInfo.setComm_type(COMMTYPE.LTE.getCode()); // LTE
+			
+			if(ip != null) {
+				deviceInfo.setIp(ip);
+			}
+			
+			if(port != null) {
+				deviceInfo.setPort(port);
+			}
+			
+			if (isNewDevice) {	
+				
+				// model을 default로 저장
+				String model_nm = defaultModelName;
+				DeviceModel deviceModel = deviceModelDAO.selectModelByName(model_nm);
+				
+				if(deviceModel != null) {
+					deviceInfo.setModel_seq(deviceModel.getModel_seq());
+				}		
+				
+				deviceInfo.setInit_reg_dt(init_reg_dt);
+				
+				deviceInfo.setBranch_id(defaultBranchId);
+				result = deviceInfoDAO.insert(deviceInfo);
+				
+			} else {
+				
+				if(deviceInfo.getBranch_id() == null) {
+					deviceInfo.setBranch_id(defaultBranchId);	
+				}
+				
+				result = deviceInfoDAO.update(deviceInfo);
+			}
+			updateDeviceStatus(deviceInfo, deviceStatus);
 			this.deviceInfo = deviceInfo;
 
 		} catch (Exception e) {
@@ -383,7 +456,7 @@ public abstract class AbstractMDSaver {
 	 * 
 	 * @param deviceInfo
 	 */
-	protected void updateDeviceStatus(DeviceInfo deviceInfo) {
+	protected void updateDeviceStatus(DeviceInfo deviceInfo, DEVICESTATUS deviceStatusCode) {
 
 		DeviceStatus param = new DeviceStatus();
 		param.setDevice_id(deviceInfo.getDevice_id());
@@ -404,7 +477,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus = new DeviceStatus();
 				deviceStatus.setDevice_id(deviceInfo.getDevice_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.DEVICE.getCode()); // device
-				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setDevice_status(deviceStatusCode.getCode()); // normal
 				deviceStatus.setLast_comm_dt(modemTime); // modem time
 				deviceStatusDAO.insert(deviceStatus);
 
@@ -413,7 +486,7 @@ public abstract class AbstractMDSaver {
 				deviceStatus = new DeviceStatus();
 				deviceStatus.setDevice_id(deviceInfo.getDevice_id());
 				deviceStatus.setDevice_flag(DEVICEFLAG.DEVICE.getCode()); // device
-				deviceStatus.setDevice_status(DEVICESTATUS.NORMAL.getCode()); // normal
+				deviceStatus.setDevice_status(deviceStatusCode.getCode()); // normal
 				deviceStatus.setLast_comm_dt(modemTime); // modem time
 				deviceStatusDAO.update(deviceStatus);
 			}

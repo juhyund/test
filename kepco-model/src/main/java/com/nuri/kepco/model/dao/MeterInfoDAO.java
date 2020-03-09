@@ -18,6 +18,7 @@ public interface MeterInfoDAO extends GenericDAO<MeterInfo> {
 	MeterInfo getMeterDetailInfo(String meterSerial);
 	
 	MeterInfo getMeterInfoBySerial(MeterInfo meterInfo);
-	
+
+	List<MeterInfo> getLpRate();
 }
 
