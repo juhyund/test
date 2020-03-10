@@ -426,7 +426,6 @@ function showDetailWindow(device_id){
 function resetForm(){
 	$("#search_form")[0].reset();
 	setSearchPeriod('today');
-	$("#grid-page").hide();
 };
 
 

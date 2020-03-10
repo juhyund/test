@@ -160,7 +160,7 @@ public class DeviceController {
 	@RequestMapping(value = "/ajaxDeviceInfoUpdate")
 	public ResponseEntity<Object> ajaxDeviceInfoUpdate(HttpServletRequest request) {
 		
-		String[] commStr = { "ip", "port", "hw_version", "fw_version", "sw_version1", "sw_version2", "remark" };
+		String[] commStr = { "mobile_no", "ip", "port", "hw_version", "fw_version", "sw_version1", "sw_version2", "remark" };
 		
 		JSONObject json = new JSONObject();
 		try {

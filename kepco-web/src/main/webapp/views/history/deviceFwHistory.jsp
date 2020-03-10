@@ -190,7 +190,6 @@ var columnDefs = [
 	{headerName: "TID", field: "tid", cellStyle:{'text-align': "center"}},
 	{headerName: "실행 일시", field: "fw_write_dt", cellStyle:{'text-align': "center"}},
 	{headerName: "펌웨어 실행 상태", field: "fw_issue_status_nm", cellStyle:{'text-align': "center"}},
-	{headerName: "업데이트 성공일시", field: "fw_success_dt", cellStyle:{'text-align': "center"}},
 	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
 ];
 
