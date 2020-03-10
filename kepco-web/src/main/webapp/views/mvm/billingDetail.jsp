@@ -184,7 +184,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<table name="순방향 " class="table table-bordered white-bg billing-detail-table" style="width: 49.5%">
 											<thead>
 												<tr>
-													<th class="text-navy" colspan="5">순방향(kW)</th>
+													<th class="text-navy" colspan="5">순방향</th>
 												</tr>
 												<tr>
 													<th></th>
@@ -194,35 +194,35 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th>T3</th>
 												</tr>
 												<tr>
-													<th>유효전력량</td>
+													<th>유효전력량(kWh)</td>
 													<td id = "ACTIVE_IMP_TOT"></td>
 													<td id = "ACTIVE_IMP_T1"></td>
 													<td id = "ACTIVE_IMP_T2"></td>
 													<td id = "ACTIVE_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>피상전력량</td>
+													<th>피상전력량(kVah)</td>
 													<td id = "APPRENT_IMP_TOT"></td>
 													<td id = "APPRENT_IMP_T1"></td>
 													<td id = "APPRENT_IMP_T2"></td>
 													<td id = "APPRENT_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>지상무효전력량</td>
+													<th>지상무효전력량(kVarh)</td>
 													<td id = "LEAD_IMP_TOT"></td>
 													<td id = "LEAD_IMP_T1"></td>
 													<td id = "LEAD_IMP_T2"></td>
 													<td id = "LEAD_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>진상무효전력량</td>
+													<th>진상무효전력량(kVarh)</td>
 													<td id = "LAGGING_IMP_TOT"></td>
 													<td id = "LAGGING_IMP_T1"></td>
 													<td id = "LAGGING_IMP_T2"></td>
 													<td id = "LAGGING_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>평균역률</td>
+													<th>평균역률(PF)</td>
 													<td id = "PF_IMP_TOT"></td>
 													<td id = "PF_IMP_T1"></td>
 													<td id = "PF_IMP_T2"></td>
@@ -234,7 +234,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<table name="table2" class="table table-bordered white-bg billing-detail-table" style="width: 49.5%">
 											<thead>
 												<tr>
-													<th class="text-navy" colspan="5">역방향(kW)</th>
+													<th class="text-navy" colspan="5">역방향</th>
 												</tr>
 												<tr>
 													<th></th>
@@ -244,35 +244,35 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th>T3</th>
 												</tr>
 												<tr>
-													<th>(역)유효전력량</td>
+													<th>(역)유효전력량(kWh)</td>
 													<td id = "ACTIVE_EXP_TOT"></td>
 													<td id = "ACTIVE_EXP_T1"></td>
 													<td id = "ACTIVE_EXP_T2"></td>
 													<td id = "ACTIVE_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)피상전력량</td>
+													<th>(역)피상전력량(kVah)</td>
 													<td id = "APPRENT_EXP_TOT"></td>
 													<td id = "APPRENT_EXP_T1"></td>
 													<td id = "APPRENT_EXP_T2"></td>
 													<td id = "APPRENT_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)지상무효전력량</td>
+													<th>(역)지상무효전력량(kVarh)</td>
 													<td id = "LEAD_EXP_TOT"></td>
 													<td id = "LEAD_EXP_T1"></td>
 													<td id = "LEAD_EXP_T2"></td>
 													<td id = "LEAD_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)진상무효전력량</td>
+													<th>(역)진상무효전력량(kVarh)</td>
 													<td id = "LAGGING_EXP_TOT"></td>
 													<td id = "LAGGING_EXP_T1"></td>
 													<td id = "LAGGING_EXP_T2"></td>
 													<td id = "LAGGING_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)평균역률</td>
+													<th>(역)평균역률(PF)</td>
 													<td id = "PF_EXP_TOT"></td>
 													<td id = "PF_EXP_T1"></td>
 													<td id = "PF_EXP_T2"></td>
