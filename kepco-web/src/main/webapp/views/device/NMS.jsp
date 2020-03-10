@@ -71,7 +71,13 @@
 	    background-color: #ccc;
 	}
 	#nmsCodeGuide th {
-	    background-color: #fff;
+	    background-color: #343a40;
+	    font-weight: bold;
+	    color: white;
+	}
+	#nmsCodeGuide td {
+		font-weight: bold;
+		color: black;
 	}
 	#nmsCodeGuide th, #nmsCodeGuide td {
 	    padding: 3px 5px;
