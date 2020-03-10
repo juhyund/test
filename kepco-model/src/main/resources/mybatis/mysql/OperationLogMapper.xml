@@ -17,10 +17,10 @@
         <if test="method_type != null and method_type != ''" >     
             AND ol.method = #{method_type}
         </if>
-        <if test="result_status != null and result_status != ''" >     
+        <if test="result_status != null and result_status != '' and result_status != '-1'" >     
             AND ol.result = #{result_status}
         </if>
-        <if test="result_status == null or result_status == ''" >
+        <if test="result_status == '-1'" >
         	AND ol.result is null	
         </if> 
         <if test="tid != null and tid != ''" >     

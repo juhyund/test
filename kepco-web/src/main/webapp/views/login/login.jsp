@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>LWM2M LTE 5차</title>
+<title>KEPCO Web</title>
 
 <link href="<%=COMMON_PATH_JS%>/bootstrap.min.css" rel="stylesheet">
 <link href="<%=COMMON_PATH_JS%>/font-awesome.css" rel="stylesheet">
