@@ -185,7 +185,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "vendor_nm"></td>
 													<th class="text-navy" scope="row">양방향계량수행:</th>
 													<td id = "net_metering"></td>
-													<th class="text-navy" scope="row">평균전압전류주기:</th>
+													<th class="text-navy" scope="row">평균전압전류주기(분):</th>
 													<td id = "avg_power_period"></td>
 													<th class="text-navy" scope="row">선식구분:</th>
 													<td id = "meter_phase" colspan="3"></td>
