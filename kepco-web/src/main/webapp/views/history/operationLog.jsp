@@ -321,9 +321,9 @@ function ajaxSearchForm() {
 
 function excelDownload() {
 	
-	 $('#search_form').attr('action', COMMON_URL + "/downloadOperationLogList");
-	 $('#search_form').attr('method',"GET");
-	 $('#search_form').submit();
+	$('#search_form').attr('action', COMMON_URL + "/downloadOperationLogList");
+	$('#search_form').attr('method',"GET");
+	$('#search_form').submit();
 	Swal.fire({
 		position: 'center',
 		icon: 'info',
