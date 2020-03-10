@@ -132,8 +132,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																<select class="form-control" name="result_status" id="result_status">
 																	<option value=''>제어결과</option>
 																	<option value='1'>성공</option>
-																	<option value='2'>실패</option>
-																	<option value='0'>대기중</option>
+																	<option value='0'>실패</option>
+																	<option value=''>대기중</option>
 																</select>
 															</div>
 															<div class="col-lg-3">
@@ -228,7 +228,7 @@ var columnDefs = [
 	{headerName: "제어결과", field: "result", width:130,
         cellClassRules: {
             'rag-green-outer': function(params) { return params.value == '성공'},
-            'rag-grey-outer': function(params) { return params.value == '대기중' },
+            'rag-grey-outer': function(params) { return params.value == '대기중'},
             'rag-red-outer': function(params) { return params.value == '실패'}
         }},
 	{headerName: "트랜잭션ID", field: "tid"},
