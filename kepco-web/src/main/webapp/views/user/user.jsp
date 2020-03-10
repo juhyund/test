@@ -563,7 +563,6 @@ onRowClicked = function(event){
 
 function resetForm(){
 	$("#search_form")[0].reset();
-	$("#grid-page").hide();
 };
 
 function showRequest() {

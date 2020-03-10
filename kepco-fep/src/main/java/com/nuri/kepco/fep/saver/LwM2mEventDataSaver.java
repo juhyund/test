@@ -30,6 +30,8 @@ public class LwM2mEventDataSaver extends AbstractMDSaver {
 		
 		String method = lwm2mEventLog.getMethod();
 		
+		LOG.debug("deviceSerial {} / method : {}", deviceSerial, method);
+		
 		DEVICESTATUS deviceStatus = null;
 		
 		if("REGISTRATION".equals(method)) { // 초기 등록			

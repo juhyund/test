@@ -323,7 +323,6 @@ onRowClicked = function(event){
 function resetForm(){
 	$("#search_form")[0].reset();
 	setSearchPeriod("thisMonth");
-	$("#grid-page").hide();
 };
 
 

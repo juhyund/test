@@ -15,6 +15,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	$("#branch_span").show();
 	    	$("#device_serial_span").show();
 	    	$("#vendor_nm_span").show();
+	    	$("#di_mobile_no").show();
 	    	$("#di_ip").show();
 	    	$("#di_port").show();
 	    	$("#model_nm_span").show();
@@ -293,8 +294,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        	"device_id" : $("#device_id").val(),
 	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(), 
-	        	"sec" : $("#sec").val(), 
-	        	"round" : $("#round").val(), 
+	        	"sec" : $("#sec").val() 
 	        }
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {

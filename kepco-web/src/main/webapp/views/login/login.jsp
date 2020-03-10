@@ -56,8 +56,7 @@ if (top.location!= self.location) {
 						<div class="col-lg-12">
 							<div class="login-con"></div>
 							<div class="col-lg-12">
-								<img src="<%=COMMON_PATH_IMG%>/login_logo.png"> <br> <br> <br>
-								<h2 class="logo-name">LWM2M LTE 5차</h2>
+								<img src="<%=COMMON_PATH_IMG%>/login_logo.png" style="width: 260px">
 							</div>
 							<div class="col-lg-12">
 								<form class="m-t" role="form" action="./login" method="post">
