@@ -24,6 +24,7 @@ import com.nuri.kepco.service.DeviceInfoService;
 import com.nuri.kepco.service.MeterBillingService;
 import com.nuri.kepco.service.MeterInfoService;
 import com.nuri.kepco.service.MeterValueService;
+import com.nuri.kepco.service.OperationLogService;
 import com.nuri.kepco.util.ControllerUtil;
 
 import java.io.File;
@@ -49,6 +50,9 @@ public class FileDownloadController {
 	
 	@Autowired
 	private MeterInfoService meterInfoService;
+	
+	@Autowired
+	private OperationLogService operationLogService;
 
 	/*
 	 * downloadMeterValue
@@ -216,6 +220,42 @@ public class FileDownloadController {
 			         param.put("limit",0);
 					
 			         Map<String, String> output = this.meterInfoService.excelMeterList(param);
+					file_path = output.get("filepath") + "/" + output.get("filename");
+
+				} catch (Exception e) {
+					logger.error("error : " + e);
+				}
+				
+		      File file = new File(file_path);
+		      InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		      return ResponseEntity.ok()
+		            .header(HttpHeaders.CONTENT_DISPOSITION,
+		                  "attachment;filename=" + file.getName())
+		            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
+		            .body(resource);
+		   }
+		 
+		 @GetMapping("/downloadOperationLogList")
+		   public ResponseEntity<InputStreamResource> downloadOperationLogList(HttpServletRequest request) throws IOException {
+			
+			 String file_path = "";
+				try {
+					String[] commStr = { "device_id", "method_type", "result_status", "tid", "request_sdate", "request_edate", "result_sdate", "result_edate", "target_meter" };
+					        
+					Map<String, Object> param = ControllerUtil.getCommonParam(request);
+
+			         for(String key : commStr) {
+				          if(request.getParameterMap().containsKey(key)) {
+				        		  param.put(key, request.getParameter(key));	
+				          }
+			         }
+			         
+			        param.put("sort", "request_dt");
+					param.put("dir", "DESC");
+			        param.put("limit",0);
+					
+			        Map<String, String> output = this.operationLogService.excelMeterList(param);
 					file_path = output.get("filepath") + "/" + output.get("filename");
 
 				} catch (Exception e) {
