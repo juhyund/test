@@ -58,7 +58,8 @@ function updateForm() {
 	$('#update_data').show();
 	$('#update_form').hide();
 	
-	$('#di_ip').attr("readonly", false);	
+	$('#di_mobile_no').attr("readonly", false);
+	$('#di_ip').attr("readonly", false);
 	$('#di_port').attr("readonly", false);	
 	$('#di_hw_version').attr("readonly", false);	
 	$('#di_fw_version').attr("readonly", false);	
@@ -66,6 +67,7 @@ function updateForm() {
 	$('#di_sw_version2').attr("readonly", false);	
 	$('#di_remark').attr("readonly", false);
 	
+	$('#di_mobile_no').css({'border' : ''});
 	$('#di_ip').css({'border' : ''});
 	$('#di_port').css({'border' : ''});
 	$('#di_hw_version').css({'border' : ''});
@@ -86,6 +88,7 @@ function updateData() {
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
            data        : {
+	        	"mobile_no" : $("#di_mobile_no").val(),
 	        	"device_id" : $("#device_id").val(),
 	        	"ip" : $("#di_ip").val(),
 	        	"port" : $("#di_port").val(),
@@ -99,6 +102,7 @@ function updateData() {
     
      $.ajax(options);
 
+	$('#di_mobile_no').attr("readonly", true);	
 	$('#di_ip').attr("readonly", true);	
 	$('#di_port').attr("readonly", true);	
 	$('#di_hw_version').attr("readonly", true);	
@@ -107,6 +111,7 @@ function updateData() {
 	$('#di_sw_version2').attr("readonly", true);	
 	$('#di_remark').attr("readonly", true);
 	
+	$('#di_mobile_no').css({'border' : 'none'});
 	$('#di_ip').css({'border' : 'none'});
 	$('#di_port').css({'border' : 'none'});
 	$('#di_hw_version').css({'border' : 'none'});
@@ -186,8 +191,16 @@ function firmwarelist() {
 									<tr>
 										<th class="device-detail-head">모뎀번호</th>
 										<td class="device-detail-body"><span id="device_serial_span" style="display: none;">{{device_info.device_serial}}</span></td>
+										<th class="device-detail-head">모뎀상태</th>
+										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
+									</tr>
+									<tr>
 										<th class="device-detail-head">제조사</th>
 										<td class="device-detail-body"><span id="vendor_nm_span" style="display: none;">{{device_info.vendor_nm}}</span></td>
+										<th class="device-detail-head">전화번호</th>
+										<td class="device-detail-body">
+											<input type="text" id="di_mobile_no" style="width:100%; display:none; border: none" value="{{device_info.mobile_no}}" readonly="readonly" ></td>
+										</td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">모뎀IP/PORT</th>
@@ -223,10 +236,9 @@ function firmwarelist() {
 										<td class="device-detail-body"><span id="reg_dt_span" style="display: none;">{{device_info.reg_dt}}</span></td>
 									</tr>
 									<tr>
-										<th class="device-detail-head">모뎀상태</th>
-										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
+										
 										<th class="device-detail-head">설명</th>
-										<td class="device-detail-body"><input type="text" id="di_remark" style="border: none; display:none; width: 100%" value="{{device_info.remark}}" readonly="readonly"></td>
+										<td class="device-detail-body" colspan="3"><input type="text" id="di_remark" style="border: none; display:none; width: 100%" value="{{device_info.remark}}" readonly="readonly"></td>
 									</tr>
 								</thead>
 							</table>

@@ -250,7 +250,12 @@ function successResultHandler(data, status) {
 	
 function renderChart(data, status){
 	var format = '{value: %H:%M}';
-
+	var change1 = {
+	    '-60': '강함',
+	    '-70': '양호',
+	    '-80': '약함',
+	    '-90': '불량'
+	};
 	var rsrpChartOptions = {
 		  chart: {
 			borderColor: '#BDC3C7',
@@ -287,8 +292,27 @@ function renderChart(data, status){
 		      format: '{value:.,0f}'
 		    },
 		    showFirstLabel: false,
-		    lineWidth: 1,
-		  }],
+		    max: -60, min: -100,
+		    lineWidth: 2,
+		  }, 
+		    {
+		      labels: {
+			      formatter: function() {
+			          var value = change1[this.value];
+			          return value !== 'undefined' ? value : this.value;
+			      },
+				  align: 'right',
+		      	  x: -3,
+		          y: 16,
+		      	  format: '{value:.,0f}'
+			  },
+		      title: {
+		        text: ''			      
+		      },
+		      showFirstLabel: false,
+		      max: -60, min: -100,
+		      opposite:true
+	        }],
 		  lang: {
 		        noData: "No data to Display"
 		  },
@@ -304,12 +328,24 @@ function renderChart(data, status){
 
 		  plotOptions: {
 		    series: {
-		      cursor: 'pointer'
+		    	marker: {
+		            enabled: true,
+		            symbol: 'circle',
+		            radius: 2
+		        },
+		      cursor: 'pointer',
+		      lineWidth: 3,
+		   	  color: '#0b6623'
 		    }
 		  },
 		  series: rsrpCreateSeries(data)
 		};
-	
+	var change2 = {
+	    '0': '강함',
+	    '-5': '양호',
+	    '-10': '약함',
+	    '-15': '불량'
+	};
 	var rsrqChartOptions = {
 			  chart: {
 			    borderColor: '#BDC3C7',
@@ -346,8 +382,27 @@ function renderChart(data, status){
 			      format: '{value:.,0f}'
 			    },
 			    showFirstLabel: false,
-			    lineWidth: 1,
-			  }],
+			    max: 0, min: -20,
+			    lineWidth: 2,
+			  }, 
+			    {
+			      labels: {
+				      formatter: function() {
+				          var value = change2[this.value];
+				          return value !== 'undefined' ? value : this.value;
+				      },
+					  align: 'right',
+			      	  x: -3,
+			          y: 16,
+			      	  format: '{value:.,0f}'
+				  },
+			      title: {
+			        text: ''			      
+			      },
+			      showFirstLabel: false,
+			      max: 0, min: -20,
+			      opposite:true
+		        }],
 			  lang: {
 			        noData: "No data to Display"
 			  },
@@ -363,12 +418,24 @@ function renderChart(data, status){
 
 			  plotOptions: {
 			    series: {
-			      cursor: 'pointer'
+			    	marker: {
+			            enabled: true,
+			            symbol: 'circle',
+			            radius: 2
+			        },
+			      cursor: 'pointer',
+			      lineWidth: 3,
+			   	  color: '#0b6623'
 			    }
 			  },
 			  series: rsrqCreateSeries(data)
 			};
-	
+	var change3 = {
+	    '40': '강함',
+	    '30': '양호',
+	    '20': '약함',
+	    '10': '불량'
+	};
 	var snrChartOptions = {
 			  chart: {
 			    borderColor: '#BDC3C7',
@@ -405,8 +472,27 @@ function renderChart(data, status){
 			      format: '{value:.,0f}'
 			    },
 			    showFirstLabel: false,
-			    lineWidth: 1,
-			  }],
+			    max: 40, min: 0,
+			    lineWidth: 2,
+			  }, 
+			    {
+			      labels: {
+				      formatter: function() {
+				          var value = change3[this.value];
+				          return value !== 'undefined' ? value : this.value;
+				      },
+					  align: 'right',
+			      	  x: -3,
+			          y: 16,
+			      	  format: '{value:.,0f}'
+				  },
+			      title: {
+			        text: ''			      
+			      },
+			      showFirstLabel: false,
+			      max: 40, min: 0,
+			      opposite:true
+		        }],
 			  lang: {
 			        noData: "No data to Display"
 			  },
@@ -422,12 +508,24 @@ function renderChart(data, status){
 
 			  plotOptions: {
 			    series: {
-			      cursor: 'pointer'
+			    	marker: {
+			            enabled: true,
+			            symbol: 'circle',
+			            radius: 2
+			        },
+			      cursor: 'pointer',
+			      lineWidth: 3,
+			   	  color: '#0b6623'
 			    }
 			  },
 			  series: snrCreateSeries(data)
 			};
-		
+	var change = {
+	    25: '좋음',
+	    50: '양호',
+	    75: '경고',
+	    100: '위험'
+	};
 	var cpuChartOptions = {
 			  chart: {
 				borderColor: '#BDC3C7',
@@ -465,10 +563,28 @@ function renderChart(data, status){
 			      y: 16,
 			      format: '{value:.,0f}'
 			    },
-			    showFirstLabel: false,
-			    lineWidth: 1,
-			    max: 100, min: 0
-			  }],
+			      showFirstLabel: false,
+			      lineWidth: 2,
+			      max: 100, min: 0
+				}, 
+			    {
+			      labels: {
+				      formatter: function() {
+				          var value = change[this.value];
+				          return value !== 'undefined' ? value : this.value;
+				      },
+					  align: 'right',
+			      	  x: -3,
+			          y: 16,
+			      	  format: '{value:.,0f}'
+				  },
+			      title: {
+			        text: ''			      
+			      },
+			      showFirstLabel: false,
+			      max: 100, min: 0,
+			      opposite:true
+		        }],
 			  lang: {
 			        noData: "No data to Display"
 			  },
@@ -484,12 +600,18 @@ function renderChart(data, status){
 
 			  plotOptions: {
 			    series: {
+			    	marker: {
+			            enabled: true,
+			            symbol: 'circle',
+			            radius: 2
+			        },
 			      cursor: 'pointer',
-			   	  color: 'green'
+			      lineWidth: 3,
+			   	  color: '#0b6623'
 			    }
 			  },
 			  series: cpuCreateSeries(data)
-			};
+			}
 	
 	var ramChartOptions = {
 			  chart: {
@@ -529,9 +651,27 @@ function renderChart(data, status){
 			      format: '{value:.,0f}'
 			    },
 			    showFirstLabel: false,
-			    lineWidth: 1,
+			    lineWidth: 2,
 			    max: 100, min: 0
-			  }],
+			  }, 
+			    {
+			      labels: {
+				      formatter: function() {
+				          var value = change[this.value];
+				          return value !== 'undefined' ? value : this.value;
+				      },
+					  align: 'right',
+			      	  x: -3,
+			          y: 16,
+			      	  format: '{value:.,0f}'
+				  },
+			      title: {
+			        text: ''			      
+			      },
+			      showFirstLabel: false,
+			      max: 100, min: 0,
+			      opposite:true
+		        }],
 			  lang: {
 			        noData: "No data to Display"
 			  },
@@ -547,8 +687,14 @@ function renderChart(data, status){
 
 			  plotOptions: {
 			    series: {
+			    	marker: {
+			            enabled: true,
+			            symbol: 'circle',
+			            radius: 2
+			        },
 			      cursor: 'pointer',
-			   	  color: 'green'
+			      lineWidth: 3,
+			   	  color: '#0b6623'
 			    }
 			  },
 			  series: ramCreateSeries(data)
@@ -582,8 +728,10 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'RSRP',
-				 lineWidth: 1,
-				 data : rsrpChannelData
+				 lineWidth: 2,
+				 data : rsrpChannelData,
+				 zoneAxis: 'y',
+		         zones: [{value: -90, color: 'red'}, {value: 80, color: '#ff7f00'}, {value: 70, color: '#ffd740'}, {value: 60}]
 			 });
 			
 		  return series;
@@ -616,8 +764,10 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'RSRQ',
-				 lineWidth: 1,
-				 data : rsrqChannelData
+				 lineWidth: 2,
+				 data : rsrqChannelData,
+				 zoneAxis: 'y',
+		         zones: [{value: -15, color: 'red'}, {value: -10, color: '#ff7f00'}, {value: -5, color: '#ffd740'}, {value: 0}]
 			 });
 			
 		  return series;
@@ -649,8 +799,10 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'SNR',
-				 lineWidth: 1,
-				 data : ssnrChannelData
+				 lineWidth: 2,
+				 data : ssnrChannelData,
+				 zoneAxis: 'y',
+		         zones: [{value: 10, color: 'red'}, {value: 20, color: '#ff7f00'}, {value: 30, color: '#ffd740'}, {value: 40}]
 			 });
 			
 		  return series;
@@ -681,7 +833,7 @@ function renderChart(data, status){
 				 name : 'CPU',
 				 data : cpuChannelData,
 				 zoneAxis: 'y',
-		         zones: [{value: 50}, {value: 75, color: 'yellow'}, {value: 100, color: 'red'}]
+				 zones: [{value: 50}, {value: 70, color: '#ffd740'}, {value: 90, color: '#ff7f00'}, {value: 100, color: 'red'}]
 			 });
 			
 		  return series;
@@ -712,19 +864,42 @@ function renderChart(data, status){
 				 name : 'RAM',
 				 data : ramChannelData,
 				 zoneAxis: 'y',
-		         zones: [{value: 50}, {value: 75, color: 'yellow'}, {value: 100, color: 'red'}]
+		         zones: [{value: 50}, {value: 70, color: '#ffd740'}, {value: 90, color: '#ff7f00'}, {value: 100, color: 'red'}]
 			 });
 			
 		  return series;
 	}
+	var color = [ '#0b6623', '#ffd740', '#ff7f00', 'red' ];
+	var color1 = [ 'red', '#ff7f00', '#ffd740', '#0b6623' ];
 	//highcharts 로딩
-	Highcharts.chart('rsrpContainer', rsrpChartOptions);
-	Highcharts.chart('rsrqContainer', rsrqChartOptions);
-	Highcharts.chart('snrContainer', snrChartOptions);
-	Highcharts.chart('cpuContainer', cpuChartOptions);
-	Highcharts.chart('ramContainer', ramChartOptions);
+	Highcharts.chart('rsrpContainer', rsrpChartOptions, function(chart){
+		lineColor('rsrpContainer', color1)
+	});
+	Highcharts.chart('rsrqContainer', rsrqChartOptions, function(chart){
+		lineColor('rsrqContainer', color1)
+	});
+	Highcharts.chart('snrContainer', snrChartOptions, function(chart){
+		lineColor('snrContainer', color1)
+	});
+	Highcharts.chart('cpuContainer', cpuChartOptions, function(chart){
+		lineColor('cpuContainer', color)
+	});
+	Highcharts.chart('ramContainer', ramChartOptions, function(chart){
+		lineColor('ramContainer', color)
+	});
 	hideLoading();	
 }	
+
+function lineColor(id, color) {
+	
+	var cnt = 0;
+	for(var j = 0 ; j < 2 ; j++) {
+		for(var i = 1 ; i <= color.length ; i++){
+			$('#' + id +' .highcharts-yaxis-grid .highcharts-grid-line')[(i + cnt)].setAttribute('stroke', color[(i-1)]);
+		}
+		cnt = 5;
+	}
+}
 
 function initDate() {
 

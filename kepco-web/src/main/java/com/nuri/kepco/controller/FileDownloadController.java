@@ -185,7 +185,7 @@ public class FileDownloadController {
 
 			         for(String key : commStr) {
 				          if(request.getParameterMap().containsKey(key)) {
-				        		  param.put(key, request.getParameter(key));	
+					          param.put(key, request.getParameter(key));	
 				          }
 			         }
 			         param.put("limit",0);
