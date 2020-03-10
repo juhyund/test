@@ -163,12 +163,6 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 		                    "id":resource.resource_id,
 		                    "values":values
 		                });
-		        		
-		        		// 112
-		        		payload.resources.push({
-		                    "id":112,
-		                    "value":resourceSplit.length
-		                });
 					}
 					
 				} else {
@@ -188,7 +182,22 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 				            });
 						}
 					} else {
-						if(resource.newValue != undefined) {
+						
+						if(object_id == 31011 && (
+								   resource.resource_id == 109 
+								|| resource.resource_id == 110 
+								|| resource.resource_id == 111
+								|| resource.resource_id == 112
+								|| resource.resource_id == 114)) {
+							
+							if(resource.newValue != undefined) { // int
+								payload.resources.push({
+					                "id":resource.resource_id,
+					                "value":parseInt(resource.newValue)
+					            });
+							}
+							
+						} else if(resource.newValue != undefined) {
 							payload.resources.push({
 				                "id":resource.resource_id,
 				                "value":resource.newValue

@@ -40,6 +40,9 @@ public class MeterValueController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
+			param.put("sort", "read_dt");
+			param.put("dir", "DESC");
+			
 			int cnt = this.meterValueService.getMeterValueCount(param);
 			JSONArray jarr = this.meterValueService.getMeterValue(param);
 			
@@ -76,6 +79,8 @@ public class MeterValueController {
 					param.put(key, request.getParameter(key));	
 				}
 			}
+			param.put("sort", "read_dt");
+			param.put("dir", "DESC");
 
 			List<Map<String, Object>> channels = this.meterValueService.selectMeterChannel(param);
 			param.put("channelList", channels);

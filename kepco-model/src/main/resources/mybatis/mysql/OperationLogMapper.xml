@@ -26,11 +26,11 @@
         <if test="target_meter != null and target_meter != ''" >     
             AND ol.tid = #{target_meter}
         </if>        
-        <if test="request_sdate != null and request_edate != null">
+        <if test="request_sdate != null and request_sdate != '' and request_edate != null and request_edate != '' ">
 			<!-- AND ol.request_dt between date_format(concat(#{request_sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{request_edate},'235959'), '%Y-%m-%d %H:%i:%s') -->
 			AND ol.request_dt between concat(#{request_sdate},'000000') AND concat(#{request_edate},'235959')
 		</if>
-		<if test="result_sdate != null and result_edate != null">
+		<if test="result_sdate != null and result_sdate != '' and result_edate != null and result_edate != '' ">
 			AND ol.result_dt between concat(#{result_sdate},'000000') AND concat(#{result_edate},'235959')
 		</if>                
 		<if test="searchfield != null and searchquery != null and searchfield != ''" >

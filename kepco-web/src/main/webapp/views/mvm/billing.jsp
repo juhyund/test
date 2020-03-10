@@ -110,12 +110,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<select class="form-control" name="meter_type"	id="meter_type"></select>
 										</div> 
 										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">계기 번호</label>
+											style="padding-left: 10px;">계기번호</label>
 										<div class="col-lg-3">
 											<input type="text" id="meter_serial" name="meter_serial" value="" class="form-control">
 										</div>
 										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">모뎀 번호</label>
+											style="padding-left: 10px;">모뎀번호</label>
 										<div class="col-lg-3">
 											<input type="text" id="device_serial" name="device_serial" value="" class="form-control">
 										</div>
@@ -197,8 +197,8 @@ var columnDefs = [
 	{headerName: "본부", 	  	 field: "parent_branch_nm", width:100,suppressSizeToFit: true},
 	{headerName: "지사", 		field: "branch_nm",		width:100,	suppressSizeToFit: true},
 	{headerName: "계기타입", 	field: "meter_type", 	width:100,	suppressSizeToFit: true},
-	{headerName: "모뎀 번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
-	{headerName: '순방향 유효전력(kW)',
+	{headerName: "모뎀번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
+	{headerName: '순방향 유효전력량(kWh)',
        children: [{headerName: "전체",  width:100, 
     	   				suppressSizeToFit: true,
 					   	field: "active_imp_tot", 
@@ -226,7 +226,7 @@ var columnDefs = [
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}]
 	},
-	{headerName: '역방향 유효전력(kW)',
+	{headerName: '역방향 유효전력량(kWh)',
        children: [{headerName: "전체", width:100,
 					   	field: "active_exp_tot", 
 					   	valueFormatter: numberFormatter, 

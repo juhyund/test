@@ -22,7 +22,7 @@
 <!-- angular -->
 <script src="<%=COMMON_PATH_JS%>/angular.min.js"></script>
 <script src="<%=COMMON_PATH_JS%>/angular-route.min.js"></script>
-<script src="<%=COMMON_PATH_JS%>/controller/meterApp.js?version=0"></script>
+<script src="<%=COMMON_PATH_JS%>/controller/meterApp.js?version=1"></script>
 
 <!-- Data picker -->
 <script src="<%=COMMON_PATH_JS%>/bootstrap-datepicker.js"></script>
@@ -185,7 +185,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "vendor_nm"></td>
 													<th class="text-navy" scope="row">양방향계량수행:</th>
 													<td id = "net_metering"></td>
-													<th class="text-navy" scope="row">평균전압전류주기:</th>
+													<th class="text-navy" scope="row">평균전압전류주기(분):</th>
 													<td id = "avg_power_period"></td>
 													<th class="text-navy" scope="row">선식구분:</th>
 													<td id = "meter_phase" colspan="3"></td>
@@ -223,6 +223,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<th>계기타입</th>
 																		<th>계기번호</th>
 																		<th>검침주기(분)</th>
+																		<th>양방향계량수행</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -231,6 +232,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<td><h3 id = "meter_type_tab2"></h3></td>
 																		<td><h3 id = "meter_serial_tab2"></h3></td>
 																		<td><h3 id = "lp_period_tab2"></h3></td>
+																		<td><h3 id = "net_metering_tab2"></h3></td>
 																	</tr>
 																</tbody>
 															</table>
@@ -342,6 +344,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<th>계기타입</th>
 																		<th>계기번호</th>
 																		<th>검침주기(분)</th>
+																		<th>양방향계량수행</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -350,6 +353,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<td><h3 id = "meter_type_tab3"></h3></td>
 																		<td><h3 id = "meter_serial_tab3"></h3></td>
 																		<td><h3 id = "lp_period_tab3"></h3></td>
+																		<td><h3 id = "net_metering_tab3"></h3></td>
 																	</tr>
 																</tbody>
 															</table>
@@ -515,8 +519,12 @@ function successResultHandler(data, status) {
 	
 	if(data.result.net_metering == "0") {
 		$('#net_metering').text("단방향 계량");
+		$('#net_metering_tab2').text("단방향 계량");
+		$('#net_metering_tab3').text("단방향 계량");
 	} else {
 		$('#net_metering').text("양방향 계량");
+		$('#net_metering_tab2').text("양방향 계량");
+		$('#net_metering_tab3').text("양방향 계량");
 	}
 	
 	$('#avg_power_period').text(data.result.avg_power_period);

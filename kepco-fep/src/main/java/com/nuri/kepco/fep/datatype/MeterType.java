@@ -150,11 +150,11 @@ public class MeterType {
     public enum DEVICESTATUS {
     	
     	NORMAL("DS001", "NORMAL"),
-    	WAIT("DS001", "WAIT"),
-    	DEREGISTRATION("DS001", "DE-REGISTRATION"),
-    	POWERDOWN("DS001", "POWER DOWN"),
-    	NEWREGISTRATION("DS001", "NEW-REGISTRATION"),
-    	DELETE("DS001", "DELETE");
+    	WAIT("DS002", "WAIT"),
+    	DEREGISTRATION("DS003", "DE-REGISTRATION"),
+    	POWERDOWN("DS004", "POWER DOWN"),
+    	NEWREGISTRATION("DS005", "NEW-REGISTRATION"),
+    	DELETE("DS006", "DELETE");
     	
         private String code;
         private String value;
