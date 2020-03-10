@@ -31,6 +31,6 @@ public interface NMSInfoService extends GenericService {
 
 	List<ConnectivityMonitor> getConnectivityMonitor(Map<String, Object> param) throws Exception;
 
-	Map<String, String> excelMeterList(Map<String, Object> param) throws Exception;
+	Map<String, String> excelNMSList(Map<String, Object> param) throws Exception;
 	
 }

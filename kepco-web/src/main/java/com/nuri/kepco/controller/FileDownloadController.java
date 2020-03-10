@@ -259,7 +259,7 @@ public class FileDownloadController {
 					param.put("dir", "DESC");
 			        param.put("limit",0);
 					
-			        Map<String, String> output = this.operationLogService.excelMeterList(param);
+			        Map<String, String> output = this.operationLogService.excelOperationLogList(param);
 					file_path = output.get("filepath") + "/" + output.get("filename");
 
 				} catch (Exception e) {
@@ -316,7 +316,7 @@ public class FileDownloadController {
 						
 					}
 			         
-			        Map<String, String> output = this.nmsInfoService.excelMeterList(param);
+			        Map<String, String> output = this.nmsInfoService.excelNMSList(param);
 					file_path = output.get("filepath") + "/" + output.get("filename");
 
 				} catch (Exception e) {
