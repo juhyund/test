@@ -61,6 +61,26 @@
 	    padding-left: 7px;
 	}	
 	
+	table#nmsCodeGuide {
+	    border-collapse: collapse;   
+	}
+	#nmsCodeGuide tr {
+	    background-color: #fff;
+	}
+	#nmsCodeGuide tr:hover {
+	    background-color: #ccc;
+	}
+	#nmsCodeGuide th {
+	    background-color: #fff;
+	}
+	#nmsCodeGuide th, #nmsCodeGuide td {
+	    padding: 3px 5px;
+	    border: solid 1px;
+	}
+	#nmsCodeGuide td:hover {
+	    cursor: pointer;
+	}
+	
 </style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -156,12 +176,61 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<input type="hidden" id="detail_control_seq" name="detail_control_seq" class="form-control">
 				</form>
 				<div>
+					<!-- NMS 상태값 -->
+					<div>
+						<table id="nmsCodeGuide" style="display: none;">
+						<tr>
+						    <th>상태</th>
+						    <th>CPU/Memory</th>
+						    <th>RSRP(dBm)</th>
+						    <th>RSRQ(dB)</th>
+						    <th>SNR(dB)</th>
+						</tr>
+						<tr>
+						    <td class="warning-green">정상</td>
+						    <td><= 50%</td>
+						    <td>>= (-80)</td>
+						    <td>>= (-10)</td>
+						    <td>>= (20)</td>
+						</tr>
+						<tr>
+						    <td class="warning-yellow">양호</td>
+						    <td>50% to 70%</td>
+						    <td>(-80) to (-90)</td>
+						    <td>(-10) to (-15)</td>
+						    <td>(13) to (20)</td>
+						</tr>
+						<tr>
+						    <td class="warning-orange">약함</td>
+						    <td>70% to 90%</td>
+						    <td>(-90) to (-100)</td>
+						    <td>(-15) to (-20)</td>
+						    <td>(0) to (13)</td>
+						</tr>
+						<tr>
+						    <td class="warning-red">불량</td>
+						    <td>90% to 100%</td>
+						    <td><=(-100)</td>
+						    <td><(-20)</td>
+						    <td><=(0)</td>
+						</tr>
+						<tr>
+						    <td class="warning-grey"></td>
+						    <td>null or ""</td>
+						    <td>null or ""</td>
+						    <td>null or ""</td>
+						    <td>null or ""</td>
+						</tr>
+						</table>
+					</div>
+					
 					<!-- page option -->
 					<div class="row m-t-n-n" style="margin:-1px"  >
 						<div style="width :100%;vertical-align:center">
 							<label id="cur_page_num" class="col-form-label"></label>
-							<div style ="float:right; margin-bottom:5px">
-								<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
+							<div style ="float:right;margin-bottom:5px;width: 240px;">
+								<button style ="float:left;" onclick="onBtShowCodeGuide()">코드 상태값 가이드</button>
+								<select id="data_per_page" class="form-control" name="data_per_page" style ="float:right;width: fit-content;" onchange="javascript:changeLimit(this);">
 									<option value=10 selected>10개씩</option>
 									<option value=100>100개씩 </option>
 									<option value=250>250개씩 </option>
@@ -169,6 +238,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</div>
 						</div>
 					</div>
+					
 					<!-- grid -->
 					<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 					
@@ -338,6 +408,10 @@ onRowClicked = function(event){
 			+deviceId+"&usageTime="+usageTime+"&deviceStatusNm="+deviceStatusNm;
 }
 
+function onBtShowCodeGuide() {
+	$("#nmsCodeGuide").toggle();	
+}
+
 /* 
 var winObj;
 function showDetailWindow(device_id){ 
@@ -377,7 +451,7 @@ function init() {
 	comboDeviceType();
 	
 	// form search
-	ajaxSearchForm();		
+	ajaxSearchForm();
 	
 	//$("#limit").val($("#search_num option:selected").val());
 }
