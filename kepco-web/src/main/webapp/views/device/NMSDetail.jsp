@@ -759,6 +759,5 @@ $('#datePicker .input-group.date').datepicker({
 	language: "kr"
 });
 </script>
-<!--  wrapper -->
 </body>
 </html>

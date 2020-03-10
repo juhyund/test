@@ -196,29 +196,29 @@ var columnDefs = [
 	{headerName: "CPU(%)", field: "cpuUsage", width:150, cellStyle:{'text-align': "right"},
 		cellClassRules: {
 			'warning-green': function(params) { return params.value <= 30 && params.value != null},
-            'warning-yellow': function(params) { return params.value > 30 && params.value <= 60 && params.value != null},
-            'warning-orange': function(params) { return params.value > 60 && params.value <= 80 && params.value != null},
+            'warning-yellow': function(params) { return params.value > 30 && params.value <= 60},
+            'warning-orange': function(params) { return params.value > 60 && params.value <= 80},
             'warning-red': function(params) { return params.value > 80 && params.value != null},
         }},
 	{headerName: "Memory(%)", field: "ramUsage", width:170, cellStyle:{'text-align': "right"},
 		cellClassRules: {
             'warning-green': function(params) { return params.value <= 30 && params.value != null},
-            'warning-yellow': function(params) { return params.value > 30 && params.value <= 60 && params.value != null},
-            'warning-orange': function(params) { return params.value > 60 && params.value <= 80 && params.value != null},
+            'warning-yellow': function(params) { return params.value > 30 && params.value <= 60},
+            'warning-orange': function(params) { return params.value > 60 && params.value <= 80},
             'warning-red': function(params) { return params.value > 80 && params.value != null},
         }},
 	{headerName: "RSRP(dBm)", field: "rsrp", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -80 && params.value != null},
-               'warning-yellow': function(params) { return params.value < -80 && params.value >= -90 && params.value != null},
-               'warning-orange': function(params) { return params.value < -90 && params.value > -100 && params.value != null},
+               'warning-yellow': function(params) { return params.value < -80 && params.value >= -90},
+               'warning-orange': function(params) { return params.value < -90 && params.value > -100},
                'warning-red': function(params) { return params.value <= -100 && params.value != null},
            }},
 	{headerName: "RSRQ(dB)", field: "rsrq", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -10 && params.value != null},
-               'warning-yellow': function(params) { return params.value < -10 && params.value >= -15 && params.value != null},
-               'warning-orange': function(params) { return params.value < -15 && params.value >= -20 && params.value != null},
+               'warning-yellow': function(params) { return params.value < -10 && params.value >= -15},
+               'warning-orange': function(params) { return params.value < -15 && params.value >= -20},
                'warning-red': function(params) { return params.value < -20 && params.value != null},
            }},
 	{headerName: "SNR(dB)", field: "ssnr", width:150, cellStyle:{'text-align': "right"},
@@ -352,32 +352,9 @@ function successResultHandler(data, status) {
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
 	
-	//warningByColor(data);
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }
-
-function warningByColor(data) {
-	 //그리드 색 addClass
-	 $.each( data, function(index, item) {
-		if(index == 'resultGrid'){
-			for(var i=0; i<item.length; i++){
-				if(item[i].cpuUsage >= 80){
-					$('#cpuUsage').addClass('warning-red');
-				}else if(item[i].cpuUsage >= 60){
-					$('#cpuUsage').addClass('warning-orange');
-				}else if(item[i].cpuUsage >= 40){
-					$('#cpuUsage').addClass('warning-yellow');
-				}else if(item[i].cpuUsage >= 60){
-					$('#cpuUsage').addClass('warning-green');
-				}			
-			} 
-		}
-		
-	});
-	
-}
-
 
 function init() {
 	

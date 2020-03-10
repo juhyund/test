@@ -36,7 +36,7 @@ public class OperationLogController {
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
-			param.put("sort", "result_dt");
+			param.put("sort", "request_dt");
 			param.put("dir", "DESC");
 			
 			int cnt = this.operationLogService.getOperationLogListCnt(param);
