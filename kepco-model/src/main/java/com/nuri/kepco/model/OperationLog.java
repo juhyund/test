@@ -28,6 +28,7 @@ public class OperationLog extends CommonObj {
 	private String reg_id;
 	private String object_nm;
 	private String resource_nm;
+	private String resource_sum;
 	private String method_type;
 	private String result_status;
 	

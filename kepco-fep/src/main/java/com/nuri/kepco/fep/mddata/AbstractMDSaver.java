@@ -467,6 +467,10 @@ public abstract class AbstractMDSaver {
 			// 현재시간
 			modemTime = TimeUtil.getCurrentTimeMilli();
 		}
+		
+		if(deviceStatusCode == null) {
+			deviceStatusCode = DEVICESTATUS.NORMAL;
+		}
 
 		try {
 

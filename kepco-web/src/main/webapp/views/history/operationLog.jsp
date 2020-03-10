@@ -23,6 +23,7 @@
 
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css">
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
@@ -321,28 +322,16 @@ function ajaxSearchForm() {
 
 function excelDownload() {
 	
-	if( totalCnt == 0){
-		Swal.fire({
-			position: 'center',
-			icon: 'error',
-			title: 'excel 다운로드 불가',
-			text: '조회 결과가 없습니다!',
-			showConfirmButton: false,
-				timer: 1500
-			});
-	}else{
-
-		 $('#search_form').attr('action', "/ewsn-app/downloadMeterValue");
-		 $('#search_form').attr('method',"GET");
-		 $('#search_form').submit();
-		Swal.fire({
-			position: 'center',
-			icon: 'info',
-			text: 'excel 생성중',
-			showConfirmButton: false,
-				timer: 1500
-		});
-	}
+	$('#search_form').attr('action', COMMON_URL + "/downloadOperationLogList");
+	$('#search_form').attr('method',"GET");
+	$('#search_form').submit();
+	Swal.fire({
+		position: 'center',
+		icon: 'info',
+		text: 'excel 생성중',
+		showConfirmButton: false,
+			timer: 1500
+	});
 
 }
 
