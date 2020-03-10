@@ -23,6 +23,7 @@
 
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css">
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
@@ -33,7 +34,7 @@
 	}
 	
 	.warning-green{
-		background-color: green;
+		background-color: #1ec744;
 		border: 1px solid;
 	}
 	
@@ -48,7 +49,7 @@
 	}
 	
 	.warning-grey{
-		background-color: grey;
+		background-color: #b3b5b7;
 		border: 1px solid;
 	}
 	
@@ -144,8 +145,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<i class="fa fa-undo"></i>
 								</button>
 								<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
-														<i class="fa fa-download"></i>
-													</button>
+									<i class="fa fa-download"></i>
+								</button>
 							</td>
 						</tr>
 					</tbody>
@@ -186,15 +187,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- body -->
 </div>
 </div>	
-</div>
 
 <script type="text/javascript" charset="utf-8">	
 
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "모뎀 번호", field: "deviceSerial"},
-	{headerName: "모뎀 번호", field: "deviceId", hide:"true"},
+	{headerName: "모뎀번호", field: "deviceSerial"},
+	{headerName: "_모뎀번호", field: "deviceId", hide:"true"},
 	{headerName: "본부", field: "parentBranchNm", width:140},
 	{headerName: "지사", field: "branchNm", width:140},
 	{headerName: "모뎀상태", field: "deviceStatusNm", width:140},
@@ -205,7 +205,8 @@ var columnDefs = [
             'warning-orange': function(params) { return params.value > 70 && params.value <= 90},
             'warning-red': function(params) { return params.value > 90 && params.value != null},
             'warning-grey': function(params) { return params.value == null || params.value == ""}
-        }},
+        }
+    },
 	{headerName: "Memory(%)", field: "ramUsage", width:170, cellStyle:{'text-align': "right"},
 		cellClassRules: {
             'warning-green': function(params) { return params.value <= 50 && params.value != null},
@@ -213,7 +214,8 @@ var columnDefs = [
             'warning-orange': function(params) { return params.value > 70 && params.value <= 90},
             'warning-red': function(params) { return params.value > 90 && params.value != null},
             'warning-grey': function(params) { return params.value == null || params.value == ""}
-        }},
+        }
+    },
 	{headerName: "RSRP(dBm)", field: "rsrp", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -80 && params.value != null},
@@ -221,7 +223,8 @@ var columnDefs = [
                'warning-orange': function(params) { return params.value < -90 && params.value > -100},
                'warning-red': function(params) { return params.value <= -100 && params.value != null},
                'warning-grey': function(params) { return params.value == null || params.value == ""}
-           }},
+           }
+    },
 	{headerName: "RSRQ(dB)", field: "rsrq", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -10 && params.value != null},
@@ -229,7 +232,8 @@ var columnDefs = [
                'warning-orange': function(params) { return params.value < -15 && params.value >= -20},
                'warning-red': function(params) { return params.value < -20 && params.value != null},
                'warning-grey': function(params) { return params.value == null || params.value == ""}
-           }},
+           }
+    },
 	{headerName: "SNR(dB)", field: "ssnr", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= 20 && params.value != null},
@@ -237,7 +241,8 @@ var columnDefs = [
                'warning-orange': function(params) { return params.value > 0 && params.value < 13},
                'warning-red': function(params) { return params.value <= 0 && params.value != null},
                'warning-grey': function(params) { return params.value == null || params.value == ""}
-           }},
+           }
+    },
 	{headerName: "최종 통신일자", field: "usageTime"},
 	{headerName: "등록일자", field: "saveTime"}
 ];
@@ -309,21 +314,18 @@ function ajaxSearchForm() {
      $.ajax(options);
 }
 
-function ajaxExcelDownload() {
-	alert("excel 다운로드 개발중");
-	//setSearchParam($("#sdateView").val(), $("#edateView").val());
+function excelDownload() {
 
-    var options = { 
-           beforeSend  : showRequest,
-           success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxExcelMeterValue",
-           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-           type        : "post", /* get, post */
-           dataType    : "json", /* xml, html, script, json */
-           data        : $("#search_form").serialize()
-     };             
-    
-     $.ajax(options);
+	$('#search_form').attr('action', COMMON_URL + "/downloadNMSList");
+	$('#search_form').attr('method',"GET");
+	$('#search_form').submit();
+	Swal.fire({
+		position: 'center',
+		icon: 'info',
+		text: 'excel 생성중',
+		showConfirmButton: false,
+			timer: 1500
+	});
 }
 
 //grid row click

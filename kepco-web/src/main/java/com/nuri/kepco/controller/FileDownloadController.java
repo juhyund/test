@@ -24,6 +24,7 @@ import com.nuri.kepco.service.DeviceInfoService;
 import com.nuri.kepco.service.MeterBillingService;
 import com.nuri.kepco.service.MeterInfoService;
 import com.nuri.kepco.service.MeterValueService;
+import com.nuri.kepco.service.NMSInfoService;
 import com.nuri.kepco.service.OperationLogService;
 import com.nuri.kepco.util.ControllerUtil;
 
@@ -53,6 +54,9 @@ public class FileDownloadController {
 	
 	@Autowired
 	private OperationLogService operationLogService;
+	
+	@Autowired
+	private NMSInfoService nmsInfoService;
 
 	/*
 	 * downloadMeterValue
@@ -241,7 +245,7 @@ public class FileDownloadController {
 			
 			 String file_path = "";
 				try {
-					String[] commStr = { "device_id", "method_type", "result_status", "tid", "request_sdate", "request_edate", "result_sdate", "result_edate", "target_meter" };
+					String[] commStr = {"device_id", "method_type", "result_status", "tid", "request_sdate", "request_edate", "result_sdate", "result_edate", "target_meter"};
 					        
 					Map<String, Object> param = ControllerUtil.getCommonParam(request);
 
@@ -255,7 +259,64 @@ public class FileDownloadController {
 					param.put("dir", "DESC");
 			        param.put("limit",0);
 					
-			        Map<String, String> output = this.operationLogService.excelMeterList(param);
+			        Map<String, String> output = this.operationLogService.excelOperationLogList(param);
+					file_path = output.get("filepath") + "/" + output.get("filename");
+
+				} catch (Exception e) {
+					logger.error("error : " + e);
+				}
+				
+		      File file = new File(file_path);
+		      InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		      return ResponseEntity.ok()
+		            .header(HttpHeaders.CONTENT_DISPOSITION,
+		                  "attachment;filename=" + file.getName())
+		            .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
+		            .body(resource);
+		   }
+		 
+		 @GetMapping("/downloadNMSList")
+		   public ResponseEntity<InputStreamResource> downloadNMSList(HttpServletRequest request) throws IOException {
+			
+			 String file_path = "";
+				try {
+					String[] commStr = {"deviceId", "deviceSerial", "sdate", "edate", "data_per_page", "usageTime"};
+					        
+					Map<String, Object> param = ControllerUtil.getCommonParam(request);
+
+			         for(String key : commStr) {
+				          if(request.getParameterMap().containsKey(key)) {
+				        		  param.put(key, request.getParameter(key));	
+				          }
+			         }
+			         
+			        String deviceStatus = request.getParameter("device_status");
+					String branch_parent_id = request.getParameter("branch_parent_id");
+					String branchId = request.getParameter("branch_id");
+					String searchfield = request.getParameter("searchfield");
+					String searchquery = request.getParameter("searchquery");
+					
+					if(deviceStatus != null && !("").equals(deviceStatus)) {
+						param.put("deviceStatus", deviceStatus);
+					}
+					if(branch_parent_id != null && !("").equals(branch_parent_id)) {
+						param.put("parentBranchId", branch_parent_id);
+					}
+					if(branchId != null && !("").equals(branchId)) {
+						param.put("branchId", branchId);
+					}
+					
+					if(searchfield != null && !("").equals(searchfield)) {
+						if(("deviceId").equals(searchfield)) {
+							param.put("deviceId", searchquery);
+						}else if(("deviceSerial").equals(searchfield)) {
+							param.put("deviceSerial", searchquery);
+						}
+						
+					}
+			         
+			        Map<String, String> output = this.nmsInfoService.excelNMSList(param);
 					file_path = output.get("filepath") + "/" + output.get("filename");
 
 				} catch (Exception e) {
