@@ -22,7 +22,7 @@
 <!-- angular -->
 <script src="<%=COMMON_PATH_JS%>/angular.min.js"></script>
 <script src="<%=COMMON_PATH_JS%>/angular-route.min.js"></script>
-<script src="<%=COMMON_PATH_JS%>/controller/meterApp.js?version=0"></script>
+<script src="<%=COMMON_PATH_JS%>/controller/meterApp.js?version=1"></script>
 
 <!-- Data picker -->
 <script src="<%=COMMON_PATH_JS%>/bootstrap-datepicker.js"></script>

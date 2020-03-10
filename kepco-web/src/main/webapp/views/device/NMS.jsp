@@ -33,7 +33,7 @@
 	}
 	
 	.warning-green{
-		background-color: green;
+		background-color: #1ec744;
 		border: 1px solid;
 	}
 	
@@ -44,6 +44,11 @@
 	
 	.warning-orange{
 		background-color: orange;
+		border: 1px solid;
+	}
+	
+	.warning-grey{
+		background-color: #b3b5b7;
 		border: 1px solid;
 	}
 	
@@ -195,17 +200,19 @@ var columnDefs = [
 	{headerName: "모뎀상태", field: "deviceStatusNm", width:140},
 	{headerName: "CPU(%)", field: "cpuUsage", width:150, cellStyle:{'text-align': "right"},
 		cellClassRules: {
-			'warning-green': function(params) { return params.value <= 30 && params.value != null},
-            'warning-yellow': function(params) { return params.value > 30 && params.value <= 60},
-            'warning-orange': function(params) { return params.value > 60 && params.value <= 80},
-            'warning-red': function(params) { return params.value > 80 && params.value != null},
+			'warning-green': function(params) { return params.value <= 50 && params.value != null},
+            'warning-yellow': function(params) { return params.value > 50 && params.value <= 70},
+            'warning-orange': function(params) { return params.value > 70 && params.value <= 90},
+            'warning-red': function(params) { return params.value > 90 && params.value != null},
+            'warning-grey': function(params) { return params.value == null || params.value == ""}
         }},
 	{headerName: "Memory(%)", field: "ramUsage", width:170, cellStyle:{'text-align': "right"},
 		cellClassRules: {
-            'warning-green': function(params) { return params.value <= 30 && params.value != null},
-            'warning-yellow': function(params) { return params.value > 30 && params.value <= 60},
-            'warning-orange': function(params) { return params.value > 60 && params.value <= 80},
-            'warning-red': function(params) { return params.value > 80 && params.value != null},
+            'warning-green': function(params) { return params.value <= 50 && params.value != null},
+            'warning-yellow': function(params) { return params.value > 50 && params.value <= 70},
+            'warning-orange': function(params) { return params.value > 70 && params.value <= 90},
+            'warning-red': function(params) { return params.value > 90 && params.value != null},
+            'warning-grey': function(params) { return params.value == null || params.value == ""}
         }},
 	{headerName: "RSRP(dBm)", field: "rsrp", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
@@ -213,6 +220,7 @@ var columnDefs = [
                'warning-yellow': function(params) { return params.value < -80 && params.value >= -90},
                'warning-orange': function(params) { return params.value < -90 && params.value > -100},
                'warning-red': function(params) { return params.value <= -100 && params.value != null},
+               'warning-grey': function(params) { return params.value == null || params.value == ""}
            }},
 	{headerName: "RSRQ(dB)", field: "rsrq", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
@@ -220,6 +228,7 @@ var columnDefs = [
                'warning-yellow': function(params) { return params.value < -10 && params.value >= -15},
                'warning-orange': function(params) { return params.value < -15 && params.value >= -20},
                'warning-red': function(params) { return params.value < -20 && params.value != null},
+               'warning-grey': function(params) { return params.value == null || params.value == ""}
            }},
 	{headerName: "SNR(dB)", field: "ssnr", width:150, cellStyle:{'text-align': "right"},
    		cellClassRules: {
@@ -227,6 +236,7 @@ var columnDefs = [
                'warning-yellow': function(params) { return params.value >= 13 && params.value < 20},
                'warning-orange': function(params) { return params.value > 0 && params.value < 13},
                'warning-red': function(params) { return params.value <= 0 && params.value != null},
+               'warning-grey': function(params) { return params.value == null || params.value == ""}
            }},
 	{headerName: "최종 통신일자", field: "usageTime"},
 	{headerName: "등록일자", field: "saveTime"}
