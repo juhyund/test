@@ -160,13 +160,13 @@ public class NMSInfoServiceImpl implements NMSInfoService {
 		
 		String template_filepath = "/template/template_excel.xlsx";
 		String filename = "device_list_" + DateUtil.getNowDateTime() + ".xlsx";
-		String filepath = fileDownloadDir + "/deviceList/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+		String filepath = fileDownloadDir + "/NMSList/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 		
 		List<ConnectivityStatisticsMonitor> result = this.connectivityStatisticsMonitorDAO.getConnectivityStatisticsMonitor(connectivityStatistics);
 		
 		ExcelRef excelRef = new ExcelRef();
 
-		excelRef.setTitle("제어이력 다운로드");
+		excelRef.setTitle("NMS");
 		excelRef.setHeaders(new String[] {"모뎀번호", "본부", "지사", "모뎀상태", "CPU(%)","Memory(%)", "RSRP(dBm)", "RSRQ(dB)", "SNR(dB)", "최종 통신일자", "등록일자"});
 		excelRef.setCells("deviceSerial,parentBranchNm,branchNm,deviceStatusNm,cpuUsage,ramUsage,rsrp,rsrq,ssnr,usageTime,saveTime");
 		ExcelUtil.makeExcelTemplate(template_filepath, filepath, filename, result, excelRef);
