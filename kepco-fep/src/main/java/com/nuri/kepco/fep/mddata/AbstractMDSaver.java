@@ -468,6 +468,8 @@ public abstract class AbstractMDSaver {
 			modemTime = TimeUtil.getCurrentTimeMilli();
 		}
 		
+		logger.debug("DEVICESTATUS : {}", deviceStatusCode);
+		
 		if(deviceStatusCode == null) {
 			deviceStatusCode = DEVICESTATUS.NORMAL;
 		}
