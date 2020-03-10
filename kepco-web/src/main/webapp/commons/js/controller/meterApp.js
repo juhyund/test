@@ -115,6 +115,8 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	
 	$scope.write = function (resources) {
 		
+		
+		
 		var object_instance_id = 0;
 		var object_id = resources[0].object_id;
 		var targetMeter = "";
@@ -127,6 +129,9 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 		var path = "/" + object_id + "/" + object_instance_id;	
 		
 		if($scope.isValid(resources)) {
+			
+			// loading
+			$("#loading").show();
 			
 			var payload = {};
 			
@@ -279,14 +284,28 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	        data : payload		
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	    	
+	    	$("#loading").hide();
+	    	
 	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
+	    		Swal.fire(
+				  '제어성공!',
+				  '트랜잭션 ID <font color=#1AB394>['+data.data.tid+']</font><br>이력정보에서 <font color=#1AB394><b>\'제어결과\'</b></font>를 확인하세요!',
+				  'success'
+				);
 	    	} else {
-	    		alert("제어실패 [" + data.data.statusMsg + "]");
+	    		//alert("제어실패 [" + data.data.statusMsg + "]");
+	    		Swal.fire(
+  				  '제어실패!',
+  				  data.data.statusMsg,
+  				  'error'
+  				);
 	    	}
 	    	
-    	}, function errorCallback(response) {
-	        alert("제어실패");	    	
+    	}, function errorCallback(response) {    		
+    		Swal.fire(
+			  '제어실패!',
+			  'error'
+			);	    	
 	    });
     };
     
