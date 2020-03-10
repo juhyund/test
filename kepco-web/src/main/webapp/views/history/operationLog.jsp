@@ -350,7 +350,7 @@ function successResultHandler(data, status) {
 			for(var i=0; i<item.length; i++){
 				if(item[i].result == 1){
 					data.resultGrid[i].result = '성공'
-				}else if(item[i].result == 2){
+				}else if(item[i].result == 0){
 					data.resultGrid[i].result = '실패'
 				}else{
 					data.resultGrid[i].result = '대기중'
