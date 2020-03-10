@@ -32,18 +32,18 @@
 		width: fit-content;
 	}
 	
-	.rag-red-outer .rag-element {
-	    background-color: red;
+	.rag-red-outer {
+	    color: red;
 	    font-weight: bold;
 	}
 	
-	.rag-green-outer .rag-element {
-	    background-color: lightgreen;
+	.rag-green-outer {
+	    color: blue;
 	    font-weight: bold;
 	}
 	
-	.rag-grey-outer .rag-element {
-	    background-color: yellow;
+	.rag-grey-outer {
+	    color: e3f704;
 	    font-weight: bold;
 	}
   	
@@ -230,9 +230,6 @@ var columnDefs = [
             'rag-green-outer': function(params) { return params.value == '성공'},
             'rag-grey-outer': function(params) { return params.value == '대기중' },
             'rag-red-outer': function(params) { return params.value == '실패'}
-        },
-        cellRenderer: function(params) {
-            return '<span class="rag-element">'+params.value+'</span>';
         }},
 	{headerName: "트랜잭션ID", field: "tid"},
 	{headerName: "전송 일시", field: "request_dt"},
