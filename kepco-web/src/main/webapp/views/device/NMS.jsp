@@ -33,7 +33,7 @@
 	}
 	
 	.warning-green{
-		background-color: green;
+		background-color: #1ec744;
 		border: 1px solid;
 	}
 	
@@ -48,7 +48,7 @@
 	}
 	
 	.warning-grey{
-		background-color: grey;
+		background-color: #b3b5b7;
 		border: 1px solid;
 	}
 	
