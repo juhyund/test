@@ -28,8 +28,36 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
 <style>
-  select.form-control {
+  	select.form-control {
 		width: fit-content;
+	}
+	
+	.warning-red{
+		background-color: red;
+	}
+	
+	.warning-green{
+		background-color: #1ec744;
+	}
+	
+	.warning-yellow{
+		background-color: yellow;
+	}
+	
+	.warning-orange{
+		background-color: orange;
+	}
+	
+	.rag-red-outer .rag-element {
+	    background-color: red;
+	}
+	
+	.rag-green-outer .rag-element {
+	    background-color: lightgreen;
+	}
+	
+	.rag-grey-outer .rag-element {
+	    background-color: #b3b5b7;
 	}
   	
 </style>
@@ -210,7 +238,15 @@ var columnDefs = [
 	{headerName: "리소스명", field: "resource_nm", width:160, cellStyle:{'text-align': "center"}},
 	{headerName: "타겟ID", field: "target_meter", cellStyle:{'text-align': "center"}},
 	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
-	{headerName: "제어결과", field: "result", width:130},
+	{headerName: "제어결과", field: "result", width:130,
+        cellClassRules: {
+            'rag-green-outer': function(params) { return params.value == '성공'},
+            'rag-grey-outer': function(params) { return params.value == '대기중' },
+            'rag-red-outer': function(params) { return params.value == '실패'}
+        },
+        cellRenderer: function(params) {
+            return '<span class="rag-element">'+params.value+'</span>';
+        }},
 	{headerName: "트랜잭션ID", field: "tid"},
 	{headerName: "전송 일시", field: "request_dt"},
 	{headerName: "응답 일시", field: "result_dt"},

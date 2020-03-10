@@ -30,27 +30,27 @@
 <style>
 	.warning-red{
 		background-color: red;
-		border: 1px solid;
+		border: solid 1px;
 	}
 	
 	.warning-green{
-		background-color: #1ec744;
-		border: 1px solid;
+		background-color: lightgreen;
+		border: solid 1px;
 	}
 	
 	.warning-yellow{
 		background-color: yellow;
-		border: 1px solid;
+		border: solid 1px;
 	}
 	
 	.warning-orange{
 		background-color: orange;
-		border: 1px solid;
+		border: solid 1px;
 	}
 	
 	.warning-grey{
 		background-color: #b3b5b7;
-		border: 1px solid;
+		border: solid 1px;
 	}
 	
 	.col-custom{
@@ -64,25 +64,31 @@
 	table#nmsCodeGuide {
 	    border-collapse: collapse;   
 	}
+	
 	#nmsCodeGuide tr {
 	    background-color: #fff;
 	}
+	
 	#nmsCodeGuide tr:hover {
 	    background-color: #ccc;
 	}
+	
 	#nmsCodeGuide th {
 	    background-color: #343a40;
 	    font-weight: bold;
 	    color: white;
 	}
-	#nmsCodeGuide td {
+	
+	.td-custom {
 		font-weight: bold;
 		color: black;
 	}
+	
 	#nmsCodeGuide th, #nmsCodeGuide td {
 	    padding: 3px 5px;
 	    border: solid 1px;
 	}
+	
 	#nmsCodeGuide td:hover {
 	    cursor: pointer;
 	}
@@ -193,35 +199,35 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						    <th>SNR(dB)</th>
 						</tr>
 						<tr>
-						    <td class="warning-green">정상</td>
+						    <td class="warning-green td-custom">정상</td>
 						    <td><= 50%</td>
 						    <td>>= (-80)</td>
 						    <td>>= (-10)</td>
 						    <td>>= (20)</td>
 						</tr>
 						<tr>
-						    <td class="warning-yellow">양호</td>
+						    <td class="warning-yellow td-custom">양호</td>
 						    <td>50% to 70%</td>
 						    <td>(-80) to (-90)</td>
 						    <td>(-10) to (-15)</td>
 						    <td>(13) to (20)</td>
 						</tr>
 						<tr>
-						    <td class="warning-orange">약함</td>
+						    <td class="warning-orange td-custom">약함</td>
 						    <td>70% to 90%</td>
 						    <td>(-90) to (-100)</td>
 						    <td>(-15) to (-20)</td>
 						    <td>(0) to (13)</td>
 						</tr>
 						<tr>
-						    <td class="warning-red">불량</td>
+						    <td class="warning-red td-custom">불량</td>
 						    <td>90% to 100%</td>
 						    <td><=(-100)</td>
 						    <td><(-20)</td>
 						    <td><=(0)</td>
 						</tr>
 						<tr>
-						    <td class="warning-grey"></td>
+						    <td class="warning-grey td-custom"></td>
 						    <td>null or ""</td>
 						    <td>null or ""</td>
 						    <td>null or ""</td>
