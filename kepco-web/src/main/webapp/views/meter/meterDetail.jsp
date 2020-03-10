@@ -32,6 +32,9 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
 <style>
   div .ibox-title {
 		/* background-color: #dee2e6; */
@@ -595,5 +598,13 @@ $('#datePicker .input-group.date').datepicker({
 
 </script> -->
 <!--  wrapper -->
+<div id="loading">
+	<div id="loading-image" class="spinner-border" role="status">
+	<img id="loading-image" src="<%=COMMON_PATH_IMG%>/loading.gif" alt="Loading..." /></div>
+	</div>
+</div>
 </body>
 </html>
+<script>
+	$("#loading").hide();
+</script>
