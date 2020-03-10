@@ -77,11 +77,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											통신현황 -
 											<div style="display: inline;" id="com_rate"></div>
 										</h2>
-										<h3>
-											24시간 이내 통신 성공 
-											(<div style="display: inline;" id="com_cnt"></div>)
-											
-										</h3>
+										<h3><div style="display: inline;" id="com_date"></div> 현재 통신 성공율</h3>
 									</div>
 								</div>
 							</div>
@@ -93,9 +89,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<i class="fa fa-chart-bar fa-5x"></i>
 									</div>
 									<div class="col-8 text-right">
-										<h2 class="font-bold">검침현황 - <div style="display: inline;" id="lp_rate"></div>
-										%</h2>
-										<h3><div style="display: inline;" id="lp_date"></div> 현재 검침율</h3>
+										<h2 class="font-bold">
+											검침현황 - 
+											<div style="display: inline;" id="lp_rate"></div>
+										</h2>
+										<h3><div style="display: inline;" id="lp_date"></div> 현재 검침 성공율</h3>
 									</div>
 								</div>
 							</div>
@@ -108,7 +106,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									</div>
 									<div class="col-8 text-right">
 										<h2 class="font-bold">제어현황 - <div style="display: inline;" id="exec_rate"></div></h2>
-										<h3><div style="display: inline;" id="exec_date"></div> 기준 제어율</h3>
+										<h3><div style="display: inline;" id="exec_date"></div> 현재 제어 성공율</h3>
 									</div>
 								</div>
 							</div>
@@ -249,7 +247,7 @@ function communication(){
 }
 
 function successCommunication(data, status) {
-	var com_cnt = data.d1 + "/" + data.total;
+	var toDay = new Date();
 	var d1_rate = 0;
 	var d2_rate = 0;
 	var d3_rate = 0;
@@ -278,7 +276,7 @@ function successCommunication(data, status) {
 	}
 	
 	$("#com_rate").html(removeZero(d1_rate.toFixed(1))+"%");
-	$("#com_cnt").html(com_cnt);
+	$("#com_date").html(toDay.yyyymmdd());
 
 	$("#d1_cnt").html(data.d1);
 	$("#d1_rate").html(removeZero(d1_rate.toFixed(1)) + "%");
@@ -399,7 +397,7 @@ function successLpRate(data, status) {
        	last_tr += '<th class="text-right">' + removeZero(total_fail_rate.toFixed(1)) + '%</th>';
        	last_tr += '</tr>';
 
-       	$("#lp_rate").html(total_succ_rate.toFixed(1));
+       	$("#lp_rate").html(removeZero(total_succ_rate.toFixed(1))+"%");
        	$("#lp_body").append(last_tr);
        	
     } else {
@@ -407,7 +405,7 @@ function successLpRate(data, status) {
        	last_tr += '<th class="text-center" colspan="3">No Data.</th>';
        	last_tr += '</tr>';
 
-       	$("#lp_rate").html(0);
+       	$("#lp_rate").html("0%");
        	$("#lp_body").append(last_tr);    	
     }
     
