@@ -251,7 +251,7 @@ function ajaxDeviceFwUpgrade() {
 				</div>
 				<div class="form-group row">
 					<label class="col-lg-2 col-form-label">패키지 URI</label>
-					<div class="col-lg-9"><input type="text" name="package_uri" id="package_uri" class="form-control" style="border: none" readonly="readonly"></div>
+					<div class="col-lg-9"><input type="text" name="package_uri" id="package_uri" class="form-control" style="border: none"></div>
 				</div>
 			</div>
 			<div class="modal-footer">
