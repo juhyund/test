@@ -47,21 +47,22 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
 <style>
 	.chart-container-left{
-		width: 45%;
+		width: 49.2%;
 		float: left;
-		margin: 5px 20px 10px 40px;
+		margin: 2px 3px;
+		margin-right: 10px;
 	}
 	
 	.chart-container-right{
-		width: 45%;
-		float: right;
-		margin: 5px 40px 10px 20px;
+		width: 49.2%;
+		float: left;
+		margin: 2px 0px;
 	}
 	
 	.long-chart-container-left{
-		width: 95%;
+		width: 99%;
 		float: left;
-    	margin: 5px 20px 10px 40px;
+    	margin: 10px 0px 2px 3px;
 	}
 	
 	#search_form {
@@ -135,10 +136,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</div>
 				</div>
 				<!--  end : summary_area  -->
-				<form name="search_form" id="search_form" method="post">
+				<form name="search_form" id="search_form" method="post" style="margin-left: 0px">
 				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
 				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-					<table class="table table-borderless ibox-content"  style="width: 99%; margin-bottom: 7px;" border="1" >
+					<table class="table table-borderless ibox-content"  style="width: 99.3%; margin-bottom: 7px;" border="1" >
 						<tbody>
 							<tr class="table-border">
 								<td>
@@ -147,7 +148,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			                            <div class="col-sm-6" id="datePicker">
 											<div class="input-group date" style="width: 48%; float: left;">
 												<input type="hidden" id="sdate" name="sdate" value=""> 
-												<input type="text" class="form-control" id="sdateView" name="sdateView" value="${sdate}">
+												<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
 												</span>
@@ -155,7 +156,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 											<div class="input-group date" style="width: 48%;">
 												<input type="hidden"  id="edate" name="edate" value=""> 
-												<input type="text" class="form-control"  id="edateView" name="edateView" value="${edate}"> 
+												<input type="text" class="form-control"  id="edateView" name="edateView" value=""> 
 												<span class="input-group-addon" style="list-style: none;">
 													<i class="fa fa-calendar"></i>
 												</span>
@@ -182,78 +183,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<input type="hidden" id="deviceSerial" name="deviceSerial" value="${deviceSerial}" class="form-control">
 					<input type="hidden" id="usageTime" name="usageTime" value="${usageTime}" class="form-control">
 				</form>
+				
 				<div id="loading">
-				        <img SRC="https://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F9950163C5AFE32810A7310">    
-				        <%-- <img id="loading-image" src="<%=COMMON_PATH_IMG%>/loading1.gif" alt="Loading..." /></div> --%>
+					<div id="loading-image" class="spinner-border" role="status">
+						<img id="loading-image" src="<%=COMMON_PATH_IMG%>/loading.gif" alt="Loading..." /></div>
+					</div>
 				</div>
-				<%-- <form name="search_form" id="search_form" method="post">
-				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
-				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-				<table class="table table-borderless ibox-content" style="height: 100%;" style="margin-bottom: 7px;" border="1">
-					<tbody>
-						<tr class="table-border">
-							<td height="80">
-								<div class="form-group row">
-									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
-									<div class="col-lg-3">
-										<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
-										<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
-											<option value=''>선택</option>
-										</select>
-									</div>
-									<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
-									<div class="col-lg-3">
-										<select class="form-control" name="model_seq" id="model_seq"></select>
-									</div>
-								</div>
-
-								<div class="form-group form-group-end row">
-									<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
-									<div class="col-lg-3">
-										<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
-											<option value=''>선택</option>
-											<option value='deviceId'>모뎀ID</option>
-											<option value='deviceSerial'>모뎀 번호</option>
-										</select>
-										<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" value="${deviceSerial}" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
-									</div>
-													
-									<label class="col-sm-1 col-form-label">검색 일자</label>
-									<div class="col-sm-3" id="datePicker">
-										<div class="input-group date" style="width: 48%; float: left;">
-											<input type="text" class="form-control" id="lsdate" name="lsdate"value=""> 
-											<span class="input-group-addon" style="list-style: none;">
-												<i class="fa fa-calendar"></i>
-											</span>
-										</div>
-										<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
-										<div class="input-group date" style="width: 48%;">
-											<input type="text" class="form-control"  id="ledate" name="ledate" value=""> 
-											<span class="input-group-addon" style="list-style: none;">
-												<i class="fa fa-calendar"></i>
-											</span>
-										</div>
-									</div>
-								</div>
-							</td>
-							<td width="180" height="80" style="text-align: right">
-								<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
-									<i class="fa fa-search"></i>
-								</button>
-								<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
-									<i class="fa fa-undo"></i>
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>	
-				</form> --%>
 				<div>								
 				   <!-- chart -->
-				 <!--   <figure class="highcharts-figure">
-					   <div id="container-CPU" class="chart-container"></div>
-		    		   <div id="container-RAM" class="chart-container"></div>
-		    	   </figure> -->
 				   <div style="overflow: hidden;">
 		    		   <div class="chart-container-left" id="cpuContainer"></div>
 		    		   <div class="chart-container-right" id="ramContainer"></div>
@@ -264,12 +201,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		    		   <div class="long-chart-container-left" id="snrContainer"></div>
 		    		</div>   
 			    </div>        
-				   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
-						<i class="fa fa-undo"> 목록으로 돌아가기</i>
-					</button>
+				<button class="btn btn-outline btn-primary m-t-sm" style="height: 100%; float: right;" type="button" onclick="javascript:history.back(-1)">
+					<i class="fa fa-undo"> 목록으로 돌아가기</i>
+				</button>
 		</div>
 	</div>
 </div>
+
+
 <!-- body -->
 </div>
 </div>	
@@ -287,7 +226,7 @@ function ajaxSearchForm() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
     var options = { 
-           beforeSend  : showRequest,
+           beforeSend  : showLoading,
            success     : successResultHandler,
            url         : COMMON_URL + "/ajaxNMSDetail",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
@@ -304,257 +243,26 @@ function resetForm(){
 	
 };
 
-function showRequest() {
-	/* $("#loading").show(); */
-	$("#loading")
-	.css("position","absolute")
-	.css("z-index","10001")
-	.css("top","300px")
-	.css("left","49%")
-	.show()
-
-}
-
 function successResultHandler(data, status) {
 	//chart rendering
 	renderChart(data, status)
 }
-
-//gauge chart
-/* var gaugeOptions = {
-	    chart: {
-	        type: 'solidgauge'
-	    },
-
-	    title: null,
-
-	    pane: {
-	        center: ['50%', '85%'],
-	        size: '120%',
-	        startAngle: -90,
-	        endAngle: 90,
-	        background: {
-	            backgroundColor:
-	                Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-	            innerRadius: '60%',
-	            outerRadius: '100%',
-	            shape: 'arc'
-	        }
-	    },
-
-	    exporting: {
-	        enabled: false
-	    },
-	    
-	    contextButton: {
-            enabled: false
-        },
-
-	    tooltip: {
-	        enabled: false
-	    },
-
-	    // the value axis
-	    yAxis: {
-	        stops: [
-	            [0.1, '#55BF3B'], // green
-	            [0.5, '#DDDF0D'], // yellow
-	            [0.9, '#DF5353'] // red
-	        ],
-	        lineWidth: 0,
-	        tickWidth: 0,
-	        minorTickInterval: null,
-	        tickAmount: 2,
-	        title: {
-	            y: -70
-	        },
-	        labels: {
-	            y: 16
-	        }
-	    },
-
-	    plotOptions: {
-	        solidgauge: {
-	            dataLabels: {
-	                y: 5,
-	                borderWidth: 0,
-	                useHTML: true
-	            }
-	        }
-	    }
-	};
-
-	// The speed gauge
-	var chartCPU = Highcharts.chart('container-CPU', Highcharts.merge(gaugeOptions, {
-	    yAxis: {
-	        min: 0,
-	        max: 100,
-	        title: {
-	            text: 'CPU'
-	        }
-	    },
-
-	    credits: {
-	        enabled: false
-	    },
-
-	    series: [{
-	        name: 'CPU',
-	        data: [80],
-	        dataLabels: {
-	            format:
-	                '<div style="text-align:center">' +
-	                '<span style="font-size:25px">{y}</span><br/>' +
-	                '<span style="font-size:12px;opacity:0.4">CPU Usage</span>' +
-	                '</div>'
-	        },
-	        tooltip: {
-	            valueSuffix: ' CPU Usage'
-	        }
-	    }]
-
-	}));
-
-	// The RPM gauge
-	var chartRAM = Highcharts.chart('container-RAM', Highcharts.merge(gaugeOptions, {
-	    yAxis: {
-	        min: 0,
-	        max: 100,
-	        title: {
-	            text: 'Memory'
-	        }
-	    },
-
-	    series: [{
-	        name: 'Memory',
-	        data: [1],
-	        dataLabels: {
-	            format:
-	                '<div style="text-align:center">' +
-	                '<span style="font-size:25px">{y}</span><br/>' +
-	                '<span style="font-size:12px;opacity:0.4">' +
-	                'Ram Usage' +
-	                '</span>' +
-	                '</div>'
-	        },
-	        tooltip: {
-	            valueSuffix: ' Ram Usage'
-	        }
-	    }]
-
-	})); */
-
-	// Bring life to the dials
-/* 	setInterval(function () {
-	    // CPU
-	    var point,
-	        newVal,
-	        inc;
-
-	    if (chartCPU) {
-	        point = chartCPU.series[0].points[0];
-	        inc = Math.round((Math.random() - 0.5) * 100);
-	        newVal = point.y + inc;
-
-	        if (newVal < 0 || newVal > 100) {
-	            newVal = point.y - inc;
-	        }
-
-	        point.update(newVal);
-	    }
-
-	    // RAM
-	    if (chartRAM) {
-	        point = chartRAM.series[0].points[0];
-	        inc = Math.round((Math.random() - 0.5) * 100);
-	        newVal = point.y + inc;
-
-	        if (newVal < 0 || newVal > 100) {
-	            newVal = point.y - inc;
-	        }
-
-	        point.update(newVal);
-	    }
-	}, 2000); */
-	
-/* 	//line chart
-	function getData(n) {
-	    var arr = [],
-	        i,
-	        x,
-	        a,
-	        b,
-	        c,
-	        spike;
-	    for (
-	        i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1) - n * 36e5;
-	        i < n;
-	        i = i + 1, x = x + 36e5
-	    ) {
-	        if (i % 100 === 0) {
-	            a = 2 * Math.random();
-	        }
-	        if (i % 1000 === 0) {
-	            b = 2 * Math.random();
-	        }
-	        if (i % 10000 === 0) {
-	            c = 2 * Math.random();
-	        }
-	        if (i % 50000 === 0) {
-	            spike = 10;
-	        } else {
-	            spike = 0;
-	        }
-	        arr.push([
-	            x,
-	            2 * Math.sin(i / 100) + a + b + c + spike + Math.random()
-	        ]);
-	    }
-	    return arr;
-	}
-	var n = 5000,
-	    data = getData(n);
-
-
-	console.time('line');
-	Highcharts.chart('container', {
-
-	    chart: {
-	        zoomType: 'x'
-	    },
-
-	    title: {
-	        text: 'COMPARISON OF RSRP, RSRQ, SNR'
-	    },
-
-	    tooltip: {
-	        valueDecimals: 2
-	    },
-
-	    xAxis: {
-	        type: 'datetime'
-	    },
-
-	    series: [{
-	        data: data,
-	        lineWidth: 0.5,
-	        name: 'Hourly data points'
-	    }]
-
-	});
-	console.timeEnd('line'); */
 	
 function renderChart(data, status){
-	var format = '{value: %m/%e %H:%M}';
+	var format = '{value: %H:%M}';
 
 	var rsrpChartOptions = {
 		  chart: {
+			borderColor: '#BDC3C7',
+			borderWidth: 1,
 		    scrollablePlotArea: {
 		      minWidth: 500
 		    },
-		    zoomType: "x"
+		    zoomType: "x",
 		  },
-
+		  credits: {
+		    enabled: false
+		  },
 		  title: {
 		    text: 'RSRP(dBm)'
 		  },
@@ -562,8 +270,6 @@ function renderChart(data, status){
 				type: 'datetime',
 				labels: {
 					format: format,
-					overflow: 'justify'
-					
 				},
 				//minTickInterval: interval,
 				ordinal: false //this sets the fixed time formats 
@@ -582,7 +288,6 @@ function renderChart(data, status){
 		    },
 		    showFirstLabel: false,
 		    lineWidth: 1,
-		    max: -60, min: -90
 		  }],
 		  lang: {
 		        noData: "No data to Display"
@@ -599,26 +304,7 @@ function renderChart(data, status){
 
 		  plotOptions: {
 		    series: {
-		      cursor: 'pointer',
-		      point: {
-		        events: {
-		          click: function (e) {
-		            hs.htmlExpand(null, {
-		              pageOrigin: {
-		                x: e.pageX || e.clientX,
-		                y: e.pageY || e.clientY
-		              },
-		              headingText: this.series.name,
-		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
-		                this.y ,
-		              width: 200
-		            });
-		          }
-		        }
-		      }/* ,
-		      marker: {
-		        lineWidth: 1
-		      } */
+		      cursor: 'pointer'
 		    }
 		  },
 		  series: rsrpCreateSeries(data)
@@ -626,12 +312,16 @@ function renderChart(data, status){
 	
 	var rsrqChartOptions = {
 			  chart: {
+			    borderColor: '#BDC3C7',
+				borderWidth: 1,
 			    scrollablePlotArea: {
 			      minWidth: 500
 			    },
 			    zoomType: "x"
 			  },
-
+			  credits: {
+			    enabled: false
+			  },
 			  title: {
 			    text: 'RSRQ(dB)'
 			  },
@@ -639,8 +329,6 @@ function renderChart(data, status){
 					type: 'datetime',
 					labels: {
 						format: format,
-						overflow: 'justify'
-						
 					},
 					//minTickInterval: interval,
 					ordinal: false //this sets the fixed time formats 
@@ -659,7 +347,6 @@ function renderChart(data, status){
 			    },
 			    showFirstLabel: false,
 			    lineWidth: 1,
-			    max: 0, min: -20
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -676,26 +363,7 @@ function renderChart(data, status){
 
 			  plotOptions: {
 			    series: {
-			      cursor: 'pointer',
-			      point: {
-			        events: {
-			          click: function (e) {
-			            hs.htmlExpand(null, {
-			              pageOrigin: {
-			                x: e.pageX || e.clientX,
-			                y: e.pageY || e.clientY
-			              },
-			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
-			                this.y ,
-			              width: 200
-			            });
-			          }
-			        }
-			      }/* ,
-			      marker: {
-			        lineWidth: 1
-			      } */
+			      cursor: 'pointer'
 			    }
 			  },
 			  series: rsrqCreateSeries(data)
@@ -703,12 +371,16 @@ function renderChart(data, status){
 	
 	var snrChartOptions = {
 			  chart: {
+			    borderColor: '#BDC3C7',
+				borderWidth: 1,
 			    scrollablePlotArea: {
 			      minWidth: 500
 			    },
 			    zoomType: "x"
 			  },
-
+			  credits: {
+			    enabled: false
+			  },
 			  title: {
 			    text: 'SNR(dB)'
 			  },
@@ -716,8 +388,6 @@ function renderChart(data, status){
 					type: 'datetime',
 					labels: {
 						format: format,
-						overflow: 'justify'
-						
 					},
 					//minTickInterval: interval,
 					ordinal: false //this sets the fixed time formats 
@@ -736,7 +406,6 @@ function renderChart(data, status){
 			    },
 			    showFirstLabel: false,
 			    lineWidth: 1,
-			    max: 30, min: -10
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -753,26 +422,7 @@ function renderChart(data, status){
 
 			  plotOptions: {
 			    series: {
-			      cursor: 'pointer',
-			      point: {
-			        events: {
-			          click: function (e) {
-			            hs.htmlExpand(null, {
-			              pageOrigin: {
-			                x: e.pageX || e.clientX,
-			                y: e.pageY || e.clientY
-			              },
-			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
-			                this.y ,
-			              width: 200
-			            });
-			          }
-			        }
-			      }/* ,
-			      marker: {
-			        lineWidth: 1
-			      } */
+			      cursor: 'pointer'
 			    }
 			  },
 			  series: snrCreateSeries(data)
@@ -780,12 +430,16 @@ function renderChart(data, status){
 		
 	var cpuChartOptions = {
 			  chart: {
+				borderColor: '#BDC3C7',
+				borderWidth: 1,
 			    scrollablePlotArea: {
 			      minWidth: 500
 			    },
 			    zoomType: "x"
 			  },
-
+			  credits: {
+			    enabled: false
+			  },
 			  title: {
 			    text: 'CPU(%)'
 			  },
@@ -831,25 +485,7 @@ function renderChart(data, status){
 			  plotOptions: {
 			    series: {
 			      cursor: 'pointer',
-			      point: {
-			        events: {
-			          click: function (e) {
-			            hs.htmlExpand(null, {
-			              pageOrigin: {
-			                x: e.pageX || e.clientX,
-			                y: e.pageY || e.clientY
-			              },
-			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
-			                this.y ,
-			              width: 200
-			            });
-			          }
-			        }
-			      }/* ,
-			      marker: {
-			        lineWidth: 1
-			      } */
+			   	  color: 'green'
 			    }
 			  },
 			  series: cpuCreateSeries(data)
@@ -857,12 +493,16 @@ function renderChart(data, status){
 	
 	var ramChartOptions = {
 			  chart: {
+			  	borderColor: '#BDC3C7',
+				borderWidth: 1,
 			    scrollablePlotArea: {
 			      minWidth: 500
 			    },
 			    zoomType: "x"
 			  },
-
+			  credits: {
+			    enabled: false
+			  },
 			  title: {
 			    text: 'MEMORY(%)'
 			  },
@@ -908,25 +548,7 @@ function renderChart(data, status){
 			  plotOptions: {
 			    series: {
 			      cursor: 'pointer',
-			      point: {
-			        events: {
-			          click: function (e) {
-			            hs.htmlExpand(null, {
-			              pageOrigin: {
-			                x: e.pageX || e.clientX,
-			                y: e.pageY || e.clientY
-			              },
-			              headingText: this.series.name,
-			              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
-			                this.y ,
-			              width: 200
-			            });
-			          }
-			        }
-			      }/* ,
-			      marker: {
-			        lineWidth: 1
-			      } */
+			   	  color: 'green'
 			    }
 			  },
 			  series: ramCreateSeries(data)
@@ -960,7 +582,7 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'RSRP',
-				 lineWidth: 0.5,
+				 lineWidth: 1,
 				 data : rsrpChannelData
 			 });
 			
@@ -994,7 +616,7 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'RSRQ',
-				 lineWidth: 0.5,
+				 lineWidth: 1,
 				 data : rsrqChannelData
 			 });
 			
@@ -1024,11 +646,10 @@ function renderChart(data, status){
 				}
 			});
 			 
-			 
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'SNR',
-				 lineWidth: 0.5,
+				 lineWidth: 1,
 				 data : ssnrChannelData
 			 });
 			
@@ -1058,7 +679,9 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'CPU',
-				 data : cpuChannelData
+				 data : cpuChannelData,
+				 zoneAxis: 'y',
+		         zones: [{value: 50}, {value: 75, color: 'yellow'}, {value: 100, color: 'red'}]
 			 });
 			
 		  return series;
@@ -1087,19 +710,20 @@ function renderChart(data, status){
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'RAM',
-				 data : ramChannelData
+				 data : ramChannelData,
+				 zoneAxis: 'y',
+		         zones: [{value: 50}, {value: 75, color: 'yellow'}, {value: 100, color: 'red'}]
 			 });
 			
 		  return series;
 	}
 	//highcharts 로딩
-	$("#loading").hide();
 	Highcharts.chart('rsrpContainer', rsrpChartOptions);
 	Highcharts.chart('rsrqContainer', rsrqChartOptions);
 	Highcharts.chart('snrContainer', snrChartOptions);
 	Highcharts.chart('cpuContainer', cpuChartOptions);
 	Highcharts.chart('ramContainer', ramChartOptions);
-	
+	hideLoading();	
 }	
 
 function initDate() {
@@ -1124,17 +748,16 @@ $(document).ready(function() {
 	init();
 });
 </script>
-<!-- 
 
 <script>	
 $('#datePicker .input-group.date').datepicker({
 	todayBtn: "linked",	
 	forceParse: false,
-	autoclose: true
+	autoclose: true,
+	todayHighlight: true,
+	format: "yyyy/mm/dd",
+	language: "kr"
 });
-
-
-</script> -->
-<!--  wrapper -->
+</script>
 </body>
 </html>

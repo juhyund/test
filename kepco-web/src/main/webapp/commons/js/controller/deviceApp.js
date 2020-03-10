@@ -3,6 +3,7 @@ var deviceApp = angular.module('deviceApp', []);
 deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	
 	$scope.deviceInfo = function () {
+		showLoading();
 		$http({
 	        method: 'POST',
 
@@ -26,10 +27,10 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	$("#last_comm_dt_span").show();
 	    	$("#reg_dt_span").show();
 	    	$("#di_remark").show();
-	    	
 		}, function errorCallback(response) {
 	        alert("error");
 	    });
+		hideLoading();
 	};
 	
 	$scope.objectModel = function () {
@@ -107,10 +108,11 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        	$scope.objects[index] = item;
 	    	}, function errorCallback(response) {
 	        	console.log("error");
-	        });        	
+	        });      	
         });     
 	}
 	$scope.read = function (resource) {
+		showLoading();
 		resource.operation_method = "Read";
 		var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
 		
@@ -133,7 +135,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	resource.statusCode = data.data.statusCode
     		resource.statusMsg = data.data.statusMsg;
 	    	resource.tid = data.data.tid;
-	    	
 	    	if(data.data.statusCode == "200") {
 	    		alert("전송성공 [" + data.data.tid + "]");
 	    	} else {
@@ -144,11 +145,11 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        alert("전송실패");
 	        resource.statusMsg = "제어실패";	    	
 	    });
-		
+		hideLoading();
     };
     
     $scope.write = function (resource, newValue) {
-    	
+    	showLoading();
     	resource.operation_method = "Write";    	
 		var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
 		
@@ -172,7 +173,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	resource.statusCode = data.data.statusCode
     		resource.statusMsg = data.data.statusMsg;
 	    	resource.tid = data.data.tid;
-	    	
 	    	if(data.data.statusCode == "200") {
 	    		alert("전송성공 [" + data.data.tid + "]");
 	    	} else {
@@ -183,10 +183,11 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        alert("전송실패");
 	        resource.statusMsg = "제어실패";	    	
 	    });
+		hideLoading();
     };
     
     $scope.execute = function (resource) {
-    	
+    	showLoading();
     	resource.operation_method = "Execute";
     
     	var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;
@@ -210,7 +211,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	resource.statusCode = data.data.statusCode
     		resource.statusMsg = data.data.statusMsg;
 	    	resource.tid = data.data.tid;
-	    	
 	    	if(data.data.statusCode == "200") {
 	    		alert("전송성공 [" + data.data.tid + "]");
 	    	} else {
@@ -221,12 +221,12 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        alert("전송실패");
 	        resource.statusMsg = "전송실패";	    	
 	    });
-		
+		hideLoading();
     };
     
 
     $scope.attribute = function (resource) {
-    	
+    	showLoading();
     	resource.operation_method = "속성설정";
     	
     	var path = "/" + resource.object_id + "/" + resource.object_instance_id + "/" + resource.resource_id;	
@@ -264,7 +264,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     	    	resource.statusCode = data.data.statusCode
         		resource.statusMsg = data.data.statusMsg;
     	    	resource.tid = data.data.tid;
-    	    	
     	    	if(data.data.statusCode == "200") {
     	    		alert("전송성공 [" + data.data.tid + "]");
     	    	} else {
@@ -277,12 +276,13 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     	    });
             
         });
-    	
+    	hideLoading();
         $('#writeModal').modal('show');
     	
     };
     
     $scope.coapping = function () {
+    	showLoading();
     	$scope.coapping = {};
 		$http({
 			method: 'POST',
@@ -309,9 +309,11 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	        alert("전송실패");
 	        coapping.statusMsg = "제어실패";	    	
 	    });
+		hideLoading();
     };
     
     $scope.reset = function () {
+    	showLoading();
 		$http({
 			method: 'POST',
 	        url: COMMON_URL + "/ajaxExecResource",
@@ -321,7 +323,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         		"device_id" : $("#device_id").val(),
         		"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(),
-	        	"resource" : "4/0/4" 
+	        	"resource" : "/4/0/4" 
         	}
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
@@ -334,5 +336,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     	}, function errorCallback(response) {
 	        alert("전송실패");
 	    });
+		hideLoading();
     };
 });

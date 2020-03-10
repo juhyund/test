@@ -1938,3 +1938,12 @@ Number.prototype.format = function(n){
   }
 	  
 }
+
+function showLoading(){
+	$("#loading").show();
+}
+
+function hideLoading(){
+	$("#loading").hide();
+}
+

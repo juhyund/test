@@ -27,6 +27,9 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=22"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="components/angular-sweetalert/SweetAlert.js"></script>
+https://cdnjs.cloudflare.com/ajax/libs/angular-sweetalert/1.1.2/SweetAlert.min.js
+
 
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -41,7 +44,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
@@ -96,8 +98,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</thead>
 							<tbody>
 								<tr>
-									<td><h3>${meter_id}</h3></td>
-									<td><h3 id = "device_id"></h3></td>
+									<td><h3 id = "meter_serial"></h3></td>
+									<td><h3 id = "device_serial"></h3></td>
 									<td><h3 id = "meter_type"></h3></td>
 									<td><h3 id = "last_comm_dt"></h3></td>
 								</tr>
@@ -319,21 +321,24 @@ function successResultHandler(data, status) {
 
 function loadMeterInfo(data, status) {	
 	//받아온 데이터를 미터Info에 로딩
-	var device_id; 
+	var device_serial; 
+	var meter_serial;
 	var meter_type;
 	var last_comm_dt; 
 	
-	device_id = data.resultGrid[0].device_id;
+	device_serial = data.resultGrid[0].device_serial;
+	meter_serial = data.resultGrid[0].meter_serial;
 	meter_type = data.resultGrid[0].meter_type;
 	last_comm_dt = data.resultGrid[0].last_comm_dt;
 	
-	$('#device_id').text(device_id);
+	$('#device_serial').text(device_serial);
+	$('#meter_serial').text(meter_serial);
 	$('#meter_type').text(meter_type);
 	$('#last_comm_dt').text(last_comm_dt);
 }
 
 function loadChart(data, status){
-	var format = '{value: %m/%e %H:%M}';
+	var format = '{value: %m/%d <br> %H:%M}';
 
 	var chartOptions = {
 		  chart: {
@@ -347,6 +352,7 @@ function loadChart(data, status){
 		    text: ''
 		  },
 		  xAxis: {
+			  	useHTML : true,
 				type: 'datetime',
 				labels: {
 					format: format,
@@ -400,6 +406,7 @@ function loadChart(data, status){
 		  plotOptions: {
 		    series: {
 		      cursor: 'pointer',
+		      //lineWidth: 1,
 		      point: {
 		        events: {
 		          click: function (e) {
@@ -409,16 +416,18 @@ function loadChart(data, status){
 		                y: e.pageY || e.clientY
 		              },
 		              headingText: this.series.name,
-		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+		              maincontentText: Highcharts.dateFormat('%Y/%m/%d %H:%M', this.x) + '<br/> ' +
 		                this.y ,
 		              width: 200
 		            });
 		          }
 		        }
-		      }/* ,
+		      },
 		      marker: {
-		        lineWidth: 1
-		      } */
+		        symbol   :"circle",
+		        radius: 1.5
+		        
+		      }
 		    }
 		  },
 		  series: createSeries(data)

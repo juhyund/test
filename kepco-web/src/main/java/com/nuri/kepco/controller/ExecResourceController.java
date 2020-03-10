@@ -122,8 +122,6 @@ public class ExecResourceController {
 		
 		try {			
 			
-			logger.debug("payload : {}", payload);
-			
 			String url = request.getParameter("url");
 			String method = request.getParameter("method");
 			String device_serial = request.getParameter("device_serial");
@@ -145,8 +143,10 @@ public class ExecResourceController {
 			param.put("reg_id", ControllerUtil.getLoginUser());
 			param.put("format", "JSON");
 			
-			String[] commStr = { "device_id",  "service_id", "resource_instance_id" };
+			String[] commStr = { "device_id",  "service_id", "resource_instance_id", "target_meter"};
 			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			logger.debug("TARGET METER : {}", param.get("target_meter") );
 			
 			operationLogService.insert(param);
 			

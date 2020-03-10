@@ -91,10 +91,9 @@ public class NMSController {
 				jarr.add(i, tmp);
 				
 			}
-			connectivityStatistics.add(jarr);
 			
 			json.put("totalCount", cnt);
-			json.put("resultGrid", connectivityStatistics);
+			json.put("resultGrid", jarr);
 			
 		} catch (Exception e) {
 			logger.error(e.toString(),e);
@@ -116,11 +115,7 @@ public class NMSController {
 			List<RamUsageMonitor> ramUsageList = this.nmsInfoService.getRamUsageMonitor(param);
 			List<CpuUsageMonitor> cpuUsageList = this.nmsInfoService.getCpuUsageMonitor(param);
 			List<ConnectivityMonitor> connectivityList = this.nmsInfoService.getConnectivityMonitor(param);
-			
-			System.out.println("ramUsageList : "+ramUsageList.size());
-			System.out.println("cpuUsageList : "+cpuUsageList.size());
-			System.out.println("connectivityList : "+connectivityList.size());
-			
+
 			json.put("ramUsageList", ramUsageList);
 			json.put("cpuUsageList", cpuUsageList);
 			json.put("connectivityList", connectivityList);
