@@ -208,21 +208,21 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "APPRENT_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>지상무효전력량(kVarh)</td>
+													<th>지상무효전력량(kVarh)(+)</td>
 													<td id = "LEAD_IMP_TOT"></td>
 													<td id = "LEAD_IMP_T1"></td>
 													<td id = "LEAD_IMP_T2"></td>
 													<td id = "LEAD_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>진상무효전력량(kVarh)</td>
+													<th>진상무효전력량(kVarh)(-)</td>
 													<td id = "LAGGING_IMP_TOT"></td>
 													<td id = "LAGGING_IMP_T1"></td>
 													<td id = "LAGGING_IMP_T2"></td>
 													<td id = "LAGGING_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>평균역률(PF)</td>
+													<th>평균역률(pf)</td>
 													<td id = "PF_IMP_TOT"></td>
 													<td id = "PF_IMP_T1"></td>
 													<td id = "PF_IMP_T2"></td>
@@ -258,21 +258,21 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "APPRENT_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)지상무효전력량(kVarh)</td>
+													<th>(역)지상무효전력량(kVarh)(+)</td>
 													<td id = "LEAD_EXP_TOT"></td>
 													<td id = "LEAD_EXP_T1"></td>
 													<td id = "LEAD_EXP_T2"></td>
 													<td id = "LEAD_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)진상무효전력량(kVarh)</td>
+													<th>(역)진상무효전력량(kVarh)(-)</td>
 													<td id = "LAGGING_EXP_TOT"></td>
 													<td id = "LAGGING_EXP_T1"></td>
 													<td id = "LAGGING_EXP_T2"></td>
 													<td id = "LAGGING_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)평균역률(PF)</td>
+													<th>(역)평균역률(pf)</td>
 													<td id = "PF_EXP_TOT"></td>
 													<td id = "PF_EXP_T1"></td>
 													<td id = "PF_EXP_T2"></td>
