@@ -155,7 +155,7 @@ function successResultHandler(data, status) {
 		if(index == 'result'){
 			if(item.result == 1){
 				data.result.result = '성공'
-			}else if(item.result == 2){
+			}else if(item.result == 0){
 				data.result.result = '실패'
 			}else{
 				data.result.result = '대기중'
