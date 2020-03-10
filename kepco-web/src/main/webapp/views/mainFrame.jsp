@@ -39,7 +39,7 @@
 <div class="navbar-header" style="width:250px">
 <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-angle-double-left"></i> </a>
 <div style="padding:20px;width:300px">
-	<span class="m-r-sm text-muted welcome-message" style="font-weight: 700"> <strong>Welcome to LWM2M!!</strong></span>
+	<span class="m-r-sm text-muted welcome-message" style="font-weight: 700"> <strong>Welcome to KEPCO Web</strong></span>
 </div>
 </div>
 <ul class="nav navbar-top-links navbar-right" style="margin-right:5px;">

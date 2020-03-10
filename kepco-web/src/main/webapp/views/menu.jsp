@@ -2,11 +2,11 @@
 <div class="sidebar-collapse">
 	<ul class="nav metismenu" id="side-menu" style="">
 		<li class="nav-header" style="height:59px">
-	        <div class="profile-element logo-text">
-	        	LWM2M LTE 5차
+	        <div class="profile-element logo-text" style="text-align: left;">
+	        	<img src="<%=COMMON_PATH_IMG%>/login_logo.png">
 	        </div>
-	        <div class="logo-element">
-	            LWM2M
+	        <div class="logo-element" style="background-color: #293846">
+	            <img src="<%=COMMON_PATH_IMG%>/logo.png">
 	        </div>
 	    </li>
 	    <li>
@@ -38,7 +38,6 @@
 				<li><a href="<%=COMMON_URL%>/operationLog" target="contentsFrame">제어 이력</a></li>
 	        </ul>
 	    </li>
-	    
 	    
 	    <%-- <li>
 	        <a href="#" ><i class="fa fa-pen-square"></i> <span class="nav-label">게시판</span> <span class="fa arrow"></span></a>

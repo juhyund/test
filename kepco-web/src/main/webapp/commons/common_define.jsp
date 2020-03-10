@@ -14,5 +14,5 @@
 	String WEBINF_PATH = WEBROOT_PATH + "/WEB-INF";
 	String SAVE_PATH = WEBROOT_PATH + "/files";
 	
-	String PAGE_TITLE = "LWM2M LTE 5차";	
+	String PAGE_TITLE = "KEPCO Web";	
 %>
