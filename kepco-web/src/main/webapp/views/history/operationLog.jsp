@@ -133,7 +133,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<option value=''>제어결과</option>
 																	<option value='1'>성공</option>
 																	<option value='0'>실패</option>
-																	<option value=''>대기중</option>
+																	<option value='-1'>대기중</option>
 																</select>
 															</div>
 															<div class="col-lg-3">
