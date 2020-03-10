@@ -51,6 +51,7 @@ public class NotifyDataParser extends DataParser {
 		this.modemTime = (modemTime == null)? TimeUtil.getCurrentTimeMilli() : modemTime;
 		this.deviceId = deviceId;
 		
+		LOG.debug("deviceId : [{}]", this.deviceId);
 		LOG.debug("modemTime : [{}]", this.modemTime);
 		
 		try {
