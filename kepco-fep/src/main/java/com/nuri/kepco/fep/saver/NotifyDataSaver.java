@@ -101,7 +101,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();			
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -147,7 +147,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -192,7 +192,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -240,7 +240,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -313,7 +313,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
@@ -377,7 +377,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
 			
 			// 부모 branch
 			String parentBranchNm = getDeviceInfo().getParent_branch_nm();

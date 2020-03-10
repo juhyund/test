@@ -207,8 +207,6 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 				}
 			}
 			
-			alert(payload);
-			
 			$scope.executeWrite(path, payload, targetMeter);
 		}
     };
