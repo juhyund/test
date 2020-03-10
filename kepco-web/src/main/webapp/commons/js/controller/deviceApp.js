@@ -136,7 +136,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     		resource.statusMsg = data.data.statusMsg;
 	    	resource.tid = data.data.tid;
 	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
+	    		alert("전송성공\nTID:  [" + data.data.tid + "]");
 	    	} else {
 	    		alert("제어실패 [" + resource.statusMsg + "]");
 	    	}
@@ -174,7 +174,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     		resource.statusMsg = data.data.statusMsg;
 	    	resource.tid = data.data.tid;
 	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
+	    		alert("전송성공\nTID:  [" + data.data.tid + "]");
 	    	} else {
 	    		alert("제어실패 [" + resource.statusMsg + "]");
 	    	}
@@ -212,7 +212,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     		resource.statusMsg = data.data.statusMsg;
 	    	resource.tid = data.data.tid;
 	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
+	    		alert("전송성공\nTID:  [" + data.data.tid + "]");
 	    	} else {
 	    		alert("제어실패 [" + data.data.statusMsg + "]");
 	    	}
@@ -265,7 +265,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         		resource.statusMsg = data.data.statusMsg;
     	    	resource.tid = data.data.tid;
     	    	if(data.data.statusCode == "200") {
-    	    		alert("전송성공 [" + data.data.tid + "]");
+    	    		alert("전송성공\nTID:  [" + data.data.tid + "]");
     	    	} else {
     	    		alert("제어실패 [" + resource.statusMsg + "]");
     	    	}
@@ -300,7 +300,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	    	$scope.coapping.statusMsg = data.data.statusMsg;
 	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
+	    		alert("전송성공\nTID:  [" + data.data.tid + "]");
 	    	} else {
 	    		alert("제어실패 [" + coapping.statusMsg + "]");
 	    	}
@@ -318,17 +318,17 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 			method: 'POST',
 	        url: COMMON_URL + "/ajaxExecResource",
 	        params : {
-	        	"url" : "clients/",
+	        	"url" : "clients/execute/",
 	        	"method" : "Execute", 
         		"device_id" : $("#device_id").val(),
         		"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").val(),
-	        	"resource" : "/4/0/4" 
+	        	"resource" : "/3/0/4" 
         	}
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공 [" + data.data.tid + "]");
+	    		alert("전송성공 \nTID: [" + data.data.tid + "]");
 	    	} else {
 	    		alert("제어실패 [" + data.data.statusMsg + "]");
 	    	}
