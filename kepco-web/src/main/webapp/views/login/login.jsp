@@ -29,7 +29,7 @@ if (top.location!= self.location) {
 <style>
 .login-bg {
 	position: relative;
-	height: 1000px;
+	height: 1100px;
 	background: url(<%=COMMON_PATH_IMG%>/login_bg.jpg);
 	background-size: cover;
 	background-position: top center;
@@ -49,7 +49,7 @@ if (top.location!= self.location) {
 <body>	
 	<div id="wrapper" style="height: 100%; overflow: hidden;">
 		<div class="row" style="width:100%">
-				<div class="login-bg col-md-9" style="min-height: 937px;"></div>
+				<div class="login-bg col-md-9" style="min-height: 1100px;"></div>
 
 				<div class="col-md-3" style="padding:30px">
 					<div class="row">

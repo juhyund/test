@@ -602,8 +602,10 @@ function firmwarelist() {
 		<!-- fw modal -->
 		<%@ include file="/views/device/fwModal.jsp"%>
 	</div>
-
-	
-
+	<div id="loading">
+		<div id="loading-image" class="spinner-border" role="status">
+			<img id="loading-image" src="<%=COMMON_PATH_IMG%>/loading.gif" alt="Loading..." /></div>
+		</div>
+	</div>
 </body>
 </html>

@@ -163,7 +163,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+									<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
 									<div id="grid-page" style ="display:none;" class="m-t-sm">
