@@ -23,6 +23,7 @@
 
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css">
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
