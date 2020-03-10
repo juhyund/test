@@ -56,7 +56,7 @@
 	    background-color: lightgreen;
 	}
 	
-	.rag-amber-outer .rag-element {
+	.rag-grey-outer .rag-element {
 	    background-color: #b3b5b7;
 	}
   	
@@ -241,7 +241,7 @@ var columnDefs = [
 	{headerName: "제어결과", field: "result", width:130,
         cellClassRules: {
             'rag-green-outer': function(params) { return params.value == '성공'},
-            'rag-amber-outer': function(params) { return params.value == '대기중' },
+            'rag-grey-outer': function(params) { return params.value == '대기중' },
             'rag-red-outer': function(params) { return params.value == '실패'}
         },
         cellRenderer: function(params) {
