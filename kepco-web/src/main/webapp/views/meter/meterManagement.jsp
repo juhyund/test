@@ -87,6 +87,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<select class="form-control" name="meter_type"
 																id="meter_type"></select>
 														</div>
+														
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">통신상태</label>
+														<div class="col-lg-3">
+															<select class="form-control" name="device_status"
+																id="device_status"></select>
+														</div>
 													</div>
 
 													<div class="form-group row">												
@@ -103,19 +110,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<input class="form-control" name="device_serial"
 																id="device_serial"></input>
 														</div>
-													</div>
-													
-													<div class="form-group form-group-end row">
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">통신상태</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="device_status"
-																id="device_status"></select>
-														</div>
 														
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">검침 일시</label>
-														<div class="col-sm-4" id="datePicker">
+														<div class="col-lg-3" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
 																<input type="hidden" id="sdate" name="sdate" value=""> 
 																<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
@@ -133,10 +131,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															</div>
 														</div>
 													</div>
-
-
+													
 												</td>
-												<td width="180" height="80" style="text-align: right">
+												<td width="180" height="80" style="float: right">
 													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
 														<i class="fa fa-search"></i>
 													</button>
