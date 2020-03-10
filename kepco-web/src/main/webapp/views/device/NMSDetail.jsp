@@ -183,9 +183,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<input type="hidden" id="deviceSerial" name="deviceSerial" value="${deviceSerial}" class="form-control">
 					<input type="hidden" id="usageTime" name="usageTime" value="${usageTime}" class="form-control">
 				</form>
+				
 				<div id="loading">
-				        <img SRC="https://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F9950163C5AFE32810A7310">    
-				        <%-- <img id="loading-image" src="<%=COMMON_PATH_IMG%>/loading1.gif" alt="Loading..." /></div> --%>
+					<div id="loading-image" class="spinner-border" role="status">
+						<img id="loading-image" src="<%=COMMON_PATH_IMG%>/loading.gif" alt="Loading..." /></div>
+					</div>
 				</div>
 				<div>								
 				   <!-- chart -->
@@ -205,6 +207,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		</div>
 	</div>
 </div>
+
+
 <!-- body -->
 </div>
 </div>	
@@ -222,7 +226,7 @@ function ajaxSearchForm() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
     var options = { 
-           beforeSend  : showRequest,
+           beforeSend  : showLoading,
            success     : successResultHandler,
            url         : COMMON_URL + "/ajaxNMSDetail",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
@@ -238,17 +242,6 @@ function resetForm(){
 	$("#search_form")[0].reset();
 	
 };
-
-function showRequest() {
-	/* $("#loading").show(); */
-	$("#loading")
-	.css("position","absolute")
-	.css("z-index","10001")
-	.css("top","300px")
-	.css("left","49%")
-	.show()
-
-}
 
 function successResultHandler(data, status) {
 	//chart rendering
@@ -294,8 +287,7 @@ function renderChart(data, status){
 		      format: '{value:.,0f}'
 		    },
 		    showFirstLabel: false,
-		    lineWidth: 2,
-		    max: 80, min: -80
+		    lineWidth: 1,
 		  }],
 		  lang: {
 		        noData: "No data to Display"
@@ -354,8 +346,7 @@ function renderChart(data, status){
 			      format: '{value:.,0f}'
 			    },
 			    showFirstLabel: false,
-			    lineWidth: 2,
-			    max: 50, min: -50
+			    lineWidth: 1,
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -414,8 +405,7 @@ function renderChart(data, status){
 			      format: '{value:.,0f}'
 			    },
 			    showFirstLabel: false,
-			    lineWidth: 2,
-			    max: 50, min: -50
+			    lineWidth: 1,
 			  }],
 			  lang: {
 			        noData: "No data to Display"
@@ -656,7 +646,6 @@ function renderChart(data, status){
 				}
 			});
 			 
-			 
 			 //시리즈 생성 (생성된 데이터 배열을 시리즈에 할당)
 			 series.push({
 				 name : 'SNR',
@@ -729,13 +718,12 @@ function renderChart(data, status){
 		  return series;
 	}
 	//highcharts 로딩
-	$("#loading").hide();
 	Highcharts.chart('rsrpContainer', rsrpChartOptions);
 	Highcharts.chart('rsrqContainer', rsrqChartOptions);
 	Highcharts.chart('snrContainer', snrChartOptions);
 	Highcharts.chart('cpuContainer', cpuChartOptions);
 	Highcharts.chart('ramContainer', ramChartOptions);
-	
+	hideLoading();	
 }	
 
 function initDate() {
@@ -760,17 +748,17 @@ $(document).ready(function() {
 	init();
 });
 </script>
-<!-- 
 
 <script>	
 $('#datePicker .input-group.date').datepicker({
 	todayBtn: "linked",	
 	forceParse: false,
-	autoclose: true
+	autoclose: true,
+	todayHighlight: true,
+	format: "yyyy/mm/dd",
+	language: "kr"
 });
-
-
-</script> -->
+</script>
 <!--  wrapper -->
 </body>
 </html>

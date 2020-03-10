@@ -255,7 +255,14 @@ function successCommunication(data, status) {
 	var d3_rate = data.d3 / data.total * 100;
 	var d4_rate = data.d4 / data.total * 100;
 	var t_cnt = data.d1 + data.d2 + data.d3 + data.d4;
-	var t_rate = t_cnt / data.total * 100;
+	
+	var t = 0;
+	if(data.d1 != 0){ t++; }
+	if(data.d2 != 0){ t++; }
+	if(data.d3 != 0){ t++; }
+	if(data.d4 != 0){ t++; }
+	
+	var t_rate = (d1_rate + d2_rate + d3_rate + d4_rate) / t;
 	
 	$("#com_rate").html(removeZero(d1_rate.toFixed(1))+"%");
 	$("#com_cnt").html(com_cnt);
