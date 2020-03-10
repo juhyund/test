@@ -179,6 +179,18 @@ public class ExecResourceController {
 			tid = GeneratorId.getInstance().getId(device_serial);
 			url = cmdUrl + url + device_serial + "?timeout=" + (sec * 1000);
 			
+			
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("request_dt", DateUtil.getNowDateTime());
+			param.put("tid", tid);
+			param.put("method", method.toUpperCase());
+			param.put("reg_id", ControllerUtil.getLoginUser());
+			param.put("format", "JSON");
+			String[] commStr = { "device_id",  "service_id" };
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			operationLogService.insert(param);
+			
 			logger.debug("url: " + url);
 			
 			json = HttpClientUtil.send(url, null, method);
