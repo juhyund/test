@@ -146,7 +146,6 @@ public class MeterValueServiceImpl implements MeterValueService {
 		String[] header = new String[defaultCol+channelL.size()];
 		header[0] = "검침일시";
 		header[1] = "모뎀 시간";
-		//header.{"검침일시", "모뎀시간"};
 		String cells = "read_dt,itime";
 		
 		
@@ -156,20 +155,11 @@ public class MeterValueServiceImpl implements MeterValueService {
 			cells += ",c"+(i+1)+"_metervalue";
 		}
 		
-		System.out.println("\n header = " +header);
-		System.out.println("\n cells = " +header);
-		
-		
 		String template_filepath = "/template/template_excel.xlsx";
 		String filename = "meter_value_detail_" + DateUtil.getNowDateTime() + ".xlsx";			
 		String filepath = fileDownloadDir + "/metervalue/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 		
-
 		List<Map<String, Object>> result = this.meterValueDAO.getMeterValueDetail(meterValue);
-		
-					
-		
-		System.out.println("\n\n\nresult = "+result);
 		
 		ExcelRef excelRef = new ExcelRef();
 		excelRef.setTitle("검침 상세 다운로드");
