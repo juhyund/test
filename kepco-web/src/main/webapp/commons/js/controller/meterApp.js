@@ -117,6 +117,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 		
 		var object_instance_id = 0;
 		var object_id = resources[0].object_id;
+		var targetMeter = "";
 		
 		if(object_id == 31011) {
 			object_instance_id = $("#object_instance_id").val(); 
@@ -135,6 +136,16 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 			for(i in resources) {
 				
 				var resource = resources[i];
+				
+				// targetMeter for meterAccess
+				if(object_id == 31012 && resource.resource_id == 101) {
+					targetMeter = resource.newValue;
+				}
+				
+				// targetMeter for meteringSchedule
+				if(object_id == 31011 && resource.resource_id == 104) {
+					targetMeter = resource.newValue;
+				}
 				
 				if(object_id == 31011 && resource.resource_id == 113) {// multiple				
 					
@@ -166,11 +177,9 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 					if(object_id == 31012 && resource.resource_id == 106) {
 						
 						var obis = resources[4].newValue;
-						var cmd = resources[3].newValue;
-						
-						console.log(obis + " " + cmd + " " + resource.newValue);
+						var cmd = resources[3].newValue;						
 						var apdu = $scope.makeAPDU(obis, resource.newValue, cmd);
-						console.log(apdu);
+						
 						
 						if(apdu != undefined) {
 							payload.resources.push({
@@ -189,7 +198,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 				}
 			}
 			
-			$scope.executeWrite(path, payload);
+			$scope.executeWrite(path, payload, targetMeter);
 		}
     };
     
@@ -241,7 +250,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
     };
     
     
-    $scope.executeWrite = function (path, payload) {
+    $scope.executeWrite = function (path, payload, targetMeter) {
     	
     	var operation_method = "Write";
     	
@@ -255,6 +264,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 	        	"device_id" : $("#device_id").val(),
 	        	"service_id" : $("#service_id").val(),
 	        	"device_serial" : $("#device_serial").text(),
+	        	"target_meter" : targetMeter,
 	        	"resource" : path
 	        },
 	        data : payload		
