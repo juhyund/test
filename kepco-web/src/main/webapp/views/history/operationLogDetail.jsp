@@ -114,7 +114,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									<input type="hidden" id="_request_dt" name="_request_dt" value="${request_dt}" class="form-control">
 								</form>
 								<div>
-									<button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
+									<button class="btn btn-outline btn-primary m-t-sm" style="height: 100%; float: right" type="button" onclick="javascript:history.back(-1)">
 										<i class="fa fa-undo"> 목록으로 돌아가기</i>
 									</button>
 						        </div>

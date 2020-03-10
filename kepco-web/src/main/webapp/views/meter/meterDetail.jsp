@@ -433,7 +433,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				
 												
 
-			   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
+			   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%; float: right" type="button" onclick="javascript:history.back(-1)">
 					<i class="fa fa-undo"> 목록으로 돌아가기</i>
 				</button>
 			              
