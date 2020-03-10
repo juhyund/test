@@ -84,6 +84,10 @@
 		color: black;
 	}
 	
+	.border-bottom-color {
+		border-bottom: 0.5px solid white !important;
+	}
+	
 	#nmsCodeGuide th, #nmsCodeGuide td {
 	    padding: 3px 5px;
 	    border: solid 1px;
@@ -194,6 +198,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<tr>
 						    <th>상태</th>
 						    <th>CPU/Memory</th>
+						    <th style="width: 90px; background-color: white;"></th>
+						    <th>상태</th>
 						    <th>RSRP(dBm)</th>
 						    <th>RSRQ(dB)</th>
 						    <th>SNR(dB)</th>
@@ -201,6 +207,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<tr>
 						    <td class="warning-green td-custom">정상</td>
 						    <td><= 50%</td>
+						    <td class="border-bottom-color"></td>
+						    <td class="warning-green td-custom">정상</td>
 						    <td>>= (-80)</td>
 						    <td>>= (-10)</td>
 						    <td>>= (20)</td>
@@ -208,20 +216,26 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<tr>
 						    <td class="warning-yellow td-custom">양호</td>
 						    <td>50% to 70%</td>
+						    <td class="border-bottom-color"></td>
+						    <td class="warning-yellow td-custom">양호</td>
 						    <td>(-80) to (-90)</td>
 						    <td>(-10) to (-15)</td>
 						    <td>(13) to (20)</td>
 						</tr>
 						<tr>
-						    <td class="warning-orange td-custom">약함</td>
+						    <td class="warning-orange td-custom">경고</td>
 						    <td>70% to 90%</td>
+						    <td class="border-bottom-color"></td>
+						    <td class="warning-orange td-custom">약함</td>
 						    <td>(-90) to (-100)</td>
 						    <td>(-15) to (-20)</td>
 						    <td>(0) to (13)</td>
 						</tr>
 						<tr>
-						    <td class="warning-red td-custom">불량</td>
+						    <td class="warning-red td-custom">위험</td>
 						    <td>90% to 100%</td>
+						    <td class="border-bottom-color"></td>
+						    <td class="warning-red td-custom">불량</td>
 						    <td><=(-100)</td>
 						    <td><(-20)</td>
 						    <td><=(0)</td>
@@ -229,6 +243,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<tr>
 						    <td class="warning-grey td-custom"></td>
 						    <td>null or ""</td>
+						    <td class="border-bottom-color"></td>
+						    <td class="warning-grey td-custom"></td>
 						    <td>null or ""</td>
 						    <td>null or ""</td>
 						    <td>null or ""</td>

@@ -32,32 +32,19 @@
 		width: fit-content;
 	}
 	
-	.warning-red{
-		background-color: red;
-	}
-	
-	.warning-green{
-		background-color: #1ec744;
-	}
-	
-	.warning-yellow{
-		background-color: yellow;
-	}
-	
-	.warning-orange{
-		background-color: orange;
-	}
-	
 	.rag-red-outer .rag-element {
 	    background-color: red;
+	    font-weight: bold;
 	}
 	
 	.rag-green-outer .rag-element {
 	    background-color: lightgreen;
+	    font-weight: bold;
 	}
 	
 	.rag-grey-outer .rag-element {
-	    background-color: #b3b5b7;
+	    background-color: yellow;
+	    font-weight: bold;
 	}
   	
 </style>
