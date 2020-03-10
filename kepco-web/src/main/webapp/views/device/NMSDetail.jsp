@@ -760,17 +760,16 @@ $(document).ready(function() {
 	init();
 });
 </script>
-<!-- 
 
 <script>	
 $('#datePicker .input-group.date').datepicker({
 	todayBtn: "linked",	
 	forceParse: false,
-	autoclose: true
+	autoclose: true,
+	todayHighlight: true,
+	format: "yyyy/mm/dd",
+	language: "kr"
 });
-
-
-</script> -->
-<!--  wrapper -->
+</script>
 </body>
 </html>
