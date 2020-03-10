@@ -98,14 +98,14 @@ public class OperationLogServiceImpl implements OperationLogService {
 	}
 
 	@Override
-	public Map<String, String> excelMeterList(Map<String, Object> param) throws Exception {
+	public Map<String, String> excelOperationLogList(Map<String, Object> param) throws Exception {
 		Map<String, String> output = new HashMap<String, String>();
 		OperationLog operationLog = new OperationLog();
 		ConversionUtil.getModelByMap(operationLog, param);
 		
 		String template_filepath = "/template/template_excel.xlsx";
-		String filename = "device_list_" + DateUtil.getNowDateTime() + ".xlsx";
-		String filepath = fileDownloadDir + "/deviceList/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+		String filename = "operationLog_List_" + DateUtil.getNowDateTime() + ".xlsx";
+		String filepath = fileDownloadDir + "/operationLog_List/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
 		
 		List<OperationLog> result = this.operationLogDAO.getOperationLogList(operationLog);
 		//리소스 경로 변환

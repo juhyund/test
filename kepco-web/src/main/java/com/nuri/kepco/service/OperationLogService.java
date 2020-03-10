@@ -17,6 +17,6 @@ public interface OperationLogService extends GenericService {
 	
 	JSONArray getExcuteRate() throws Exception;
 
-	Map<String, String> excelMeterList(Map<String, Object> param) throws Exception;
+	Map<String, String> excelOperationLogList(Map<String, Object> param) throws Exception;
 	
 }
