@@ -20,6 +20,9 @@
         <if test="result_status != null and result_status != ''" >     
             AND ol.result = #{result_status}
         </if>
+        <if test="result_status == null or result_status == ''" >
+        	AND ol.result is null	
+        </if> 
         <if test="tid != null and tid != ''" >     
             AND ol.tid = #{tid}
         </if>
