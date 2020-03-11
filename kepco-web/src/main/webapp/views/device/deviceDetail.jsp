@@ -143,11 +143,6 @@ function firmwarelist() {
 						<h3 style="margin-top: 6px">모뎀 관리</h3>
 					</div>
 					<div class="col-lg-2">
-						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active"><strong>모뎀 관리</strong>
-							</li>
-						</ol>
 					</div>
 				</div>
 				<!-- navigator -->
