@@ -44,8 +44,6 @@ public abstract class AbstractMDSaver {
 
 	@Autowired
 	DeviceInfoDAO deviceInfoDAO;
-
-	private DeviceInfo deviceInfo;
 	
 	@Value("${device.model.name}")
 	private String defaultModelName;
@@ -58,10 +56,9 @@ public abstract class AbstractMDSaver {
 
 	public abstract boolean save(IMeasurementData md) throws Exception;
 
-
 	String modemTime; // 서버가 모뎀으로부터 수신한 시간
 
-	protected int checkMeter(MDData mdData) {
+	protected int checkMeter(MDData mdData, DeviceInfo deviceInfo) {
 
 		int result = 0;
 		boolean isNewMeter = false;
@@ -200,8 +197,8 @@ public abstract class AbstractMDSaver {
 			
 			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
 			if (meter == null) {				
-				// default branch id 세팅
-				deviceInfo.setBranch_id(defaultBranchId);
+
+				// default branch id 세팅				
 				meterInfo.setBranch_id(defaultBranchId);
 				result += meterInfoDAO.insert(meterInfo);				
 			} else {
@@ -270,15 +267,16 @@ public abstract class AbstractMDSaver {
 		return -1;
 	}
 
-	protected int checkDevice(String deviceSerial, String modemTime, String mobileNo) {
+	protected DeviceInfo checkDevice(String deviceSerial, String modemTime, String mobileNo) {
 
 		int result = 0;
+		DeviceInfo deviceInfo = null;
 		boolean isNewDevice = false;
 		this.modemTime = modemTime;
 
 		try {
 			// device id
-			DeviceInfo deviceInfo = null;
+			
 			deviceInfo = deviceInfoDAO.selectByDeviceSerial(deviceSerial);
 
 			if (deviceInfo == null) {
@@ -316,13 +314,12 @@ public abstract class AbstractMDSaver {
 			}
 			
 			updateDeviceStatus(deviceInfo, DEVICESTATUS.NORMAL);
-			this.deviceInfo = deviceInfo;
-
+			
 		} catch (Exception e) {
 			logger.error("error", e);
 		}
 		
-		return result;
+		return deviceInfo;
 	}
 	
 	/**
@@ -335,15 +332,15 @@ public abstract class AbstractMDSaver {
 	 * @param deviceStatus
 	 * @return
 	 */
-	protected int checkDevice(String deviceSerial, String modemTime, String ip, String port, String init_reg_dt, DEVICESTATUS deviceStatus) {
+	protected DeviceInfo checkDevice(String deviceSerial, String modemTime, String ip, String port, String init_reg_dt, DEVICESTATUS deviceStatus) {
 
+		DeviceInfo deviceInfo = null;
 		int result = 0;
 		boolean isNewDevice = false;
 		this.modemTime = modemTime;
 
 		try {
-			// device id
-			DeviceInfo deviceInfo = null;
+			// device id			
 			deviceInfo = deviceInfoDAO.selectByDeviceSerial(deviceSerial);
 
 			if (deviceInfo == null) {
@@ -388,17 +385,17 @@ public abstract class AbstractMDSaver {
 				result = deviceInfoDAO.update(deviceInfo);
 			}
 			updateDeviceStatus(deviceInfo, deviceStatus);
-			this.deviceInfo = deviceInfo;
+			
 
 		} catch (Exception e) {
 			logger.error("error", e);
 		}
 		
-		return result;
+		return deviceInfo;
 	}
 	
 	
-	protected int checkDevice(String deviceSerial, String modemTime) {
+	protected DeviceInfo checkDevice(String deviceSerial, String modemTime) {
 
 		return checkDevice(deviceSerial, modemTime, null);
 	}
@@ -446,8 +443,7 @@ public abstract class AbstractMDSaver {
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("error", e);
 		}
 	}
 
@@ -503,8 +499,12 @@ public abstract class AbstractMDSaver {
 		}
 	}
 
-	public DeviceInfo getDeviceInfo() {
-		return deviceInfo;
+	public DeviceInfo getDeviceInfo(String deviceSerial) {
+		try {
+			return deviceInfoDAO.selectByDeviceSerial(deviceSerial);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/**

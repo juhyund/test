@@ -136,7 +136,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		// checkDevice
 		checkDevice(deviceSerial, md.getModemTime(), parser.getMobileNo());
 		
-		if(getDeviceInfo() != null) {
+		if(getDeviceInfo(deviceSerial) != null) {
 				
 			for (MDData mdData : mdList) {
  
