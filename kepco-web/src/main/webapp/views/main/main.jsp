@@ -55,10 +55,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-							<li class="breadcrumb-item"><a
-								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-							</li>
-							<li class="breadcrumb-item active"><strong>Dashboard</strong></li>
 						</ol>
 					</div>
 				</div>
@@ -188,7 +184,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<table class="table table-bordered white-bg">
 								<thead>
 									<tr>
-										<th class="text-center">미터타입</th>
+										<th class="text-center">계기타입</th>
 										<th width="150" class="text-right">성공(%)</th>
 										<th width="150" class="text-right">실패(%)</th>
 									</tr>
