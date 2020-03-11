@@ -203,7 +203,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<table class="table table-bordered white-bg">
 								<thead>
 									<tr>
-										<th class="text-center">Method</th>
+										<th class="text-center">제어명령</th>
 										<th width="150" class="text-right">성공</th>
 										<th width="150" class="text-right">실패</th>
 										<th width="150" class="text-right">대기</th>
@@ -353,6 +353,8 @@ function lpRate(){
 
 function successLpRate(data, status) {
 	var toDay = new Date();
+	var total_succ_cnt = 0;
+   	var total_fail_cnt = 0;
 	var total_succ = 0;
    	var total_fail = 0;
 	
@@ -374,14 +376,17 @@ function successLpRate(data, status) {
         	
         	var tr = '<tr>'
         	tr += '<td class="text-center">' + value.m_type + '</td>';
-        	tr += '<td class="text-right">' + removeZero(succ_rate.toFixed(1)) + '%</td>';
-        	tr += '<td class="text-right">' + removeZero(fail_rate.toFixed(1)) + '%</td>';
+        	tr += '<td class="text-right">' + succ_cnt + " ("+ removeZero(succ_rate.toFixed(1)) + '%)</td>';
+        	tr += '<td class="text-right">' + fail_cnt + " ("+ removeZero(fail_rate.toFixed(1)) + '%)</td>';
         	tr += '</tr>';
 
         	$("#lp_body").append(tr);
 
         	total_succ += succ_rate;
         	total_fail += fail_rate;
+        	
+        	total_succ_cnt += succ_cnt;
+        	total_fail_cnt += fail_cnt;
         	
             types[i] = value.m_type;
             succ[i] = Math.round(succ_rate);
@@ -393,8 +398,8 @@ function successLpRate(data, status) {
         
         var last_tr = '<tr class="table-active">'
        	last_tr += '<th class="text-center">TOTAL</th>';
-       	last_tr += '<th class="text-right">' + removeZero(total_succ_rate.toFixed(1)) + '%</th>';
-       	last_tr += '<th class="text-right">' + removeZero(total_fail_rate.toFixed(1)) + '%</th>';
+       	last_tr += '<th class="text-right">' + total_succ_cnt + " (" + removeZero(total_succ_rate.toFixed(1)) + '%)</th>';
+       	last_tr += '<th class="text-right">' + total_fail_cnt + " (" + removeZero(total_fail_rate.toFixed(1)) + '%)</th>';
        	last_tr += '</tr>';
 
        	$("#lp_rate").html(removeZero(total_succ_rate.toFixed(1))+"%");

@@ -69,6 +69,7 @@ function fwUploadModal() {
 };
 
 function ajaxDeviceFwUpdate() {
+showLoading();
   var formData = new FormData(); 
   formData.append("fw_nm", $("#fw_name").val());
   formData.append("fw_version", $("#fw_ver").val());
@@ -88,6 +89,7 @@ function ajaxDeviceFwUpdate() {
         	 } else {
         		 alert(data.result);
         	 }
+        	 hideLoading();
          }
    };             
    $.ajax(options);
@@ -110,6 +112,7 @@ $(function() {
 });
 
 function ajaxDeviceFwUpgrade() {
+showLoading();
   var options = { 
          url         : COMMON_URL + "/ajaxExecResource",
 		 contentType : "application/x-www-form-urlencoded;charset=UTF-8",
@@ -130,9 +133,11 @@ function ajaxDeviceFwUpgrade() {
  	    	} else {
  	    		alert("제어실패 [" + data.statusMsg + "]");
  	    	}
+        	 hideLoading();
          }
    };             
    $.ajax(options);
+
 }
 </script>
 </head>
