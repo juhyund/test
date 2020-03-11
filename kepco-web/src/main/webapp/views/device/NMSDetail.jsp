@@ -239,8 +239,7 @@ function ajaxSearchForm() {
 }
 
 function resetForm(){
-	$("#search_form")[0].reset();
-	
+	setSearchPeriod('today');	
 };
 
 function successResultHandler(data, status) {
