@@ -92,12 +92,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>NMS 상세정보</strong>
-		</li>
 		</ol>
 	</div>						
 </div>
@@ -239,8 +233,7 @@ function ajaxSearchForm() {
 }
 
 function resetForm(){
-	$("#search_form")[0].reset();
-	
+	setSearchPeriod('today');	
 };
 
 function successResultHandler(data, status) {
@@ -887,7 +880,11 @@ function renderChart(data, status){
 	Highcharts.chart('ramContainer', ramChartOptions, function(chart){
 		lineColor('ramContainer', color)
 	});
-	hideLoading();	
+	var div = [ '#rsrpContainer', '#rsrqContainer', '#snrContainer' ];
+	for(var len = 0 ; len < div.length ; len++){
+		$(div[len]).highcharts().reflow();
+	}
+	hideLoading();
 }	
 
 function lineColor(id, color) {

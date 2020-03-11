@@ -48,17 +48,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 <div class="col-lg-2">
 	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-		<li class="breadcrumb-item"><a
-			href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active"><strong>LP검침</strong>
-		</li>
 	</ol>
 </div>
 </div>
 <!-- navigator -->
 <!-- body -->
-<div class="row">
+<div class="row" style="width: 100%">
 	<div class="col-lg-12">	
 		<div class="ibox">
 			<div class="ibox-content">
@@ -74,7 +69,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 										<div class="col-lg-3">
 											<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
-											<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+											<select class="form-control" style="float:right; width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
 												<option value=''>선택</option>
 											</select>
 										</div>
@@ -155,7 +150,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</div>
 						</div>
 						<!-- grid -->
-						<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
+						<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
 						
 						<!-- grid pagination -->
 						<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -276,6 +271,7 @@ function showDetailMeterValue(meter_id){
 function resetForm(){
 	$("#search_form")[0].reset();
 	setSearchPeriod('today');
+	$("#grid-page").hide();
 };
 
 
@@ -366,6 +362,4 @@ $('#datePicker .input-group.date').datepicker({
 
 
 </script>
-<!--  wrapper -->
-</body>
-</html>
+<!--  wra

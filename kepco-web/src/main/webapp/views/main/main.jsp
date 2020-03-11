@@ -55,10 +55,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-							<li class="breadcrumb-item"><a
-								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-							</li>
-							<li class="breadcrumb-item active"><strong>Dashboard</strong></li>
 						</ol>
 					</div>
 				</div>
@@ -188,9 +184,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<table class="table table-bordered white-bg">
 								<thead>
 									<tr>
-										<th class="text-center">미터타입</th>
-										<th width="150" class="text-right">성공(%)</th>
-										<th width="150" class="text-right">실패(%)</th>
+										<th class="text-center">계기타입</th>
+										<th width="150" class="text-right">미터개수/성공(%)</th>
+										<th width="150" class="text-right">미터개수/실패(%)</th>
 									</tr>
 								</thead>
 								<tbody id="lp_body">
@@ -203,7 +199,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<table class="table table-bordered white-bg">
 								<thead>
 									<tr>
-										<th class="text-center">Method</th>
+										<th class="text-center">제어명령</th>
 										<th width="150" class="text-right">성공</th>
 										<th width="150" class="text-right">실패</th>
 										<th width="150" class="text-right">대기</th>
@@ -275,7 +271,7 @@ function successCommunication(data, status) {
 		t_rate = (d1_rate + d2_rate + d3_rate + d4_rate) / t;
 	}
 	
-	$("#com_rate").html(removeZero(d1_rate.toFixed(1))+"%");
+	$("#com_rate").html(removeZero(t_rate.toFixed(1))+"%");
 	$("#com_date").html(toDay.yyyymmdd());
 
 	$("#d1_cnt").html(data.d1);
@@ -353,6 +349,8 @@ function lpRate(){
 
 function successLpRate(data, status) {
 	var toDay = new Date();
+	var total_succ_cnt = 0;
+   	var total_fail_cnt = 0;
 	var total_succ = 0;
    	var total_fail = 0;
 	
@@ -374,14 +372,17 @@ function successLpRate(data, status) {
         	
         	var tr = '<tr>'
         	tr += '<td class="text-center">' + value.m_type + '</td>';
-        	tr += '<td class="text-right">' + removeZero(succ_rate.toFixed(1)) + '%</td>';
-        	tr += '<td class="text-right">' + removeZero(fail_rate.toFixed(1)) + '%</td>';
+        	tr += '<td class="text-right">' + succ_cnt + " ("+ removeZero(succ_rate.toFixed(1)) + '%)</td>';
+        	tr += '<td class="text-right">' + fail_cnt + " ("+ removeZero(fail_rate.toFixed(1)) + '%)</td>';
         	tr += '</tr>';
 
         	$("#lp_body").append(tr);
 
         	total_succ += succ_rate;
         	total_fail += fail_rate;
+        	
+        	total_succ_cnt += succ_cnt;
+        	total_fail_cnt += fail_cnt;
         	
             types[i] = value.m_type;
             succ[i] = Math.round(succ_rate);
@@ -393,8 +394,8 @@ function successLpRate(data, status) {
         
         var last_tr = '<tr class="table-active">'
        	last_tr += '<th class="text-center">TOTAL</th>';
-       	last_tr += '<th class="text-right">' + removeZero(total_succ_rate.toFixed(1)) + '%</th>';
-       	last_tr += '<th class="text-right">' + removeZero(total_fail_rate.toFixed(1)) + '%</th>';
+       	last_tr += '<th class="text-right">' + total_succ_cnt + " / " + removeZero(total_succ_rate.toFixed(1)) + '%</th>';
+       	last_tr += '<th class="text-right">' + total_fail_cnt + " / " + removeZero(total_fail_rate.toFixed(1)) + '%</th>';
        	last_tr += '</tr>';
 
        	$("#lp_rate").html(removeZero(total_succ_rate.toFixed(1))+"%");

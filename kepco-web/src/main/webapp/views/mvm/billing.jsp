@@ -48,11 +48,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>					
 <div class="col-lg-2">
 	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-		<li class="breadcrumb-item"><a
-			href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active"><strong>정기검침</strong>
-		</li>
 	</ol>
 </div>
 </div>
@@ -74,7 +69,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 										<div class="col-lg-3">
 											<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
-											<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+											<select class="form-control" style="float:right; width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
 												<option value=''>선택</option>
 											</select>
 										</div>

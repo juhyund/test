@@ -93,7 +93,7 @@ function selectComboBox(combo_id, parent_code) {
            		$('#'+combo_id).append(new Option("선택", ""));
            		$.each(data.result, function(i, combo) 
 				{  
-					$('#'+combo_id).append(new Option(combo.code_nm, combo.code));
+					$('#'+combo_id).append(new Option(combo.code_local_nm, combo.code));
          		});
            },
            url         : COMMON_URL + "/ajaxCodeCombo",

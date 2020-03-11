@@ -69,11 +69,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-							<li class="breadcrumb-item"><a
-								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-							</li>
-							<li class="breadcrumb-item active"><strong>제어 이력 조회</strong>
-							</li>
 						</ol>
 					</div>
 				</div>
@@ -99,7 +94,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<option value='device_serial'>모뎀 번호</option>
 																	<option value='object_id'>Object ID</option>
 																</select>
-																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline; float: right;">
 															</div>
 														
 														<label class="col-lg-1 col-form-label"
@@ -409,6 +404,7 @@ function resetForm() {
 	$("#request_edate").val("");
 	$("#result_sdate").val("");
 	$("#result_edate").val("");
+	$("#target_meter").val("");
 }
 
 
