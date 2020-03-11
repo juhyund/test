@@ -298,8 +298,8 @@
 			, date_format(substr(billing_dt,1,8), '%y-%m-%d') as billing_dt
 			, lp_period
 			, ifnull(cosem_device_name,'') as cosem_device_name 	
-			, date_format(a.reg_dt, '%y-%m-%d %h:%i:%s')   as reg_dt
-			, ifnull(date_format(DS.last_renw_dt, '%y-%m-%d %h:%i:%s'),'')   as last_renw_dt			
+			, date_format(a.reg_dt, '%Y-%m-%d %H:%i:%s')   as reg_dt
+			, ifnull(date_format(DS.last_renw_dt, '%Y-%m-%d %H:%i:%s'),'')   as last_renw_dt			
 			, FNC_GET_CODE_NM(DS.device_status) as device_status
 			, DATE_FORMAT(DS.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, VI.vendor_nm
@@ -362,9 +362,9 @@
 			, date_format(substr(billing_dt,1,8), '%y-%m-%d') as billing_dt
 			, lp_period
 			, ifnull(cosem_device_name,'') as cosem_device_name 	
-			, date_format(a.reg_dt, '%y-%m-%d %h:%i:%s')   as reg_dt
-			, ifnull(date_format(ds.last_renw_dt, '%y-%m-%d %h:%i:%s'),'')   as last_renw_dt			
-			, ifnull(date_format(ds.last_comm_dt, '%y-%m-%d %h:%i:%s'),'')   as last_comm_dt
+			, date_format(a.reg_dt, '%Y-%m-%d %H:%i:%s')   as reg_dt
+			, ifnull(date_format(ds.last_renw_dt, '%Y-%m-%d %H:%i:%s'),'')   as last_renw_dt			
+			, ifnull(date_format(ds.last_comm_dt, '%Y-%m-%d %H:%i:%s'),'')   as last_comm_dt
 			, di.comm_type
 			, di.ip
 			, vi.vendor_nm

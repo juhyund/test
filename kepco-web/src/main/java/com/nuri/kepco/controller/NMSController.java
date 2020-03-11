@@ -83,7 +83,7 @@ public class NMSController {
 				String saveTime = (String) tmp.get("saveTime");
 				
 				SimpleDateFormat beforFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-				SimpleDateFormat transFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+				SimpleDateFormat transFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
 
 				tmp.put("usageTime", transFormat.format(beforFormat.parse(usageTime)));
 				tmp.put("saveTime", transFormat.format(beforFormat.parse(saveTime)));

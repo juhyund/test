@@ -409,6 +409,7 @@ function resetForm() {
 	$("#request_edate").val("");
 	$("#result_sdate").val("");
 	$("#result_edate").val("");
+	$("#target_meter").val("");
 }
 
 
