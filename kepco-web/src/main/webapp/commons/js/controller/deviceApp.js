@@ -300,7 +300,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	    	$scope.coapping.statusMsg = data.data.statusMsg;
 	    	if(data.data.statusCode == "200") {
-	    		alert("전송성공\nTID:  [" + data.data.tid + "]");
+	    		//alert("전송성공\nTID:  [" + data.data.tid + "]");
 	    	} else {
 	    		alert("제어실패 [" + coapping.statusMsg + "]");
 	    	}

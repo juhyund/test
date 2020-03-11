@@ -197,7 +197,6 @@
 			, branch_id
 			, model_seq
 			, device_oid
-			, mobile_no
 			, comm_type
 			, device_type
 			, ip
@@ -218,7 +217,6 @@
 			, #{branch_id}
 			, #{model_seq}
 			, #{device_oid}
-			, #{mobile_no}
 			, #{comm_type}
 			, #{device_type}
 			, INET_ATON(#{ip})
@@ -244,7 +242,6 @@
 			<if test="device_oid != null" > , device_oid = #{device_oid}</if>
 			<if test="comm_type != null" > , comm_type = #{comm_type}</if>
 			<if test="device_type != null" > , device_type = #{device_type}</if>
-			<if test="mobile_no != null" > , mobile_no = #{mobile_no}</if>
 			<if test="ip != null" > , ip = INET_ATON(#{ip})</if>
 			<if test="port != null" > , port = #{port}</if>
 			<if test="fw_version != null" > , fw_version = #{fw_version}</if>
