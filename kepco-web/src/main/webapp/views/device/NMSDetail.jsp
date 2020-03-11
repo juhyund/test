@@ -887,7 +887,11 @@ function renderChart(data, status){
 	Highcharts.chart('ramContainer', ramChartOptions, function(chart){
 		lineColor('ramContainer', color)
 	});
-	hideLoading();	
+	var div = [ '#rsrpContainer', '#rsrqContainer', '#snrContainer' ];
+	for(var len = 0 ; len < div.length ; len++){
+		$(div[len]).highcharts().reflow();
+	}
+	hideLoading();
 }	
 
 function lineColor(id, color) {
