@@ -251,7 +251,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<div style="width :100%;vertical-align:center">
 							<label id="cur_page_num" class="col-form-label"></label>
 							<div style ="float:right;margin-bottom:5px;width: 290px;">
-								<button style ="float:left;" onclick="onBtShowCodeGuide()">(도움말) 코드 상태값 가이드</button>
+								<button class="btn btn-outline btn-primary" style ="float:left;" onclick="onBtShowCodeGuide()">(도움말) 코드 상태값 가이드</button>
 								<select id="data_per_page" class="form-control" name="data_per_page" style ="float:right;width: fit-content;" onchange="javascript:changeLimit(this);">
 									<option value=10 selected>10개씩</option>
 									<option value=100>100개씩 </option>
