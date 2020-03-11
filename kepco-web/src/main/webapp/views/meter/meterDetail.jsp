@@ -143,8 +143,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 									            <col width="10%" />
 									            <col width="12%" />
 									            <col width="10%" />
-									            <col width="12%" />
-									            <col width="8%" />
+									            <col width="13%" />
+									            <col width="7%" />
 									            <col width="13%" />
 									            <col width="10%" />
 									            <col width="10%" />
