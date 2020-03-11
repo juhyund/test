@@ -275,7 +275,7 @@ function successCommunication(data, status) {
 		t_rate = (d1_rate + d2_rate + d3_rate + d4_rate) / t;
 	}
 	
-	$("#com_rate").html(removeZero(d1_rate.toFixed(1))+"%");
+	$("#com_rate").html(removeZero(t_rate.toFixed(1))+"%");
 	$("#com_date").html(toDay.yyyymmdd());
 
 	$("#d1_cnt").html(data.d1);
