@@ -185,8 +185,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<thead>
 									<tr>
 										<th class="text-center">계기타입</th>
-										<th width="150" class="text-right">성공(%)</th>
-										<th width="150" class="text-right">실패(%)</th>
+										<th width="150" class="text-right">미터개수/성공(%)</th>
+										<th width="150" class="text-right">미터개수/실패(%)</th>
 									</tr>
 								</thead>
 								<tbody id="lp_body">
@@ -394,8 +394,8 @@ function successLpRate(data, status) {
         
         var last_tr = '<tr class="table-active">'
        	last_tr += '<th class="text-center">TOTAL</th>';
-       	last_tr += '<th class="text-right">' + total_succ_cnt + " (" + removeZero(total_succ_rate.toFixed(1)) + '%)</th>';
-       	last_tr += '<th class="text-right">' + total_fail_cnt + " (" + removeZero(total_fail_rate.toFixed(1)) + '%)</th>';
+       	last_tr += '<th class="text-right">' + total_succ_cnt + " / " + removeZero(total_succ_rate.toFixed(1)) + '%</th>';
+       	last_tr += '<th class="text-right">' + total_fail_cnt + " / " + removeZero(total_fail_rate.toFixed(1)) + '%</th>';
        	last_tr += '</tr>';
 
        	$("#lp_rate").html(removeZero(total_succ_rate.toFixed(1))+"%");
