@@ -134,9 +134,9 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		LOG.debug("## deviceSerial Saver : {}" , deviceSerial);
 		
 		// checkDevice
-		checkDevice(deviceSerial, md.getModemTime(), parser.getMobileNo());
+		DeviceInfo deviceInfo = checkDevice(deviceSerial, md.getModemTime(), parser.getMobileNo());
 		
-		if(getDeviceInfo(deviceSerial) != null) {
+		if(deviceInfo != null) {
 				
 			for (MDData mdData : mdList) {
  
@@ -151,7 +151,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				}
 				
 				// 0. check meter
-				checkMeter(mdData);
+				checkMeter(mdData, deviceInfo);
 				
 				LOG.debug("meter time : {}" , mdData.getMeterTime());
 				
