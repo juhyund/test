@@ -99,7 +99,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																	<option value='device_serial'>모뎀 번호</option>
 																	<option value='object_id'>Object ID</option>
 																</select>
-																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
+																<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline; float: right;">
 															</div>
 														
 														<label class="col-lg-1 col-form-label"
