@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.nuri.kepco.mongo.model.ConnectivityMonitor;
+import com.nuri.kepco.mongo.model.ConnectivityStatisticsMonitor;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
 import com.nuri.kepco.mongo.model.RamUsageMonitor;
 
@@ -20,10 +21,16 @@ public interface NMSInfoService extends GenericService {
 	
 	JSONObject getNMSDetail(String meter_serial) throws Exception;
 
+	JSONArray getConnectivityStatistics(Map<String, Object> param) throws Exception;
+	
+	long getCount(Map<String, Object> param) throws Exception;
+	
 	List<RamUsageMonitor> getRamUsageMonitor(Map<String, Object> param) throws Exception;
 
 	List<CpuUsageMonitor> getCpuUsageMonitor(Map<String, Object> param) throws Exception;
 
 	List<ConnectivityMonitor> getConnectivityMonitor(Map<String, Object> param) throws Exception;
+
+	Map<String, String> excelNMSList(Map<String, Object> param) throws Exception;
 	
 }

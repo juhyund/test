@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuri.kepco.config.CodeConstants;
 import com.nuri.kepco.service.DeviceFwService;
+import com.nuri.kepco.service.DeviceFwHistoryService;
 import com.nuri.kepco.util.ControllerUtil;
 
 @Controller
@@ -37,10 +36,15 @@ public class DeviceFwController {
 
 	@Autowired
 	private DeviceFwService deviceFwService;
+
+	@Autowired
+	private DeviceFwHistoryService deviceFwHistoryService;
 	
 	@Value("${device.fw.path}")
 	private String deviceFwPath;
 	
+	@Value("${device.fw.url}")
+	private String deviceFwUrl;
 	
 	@RequestMapping(value = "/ajaxDeviceFWList")
 	public ResponseEntity<Object> ajaxDeviceFWList(HttpServletRequest request) {                
@@ -75,14 +79,12 @@ public class DeviceFwController {
 		JSONObject json = new JSONObject();
 		try {
 			String new_name = UUID.randomUUID().toString();
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 			String[] commStr = { "fw_nm", "fw_version", "fw_file_nm" };
 			Map<String, Object> param = new HashMap<String, Object>();
 			ControllerUtil.getCustomParam(request, commStr, param);
 
 			File dir = new File(deviceFwPath + "/" + param.get("fw_version"));
-			
 			
 			if (!dir.exists()) {
 				dir.mkdir(); 
@@ -92,11 +94,13 @@ public class DeviceFwController {
 			fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);
 			
-			param.put("fw_file_path", dir.getPath());
-			param.put("fw_pkg_uri", new_name);
+			String package_uri = deviceFwUrl + param.get("fw_version") + "/" + new_name;
+			
+			param.put("fw_file_path", targetFile.getPath());
+			param.put("fw_pkg_uri", package_uri);
 			param.put("fw_biuld_no", "1.0");
 			param.put("use_yn", CodeConstants.USE_YN.Y.getCode());
-			param.put("reg_id", authentication.getName());
+			param.put("reg_id", ControllerUtil.getLoginUser());
 			
 			deviceFwService.insert(param);
 			
@@ -121,5 +125,36 @@ public class DeviceFwController {
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(value = "/ajaxFirmwareHistoryList")
+	public ResponseEntity<Object> ajaxFirmwareHistoryList(HttpServletRequest request){
+
+		JSONObject json = new JSONObject();
+		try {
+			String[] commStr = { "device_serial", "fw_issue_status", "fw_file_nm", "fw_version", "usdate", "uedate" };
+
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			ControllerUtil.getCustomParam(request, commStr, param);
+			
+			param.put("sort", "reg_dt");
+			param.put("dir", "DESC");
+			
+			int cnt = this.deviceFwHistoryService.selectCount(param);
+			JSONArray jarr = this.deviceFwHistoryService.selectList(param);
+			
+			json.put("totalCount", cnt);
+			json.put("resultGrid", jarr);
+
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	
+	
 }
 

@@ -15,4 +15,8 @@ public interface MeterInfoService extends GenericService {
 	
 	JSONObject getMeterDetailInfo(String meter_serial) throws Exception;
 	
+	JSONArray getLpRate() throws Exception;
+	
+	Map<String, String> excelMeterList(Map<String, Object> param) throws Exception;
+	
 }

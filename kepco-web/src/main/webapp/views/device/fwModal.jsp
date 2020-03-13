@@ -8,12 +8,6 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
 
 <script>
-function resetForm() {
-	$("#searchfield").val($("#target option:first").val());
-	$("#searchquery").val("");
-	$("#instances").val("");
-}
-
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80, menuTabs:[]},
@@ -49,17 +43,17 @@ function ajaxSearchForm() {
 }
 
 function successResultHandler(data, status) {	
-	//var dataPerPage = $("#limit").val();
-	//var currentPage = $("#page").val();
-	
 	dataGrid.setData(data.resultGrid);
-	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }
 
 function fwListModal() {
 	ajaxSearchForm();
-	$('#writeSubmit').unbind();
     $('#fwListModal').modal('show');
+	
+};
+
+function fwUpgradeModal() {
+    $('#fwUpgradeModal').modal('show');
 	
 };
 
@@ -75,6 +69,7 @@ function fwUploadModal() {
 };
 
 function ajaxDeviceFwUpdate() {
+showLoading();
   var formData = new FormData(); 
   formData.append("fw_nm", $("#fw_name").val());
   formData.append("fw_version", $("#fw_ver").val());
@@ -90,9 +85,11 @@ function ajaxDeviceFwUpdate() {
          success     : function(data, status){
         	 if(data.result == "success"){
         		 ajaxSearchForm();
+        		 firmwarelist();
         	 } else {
         		 alert(data.result);
         	 }
+        	 hideLoading();
          }
    };             
    $.ajax(options);
@@ -114,7 +111,34 @@ $(function() {
 	});
 });
 
+function ajaxDeviceFwUpgrade() {
+showLoading();
+  var options = { 
+         url         : COMMON_URL + "/ajaxExecResource",
+		 contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		 dataType    : "json",
+         type        : "post",
+         data		 : { 
+			url : "clients/",
+        	method :"Write",
+        	device_id : $("#device_id").val(),
+        	service_id : $("#service_id").val(),
+        	device_serial : $("#device_serial").val(), 
+        	resource : "/5/0/1", 
+        	newValue : $("#package_uri").val()
+	     },
+         success     : function(data, status){
+        	 if(data.statusCode == "200") {
+ 	    		alert("전송성공 [" + data.tid + "]");
+ 	    	} else {
+ 	    		alert("제어실패 [" + data.statusMsg + "]");
+ 	    	}
+        	 hideLoading();
+         }
+   };             
+   $.ajax(options);
 
+}
 </script>
 </head>
 <body>
@@ -130,10 +154,6 @@ $(function() {
 			</div>
 			<div class="modal-body">		
 			<form class="form-horizontal" role="form" method="post" id="fwModal">
-				<!-- 
-				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
-				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-				 -->
 				<div>
 					<div class="ibox-content" style="background-color: #e7eaec">
 						<table style="height: 100%; width: 100%; border: 0px #e7eaec">
@@ -164,7 +184,7 @@ $(function() {
 				</div>
 			
 				<!-- grid -->
-				<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+				<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 				
 				<!-- grid pagination 
 				<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -173,7 +193,7 @@ $(function() {
 				-->
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal" id="writeSubmit">모뎀전송</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ajaxDeviceFwUpgrade()">모뎀전송</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</form>
@@ -209,8 +229,38 @@ $(function() {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<!-- <button type="button" class="file btn btn-lg btn-primary" data-dismiss="modal">파일 업로드<input type="file" name="file"/></button> -->
 				<button type="button" class="btn btn-primary" id="uploadFw" data-dismiss="modal" onclick="ajaxDeviceFwUpdate()">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			</div>
+		</form>
+		</div>
+	</div>
+	</div>
+	<!-- modal -->
+	
+	<!-- modal -->
+	<div class="modal bs-example-modal-sm" id="fwUpgradeModal" tabindex="-1" role="dialog"
+	aria-labelledby="fwUpgradeModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 850px">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
+				<h4 class="modal-title">펌웨어 업그레이드</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">		
+			<form class="form-horizontal" role="form" method="post" id="fwUpgradeform">
+				<div class="form-group row">
+					<label class="col-lg-2 col-form-label">모뎀번호</label>
+					<div class="col-lg-9"><input type="text" name="deviceserial" id="deviceserial" class="form-control" style="border: none" readonly="readonly"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-2 col-form-label">패키지 URI</label>
+					<div class="col-lg-9"><input type="text" name="package_uri" id="package_uri" class="form-control" style="border: none"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="uploadFw" data-dismiss="modal" onclick="ajaxDeviceFwUpgrade()">모뎀전송</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 			</div>
 		</form>

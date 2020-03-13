@@ -13,6 +13,9 @@ public class ConnectivityMonitor {
 	
 	@Id
 	private String id;
+
+	private String parentBranchId; // branch id
+	private String parentBranchNm; // branch name
 	
 	String branchId; // branch id
 	String branchNm; // branch name
@@ -32,8 +35,8 @@ public class ConnectivityMonitor {
 	String saveTime; // 20200224000000
 	
 	// 조회조건
-	private Date sdate;
-	private Date edate;
+	private String sdate;
+	private String edate;
 	private int page;
 	private int row;
 	

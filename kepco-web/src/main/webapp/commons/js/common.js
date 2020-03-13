@@ -93,7 +93,7 @@ function selectComboBox(combo_id, parent_code) {
            		$('#'+combo_id).append(new Option("선택", ""));
            		$.each(data.result, function(i, combo) 
 				{  
-					$('#'+combo_id).append(new Option(combo.code_nm, combo.code));
+					$('#'+combo_id).append(new Option(combo.code_local_nm, combo.code));
          		});
            },
            url         : COMMON_URL + "/ajaxCodeCombo",
@@ -1515,6 +1515,14 @@ function DateTime2Time(val){
 	return hh+":"+mm+":"+ss;
 }
 
+// 현재 날짜값을 yyyy-mm-dd 형식으로 변환해주는 함수
+Date.prototype.yyyymmdd = function() {
+    var yyyy = this.getFullYear().toString();
+    var mm = (this.getMonth() + 1).toString();
+    var dd = this.getDate().toString();
+    return  yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
+}
+
 function toJson(obj){	
 	try {
 
@@ -1901,9 +1909,9 @@ function popupDeliveryTrack(invoice_no, cop)
 }
 
 /**
- * 포매팅 추가 (프로토타입 추가)
- * @param param
- * @descr 천 단위 표현(,) 및 소수점 표현(param째 자리까지 표현 )
+ * formatNumber(value, n)
+ * @param value,n
+ * @descr 
  * @returns
  */
 function formatNumber(value, n){
@@ -1912,10 +1920,30 @@ function formatNumber(value, n){
 	  }else{
 	    return "";
 	  }
-	}
+}
 
+/**
+ * 포매팅 추가 (프로토타입 추가)
+ * @param n
+ * @descr 천 단위 표현(,) 및 소수점 표현(n째 자리까지 표현 )
+ * @returns
+ */
 Number.prototype.format = function(n){
   var reg = /\B(?=(\d{3})+(?!\d))/g;
   var strNum = this.toFixed(Math.max(0, ~~n)).replace(reg,',');
-  return strNum.split(".")[0] + "." + strNum.split(".")[1].replace(/,/gi,'');
+  if (n!=0){
+	  return strNum.split(".")[0] + "." + strNum.split(".")[1].replace(/,/gi,'');
+  }else{
+	  return strNum.split(".")[0];
+  }
+	  
 }
+
+function showLoading(){
+	$("#loading").show();
+}
+
+function hideLoading(){
+	$("#loading").hide();
+}
+

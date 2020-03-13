@@ -41,6 +41,7 @@ public class MeterInfo extends CommonObj {
 	private String mtime;
 	private int lp_period;
 	private int net_metering;
+	private String meter_type_code;
 	
 	private String allow_yn;
 	private String device_serial;
@@ -48,11 +49,16 @@ public class MeterInfo extends CommonObj {
 	private String vendor_nm;
 	private String device_status;
 	private String last_comm_dt;
+	private String code_local_nm;
 	
 	private String vendorCd;	
 	private String modelCd;
 	
 	private int avg_power_period;
+	
+	private String m_type;
+	private long total_cnt;
+	private long succ_cnt;
 	
 	/**
 	 * 미터 모델 정보

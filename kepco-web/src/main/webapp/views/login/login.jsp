@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>LWM2M LTE 5차</title>
+<title>KEPCO Web</title>
 
 <link href="<%=COMMON_PATH_JS%>/bootstrap.min.css" rel="stylesheet">
 <link href="<%=COMMON_PATH_JS%>/font-awesome.css" rel="stylesheet">
@@ -29,7 +29,7 @@ if (top.location!= self.location) {
 <style>
 .login-bg {
 	position: relative;
-	height: 1000px;
+	height: 1100px;
 	background: url(<%=COMMON_PATH_IMG%>/login_bg.jpg);
 	background-size: cover;
 	background-position: top center;
@@ -49,15 +49,14 @@ if (top.location!= self.location) {
 <body>	
 	<div id="wrapper" style="height: 100%; overflow: hidden;">
 		<div class="row" style="width:100%">
-				<div class="login-bg col-md-9" style="min-height: 937px;"></div>
+				<div class="login-bg col-md-9" style="min-height: 1100px;"></div>
 
 				<div class="col-md-3" style="padding:30px">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="login-con"></div>
 							<div class="col-lg-12">
-								<img src="<%=COMMON_PATH_IMG%>/login_logo.png"> <br> <br> <br>
-								<h2 class="logo-name">LWM2M LTE 5차</h2>
+								<img src="<%=COMMON_PATH_IMG%>/login_logo.png" style="width: 260px">
 							</div>
 							<div class="col-lg-12">
 								<form class="m-t" role="form" action="./login" method="post">

@@ -59,7 +59,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				if(cpuUsageList.size() > 0) {					
 					int result = saveCPUUsage(cpuUsageList);
 					int result2 = saveCpuStatisticsMonitor(cpuUsageList);
-					LOG.debug("save CPU Usage : total {} / result {} / statistics {}", cpuUsageList.size(), result, result2);
+					LOG.debug("save CPU Usage : deviceSerial {} / total {} / result {} / statistics {}", deviceSerial, cpuUsageList.size(), result, result2);
 				}
 			}
 			
@@ -68,7 +68,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				if(ramUsageList.size() > 0) {					
 					int result = saveRAMUsage(ramUsageList);
 					int result2 = saveRamStatisticsMonitor(ramUsageList);
-					LOG.debug("save RAM Usage : total {} / result {}/ statistics {}", ramUsageList.size(), result, result2);
+					LOG.debug("save RAM Usage : deviceSerial {} / total {} / result {}/ statistics {}", deviceSerial, ramUsageList.size(), result, result2);
 				}
 			}
 			
@@ -77,7 +77,7 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				if(connectiviMonitorList.size() > 0) {					
 					int result = saveConnectivityMonitor(connectiviMonitorList);
 					int result2 = saveConnectivityStatisticsMonitor(connectiviMonitorList);
-					LOG.debug("save Connectivity Monitor : total {} / result {} / statistics {}", connectiviMonitorList.size(), result, result2);
+					LOG.debug("save Connectivity Monitor :deviceSerial {} /total {} / result {} / statistics {}", deviceSerial, connectiviMonitorList.size(), result, result2);
 				}
 			}
 			
@@ -99,9 +99,13 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String deviceId = getDeviceInfo().getDevice_id();
 			String deviceSerial = getDeviceInfo().getDevice_serial();
 			String branchId = getDeviceInfo().getBranch_id();
-			String branchNm = getDeviceInfo().getBranch_nm();
+			String branchNm = getDeviceInfo().getBranch_nm();			
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			
+			// 부모 branch
+			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
+			String parentBranchId = getDeviceInfo().getBranch_parent_id();
 			
 			for(CpuUsageMonitor cpu : cpuUsageList) {				
 				cpu.setDeviceId(deviceId);
@@ -110,6 +114,9 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				cpu.setBranchNm(branchNm);
 				cpu.setDeviceStatus(deviceStatus);
 				cpu.setDeviceStatusNm(deviceStatusNm);
+				
+				cpu.setParentBranchId(parentBranchId);
+				cpu.setParentBranchNm(parentBranchNm);
 			}
 			
 			LOG.debug("cpuUsageList : {}", cpuUsageList);
@@ -140,7 +147,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			
+			// 부모 branch
+			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
+			String parentBranchId = getDeviceInfo().getBranch_parent_id();
 			
 			for(RamUsageMonitor ram : ramUsageList) {				
 				ram.setDeviceId(deviceId);
@@ -149,6 +160,9 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				ram.setBranchNm(branchNm);
 				ram.setDeviceStatus(deviceStatus);
 				ram.setDeviceStatusNm(deviceStatusNm);
+				
+				ram.setParentBranchId(parentBranchId);
+				ram.setParentBranchNm(parentBranchNm);
 			}
 			
 			ramUsageMonitorDAO.add(ramUsageList);
@@ -178,7 +192,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			
+			// 부모 branch
+			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
+			String parentBranchId = getDeviceInfo().getBranch_parent_id();
 			
 			for(Integer key: connectivityList.keySet()) {
 				
@@ -189,6 +207,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				connectivityMonitor.setBranchNm(branchNm);
 				connectivityMonitor.setDeviceStatus(deviceStatus);
 				connectivityMonitor.setDeviceStatusNm(deviceStatusNm);
+				connectivityMonitor.setParentBranchId(parentBranchId);
+				connectivityMonitor.setParentBranchNm(parentBranchNm);
 				
 				list.add(connectivityMonitor);
 			}
@@ -220,7 +240,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			
+			// 부모 branch
+			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
+			String parentBranchId = getDeviceInfo().getBranch_parent_id();
 			
 			for(Integer key: connectivityList.keySet()) {
 				
@@ -246,6 +270,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 				statistics.setBranchNm(branchNm);
 				statistics.setDeviceStatus(deviceStatus);
 				statistics.setDeviceStatusNm(deviceStatusNm);
+				statistics.setParentBranchId(parentBranchId);
+				statistics.setParentBranchNm(parentBranchNm);
 				
 				if(connectivityMonitor.getRsrp() != null) { statistics.setRsrp(connectivityMonitor.getRsrp()); }
 				if(connectivityMonitor.getRsrq() != null) { statistics.setRsrq(connectivityMonitor.getRsrq()); }
@@ -287,7 +313,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			
+			// 부모 branch
+			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
+			String parentBranchId = getDeviceInfo().getBranch_parent_id();
 			
 			for(CpuUsageMonitor cpu : cpuUsageList) {
 				
@@ -309,6 +339,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 					statistics.setBranchNm(branchNm);
 					statistics.setDeviceStatus(deviceStatus);
 					statistics.setDeviceStatusNm(deviceStatusNm);
+					statistics.setParentBranchId(parentBranchId);
+					statistics.setParentBranchNm(parentBranchNm);
 				}
 				
 				if(cpu.getCpuUsage() != null) { statistics.setCpuUsage(cpu.getCpuUsage());}
@@ -345,7 +377,11 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			String branchId = getDeviceInfo().getBranch_id();
 			String branchNm = getDeviceInfo().getBranch_nm();
 			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_nm();
+			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			
+			// 부모 branch
+			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
+			String parentBranchId = getDeviceInfo().getBranch_parent_id();
 			
 			for(RamUsageMonitor ram : ramUsageList) {
 				
@@ -363,8 +399,13 @@ public class NotifyDataSaver extends AbstractMDSaver {
 					
 					statistics.setDeviceId(deviceId);
 					statistics.setDeviceSerial(deviceSerial);
+					
+					statistics.setParentBranchId(parentBranchId);
+					statistics.setParentBranchNm(parentBranchNm);
+					
 					statistics.setBranchId(branchId);
 					statistics.setBranchNm(branchNm);
+					
 					statistics.setDeviceStatus(deviceStatus);
 					statistics.setDeviceStatusNm(deviceStatusNm);
 				}
@@ -387,6 +428,5 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		
 		return result;
 	}
-	
 
 }

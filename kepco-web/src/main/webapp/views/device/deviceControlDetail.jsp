@@ -50,12 +50,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
 		</ol>
 	</div>						
 </div>
@@ -80,7 +74,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<td id = "app_id"></td>
 							</tr>
 							<tr>
-								<th class="text-navy" scope="row">단말 ID</th><!-- 단말아이디 -->
+								<th class="text-navy" scope="row">모뎀 ID</th><!-- 모뎀아이디 -->
 								<td id = "device_id"></td>
 								<th class="text-navy" scope="row">요청자아이디</th><!-- 등록자아이디 -->
 								<td id = "reg_id"></td>
@@ -120,7 +114,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				</div>
 				<!--  end : summary_area  -->
 
-			   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
+			   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%; float: right" type="button" onclick="javascript:history.back(-1)">
 					<i class="fa fa-undo"> 목록으로 돌아가기</i>
 				</button>
 			              

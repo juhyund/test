@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/commons/common_define.jsp"%>
+<%@ page import="com.nuri.kepco.config.CodeConstants" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +26,12 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
-
+<style>
+  select.form-control {
+		width: fit-content;
+	}
+  	
+</style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
@@ -44,15 +49,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">제어 이력 조회</h3>
+						<h3 style="margin-top: 6px">펌웨어 관리 이력</h3>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-							<li class="breadcrumb-item"><a
-								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-							</li>
-							<li class="breadcrumb-item active"><strong>Layouts</strong>
-							</li>
 						</ol>
 					</div>
 				</div>
@@ -70,37 +70,23 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<tr class="table-border">
 												<td height="80">
 													<div class="form-group row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">모뎀 번호</label>
 														<div class="col-lg-3">
-															<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
+															<input type="text" class="form-control" name="device_serial" id="device_serial" style="height: 33px; vertical-align: top; display: inline;">
+														</div>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">실행 상태</label>
+														<div class="col-lg-3">
+															<select class="form-control" name="fw_issue_status" id="fw_issue_status" style="width: 100%; margin-right: 45px;">
 																<option value=''>선택</option>
-																<option value='deviceId'>단말ID</option>
-																<option value='deviceSerial'>단말 번호</option>
+																<% for(CodeConstants.FW_STATUS ds : CodeConstants.FW_STATUS.values()){ %> 
+																<option value='<%= ds.name() %>'><%= ds.getDescr()%></option>
+																<% }%>
 															</select>
-															<input type="text" class="form-control" name="deviceSerial" id="deviceSerial" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 														</div>
-														
 														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">계기타입</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="meter_type"
-																id="meter_type"></select>
-														</div>
-													</div>
-
-													<div class="form-group form-group-end row">
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">통신상태</label>
-														<div class="col-lg-3">
-															<select class="form-control" name="device_status"
-																id="device_status"></select>
-														</div>
-														
-														<label class="col-lg-1 col-form-label"
-															style="padding-left: 10px;">검색 일자</label>
-														<div class="col-sm-4" id="datePicker">
+															style="padding-left: 10px;">실행 일시</label>
+														<div class="col-sm-3" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
-																<input type="hidden" id="sdate" name="sdate" value=""> 
 																<input type="text" class="form-control" id="sdate" name="sdate" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
@@ -108,7 +94,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															</div>
 															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 															<div class="input-group date" style="width: 48%;">
-																<input type="hidden" id="edate" name="edate" value=""> 
 																<input type="text" class="form-control" id="edate" name="edate" value="">
 																<span class="input-group-addon" style="list-style: none;">
 																	<i class="fa fa-calendar"></i>
@@ -117,7 +102,33 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 													</div>
 
-
+													<div class="form-group form-group-end row">
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">펌웨어 파일</label>
+														<div class="col-lg-3">
+															<input type="text" class="form-control" name="fw_file_nm" id="fw_file_nm" style="height: 33px; vertical-align: top; display: inline;">
+														</div>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">펌웨어 버전</label>
+														<div class="col-lg-3">
+															<input type="text" class="form-control" name="fw_version" id="fw_version" style="height: 33px; vertical-align: top; display: inline;">
+														</div>
+														<label class="col-lg-1 col-form-label"
+															style="padding-left: 10px;">성공 일시</label>
+														<div class="col-sm-3" id="datePicker">
+															<div class="input-group date" style="width: 48%; float: left;">
+																<input type="text" class="form-control" id="usdate" name="usdate" value="">
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
+															</div>
+															<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
+															<div class="input-group date" style="width: 48%;">
+																<input type="text" class="form-control" id="uedate" name="uedate" value="">
+																<span class="input-group-addon" style="list-style: none;">
+																	<i class="fa fa-calendar"></i>
+																</span>
+															</div>
+														</div>
+													</div>
 												</td>
 												<td width="180" height="80" style="text-align: right">
 													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
@@ -125,9 +136,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</button>
 													<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
 														<i class="fa fa-undo"></i>
-													</button>
-													<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
-														<i class="fa fa-download"></i>
 													</button>
 												</td>
 											</tr>
@@ -150,7 +158,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+									<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
 									<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -171,74 +179,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
-	{headerName: "리소스 경로", field: ""},
-	{headerName: "오브젝트명", field: ""},
-	{headerName: "리소스명", field: "", width:150, cellStyle:{'text-align': "center"}},
-	{headerName: "제어항목", field: "", cellStyle:{'text-align': "center"}},
-	{headerName: "제어결과", field: "", width:120},
-	{headerName: "트랜잭션ID", field: ""},
-	{headerName: "제어 전송 일시", field: ""},
-	{headerName: "제어 완료 일시", field: ""},
-	{headerName: "요청자", field: "", cellStyle:{'text-align': "center"}}		
+	{headerName: "모뎀 번호", field: "device_serial", cellStyle:{'text-align': "center"}},
+	{headerName: "펌웨어 파일", field: "fw_file_nm", cellStyle:{'text-align': "center"}},
+	{headerName: "펌웨어 버전", field: "fw_version", cellStyle:{'text-align': "center"}},
+	{headerName: "TID", field: "tid", cellStyle:{'text-align': "center"}},
+	{headerName: "실행 일시", field: "fw_write_dt", cellStyle:{'text-align': "center"}},
+	{headerName: "펌웨어 실행 상태", field: "fw_issue_status_nm", cellStyle:{'text-align': "center"}},
+	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
 ];
 
 // init selectComboBox
-//device type
-function comboMeterType() { 
-     selectComboBox('meter_type', 'MT');
-}
-
-//device status
-function comboDeviceStatus() { 
-     selectComboBox('device_status', 'DS');
-}
-
-// branch
-function comboBranch() {
-	console.log("1");
-	var combo = [ 'ajaxParentBranchCombo'];
-	for (var i = 0; i < combo.length; i++) {
-		console.log(combo[i]);
-		var options = { 
-	           beforeSend  : showRequest,
-	           success     : successResultCombo,
-	           url         : COMMON_URL + "/" + combo[i],
-	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	           type        : "post", /* get, post */
-	           dataType    : "json", /* xml, html, script, json */
-	           data        : $("#search_form").serialize()
-	     };             
-	     $.ajax(options);
-	}
-	
-}
-
-function changeParent() {
-	var sel_obj = document.getElementById('branch_id');
-    for(var i=0; i<sel_obj.options.length; i++) sel_obj.options[i] = null;
-    sel_obj.options.length = 0;
-
-	var options = { 
-	           beforeSend  : showRequest,
-	           success     : successResultCombo,
-	           url         : COMMON_URL + "/ajaxBranchCombo",
-	           contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	           type        : "post", /* get, post */
-	           dataType    : "json", /* xml, html, script, json */
-	           data        : $("#search_form").serialize()
-	     };             
-	    
-	     $.ajax(options);
-}
-
-function successResultCombo(data, status) {
-	$.each(data, function(nm, combo) {
-		$('#'+nm).append(new Option("선택", ""));
-		$.each(data[nm], function(key, value){
-			$('#'+nm).append(new Option(value, key));
-		});
-	});
-}
 
 var initGrid = function() {
     dataGrid = new DataGrid('grid', columnDefs, true, 500);    
@@ -247,17 +197,15 @@ var initGrid = function() {
 };
 
 // grid row click
-onRowClicked = function(event){
-	var meter_serial = event.data.meter_serial;
-	location.href = CONTEXT_PATH + "/meterDetail?meter_serial="+meter_serial;
+ onRowClicked = function(event){
+	var device_id = event.data.device_id;
 }
 
 function ajaxSearchForm() {
 	
     var options = { 
-           beforeSend  : showRequest,
            success     : successResultHandler,
-           url         : COMMON_URL + "/ajaxControlHistoryList",
+           url         : COMMON_URL + "/ajaxFirmwareHistoryList",
            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
            type        : "post", /* get, post */
            dataType    : "json", /* xml, html, script, json */
@@ -267,82 +215,27 @@ function ajaxSearchForm() {
      $.ajax(options);
 }
 
-function excelDownload() {
-	
-	if( totalCnt == 0){
-		Swal.fire({
-			position: 'center',
-			icon: 'error',
-			title: 'excel 다운로드 불가',
-			text: '조회 결과가 없습니다!',
-			showConfirmButton: false,
-				timer: 1500
-			});
-	}else{
-
-		 $('#search_form').attr('action', "/ewsn-app/downloadMeterValue");
-		 $('#search_form').attr('method',"GET");
-		 $('#search_form').submit();
-		Swal.fire({
-			position: 'center',
-			icon: 'info',
-			text: 'excel 생성중',
-			showConfirmButton: false,
-				timer: 1500
-		});
-	}
-
-}
-
-
-function showRequest() {
-	// $("#loading").show();
-}
-
 function successResultHandler(data, status) {	
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
-	
-	//allow_yn 변환
-	$.each( data, function(index, item) {
-		if(index == 'resultGrid'){
-			for(var i=0; i<item.length; i++){
-				if(item[i].allow_yn == 1){
-					data.resultGrid[i].allow_yn = '인가'
-				}else if(item[i].allow_yn == 2){
-					data.resultGrid[i].allow_yn = '비인가'
-				}
-			}
-		}
-		
-	});
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 }
 
 function resetForm() {
-	$('#sdate').val("");
-	$('#edate').val("");
-	$('#lsdate').val("");
-	$('#ledate').val("");
-	$("#branch_parent_id").val($("#target option:first").val());
-	$("#branch_id").val($("#target option:first").val());
-	$("#meter_type").val($("#target option:first").val());
-	$("#device_status").val($("#target option:first").val());
-	$("#meter_serial").val("");
-	$("#device_serial").val("");
+	$('#device_serial').val("");
+	$("#fw_issue_status").val($("#target option:first").val());
+	$("#fw_file_nm").val("");
+	$("#fw_version").val("");
+	$("#sdate").val("");
+	$("#edate").val("");
+	$("#usdate").val("");
+	$("#uedate").val("");
 }
 
 
 function init() {
-	
-	// init
-	// combo
-	comboMeterType();
-	comboDeviceStatus();
-	comboBranch();
-	
 	// Grid
 	initGrid();
 	

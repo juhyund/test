@@ -11,41 +11,44 @@
 
 	<sql id="base_where_list">
 		<where>
-		<if test="device_id != null" >     
+		<if test="device_id != null and device_id != ''" >     
             AND a.device_id = #{device_id}
         </if>
-		<if test="service_id != null" >     
+		<if test="service_id != null and service_id != ''" >     
             AND a.service_id = #{service_id}
         </if>
-		<if test="branch_parent_id != null" >     
+		<if test="branch_parent_id != null and branch_parent_id != ''" >     
             AND d.branch_parent_id = #{branch_parent_id}
         </if>
-        <if test="branch_id != null" >     
+        <if test="branch_id != null and branch_id != ''" >     
             AND a.branch_id = #{branch_id}
         </if>
-        <if test="model_seq != null" >     
+        <if test="model_seq != null and model_seq != ''" >     
             AND a.model_seq = #{model_seq}
         </if>
-        <if test="device_oid != null" >     
+        <if test="device_oid != null and device_oid != ''" >     
             AND a.device_oid = #{device_oid}
         </if>
-        <if test="comm_type != null" >     
+        <if test="comm_type != null and comm_type != ''" >     
             AND a.comm_type = #{comm_type}
         </if>
-        <if test="allow_yn != null" >     
+        <if test="allow_yn != null and allow_yn != ''" >     
             AND a.allow_yn = #{allow_yn}
         </if>
-		<if test="searchfield != null and searchquery != null " >
+        <if test="mobile_no != null and mobile_no != ''" >     
+            AND a.mobile_no = #{mobile_no}
+        </if>
+		<if test="searchfield != null and searchquery != null  and searchfield != '' and searchquery != ''" >
 			AND a.${searchfield} like concat(#{searchquery},'%')
 		</if>
 		<!-- DeviceInfoList -->		
-		<if test="device_status != null" >     
+		<if test="device_status != null and device_status != ''" >     
             AND c.device_status = #{device_status}
         </if>
-		<if test="sdate != null and edate != null">
+		<if test="sdate != null and edate != null and ledate != '' and edate != ''">
 			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="lsdate != null and ledate != null">
+		<if test="lsdate != null and ledate != null and lsdate != '' and ledate != ''">
 			AND c.last_comm_dt between date_format(concat(#{lsdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{ledate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
 		
@@ -78,6 +81,7 @@
 			, a.branch_id			
 			, a.model_seq
 			, a.device_oid
+			, a.mobile_no
 			, a.comm_type
 			, FNC_GET_CODE_NM(a.comm_type) as comm_type_nm
 			, a.device_type
@@ -86,10 +90,13 @@
 			, a.port
 			, a.fw_version
 			, a.hw_version
+			, a.sw_version1
+			, a.sw_version2
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
 			, a.reg_id
+			, a.mobile_no
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
@@ -113,6 +120,7 @@
 			, a.branch_id			
 			, a.model_seq
 			, a.device_oid
+			, a.mobile_no
 			, a.comm_type
 			, FNC_GET_CODE_NM(a.comm_type) as comm_type_nm
 			, a.device_type
@@ -121,10 +129,13 @@
 			, a.port
 			, a.fw_version
 			, a.hw_version
+			, a.sw_version1
+			, a.sw_version2
 			, a.allow_yn			
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
 			, a.reg_id
+			, a.mobile_no
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
@@ -141,17 +152,23 @@
 			, a.service_id
 			, a.branch_id
 			, c.branch_nm
+			, c.branch_parent_id
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = c.branch_parent_id) AS parent_branch_nm
 			, a.model_seq
 			, a.device_oid
+			, a.mobile_no
 			, a.comm_type
-			, FNC_GET_CODE_NM(a.comm_type) as comm_type_nm
+			, FNC_GET_CODE_NM(a.comm_type) AS comm_type_nm
 			, a.device_type
-			, FNC_GET_CODE_NM(a.device_type) as device_type_nm
-			, INET_NTOA(ip) as ip
+			, FNC_GET_CODE_NM(a.device_type) AS device_type_nm
+			, INET_NTOA(ip) AS ip
 			, a.port
 			, a.fw_version
 			, a.hw_version
-			, a.allow_yn			
+			, a.sw_version1
+			, a.sw_version2
+			, a.allow_yn	
+			, a.mobile_no		
 			, DATE_FORMAT(a.init_reg_dt,'${prop.dt}') AS init_reg_dt
 			, a.remark
 			, a.reg_id
@@ -159,10 +176,11 @@
 			, DATE_FORMAT(a.dest_dt,'${prop.dt}') AS dest_dt
 			, DATE_FORMAT(b.last_comm_dt,'${prop.dt}') AS last_comm_dt
 			, b.device_status
-			, FNC_GET_CODE_NM(b.device_status) as device_status_nm
+			, FNC_GET_CODE_NM(b.device_status) AS device_status_nm
+			, FNC_GET_CODE_LOCAL_NM(b.device_status) AS device_status_local_nm
 		FROM EMI_DEVICE_INFO a	
 		LEFT OUTER JOIN EMI_DEVICE_STATUS b ON (a.device_id = b.device_id)
-		LEFT OUTER JOIN EMI_BRANCH_INFO c ON (a.branch_id = c.branch_id)	
+		LEFT OUTER JOIN EMI_BRANCH_INFO c ON (a.branch_id = c.branch_id)
 		WHERE a.device_serial = #{device_serial}		
 	</select>
 	
@@ -185,6 +203,9 @@
 			, port
 			, fw_version
 			, hw_version
+			, sw_version1
+			, sw_version2
+			, mobile_no
 			, allow_yn			
 			, remark
 			, reg_id
@@ -202,6 +223,9 @@
 			, #{port}
 			, #{fw_version}
 			, #{hw_version}
+			, #{sw_version1}
+			, #{sw_version2}
+			, #{mobile_no}
 			, #{allow_yn}			
 			, #{remark}
 			, #{reg_id}
@@ -222,8 +246,11 @@
 			<if test="port != null" > , port = #{port}</if>
 			<if test="fw_version != null" > , fw_version = #{fw_version}</if>
 			<if test="hw_version != null" > , hw_version = #{hw_version}</if>
+			<if test="sw_version1 != null" > , sw_version1 = #{sw_version1}</if>
+			<if test="sw_version2 != null" > , sw_version2 = #{sw_version2}</if>
 			<if test="allow_yn != null" > , allow_yn = #{allow_yn}</if>			
 			<if test="remark != null" > , remark = #{remark}</if>	
+			<if test="mobile_no != null" > , mobile_no = #{mobile_no}</if>	
 		WHERE device_id = #{device_id}
 	</update>
 	
@@ -238,6 +265,7 @@
 			, f.code_local_nm
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
+			, a.mobile_no
 		FROM
 			EMI_DEVICE_INFO a
 			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq
@@ -273,17 +301,22 @@
 			a.device_id
 			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = d.branch_parent_id) AS parent_branch_nm
 			, d.branch_nm
+			, a.service_id
 			, a.device_serial
 			, e.vendor_nm
 			, a.device_oid
-			, a.ip
+			, a.mobile_no
+			, INET_NTOA(a.ip) as ip
 			, a.port
 			, a.fw_version
 			, a.hw_version
+			, a.sw_version1
+			, a.sw_version2
 			, b.model_nm
 			, g.security_mode
 			, f.code_local_nm
 			, a.remark
+			, a.mobile_no
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
 		FROM
@@ -296,6 +329,36 @@
 			LEFT OUTER JOIN EMI_DEVICE_SECURITY g ON a.device_id = g.device_id
 		WHERE 
 			a.device_id = #{device_id}
+	</select>
+
+	<select id="getCommunication" resultType="deviceInfo">
+		<![CDATA[
+		SELECT 
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				WHERE a.ALLOW_YN = 1) AS total, 
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT BETWEEN DATE_FORMAT(now(), '%Y-%m-%d 00:00:00') AND DATE_FORMAT(now(), '%Y-%m-%d 23:59:59')
+				AND a.ALLOW_YN = 1) AS d1, 
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT BETWEEN DATE_SUB(DATE_FORMAT(now(), '%Y-%m-%d 00:00:00'), INTERVAL 1 DAY) AND DATE_SUB(DATE_FORMAT(now(), '%Y-%m-%d 23:59:59'), INTERVAL 1 DAY)
+				AND a.ALLOW_YN = 1) AS d2,
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT  < DATE_SUB(DATE_FORMAT(now(), '%Y-%m-%d 23:59:59'), INTERVAL 1 DAY)
+				AND a.ALLOW_YN = 1) AS d3,
+			(SELECT COUNT(*)
+				FROM emi_device_info a
+				LEFT OUTER JOIN emi_device_status b ON a.DEVICE_ID = b.DEVICE_ID
+				WHERE b.LAST_COMM_DT IS NULL
+				AND a.ALLOW_YN = 1) AS d4
+		FROM DUAL
+		]]>
 	</select>
 	
 </mapper>

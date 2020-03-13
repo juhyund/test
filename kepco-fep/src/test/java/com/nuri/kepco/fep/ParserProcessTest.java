@@ -45,11 +45,10 @@ public class ParserProcessTest {
 		// 양방향
 //		String json = "{\"deviceId\":\"LeshanClientDemo\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjA4ODM3NTYgMQ==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MDgxOTAwMDAwNTMUAhsEDioVCQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkAhsEDioR//3kAAAAKgAA/wABAgASCRBOSkMgMTYwNjAyQSAgIDIxAQEACAT/AAMCAAIRDwAADwAA/wAWBAARAQECAgkEAAAA/wkF////Af8BAQADAP8AAwIABRdEegAAAQAA8gD/AAECAAoJCBMDAAEAAAcIAQCAAAz/AAMCAAIRDwEBAAMB/wADAgAFF0R6AAABAQADAv8AAwIABRdEegAA\\\"}]}\"}";
 		
-		
-		String json = "{\"deviceId\":\"Aging1\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"C459567D93A97621\",\"mid\":\"14748\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjAwMTQ4MDcgMQ==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MDgyNTAxNDM0ODgUAhsEFBAPAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AQBjAQD/AAcCADsGAACIdgYAAAAABgAAwHQGAAFeDQkMB+QCGwQUDwD/gAAABBgcAQAGAAAAAAYAAAAABgAAAAAGAAAAAA==\\\"}]}\"}";
+		String json = "{\"deviceId\":\"01220001645\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"544919B32BAC9A98\",\"mid\":\"61927\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjAwMDE2NDUgMw==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxNzEwMDY0NTQUAwYFEAIMAQA=\\\"},{\\\"n\\\":\\\"102/1\\\",\\\"sv\\\":\\\"MDgxNzAwMDkzNzgUAwYFEAIQAQA=\\\"},{\\\"n\\\":\\\"102/2\\\",\\\"sv\\\":\\\"MjYxNzA3MTEwNzUUAwYFEAIOAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AQBjAQD/AAcCABgJDAfkAwYFEAAA/4AAAAYABlt5Fz+AAAA=\\\"},{\\\"n\\\":\\\"103/1\\\",\\\"sv\\\":\\\"AQBjAQD/AAcCABgJDAfkAwYFEAAA/4AAAAYABlt5Fz+AAAABAGMBAP8ABwIAEwkMB+QDBgUQAAD/gAAABgAAboU=\\\"},{\\\"n\\\":\\\"103/2\\\",\\\"sv\\\":\\\"AQBjAQD/AAcCABgJDAfkAwYFEAAA/4AAAAYABlt5Fz+AAAABAGMBAP8ABwIAEwkMB+QDBgUQAAD/gAAABgAAboUBAGMBAP8ABwIAGAkMB+QDBgUQAAD/gAAABgAFbkkXP4AAAA==\\\"}]}\"}";
 		
 		process.process(json);
-
+		
 		System.out.println("test");		
     }
 	

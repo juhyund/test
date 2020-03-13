@@ -23,6 +23,7 @@
 
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-grid.css">
 <link rel="stylesheet" href="<%=COMMON_PATH_CSS%>/ag-theme-balham.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
@@ -44,28 +45,23 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">단말 목록 조회</h3>
+						<h3 style="margin-top: 6px">모뎀 목록 조회</h3>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-							<li class="breadcrumb-item"><a
-								href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-							</li>
-							<li class="breadcrumb-item active"><strong>단말 관리</strong>
-							</li>
 						</ol>
 					</div>
 				</div>
 				<!-- navigator -->
 				<!-- body -->
-				<div class="row">
+				<div class="row" style="width: 100%">
 					<div class="col-lg-12">
 						<div class="ibox">
 							<div class="ibox-content">
 								<form name="search_form" id="search_form" method="post">
 								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
 								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
-								<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
+								<table class="table table-borderless" style="height: 100%; style="margin-bottom: 7px;" border="1">
 									<tbody>
 										<tr class="table-border">
 											<td height="80">
@@ -77,7 +73,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<option value=''>선택</option>
 														</select>
 													</div>
-													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말모델</label>
+													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
 													<div class="col-lg-3">
 														<select class="form-control" name="model_seq" id="model_seq"></select>
 													</div>
@@ -105,13 +101,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="col-lg-3">
 														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 															<option value=''>선택</option>
-															<option value='device_id'>단말ID</option>
-															<option value='device_serial'>단말 번호</option>
+															<option value='device_id'>모뎀ID</option>
+															<option value='device_serial'>모뎀 번호</option>
 														</select>
 														<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 													</div>
 													
-													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">단말상태</label>
+													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀상태</label>
 													<div class="col-lg-3">
 														<select class="form-control" name="device_status" id="device_status">
 															<option value=''>선택</option>
@@ -146,6 +142,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
 													<i class="fa fa-undo"></i>
 												</button>
+												<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
+													<i class="fa fa-download"></i>
+												</button>
 											</td>
 										</tr>
 									</tbody>
@@ -167,7 +166,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									<!-- grid -->
-									<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+									<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
 									<center>
@@ -188,12 +187,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "단말번호", field: "device_serial"},
+	{headerName: "모뎀번호", field: "device_serial"},
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
-	{headerName: "단말모뎀", field: "model_nm"},
+	{headerName: "모뎀모델", field: "model_nm"},
 	{headerName: "제조사", field: "vendor_nm"},
-	{headerName: "단말상태", field: "code_local_nm"},
+	{headerName: "모뎀상태", field: "code_local_nm"},
 	{headerName: "최종통신일시", field: "last_comm_dt"},
 	{headerName: "등록일자", field: "reg_dt"}
 ];
@@ -222,6 +221,21 @@ function ajaxSearchForm() {
      };             
     
      $.ajax(options);
+}
+
+function excelDownload() {
+	
+	 $('#search_form').attr('action', COMMON_URL + "/downloadDevicelist");
+	 $('#search_form').attr('method',"GET");
+	 $('#search_form').submit();
+	Swal.fire({
+		position: 'center',
+		icon: 'info',
+		text: 'excel 생성중',
+		showConfirmButton: false,
+			timer: 1500
+	});
+
 }
 
 function showRequest() {

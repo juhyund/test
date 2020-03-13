@@ -50,12 +50,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
 		</ol>
 	</div>						
 </div>
@@ -131,9 +125,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<button class="btn btn-primary " type="button"><i class="fa fa-undo"></i>&nbsp;&nbsp;<span class="bold">새로고침</span></button>
 				</div>  -->       
 				<div>
-					<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+					<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 			   </div>
-			   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%" type="button" onclick="javascript:history.back(-1)">
+			   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%; float: right" type="button" onclick="javascript:history.back(-1)">
 					<i class="fa fa-undo"> 목록으로 돌아가기</i>
 				</button>
 			              

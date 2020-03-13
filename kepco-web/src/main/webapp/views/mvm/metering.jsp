@@ -44,12 +44,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">검침데이터 조회</h3>
+	<h3 style="margin-top:6px">LP검침 데이터 조회</h3>
+</div>
+<div class="col-lg-2">
+	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
+	</ol>
 </div>
 </div>
 <!-- navigator -->
 <!-- body -->
-<div class="row">
+<div class="row" style="width: 100%">
 	<div class="col-lg-12">	
 		<div class="ibox">
 			<div class="ibox-content">
@@ -65,7 +69,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 										<div class="col-lg-3">
 											<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
-											<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+											<select class="form-control" style="float:right; width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
 												<option value=''>선택</option>
 											</select>
 										</div>
@@ -96,7 +100,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			                            </div>
 									</div>
 									<div class="form-group row">
-										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">계기 타입</label>
+										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">계기타입</label>
 										<div class="col-lg-3">
 											<select class="form-control" name="meter_type"	id="meter_type"></select>
 										</div> 
@@ -138,7 +142,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<label id="cur_page_num" class="col-form-label"></label>
 								<div style ="float:right; margin-bottom:5px">
 									<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-										<option valuesearch_num=10 selected>10개씩</option>
+										<option value=10 selected>10개씩</option>
 										<option value=100>100개씩 </option>
 										<option value=250>250개씩 </option>
 									</select>
@@ -170,12 +174,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", 		field: "no", 				width:50,	suppressSizeToFit: true},
 	{headerName: "검침일", 	field: "read_dt",			width:200},
-	{headerName: "미터 시리얼", field: "meter_serial",		width:100},
+	{headerName: "계기번호",   field: "meter_serial",		width:100},
 	{headerName: "본부", 	  	field: "parent_branch_nm", 	width:200},
 	{headerName: "지사", 		field: "branch_nm",			width:100},
 	{headerName: "계기타입", 	field: "meter_type", 		width:100},
-	{headerName: "계기번호", 	field: "meter_serial", 		width:100},
-	{headerName: "모뎀 번호", 	field: "device_serial", 	width:200},
+	{headerName: "모뎀번호", 	field: "device_serial", 	width:200},
    	{headerName: "누적검침값 (kWh)", width:100,	
 			   	field: "meter_value", 
 			   	suppressSizeToFit: true,
@@ -213,7 +216,7 @@ function ajaxSearchForm() {
 function excelDownload() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
-	if( totalCnt == 0){
+	/* if( totalCnt == 0){
 		Swal.fire({
 			position: 'center',
 			icon: 'error',
@@ -222,9 +225,8 @@ function excelDownload() {
 			showConfirmButton: false,
 				timer: 1500
 			});
-	}else{
-
-		 $('#search_form').attr('action', "/ewsn-app/downloadMeterValue");
+	}else{ */
+		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterValue");
 		 $('#search_form').attr('method',"GET");
 		 $('#search_form').submit();
 		Swal.fire({
@@ -234,7 +236,7 @@ function excelDownload() {
 			showConfirmButton: false,
 				timer: 1500
 		});
-	}
+	// }
 
 }
 
@@ -360,6 +362,4 @@ $('#datePicker .input-group.date').datepicker({
 
 
 </script>
-<!--  wrapper -->
-</body>
-</html>
+<!--  wra

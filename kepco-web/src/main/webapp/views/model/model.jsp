@@ -50,12 +50,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
-		<li class="breadcrumb-item">
-			<a href="http://webapplayers.com/inspinia_admin-v2.9.2/index.html">Home</a>
-		</li>
-		<li class="breadcrumb-item active">
-			<strong>Layouts</strong>
-		</li>
 		</ol>
 	</div>						
 </div>
@@ -136,7 +130,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						</div>
 					</div>
 					<!-- grid -->
-					<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+					<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 					
 					<!-- grid pagination -->
 					<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -231,7 +225,6 @@ onRowClicked = function(event){
 function resetForm(){
 	$("#search_form")[0].reset();
 	setSearchPeriod('today');
-	$("#grid-page").hide();
 	
 };
 

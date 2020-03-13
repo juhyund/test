@@ -27,6 +27,9 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js?ver=22"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="components/angular-sweetalert/SweetAlert.js"></script>
+https://cdnjs.cloudflare.com/ajax/libs/angular-sweetalert/1.1.2/SweetAlert.min.js
+
 
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -41,7 +44,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
@@ -62,7 +64,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">검침 데이터 조회 > 상세정보 </h3>
+	<h3 style="margin-top:6px">LP검침 > 상세 데이터 조회 </h3>
 </div>
 					
 </div>
@@ -88,16 +90,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		                <table class="table-borderless text-center m-t" style="width:100%" >
 							<thead>
 								<tr class="text-navy">
-									<th>미터 ID</th>
-									<th>단말 ID</th>
-									<th>미터 타입</th>
+									<th>계기번호</th>
+									<th>모뎀번호</th>
+									<th>계기타입</th>
 									<th>최종통신일자</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td><h3>${meter_id}</h3></td>
-									<td><h3 id = "device_id"></h3></td>
+									<td><h3 id = "meter_serial"></h3></td>
+									<td><h3 id = "device_serial"></h3></td>
 									<td><h3 id = "meter_type"></h3></td>
 									<td><h3 id = "last_comm_dt"></h3></td>
 								</tr>
@@ -154,8 +156,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					</table>
 					<input type="hidden" id="meter_id" name="meter_id" value="${meter_id}" class="form-control">
 				</form>
-							
-				
 			  	<!-- <div class="text-center" style="padding-bottom:15px">
 					<button class="btn btn-primary " type="button"><i class="fa fa-search"></i>&nbsp;&nbsp;<span class="bold">검색</span></button>
 					<button class="btn btn-primary " type="button"><i class="fa fa-undo"></i>&nbsp;&nbsp;<span class="bold">새로고침</span></button>
@@ -212,9 +212,7 @@ var columnDefs = [
 //specify the columns  
 	{headerName: "번호",		field: "no",		width:50,	suppressSizeToFit: true, pinned:"left"},
 	{headerName: "검침일시", 	field: "read_dt",	width:100,	suppressSizeToFit: true, pinned:"left"},
-	{headerName: "모뎀시간 ", 	field: "itime",		width:100,	suppressSizeToFit: true, pinned:"left"},
-	{headerName: "미터시간", 	field: "mtime",		width:100,	suppressSizeToFit: true, pinned:"left"}	]
-	
+	{headerName: "모뎀시간 ", 	field: "itime",		width:100,	suppressSizeToFit: true, pinned:"left"}	]
 	
 function useChannelList(data, status) {
 	//미터가 사용하는 채널에 따라 유동적으로 헤더를 생성
@@ -233,7 +231,7 @@ function useChannelList(data, status) {
 	
 	//grid로딩
 	initGrid();
-	ajaxSearchForm();su
+	ajaxSearchForm();
 }
 
 var initGrid = function() {
@@ -296,7 +294,7 @@ function resetForm(){
 function excelDownload() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	
-	 $('#search_form').attr('action', "/ewsn-app/downloadMeterValueDetail");
+	 $('#search_form').attr('action', COMMON_URL + "/downloadMeterValueDetail");
 	 $('#search_form').attr('method',"GET");
 	 $('#search_form').submit();
 	Swal.fire({
@@ -306,7 +304,6 @@ function excelDownload() {
 		showConfirmButton: false,
 			timer: 1500
 	});
-	
 
 }
 
@@ -324,21 +321,24 @@ function successResultHandler(data, status) {
 
 function loadMeterInfo(data, status) {	
 	//받아온 데이터를 미터Info에 로딩
-	var device_id; 
+	var device_serial; 
+	var meter_serial;
 	var meter_type;
 	var last_comm_dt; 
 	
-	device_id = data.resultGrid[0].device_id;
+	device_serial = data.resultGrid[0].device_serial;
+	meter_serial = data.resultGrid[0].meter_serial;
 	meter_type = data.resultGrid[0].meter_type;
 	last_comm_dt = data.resultGrid[0].last_comm_dt;
 	
-	$('#device_id').text(device_id);
+	$('#device_serial').text(device_serial);
+	$('#meter_serial').text(meter_serial);
 	$('#meter_type').text(meter_type);
 	$('#last_comm_dt').text(last_comm_dt);
 }
 
 function loadChart(data, status){
-	var format = '{value: %m/%e %H:%M}';
+	var format = '{value: %m/%d <br> %H:%M}';
 
 	var chartOptions = {
 		  chart: {
@@ -352,6 +352,7 @@ function loadChart(data, status){
 		    text: ''
 		  },
 		  xAxis: {
+			  	useHTML : true,
 				type: 'datetime',
 				labels: {
 					format: format,
@@ -405,6 +406,7 @@ function loadChart(data, status){
 		  plotOptions: {
 		    series: {
 		      cursor: 'pointer',
+		      //lineWidth: 1,
 		      point: {
 		        events: {
 		          click: function (e) {
@@ -414,16 +416,18 @@ function loadChart(data, status){
 		                y: e.pageY || e.clientY
 		              },
 		              headingText: this.series.name,
-		              maincontentText: Highcharts.dateFormat('%Y/%m/%e %H:%M', this.x) + '<br/> ' +
+		              maincontentText: Highcharts.dateFormat('%Y/%m/%d %H:%M', this.x) + '<br/> ' +
 		                this.y ,
 		              width: 200
 		            });
 		          }
 		        }
-		      }/* ,
+		      },
 		      marker: {
-		        lineWidth: 1
-		      } */
+		        symbol   :"circle",
+		        radius: 1.5
+		        
+		      }
 		    }
 		  },
 		  series: createSeries(data)

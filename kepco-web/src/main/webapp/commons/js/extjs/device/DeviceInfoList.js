@@ -131,25 +131,25 @@ Ext.onReady(function() {
 			sortable : false
 		}, {
 			dataIndex : 'device_serial',
-			text : '단말번호',
+			text : '모뎀번호',
 			width : 120,
 			align : 'center',
 			sortable : false
 		}, {
 			dataIndex : 'device_oid',
-			text : '단말OID',
+			text : '모뎀OID',
 			width : 250,
 			align : 'center',
 			sortable : false
 		}, {
 			dataIndex : 'device_code_nm',
-			text : '단말구분',
+			text : '모뎀구분',
 			width : 120,
 			align : 'center',
 			sortable : false
 		}, {
 			dataIndex : 'device_stat_nm',
-			text : '단말상태',
+			text : '모뎀상태',
 			width : 120,
 			align : 'center',
 			sortable : false
@@ -200,7 +200,7 @@ Ext.onReady(function() {
 			    items: [			    
 		        {
 		            xtype: 'fieldcontainer',
-		            fieldLabel: '단말아이디',	            
+		            fieldLabel: '모뎀아이디',	            
 		            defaultType: 'textfield',
 		            layout: 'hbox',
 		            margin: '0 0 0 10',
@@ -221,7 +221,7 @@ Ext.onReady(function() {
 		            ]
 		        }, {
 		            xtype: 'fieldcontainer',
-		            fieldLabel: '단말시리얼',	            
+		            fieldLabel: '모뎀번호',	            
 		            defaultType: 'textfield',
 		            layout: 'hbox',
 		            margin: '0 0 0 10',
@@ -242,7 +242,7 @@ Ext.onReady(function() {
 		            ]
 		        }, {
 		            xtype: 'fieldcontainer',
-		            fieldLabel: '단말OID',	            
+		            fieldLabel: '모뎀OID',	            
 		            defaultType: 'textfield',
 		            layout: 'hbox',
 		            margin: '0 0 0 10',

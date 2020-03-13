@@ -1,6 +1,7 @@
 package com.nuri.kepco.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,10 @@ public class DeviceController {
 			param.put("sort", "reg_dt");
 			param.put("dir", "DESC");
 			
+        	if(param.containsKey("model_seq")) {
+        		param.put("model_seq", (Integer.parseInt((String) param.get("model_seq"))));		        		
+        	}
+
 			int cnt = this.deviceInfoService.getDeviceListCnt(param);
 			JSONArray jarr = this.deviceInfoService.getDeviceList(param);
 			
@@ -110,8 +115,8 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/ajaxDeviceObjectModelList")
-	public ResponseEntity<Object> ajaxDeviceObjectModelList(HttpServletRequest request) {
+	@RequestMapping(value = "/ajaxObjectModelList")
+	public ResponseEntity<Object> ajaxObjectModelList(HttpServletRequest request) {
 		
 		JSONObject json = new JSONObject();
 		try {
@@ -152,5 +157,41 @@ public class DeviceController {
 		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value = "/ajaxDeviceInfoUpdate")
+	public ResponseEntity<Object> ajaxDeviceInfoUpdate(HttpServletRequest request) {
+		
+		String[] commStr = { "mobile_no", "ip", "port", "hw_version", "fw_version", "sw_version1", "sw_version2", "remark" };
+		
+		JSONObject json = new JSONObject();
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("device_id", request.getParameter("device_id"));
+			
+			JSONObject ori = deviceInfoService.selectOne(param);
+			Iterator<String> keysItr = ori.keySet().iterator();
+		    while(keysItr.hasNext()) {
+		        String key = keysItr.next();
+		        Object value = ori.get(key);
+		        if(value != null && !"".equals(value)) {
+		        	if("model_seq".equals(key)) {
+		        		param.put(key, ((int)(long) value));		        		
+		        	} else {
+		        		param.put(key, value);	
+		        	}
+		        }
+		    }
+			ControllerUtil.getCustomParam(request, commStr, param);
+			deviceInfoService.update(param);
+
+			json.put("result", "SUCCESS!");
+		} catch (Exception e) {
+			json.put("result", "ERROR!");
+			logger.error(e.toString(),e);
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		return new ResponseEntity<Object>(json, responseHeaders, HttpStatus.CREATED);
+	}
 }
 

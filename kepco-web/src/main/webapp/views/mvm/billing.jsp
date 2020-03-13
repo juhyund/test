@@ -46,6 +46,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div class="col-lg-10" >
 	<h3 style="margin-top:6px">정기검침 데이터 조회</h3>
 </div>					
+<div class="col-lg-2">
+	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
+	</ol>
+</div>
 </div>
 <!-- navigator -->
 <!-- body -->
@@ -65,7 +69,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
 										<div class="col-lg-3">
 											<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
-											<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
+											<select class="form-control" style="float:right; width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
 												<option value=''>선택</option>
 											</select>
 										</div>
@@ -101,12 +105,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<select class="form-control" name="meter_type"	id="meter_type"></select>
 										</div> 
 										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">계기 번호</label>
+											style="padding-left: 10px;">계기번호</label>
 										<div class="col-lg-3">
 											<input type="text" id="meter_serial" name="meter_serial" value="" class="form-control">
 										</div>
 										<label class="col-lg-1 col-form-label"
-											style="padding-left: 10px;">모뎀 번호</label>
+											style="padding-left: 10px;">모뎀번호</label>
 										<div class="col-lg-3">
 											<input type="text" id="device_serial" name="device_serial" value="" class="form-control">
 										</div>
@@ -151,7 +155,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<label id="cur_page_num" class="col-form-label"></label>
 								<div style ="float:right; margin-bottom:5px">
 									<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-										<option valuesearch_num=10 selected>10개씩</option>
+										<option value=10 selected>10개씩</option>
 										<option value=100>100개씩 </option>
 										<option value=250>250개씩 </option>
 									</select>
@@ -159,7 +163,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</div>
 						</div>
 						<!-- grid -->
-						<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+						<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
 						
 						<!-- grid pagination -->
 						<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -184,13 +188,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", 		field: "no", 			width:50,	suppressSizeToFit: true, pinned:"left"},
 	{headerName: "검침일", 	field: "billing_dt",	width:100,	suppressSizeToFit: true, pinned:"left"},
-	{headerName: "미터 시리얼", field: "meter_serial",	width:100,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "계기번호", field: "meter_serial",	width:100,	suppressSizeToFit: true, pinned:"left"},
 	{headerName: "본부", 	  	 field: "parent_branch_nm", width:100,suppressSizeToFit: true},
 	{headerName: "지사", 		field: "branch_nm",		width:100,	suppressSizeToFit: true},
 	{headerName: "계기타입", 	field: "meter_type", 	width:100,	suppressSizeToFit: true},
-	{headerName: "계기번호", 	field: "meter_serial", 	width:100,	suppressSizeToFit: true},
-	{headerName: "모뎀 번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
-	{headerName: '순방향 유효전력',
+	{headerName: "모뎀번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
+	{headerName: '순방향 유효전력량(kWh)',
        children: [{headerName: "전체",  width:100, 
     	   				suppressSizeToFit: true,
 					   	field: "active_imp_tot", 
@@ -218,7 +221,7 @@ var columnDefs = [
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}]
 	},
-	{headerName: '역방향 유효전력',
+	{headerName: '역방향 유효전력량(kWh)',
        children: [{headerName: "전체", width:100,
 					   	field: "active_exp_tot", 
 					   	valueFormatter: numberFormatter, 
@@ -271,7 +274,7 @@ function ajaxSearchForm() {
            data        : $("#search_form").serialize()
      };             
      $.ajax(options);
-}/* 
+}
 
 function excelDownload() {
 	setSearchParam2($("#sdateView").val(), $("#edateView").val());
@@ -286,19 +289,19 @@ function excelDownload() {
 				timer: 1500
 			});
 	}else{
-
-		 $('#search_form').attr('action', "/ewsn-app/downloadMeterValue");
+		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterBilling");
 		 $('#search_form').attr('method',"GET");
 		 $('#search_form').submit();
 		Swal.fire({
 			position: 'center',
 			icon: 'info',
 			text: 'excel 생성중',
-			showConfirmButton: false
+			showConfirmButton: false,
 				timer: 1500
 		});
 	}
-} */
+
+}
 
 onRowClicked = function(event){
 	var meter_id = event.data.meter_id;
@@ -315,7 +318,6 @@ onRowClicked = function(event){
 function resetForm(){
 	$("#search_form")[0].reset();
 	setSearchPeriod("thisMonth");
-	$("#grid-page").hide();
 };
 
 

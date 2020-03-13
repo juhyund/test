@@ -68,7 +68,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">정기검침 > 상세정보</h3>
+						<h3 style="margin-top: 6px">정기검침 > 상세 데이터 조회</h3>
 					</div>
 				</div>
 				<!-- navigator -->
@@ -93,12 +93,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<thead>
 												<tr class="text-navy">
 													<th>검침일</th>
-													<th>모뎀시간</th>
-													<th>미터시간</th>
+													<th>모뎀 시간</th>
+													<th>계기 시간</th>
 													<th>(본부)지사 </th>
-													<th>계기타입</th>
-													<th>계기번호</th>
-													<th>모뎀번호</th>
+													<th>계기 타입</th>
+													<th>계기 번호</th>
+													<th>모뎀 번호</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -119,7 +119,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 								<!--  start : search_area  -->
 								<form name="search_form" id="search_form" method="post">
-									<table class="table table-borderless"
+									<%-- <table class="table table-borderless"
 										style="width: 100%; margin-bottom: 7px;" border="1">
 										<tbody>
 											<tr class="table-border">
@@ -172,7 +172,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</td>
 											</tr>
 										</tbody>
-									</table>
+									</table> --%>
 									<input type="hidden" id="meter_id" name="meter_id"value="${meter_id}" class="form-control">
 									<input type="hidden" id="billing_dt" name="billing_dt"value="${billing_dt}" class="form-control">
 								</form>
@@ -194,35 +194,35 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th>T3</th>
 												</tr>
 												<tr>
-													<th>유효전력량</td>
+													<th>유효전력량(kWh)</td>
 													<td id = "ACTIVE_IMP_TOT"></td>
 													<td id = "ACTIVE_IMP_T1"></td>
 													<td id = "ACTIVE_IMP_T2"></td>
 													<td id = "ACTIVE_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>피상전력량</td>
+													<th>피상전력량(kVah)</td>
 													<td id = "APPRENT_IMP_TOT"></td>
 													<td id = "APPRENT_IMP_T1"></td>
 													<td id = "APPRENT_IMP_T2"></td>
 													<td id = "APPRENT_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>지상무효전력량</td>
+													<th>지상무효전력량(kVarh)(+)</td>
 													<td id = "LEAD_IMP_TOT"></td>
 													<td id = "LEAD_IMP_T1"></td>
 													<td id = "LEAD_IMP_T2"></td>
 													<td id = "LEAD_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>진상무효전력량</td>
+													<th>진상무효전력량(kVarh)(-)</td>
 													<td id = "LAGGING_IMP_TOT"></td>
 													<td id = "LAGGING_IMP_T1"></td>
 													<td id = "LAGGING_IMP_T2"></td>
 													<td id = "LAGGING_IMP_T3"></td>
 												</tr>
 												<tr>
-													<th>평균역률</td>
+													<th>평균역률(pf)</td>
 													<td id = "PF_IMP_TOT"></td>
 													<td id = "PF_IMP_T1"></td>
 													<td id = "PF_IMP_T2"></td>
@@ -238,41 +238,41 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</tr>
 												<tr>
 													<th></th>
-													<th>Total</th>
+												<th>Total</th>
 													<th>T1</th>
 													<th>T2</th>
 													<th>T3</th>
 												</tr>
 												<tr>
-													<th>(역)유효전력량</td>
+													<th>(역)유효전력량(kWh)</td>
 													<td id = "ACTIVE_EXP_TOT"></td>
 													<td id = "ACTIVE_EXP_T1"></td>
 													<td id = "ACTIVE_EXP_T2"></td>
 													<td id = "ACTIVE_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)피상전력량</td>
+													<th>(역)피상전력량(kVah)</td>
 													<td id = "APPRENT_EXP_TOT"></td>
 													<td id = "APPRENT_EXP_T1"></td>
 													<td id = "APPRENT_EXP_T2"></td>
 													<td id = "APPRENT_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)지상무효전력량</td>
+													<th>(역)지상무효전력량(kVarh)(+)</td>
 													<td id = "LEAD_EXP_TOT"></td>
 													<td id = "LEAD_EXP_T1"></td>
 													<td id = "LEAD_EXP_T2"></td>
 													<td id = "LEAD_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)진상무효전력량</td>
+													<th>(역)진상무효전력량(kVarh)(-)</td>
 													<td id = "LAGGING_EXP_TOT"></td>
 													<td id = "LAGGING_EXP_T1"></td>
 													<td id = "LAGGING_EXP_T2"></td>
 													<td id = "LAGGING_EXP_T3"></td>
 												</tr>
 												<tr>
-													<th>(역)평균역률</td>
+													<th>(역)평균역률(pf)</td>
 													<td id = "PF_EXP_TOT"></td>
 													<td id = "PF_EXP_T1"></td>
 													<td id = "PF_EXP_T2"></td>
@@ -281,11 +281,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											</thead>
 										</table>
 									</div>
+									<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px; float: right" type="button" onclick="javascript:history.back(-1)">
+										<i class="fa fa-undo"> 목록으로 돌아가기</i>
+									</button>	
 								</div>
 								<!--  end : table_area  -->
 
-
-
+										
+								
 							</div>
 						</div>
 					</div>
@@ -303,39 +306,15 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		});
 
 		function init() {
-			initDate();
-			
 			ajaxSearchForm();
 		}
-		function initDate() {
-
-			var initSdate = $("#sdateView").val();
-			var initEdate = $("#edateView").val();
-
-			setSearchParam2(initSdate, initEdate);
-		}
 		
-		function ajaxChannelList() {
-			var options = {
-				beforeSend : showRequest,
-				success : useChannelList, /*미터가 사용하는 채널에 따라 유동적으로 헤더를 생성*/
-				url : COMMON_URL + "/ajaxChannelList",
-				contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-				type : "post", /* get, post */
-				dataType : "json", /* xml, html, script, json */
-				data : $("#search_form").serialize()
-			};
-
-			$.ajax(options);
-		}
-
 		function ajaxSearchForm() {
-			setSearchParam2($("#sdateView").val(), $("#edateView").val());
 
 			var options = {
 				beforeSend : showRequest,
 				success : successResultHandler,
-				url : COMMON_URL + "/ajaxMeterBilling",
+				url : COMMON_URL + "/ajaxMeterBillingDetail",
 				contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 				type : "post", /* get, post */
 				dataType : "json", /* xml, html, script, json */
@@ -406,14 +385,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			$('#LAGGING_EXP_T3').text(formatNumber(data.resultGrid[0].lagging_exp_rate3,4));
 			
 			//평균 역률
-			$('#PF_IMP_TOT'		).text(formatNumber(data.resultGrid[0].pf_imp_tot,4));		
-			$('#PF_IMP_T1'		).text(formatNumber(data.resultGrid[0].pf_imp_rate1,4));		
-			$('#PF_IMP_T2'		).text(formatNumber(data.resultGrid[0].pf_imp_rate2,4));		
-			$('#PF_IMP_T3'		).text(formatNumber(data.resultGrid[0].pf_imp_rate3,4));	
-			$('#PF_EXP_TOT'		).text(formatNumber(data.resultGrid[0].pf_exp_tot,4));		
-			$('#PF_EXP_T1'		).text(formatNumber(data.resultGrid[0].pf_exp_rate1,4));		
-			$('#PF_EXP_T2'		).text(formatNumber(data.resultGrid[0].pf_exp_rate2,4));		
-			$('#PF_EXP_T3'		).text(formatNumber(data.resultGrid[0].pf_exp_rate3,4));
+			$('#PF_IMP_TOT'		).text(formatNumber(data.resultGrid[0].pf_imp_tot,2));		
+			$('#PF_IMP_T1'		).text(formatNumber(data.resultGrid[0].pf_imp_rate1,2));		
+			$('#PF_IMP_T2'		).text(formatNumber(data.resultGrid[0].pf_imp_rate2,2));		
+			$('#PF_IMP_T3'		).text(formatNumber(data.resultGrid[0].pf_imp_rate3,2));	
+			$('#PF_EXP_TOT'		).text(formatNumber(data.resultGrid[0].pf_exp_tot,2));		
+			$('#PF_EXP_T1'		).text(formatNumber(data.resultGrid[0].pf_exp_rate1,2));		
+			$('#PF_EXP_T2'		).text(formatNumber(data.resultGrid[0].pf_exp_rate2,2));		
+			$('#PF_EXP_T3'		).text(formatNumber(data.resultGrid[0].pf_exp_rate3,2));
 			
 		}
 

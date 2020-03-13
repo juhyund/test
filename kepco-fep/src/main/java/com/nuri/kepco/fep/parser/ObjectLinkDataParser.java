@@ -16,8 +16,11 @@ import org.eclipse.leshan.json.LwM2mJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.nuri.kepco.fep.datatype.FIRMWARE;
+import com.nuri.kepco.fep.datatype.FIRMWARE.FIRMWAREUPDATE;
 import com.nuri.kepco.fep.datatype.MeterEntry.METERENTRY;
 import com.nuri.kepco.fep.datatype.ResultMessage;
+import com.nuri.kepco.fep.datatype.Device.DEVICE;
 import com.nuri.kepco.fep.mddata.DataParser;
 import com.nuri.kepco.model.DeviceResource;
 import com.nuri.kepco.model.MeterInfo;
@@ -26,11 +29,15 @@ public class ObjectLinkDataParser extends DataParser {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ObjectLinkDataParser.class);
 
-	private static final Integer METERENTRY_OBJECTID = 31004;
+	private static final Integer METERENTRY_OBJECTID = 31004; // METER ENTRY
+	private static final Integer FIRMWARE_OBJECTID = 5; // FIRMWARE UPDATE OBJECT
+	private static final Integer DEVICE_OBJECTID = 3; // DEVICE OBJECT
 
 	private List<DeviceResource> deviceResourceList = null;
 
 	private Map<Integer, MeterInfo> meterInfoList = null;
+	private Map<Integer, Object> firmwareInfo = null;
+	private Map<Integer, Object> deviceInfoMap = null;
 
 	@Override
 	public void parser(String data, String deviceId, String modemTime) throws Exception {
@@ -44,9 +51,20 @@ public class ObjectLinkDataParser extends DataParser {
 
 			LwM2mPath basePath = new LwM2mPath(bn);
 
-			// METERENTRY
+
 			if (METERENTRY_OBJECTID.equals(basePath.getObjectId())) {
+
+				// METERENTRY
 				parseMeterInfo(jsonObject);
+				
+			} else if(FIRMWARE_OBJECTID.equals(basePath.getObjectId())) {
+				
+				// FIRMWARE UPDATE
+				parseFirmwareInfo(jsonObject);
+				
+			} else if(DEVICE_OBJECTID.equals(basePath.getObjectId())) {				
+				// DEVICE 
+				parseDeviceInfo(jsonObject);
 			}
 
 			// OBJECTLINK
@@ -57,10 +75,10 @@ public class ObjectLinkDataParser extends DataParser {
 				LwM2mPath path = new LwM2mPath(resourcePath);
 				DeviceResource resource = new DeviceResource();
 				resource.setResource_path(resourcePath);
-				resource.setObject_id(String.valueOf(path.getObjectId()));
-				resource.setObject_instance_id(String.valueOf(path.getObjectInstanceId()));
-				resource.setResource_id(String.valueOf(path.getResourceId()));
-				resource.setResource_instance_id(String.valueOf(path.getResourceInstanceId()));
+				if(path.getObjectId() != null) resource.setObject_id(String.valueOf(path.getObjectId()));
+				if(path.getObjectInstanceId() != null) resource.setObject_instance_id(String.valueOf(path.getObjectInstanceId()));
+				if(path.getResourceId() != null) resource.setResource_id(String.valueOf(path.getResourceId()));
+				if(path.getResourceInstanceId() != null) resource.setResource_instance_id(String.valueOf(path.getResourceInstanceId()));
 				resource.setResource_val(e.getResourceValue().toString());
 				resource.setReg_id("system");
 				resource.setUpdate_id("system");
@@ -131,6 +149,128 @@ public class ObjectLinkDataParser extends DataParser {
 		}
 
 	}
+	
+	/**
+	 * firmware update (5) 객체의 정보를 파싱한다
+	 * @param jsonObject
+	 */
+	private void parseFirmwareInfo(JsonRootObject jsonObject) {
+		
+		firmwareInfo = new HashMap<Integer, Object>();
+
+		for (JsonArrayEntry e : jsonObject.getResourceList()) {
+
+			String resourcePath = FIRMWARE_OBJECTID + "/0/" + e.getName();
+			LwM2mPath path = new LwM2mPath(resourcePath);			
+			
+
+			if (FIRMWAREUPDATE.PACKAGEURI.getCode().equals(path.getResourceId())) {
+				firmwareInfo.put(FIRMWAREUPDATE.PACKAGEURI.getCode(), e.getResourceValue().toString());
+			}
+			
+			if (FIRMWAREUPDATE.STATE.getCode().equals(path.getResourceId())) {
+				firmwareInfo.put(FIRMWAREUPDATE.STATE.getCode(), e.getFloatValue().intValue());
+			}
+			
+			if (FIRMWAREUPDATE.UPDATERESULT.getCode().equals(path.getResourceId())) {
+				firmwareInfo.put(FIRMWAREUPDATE.UPDATERESULT.getCode(), e.getFloatValue().intValue());
+			}
+			
+			if (FIRMWAREUPDATE.PACKAGENAME.getCode().equals(path.getResourceId())) {
+				firmwareInfo.put(FIRMWAREUPDATE.PACKAGENAME.getCode(), e.getResourceValue().toString());
+			}
+			
+			if (FIRMWAREUPDATE.PACKAGEVERSION.getCode().equals(path.getResourceId())) {
+				firmwareInfo.put(FIRMWAREUPDATE.PACKAGEVERSION.getCode(), e.getResourceValue().toString());
+			}
+			
+			if (FIRMWAREUPDATE.PROTOCOL.getCode().equals(path.getResourceId())) {
+				firmwareInfo.put(FIRMWAREUPDATE.PROTOCOL.getCode(), e.getFloatValue().intValue());
+			}
+			
+			if (FIRMWAREUPDATE.METHOD.getCode().equals(path.getResourceId())) {
+				firmwareInfo.put(FIRMWAREUPDATE.METHOD.getCode(), e.getFloatValue().intValue());
+			}
+		}
+	}
+	
+	/**
+	 * device (3) 객체의 정보를 파싱한다
+	 * @param jsonObject
+	 */
+	private void parseDeviceInfo(JsonRootObject jsonObject) {
+		
+		Map<Integer, String> swVersionMap = new HashMap<Integer, String>();
+		deviceInfoMap = new HashMap<Integer, Object>();
+		
+		for (JsonArrayEntry e : jsonObject.getResourceList()) {
+
+			String resourcePath = DEVICE_OBJECTID + "/0/" + e.getName();
+			
+			LwM2mPath path = new LwM2mPath(resourcePath);	
+			
+			if (DEVICE.MANUFACTURER.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.MANUFACTURER.getCode(), e.getStringValue());
+			}
+			
+			if (DEVICE.MODELNUMBER.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.MODELNUMBER.getCode(), e.getStringValue());
+			}
+			
+			if (DEVICE.SERIALNUMBER.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.SERIALNUMBER.getCode(), e.getStringValue());
+			}
+			
+			if (DEVICE.FWVERSION.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.FWVERSION.getCode(), e.getStringValue());
+			}
+			
+			if (DEVICE.AVAILABLEPOWERSOURCES.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.AVAILABLEPOWERSOURCES.getCode(), e.getFloatValue().intValue());
+			}
+			
+			if (DEVICE.POWERSOURCEVOLTAGE.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.POWERSOURCEVOLTAGE.getCode(), e.getFloatValue().intValue());
+			}
+			
+			if (DEVICE.MEMORYFREE.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.MEMORYFREE.getCode(), e.getFloatValue().intValue());
+			}
+			
+			if (DEVICE.ERRORCODE.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.ERRORCODE.getCode(), e.getFloatValue().intValue());
+			}
+			
+			if (DEVICE.CURRENTTIME.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.CURRENTTIME.getCode(), e.getTime());
+			}
+			
+			if (DEVICE.TIMEZONE.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.TIMEZONE.getCode(), e.getStringValue());
+			}
+			
+			if (DEVICE.DEVICETYPE.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.DEVICETYPE.getCode(), e.getStringValue());
+			}
+			
+			if (DEVICE.HWVERSION.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.HWVERSION.getCode(), e.getStringValue());
+			}
+			
+			if (DEVICE.SWVERSION.getCode().equals(path.getResourceId())) {
+				
+				swVersionMap.put(path.getResourceInstanceId(), e.getStringValue());				
+				deviceInfoMap.put(DEVICE.SWVERSION.getCode(), swVersionMap);
+			}
+			
+			if (DEVICE.MEMORYTOTAL.getCode().equals(path.getResourceId())) {
+				deviceInfoMap.put(DEVICE.MEMORYTOTAL.getCode(), e.getFloatValue().intValue());
+			}
+			
+		}
+		
+	}
+
 
 	public List<DeviceResource> getDeviceResourceList() {
 		return deviceResourceList;
@@ -138,6 +278,14 @@ public class ObjectLinkDataParser extends DataParser {
 
 	public Map<Integer, MeterInfo> getMeterInfoList() {
 		return meterInfoList;
+	}
+	
+	public Map<Integer, Object> getFirmwareInfo() {
+		return firmwareInfo;
+	}
+	
+	public Map<Integer, Object> getDeviceInfoMap() {
+		return deviceInfoMap;
 	}
 
 	private String getDateFormat(String textDate) {

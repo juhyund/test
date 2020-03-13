@@ -14,5 +14,9 @@ public interface DeviceInfoService extends GenericService {
 	JSONArray getDeviceList(Map<String, Object> param) throws Exception;
 	
 	JSONObject getDeviceInfo(String deviceId) throws Exception;
+
+	JSONObject getCommunication() throws Exception;
+	
+	Map<String, String> excelDeviceList(Map<String, Object> param) throws Exception;
 }
 
