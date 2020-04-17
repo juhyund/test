@@ -24,6 +24,8 @@ public class MDData {
 	String meterPhase;
 	
 	String cosemDeviceName; //cosem 아이디
+	String cosemLogicalDevice; // cosem logica device 번호
+	String cosemVersion; // 버전
 	Double acon; // 유효전력량 계기정수
 	Double rcon; // 무효전력량 계기정수
 	Double pcon; // 피상전력량 계기정수

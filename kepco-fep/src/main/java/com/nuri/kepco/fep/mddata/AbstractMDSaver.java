@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.aimir.util.DataUtil;
+import com.aimir.util.Hex;
 import com.aimir.util.TimeUtil;
 import com.nuri.kepco.fep.datatype.MDData;
 import com.nuri.kepco.fep.datatype.MeterType;
@@ -29,6 +31,9 @@ import com.nuri.kepco.model.dao.VendorInfoDAO;
 public abstract class AbstractMDSaver {
 
 	Logger logger = LoggerFactory.getLogger(AbstractMDSaver.class);
+	
+	private static final String KEPCO_LD = "2"; // KEPCO 관리용 번호
+	private static final int KEPCO_SECURE_METER = 30; // KEPCO 보안계기버전
 
 	@Autowired
 	MeterInfoDAO meterInfoDAO;
@@ -169,6 +174,10 @@ public abstract class AbstractMDSaver {
 		return result;
 	}
 	
+	// meterentry 객체로 부터 미터 정보를 업데이트 한다.
+	// meterentry 는 cosem device 정보가 없기 때문에 보안 계기 구분이 불가능
+	// 미터타입으 구분되지 않는 경우 unknown 으로 저장
+	// update시 cosem id 정보가 있다면 비교하여 구분한다. 
 	protected int checkMeter(MeterInfo meterInfo) {
 		
 		int result = 0;
@@ -202,6 +211,13 @@ public abstract class AbstractMDSaver {
 				meterInfo.setBranch_id(defaultBranchId);
 				result += meterInfoDAO.insert(meterInfo);				
 			} else {
+				
+				// 보안계기 여부 확인
+				if(meter.getCosem_device_name() != null) {
+					if(isSecureMeterType(meter.getCosem_device_name())) {
+						meterInfo.setMeter_type(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName());
+					}
+				}
 				
 				// default branch id 세팅
 				if(meter.getBranch_id() == null) {
@@ -525,5 +541,33 @@ public abstract class AbstractMDSaver {
 		
 		logger.debug("billingDay : {}", billingDay);
 		return meterTime.substring(0, 6) + billingDay + "0000"; // length - 12
+	}
+	
+	/**
+	 * cosemDeviceName 으로 부터 보안 계기 여부 확인한다.
+	 * @param cosemDeviceName
+	 * @return
+	 */
+	public boolean isSecureMeterType(String cosemDeviceName) {
+		
+		boolean isSecureMeter = false;
+		
+		byte[] bcosem = cosemDeviceName.getBytes();
+		byte[] blogicalDeviceNo = new byte[1];
+		byte[] bversion = new byte[1];
+		
+		System.arraycopy(bcosem, 14, blogicalDeviceNo, 0, blogicalDeviceNo.length);
+		System.arraycopy(bcosem, 15, bversion, 0, bversion.length);
+		
+		String logicalDeviceNo = new String(blogicalDeviceNo);
+		String version = DataUtil.getBCDtoBytes(bversion);
+		
+		if(KEPCO_LD.equals(logicalDeviceNo)) {
+			if(Integer.parseInt(version) >= KEPCO_SECURE_METER) {
+				isSecureMeter = true;
+			}
+		}
+		
+		return isSecureMeter;
 	}
 }

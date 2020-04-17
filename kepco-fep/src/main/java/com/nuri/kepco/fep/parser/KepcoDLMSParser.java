@@ -23,6 +23,8 @@ import com.nuri.kepco.model.MeterBilling;
 public class KepcoDLMSParser {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KepcoDLMSParser.class);
+	private static final String KEPCO_LD = "2"; // KEPCO 관리용 번호
+	private static final int KEPCO_SECURE_METER = 30; // KEPCO 보안계기버전
 
 	LinkedHashMap<String, Map<String, Object>> result = null;
 	
@@ -85,7 +87,7 @@ public class KepcoDLMSParser {
 		mdData.setMeterID(meterID); // MeterID 
 		mdData.setModemTime(modemTime); // 해당미터 검침 값 수신시 모뎀시간
 		
-		setMeterModel(meterID); 
+		setMeterModel(meterID, mdData.getCosemLogicalDevice(), mdData.getCosemVersion()); 
 	}
 	
 	/**
@@ -255,12 +257,29 @@ public class KepcoDLMSParser {
 			Map<String, Object> map = null;
 			map = (Map<String, Object>) result.get(OBIS.HW_VER.getCode()); // cosem_id
 			if (map != null) {
+				
 				Object obj = null;
 				obj = map.get(OBIS.HW_VER.getName());
 				if (obj != null)
 					cosem_device_id = new String(Hex.encode((String) obj));
 				LOG.debug("COSEM_ID(HW_VER) [" + cosem_device_id + "]");
 				mdData.setCosemDeviceName(cosem_device_id);
+				
+				byte[] bcosem = Hex.encode((String) obj);
+				byte[] blogicalDeviceNo = new byte[1];
+				byte[] bversion = new byte[1];
+				
+				System.arraycopy(bcosem, 14, blogicalDeviceNo, 0, blogicalDeviceNo.length);
+				System.arraycopy(bcosem, 15, bversion, 0, bversion.length);
+				
+				String logicalDeviceNo = new String(blogicalDeviceNo);
+				String version = DataUtil.getBCDtoBytes(bversion);
+				
+				mdData.setCosemLogicalDevice(logicalDeviceNo);
+				mdData.setCosemVersion(version);
+				
+				LOG.debug("COSEM_ID(logicalDeviceNo) [" + logicalDeviceNo + "]");
+				LOG.debug("COSEM_ID(version) [" + version + "]");				
 			}
 
 			map = (Map<String, Object>) result.get(OBIS.METER_TIME.getCode());
@@ -553,7 +572,7 @@ public class KepcoDLMSParser {
 	 * 미터 모델 정보
 	 * @param meterSerial
 	 */
-	public void setMeterModel(String meterSerial) {
+	public void setMeterModel(String meterSerial, String cosemLogicalDeviceNo, String cosemVersion) {
 
 		String vendorCd = meterSerial.substring(0, 2);
 		String modelCd = meterSerial.substring(2, 4);
@@ -565,8 +584,15 @@ public class KepcoDLMSParser {
 		
 		if(type != null) {
 			mdData.setMeterType(type.getName());
-		} else {
-			mdData.setMeterType(DLMSVARIABLE.METERTYPE.UNKNOWN.getName());
+		} else {			
+			// 보안계기 구분 : LD = 2 이고 Version > 3.x 이상일 때 보안계기타입 
+			if(KEPCO_LD.equals(cosemLogicalDeviceNo)) {
+				if(Integer.parseInt(cosemVersion) >= KEPCO_SECURE_METER) {					
+					mdData.setMeterType(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName()); 
+				}
+			} else {
+				mdData.setMeterType(DLMSVARIABLE.METERTYPE.UNKNOWN.getName());
+			}
 		}
 		
 		if(phase != null) {
