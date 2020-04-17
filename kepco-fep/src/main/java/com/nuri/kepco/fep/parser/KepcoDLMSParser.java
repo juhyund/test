@@ -380,7 +380,7 @@ public class KepcoDLMSParser {
 		}
 		
 		// meter model
-		setMeterModel(meterID, mdData.getCosemLogicalDevice(), mdData.getCosemVersion());
+		setMeterModel(meterID);
 	}
 	
 	/**
@@ -574,25 +574,16 @@ public class KepcoDLMSParser {
 	 * 미터 모델 정보
 	 * @param meterSerial
 	 */
-	public void setMeterModel(String meterSerial, String cosemLogicalDeviceNo, String cosemVersion) {
+	public void setMeterModel(String meterSerial) {
 
 		String vendorCd = meterSerial.substring(0, 2);
 		String modelCd = meterSerial.substring(2, 4);
 
 		LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] vendorCd : [" + vendorCd + "] modelCd : [" + modelCd + "]");
-		LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] cosemLogicalDeviceNo : [" + cosemLogicalDeviceNo + "] cosemVersion : [" + cosemVersion + "]");
 		
 		DLMSVARIABLE.METERTYPE type = DLMSVARIABLE.METERTYPE.getMeterType(modelCd);
 		DLMSVARIABLE.METERPHASE phase = DLMSVARIABLE.METERPHASE.getMeterPhase(modelCd);
-				
-		// 보안계기 구분 : LD = 2 이고 Version > 3.x 이상일 때 보안계기타입 
-		if(KEPCO_LD.equals(cosemLogicalDeviceNo)) {
-			if(Integer.parseInt(cosemVersion) >= KEPCO_SECURE_METER) {					
-				type = DLMSVARIABLE.METERTYPE.SECMETERTYPE;
-				
-				LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] type : [" + type.getName() + "]");
-			}
-		}
+		
 		
 		if(type != null) {
 			mdData.setMeterType(type.getName());

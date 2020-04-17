@@ -18,29 +18,32 @@ public class CosemIdTest {
 		
 		try {
 			
-			String cosem = "50535419013031303230322020203230";
+//			String cosem = "50535419013031303230322020203230";
 			
 			                
 			
-			byte[] bcosem = Hex.encode(cosem);
-			byte[] blogicalDeviceNo = new byte[1];
-			byte[] bversion = new byte[1];
+//			byte[] bcosem = Hex.encode(cosem);
+			
+			byte[] bcosem = "WZT 160501A  130".getBytes();
+			
+			byte[] bversion1 = new byte[1];
+			byte[] bversion2 = new byte[1];
 			
 			System.out.println(new String(bcosem));
 			
 			System.out.println(Hex.decode(new String(bcosem).getBytes()));
 			
-			System.arraycopy(bcosem, 14, blogicalDeviceNo, 0, blogicalDeviceNo.length);
-			System.arraycopy(bcosem, 15, bversion, 0, bversion.length);
+			System.arraycopy(bcosem, 14, bversion1, 0, bversion1.length);			
+			System.arraycopy(bcosem, 15, bversion2, 0, bversion2.length);
 			
-			String logicalDeviceNo = new String(blogicalDeviceNo);
-			String version = DataUtil.getBCDtoBytes(bversion);
+			String version1 = new String(bversion1);
+			String version2 = new String(bversion2);
+			String version = version1 + "" + version2;
 			
-			System.out.println("logicalDeviceNo : " + logicalDeviceNo);
 			System.out.println("version : " + Integer.parseInt(version));
 			
 			if(Integer.parseInt(version) >= 30) {
-				System.out.println("ddd");
+				System.out.println("보안계기");
 			}
 			
 		} catch (Exception e) {

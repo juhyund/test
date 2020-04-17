@@ -565,19 +565,18 @@ public abstract class AbstractMDSaver {
 		boolean isSecureMeter = false;
 		
 		byte[] bcosem = cosemDeviceName.getBytes();
-		byte[] blogicalDeviceNo = new byte[1];
-		byte[] bversion = new byte[1];
+		byte[] bversion1 = new byte[1];
+		byte[] bversion2 = new byte[1];
 		
-		System.arraycopy(bcosem, 14, blogicalDeviceNo, 0, blogicalDeviceNo.length);
-		System.arraycopy(bcosem, 15, bversion, 0, bversion.length);
+		System.arraycopy(bcosem, 14, bversion1, 0, bversion1.length);
+		System.arraycopy(bcosem, 15, bversion2, 0, bversion2.length);
 		
-		String logicalDeviceNo = new String(blogicalDeviceNo);
-		String version = DataUtil.getBCDtoBytes(bversion);
-		
-		if(KEPCO_LD.equals(logicalDeviceNo)) {
-			if(Integer.parseInt(version) >= KEPCO_SECURE_METER) {
-				isSecureMeter = true;
-			}
+		String version1 = new String(bversion1);
+		String version2 = new String(bversion2);
+		String version = version1 + "" + version2;
+				
+		if(Integer.parseInt(version) >= KEPCO_SECURE_METER) {
+			isSecureMeter = true;
 		}
 		
 		return isSecureMeter;
