@@ -578,21 +578,25 @@ public class KepcoDLMSParser {
 		String modelCd = meterSerial.substring(2, 4);
 
 		LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] vendorCd : [" + vendorCd + "] modelCd : [" + modelCd + "]");
+		LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] cosemLogicalDeviceNo : [" + cosemLogicalDeviceNo + "] cosemVersion : [" + cosemVersion + "]");
+		
 
 		DLMSVARIABLE.METERTYPE type = DLMSVARIABLE.METERTYPE.getMeterType(modelCd);
 		DLMSVARIABLE.METERPHASE phase = DLMSVARIABLE.METERPHASE.getMeterPhase(modelCd);
+				
+		// 보안계기 구분 : LD = 2 이고 Version > 3.x 이상일 때 보안계기타입 
+		if(KEPCO_LD.equals(cosemLogicalDeviceNo)) {
+			if(Integer.parseInt(cosemVersion) >= KEPCO_SECURE_METER) {					
+				type = DLMSVARIABLE.METERTYPE.SECMETERTYPE;
+				
+				LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] type : [" + type.getName() + "]");
+			}
+		}
 		
 		if(type != null) {
 			mdData.setMeterType(type.getName());
-		} else {			
-			// 보안계기 구분 : LD = 2 이고 Version > 3.x 이상일 때 보안계기타입 
-			if(KEPCO_LD.equals(cosemLogicalDeviceNo)) {
-				if(Integer.parseInt(cosemVersion) >= KEPCO_SECURE_METER) {					
-					mdData.setMeterType(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName()); 
-				}
-			} else {
-				mdData.setMeterType(DLMSVARIABLE.METERTYPE.UNKNOWN.getName());
-			}
+		} else {
+			mdData.setMeterType(DLMSVARIABLE.METERTYPE.UNKNOWN.getName());
 		}
 		
 		if(phase != null) {
