@@ -46,47 +46,35 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 	@Autowired
 	DeviceFwHistoryDAO deviceFwHistoryDAO;
 
-	private List<DeviceResource> deviceResourceList = null;
-
-	private Map<Integer, MeterInfo> meterInfoList = null;
-
-	private Map<Integer, Object> firmwareInfo = null;
-
-	private Map<Integer, Object> deviceInfoMap = null;
+//	private List<DeviceResource> deviceResourceList = null;
+//
+//	private Map<Integer, MeterInfo> meterInfoList = null;
+//
+//	private Map<Integer, Object> firmwareInfo = null;
+//
+//	private Map<Integer, Object> deviceInfoMap = null;
 
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
 
 		ObjectLinkDataParser parser = (ObjectLinkDataParser) md.getMeterDataParser();
-
-		deviceResourceList = parser.getDeviceResourceList();
-		meterInfoList = parser.getMeterInfoList();
-		firmwareInfo = parser.getFirmwareInfo();
-		deviceInfoMap = parser.getDeviceInfoMap();
-
 		String deviceSerial = md.getDeviceId();
 
 		// checkDevice
-		checkDevice(deviceSerial, md.getModemTime());
+		DeviceInfo deviceInfo = checkDevice(deviceSerial, md.getModemTime());
 
-		int result = saveDeviceResource();
+		int result = saveDeviceResource(parser, deviceInfo);
 		LOG.debug("Device [{}] resource update : {}", deviceSerial, result);
 
-		int result2 = saveMeterInfo();
+		int result2 = saveMeterInfo(parser, deviceInfo);
 		LOG.debug("Device [{}] meter update : {}", deviceSerial, result2);
-
-		if (firmwareInfo != null) {
-			int result3 = saveFirmwareInfo();
-			LOG.debug("Device [{}] firmware update : {}", deviceSerial, result3);
-		}
 		
-		if (deviceInfoMap != null) {
-			int result4 = saveDeviceInfo();
-			LOG.debug("Device [{}] device fw/sw version update : {}", deviceSerial, result4);
-		}
-
+		//int result3 = saveFirmwareInfo(parser);
+		//LOG.debug("Device [{}] firmware update : {}", deviceSerial, result3);
 		
-
+		int result4 = saveDeviceInfo(parser, deviceInfo);
+		LOG.debug("Device [{}] device fw/sw version update : {}", deviceSerial, result4);
+		
 		return true;
 	}
 
@@ -95,12 +83,10 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 	 * 
 	 * @return
 	 */
-	private int saveDeviceResource() {
-
+	private int saveDeviceResource(ObjectLinkDataParser parser, DeviceInfo deviceInfo) {
+		
 		int result = 0;
-
-		// deviceInfo
-		DeviceInfo deviceInfo = getDeviceInfo();
+		List<DeviceResource> deviceResourceList = parser.getDeviceResourceList();
 
 		if (deviceInfo != null) {
 			for (DeviceResource deviceResource : deviceResourceList) {
@@ -120,12 +106,10 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 	 * 
 	 * @return
 	 */
-	private int saveMeterInfo() {
+	private int saveMeterInfo(ObjectLinkDataParser parser, DeviceInfo deviceInfo) {
 
 		int result = 0;
-
-		// deviceInfo
-		DeviceInfo deviceInfo = getDeviceInfo();
+		Map<Integer, MeterInfo> meterInfoList = parser.getMeterInfoList();
 
 		if (deviceInfo != null) {
 
@@ -149,12 +133,11 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 	 * 
 	 * @return
 	 */
-	private int saveFirmwareInfo() {
+	private int saveFirmwareInfo(ObjectLinkDataParser parser, DeviceInfo deviceInfo) {
 
 		int result = 0;
-
-		// device
-		DeviceInfo deviceInfo = getDeviceInfo();
+		
+		Map<Integer, Object> firmwareInfo = parser.getFirmwareInfo();
 
 		try {
 
@@ -223,12 +206,11 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 	 * 
 	 * @return
 	 */
-	private int saveDeviceInfo() {
+	private int saveDeviceInfo(ObjectLinkDataParser parser, DeviceInfo deviceInfo) {
 
 		int result = 0;
+		Map<Integer, Object> deviceInfoMap = parser.getDeviceInfoMap();
 
-		// device
-		DeviceInfo deviceInfo = getDeviceInfo();
 
 		try {
 

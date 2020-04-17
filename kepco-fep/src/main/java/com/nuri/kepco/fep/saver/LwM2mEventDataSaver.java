@@ -8,6 +8,7 @@ import com.nuri.kepco.fep.datatype.MeterType.DEVICESTATUS;
 import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
 import com.nuri.kepco.fep.parser.LwM2mEventDataParser;
+import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.mongo.model.LwM2mEventLog;
 
 @Service
@@ -45,9 +46,9 @@ public class LwM2mEventDataSaver extends AbstractMDSaver {
 		}
 		
 		// 단말정보 업데이트
-		int result = checkDevice(deviceSerial, modemTime, ip, String.valueOf(port), registrationDate, deviceStatus);
+		DeviceInfo deviceInfo = checkDevice(deviceSerial, modemTime, ip, String.valueOf(port), registrationDate, deviceStatus);
 		
-		if(result > 0) {
+		if(deviceInfo != null) {
 			return true;
 		} else {
 			return false;

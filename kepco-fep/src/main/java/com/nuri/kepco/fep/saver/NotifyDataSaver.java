@@ -13,6 +13,7 @@ import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
 import com.nuri.kepco.fep.parser.KepcoDLMSParser;
 import com.nuri.kepco.fep.parser.NotifyDataParser;
+import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.mongo.model.ConnectivityMonitor;
 import com.nuri.kepco.mongo.model.ConnectivityStatisticsMonitor;
 import com.nuri.kepco.mongo.model.CpuUsageMonitor;
@@ -50,15 +51,15 @@ public class NotifyDataSaver extends AbstractMDSaver {
 		String deviceSerial = md.getDeviceId();
 		
 		// checkDevice
-		checkDevice(deviceSerial, md.getModemTime());
+		DeviceInfo deviceInfo = checkDevice(deviceSerial, md.getModemTime());
 		
-		if(getDeviceInfo() != null) {			
+		if(deviceInfo != null) {			
 			
 			// save CPU Usage (mongodb)
 			if(cpuUsageList != null) {
 				if(cpuUsageList.size() > 0) {					
-					int result = saveCPUUsage(cpuUsageList);
-					int result2 = saveCpuStatisticsMonitor(cpuUsageList);
+					int result = saveCPUUsage(cpuUsageList, deviceInfo);
+					int result2 = saveCpuStatisticsMonitor(cpuUsageList, deviceInfo);
 					LOG.debug("save CPU Usage : deviceSerial {} / total {} / result {} / statistics {}", deviceSerial, cpuUsageList.size(), result, result2);
 				}
 			}
@@ -66,8 +67,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			// save RAM Usage (mongodb)			
 			if(ramUsageList != null) {
 				if(ramUsageList.size() > 0) {					
-					int result = saveRAMUsage(ramUsageList);
-					int result2 = saveRamStatisticsMonitor(ramUsageList);
+					int result = saveRAMUsage(ramUsageList, deviceInfo);
+					int result2 = saveRamStatisticsMonitor(ramUsageList, deviceInfo);
 					LOG.debug("save RAM Usage : deviceSerial {} / total {} / result {}/ statistics {}", deviceSerial, ramUsageList.size(), result, result2);
 				}
 			}
@@ -75,8 +76,8 @@ public class NotifyDataSaver extends AbstractMDSaver {
 			// save Connectivity Monitor Usage (mongodb)		
 			if(connectiviMonitorList != null) {
 				if(connectiviMonitorList.size() > 0) {					
-					int result = saveConnectivityMonitor(connectiviMonitorList);
-					int result2 = saveConnectivityStatisticsMonitor(connectiviMonitorList);
+					int result = saveConnectivityMonitor(connectiviMonitorList, deviceInfo);
+					int result2 = saveConnectivityStatisticsMonitor(connectiviMonitorList, deviceInfo);
 					LOG.debug("save Connectivity Monitor :deviceSerial {} /total {} / result {} / statistics {}", deviceSerial, connectiviMonitorList.size(), result, result2);
 				}
 			}
@@ -90,22 +91,22 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	 * @param connectivityList
 	 * @return
 	 */
-	private int saveCPUUsage(List<CpuUsageMonitor> cpuUsageList) {
+	private int saveCPUUsage(List<CpuUsageMonitor> cpuUsageList, DeviceInfo deviceInfo) {
 		
 		int result = 0;
 		
 		try {
 			
-			String deviceId = getDeviceInfo().getDevice_id();
-			String deviceSerial = getDeviceInfo().getDevice_serial();
-			String branchId = getDeviceInfo().getBranch_id();
-			String branchNm = getDeviceInfo().getBranch_nm();			
-			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			String deviceId = deviceInfo.getDevice_id();
+			String deviceSerial = deviceInfo.getDevice_serial();
+			String branchId = deviceInfo.getBranch_id();
+			String branchNm = deviceInfo.getBranch_nm();			
+			String deviceStatus = deviceInfo.getDevice_status();
+			String deviceStatusNm = deviceInfo.getDevice_status_local_nm();
 			
 			// 부모 branch
-			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
-			String parentBranchId = getDeviceInfo().getBranch_parent_id();
+			String parentBranchNm = deviceInfo.getParent_branch_nm();
+			String parentBranchId = deviceInfo.getBranch_parent_id();
 			
 			for(CpuUsageMonitor cpu : cpuUsageList) {				
 				cpu.setDeviceId(deviceId);
@@ -137,21 +138,21 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	 * @param connectivityList
 	 * @return
 	 */
-	private int saveRAMUsage(List<RamUsageMonitor> ramUsageList) {
+	private int saveRAMUsage(List<RamUsageMonitor> ramUsageList, DeviceInfo deviceInfo) {
 		
 		int result = 0;
 		try {
 			
-			String deviceId = getDeviceInfo().getDevice_id();
-			String deviceSerial = getDeviceInfo().getDevice_serial();
-			String branchId = getDeviceInfo().getBranch_id();
-			String branchNm = getDeviceInfo().getBranch_nm();
-			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			String deviceId = deviceInfo.getDevice_id();
+			String deviceSerial = deviceInfo.getDevice_serial();
+			String branchId = deviceInfo.getBranch_id();
+			String branchNm = deviceInfo.getBranch_nm();
+			String deviceStatus = deviceInfo.getDevice_status();
+			String deviceStatusNm = deviceInfo.getDevice_status_local_nm();
 			
 			// 부모 branch
-			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
-			String parentBranchId = getDeviceInfo().getBranch_parent_id();
+			String parentBranchNm = deviceInfo.getParent_branch_nm();
+			String parentBranchId = deviceInfo.getBranch_parent_id();
 			
 			for(RamUsageMonitor ram : ramUsageList) {				
 				ram.setDeviceId(deviceId);
@@ -180,23 +181,23 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	 * @param connectivityList
 	 * @return
 	 */
-	private int saveConnectivityMonitor(Map<Integer, ConnectivityMonitor> connectivityList) {
+	private int saveConnectivityMonitor(Map<Integer, ConnectivityMonitor> connectivityList, DeviceInfo deviceInfo) {
 		
 		List<ConnectivityMonitor> list = new ArrayList<ConnectivityMonitor>();
 		int result = 0;
 		
 		try {
 			
-			String deviceId = getDeviceInfo().getDevice_id();
-			String deviceSerial = getDeviceInfo().getDevice_serial();
-			String branchId = getDeviceInfo().getBranch_id();
-			String branchNm = getDeviceInfo().getBranch_nm();
-			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			String deviceId = deviceInfo.getDevice_id();
+			String deviceSerial = deviceInfo.getDevice_serial();
+			String branchId = deviceInfo.getBranch_id();
+			String branchNm = deviceInfo.getBranch_nm();
+			String deviceStatus = deviceInfo.getDevice_status();
+			String deviceStatusNm = deviceInfo.getDevice_status_local_nm();
 			
 			// 부모 branch
-			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
-			String parentBranchId = getDeviceInfo().getBranch_parent_id();
+			String parentBranchNm = deviceInfo.getParent_branch_nm();
+			String parentBranchId = deviceInfo.getBranch_parent_id();
 			
 			for(Integer key: connectivityList.keySet()) {
 				
@@ -229,22 +230,22 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	 * @param cpuUsageList
 	 * @return
 	 */
-	private int saveConnectivityStatisticsMonitor(Map<Integer, ConnectivityMonitor> connectivityList) {
+	private int saveConnectivityStatisticsMonitor(Map<Integer, ConnectivityMonitor> connectivityList, DeviceInfo deviceInfo) {
 		
 		int result = 0;
 		
 		try {
 			
-			String deviceId = getDeviceInfo().getDevice_id();
-			String deviceSerial = getDeviceInfo().getDevice_serial();
-			String branchId = getDeviceInfo().getBranch_id();
-			String branchNm = getDeviceInfo().getBranch_nm();
-			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			String deviceId = deviceInfo.getDevice_id();
+			String deviceSerial = deviceInfo.getDevice_serial();
+			String branchId = deviceInfo.getBranch_id();
+			String branchNm = deviceInfo.getBranch_nm();
+			String deviceStatus = deviceInfo.getDevice_status();
+			String deviceStatusNm = deviceInfo.getDevice_status_local_nm();
 			
 			// 부모 branch
-			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
-			String parentBranchId = getDeviceInfo().getBranch_parent_id();
+			String parentBranchNm = deviceInfo.getParent_branch_nm();
+			String parentBranchId = deviceInfo.getBranch_parent_id();
 			
 			for(Integer key: connectivityList.keySet()) {
 				
@@ -302,22 +303,22 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	 * @param cpuUsageList
 	 * @return
 	 */
-	private int saveCpuStatisticsMonitor(List<CpuUsageMonitor> cpuUsageList) {
+	private int saveCpuStatisticsMonitor(List<CpuUsageMonitor> cpuUsageList, DeviceInfo deviceInfo) {
 		
 		int result = 0;
 		
 		try {
 			
-			String deviceId = getDeviceInfo().getDevice_id();
-			String deviceSerial = getDeviceInfo().getDevice_serial();
-			String branchId = getDeviceInfo().getBranch_id();
-			String branchNm = getDeviceInfo().getBranch_nm();
-			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			String deviceId = deviceInfo.getDevice_id();
+			String deviceSerial = deviceInfo.getDevice_serial();
+			String branchId = deviceInfo.getBranch_id();
+			String branchNm = deviceInfo.getBranch_nm();
+			String deviceStatus = deviceInfo.getDevice_status();
+			String deviceStatusNm = deviceInfo.getDevice_status_local_nm();
 			
 			// 부모 branch
-			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
-			String parentBranchId = getDeviceInfo().getBranch_parent_id();
+			String parentBranchNm = deviceInfo.getParent_branch_nm();
+			String parentBranchId = deviceInfo.getBranch_parent_id();
 			
 			for(CpuUsageMonitor cpu : cpuUsageList) {
 				
@@ -366,22 +367,22 @@ public class NotifyDataSaver extends AbstractMDSaver {
 	 * @param ramUsageList
 	 * @return
 	 */
-	private int saveRamStatisticsMonitor(List<RamUsageMonitor> ramUsageList) {
+	private int saveRamStatisticsMonitor(List<RamUsageMonitor> ramUsageList, DeviceInfo deviceInfo) {
 		
 		int result = 0;
 		
 		try {
 			
-			String deviceId = getDeviceInfo().getDevice_id();
-			String deviceSerial = getDeviceInfo().getDevice_serial();
-			String branchId = getDeviceInfo().getBranch_id();
-			String branchNm = getDeviceInfo().getBranch_nm();
-			String deviceStatus = getDeviceInfo().getDevice_status();
-			String deviceStatusNm = getDeviceInfo().getDevice_status_local_nm();
+			String deviceId = deviceInfo.getDevice_id();
+			String deviceSerial = deviceInfo.getDevice_serial();
+			String branchId = deviceInfo.getBranch_id();
+			String branchNm = deviceInfo.getBranch_nm();
+			String deviceStatus = deviceInfo.getDevice_status();
+			String deviceStatusNm = deviceInfo.getDevice_status_local_nm();
 			
 			// 부모 branch
-			String parentBranchNm = getDeviceInfo().getParent_branch_nm();
-			String parentBranchId = getDeviceInfo().getBranch_parent_id();
+			String parentBranchNm = deviceInfo.getParent_branch_nm();
+			String parentBranchId = deviceInfo.getBranch_parent_id();
 			
 			for(RamUsageMonitor ram : ramUsageList) {
 				
