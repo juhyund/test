@@ -83,11 +83,10 @@ public abstract class AbstractMDSaver {
 			// meter type
 			if (!"".equals(meterType) && meterType != null) {
 				meter.setMeter_type(meterType);
-			} 
-//			else {
-//				meter.setMeter_type(MeterType.METERTYPE.UNKNOWN.getCode());
-//			}
-
+			}else {
+				meter.setMeter_type(MeterType.METERTYPE.UNKNOWN.getCode());
+			}
+			
 			meter.setMeter_phase(meterPhase);
 			meter.setMeter_serial(mdData.getMeterID());
 			meter.setMeterModel(); // serial vendorCd, modelCd 
@@ -127,6 +126,14 @@ public abstract class AbstractMDSaver {
 			if(mdData.getAvgPowerPeriod() != null) {
 				meter.setAvg_power_period(mdData.getAvgPowerPeriod());
 			}
+			
+			// 보안계기 여부 확인
+			if(meter.getCosem_device_name() != null) {
+				if(isSecureMeterType(meter.getCosem_device_name())) {						
+					logger.debug("METER SECURE TYPE? : {} - {}", meter.getMeter_serial(), isSecureMeterType(meter.getCosem_device_name()));
+					meter.setMeter_type(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName());
+				}
+			}						
 
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
