@@ -180,6 +180,8 @@ public abstract class AbstractMDSaver {
 	// update시 cosem id 정보가 있다면 비교하여 구분한다. 
 	protected int checkMeter(MeterInfo meterInfo) {
 		
+		logger.debug("checkMeter meterInfo {}", meterInfo.getMeter_serial())
+		
 		int result = 0;
 		
 		try {
