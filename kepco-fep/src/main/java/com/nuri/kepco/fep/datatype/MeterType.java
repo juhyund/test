@@ -32,9 +32,11 @@ public class MeterType {
     
     public enum METERTYPE {
     	
-    	EType("MT001", "ET-Type"),
-    	GType("MT002", "GT-Type"),
+    	SType("MT001", "S-Type"),
+    	EType("MT002", "E-Type"),    	
     	AEType("MT003", "AE-Type"),
+    	GType("MT004", "G-Type"),
+    	SECType("MT005", "SECType"),
     	UNKNOWN("MT999", "UNKNOWN");
     	
         private String code;

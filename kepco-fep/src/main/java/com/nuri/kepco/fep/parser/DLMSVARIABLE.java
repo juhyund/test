@@ -172,6 +172,8 @@ public class DLMSVARIABLE {
     
     	METERTYPE19("19","MT003"), //  EA-Type - Single Ph 2 wire 50(5)A
     	
+    	SECMETERTYPE("00","MT005"), // 보안계기
+    	
     	UNKNOWN("99","MT006");
     	        
         private String code;

@@ -1,1 +1,0 @@
-http://localhost:9090/Authorize/SavingAuthKey?calling_id=aaaabbbbccccddddeeeeffffgggghhhh&sys_title=00000000@12345678&nas_ip=locahost&nas_port=5656&fep_key=1234&nms_key=4567
