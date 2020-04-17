@@ -214,7 +214,8 @@ public abstract class AbstractMDSaver {
 				
 				// 보안계기 여부 확인
 				if(meter.getCosem_device_name() != null) {
-					if(isSecureMeterType(meter.getCosem_device_name())) {
+					if(isSecureMeterType(meter.getCosem_device_name())) {						
+						logger.debug("METER SECURE TYPE? : {} - {}", meter.getMeter_serial(), isSecureMeterType(meter.getCosem_device_name()));
 						meterInfo.setMeter_type(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName());
 					}
 				}
