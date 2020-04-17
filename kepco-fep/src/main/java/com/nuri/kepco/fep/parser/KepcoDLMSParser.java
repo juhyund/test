@@ -86,8 +86,7 @@ public class KepcoDLMSParser {
 
 		mdData.setMeterID(meterID); // MeterID 
 		mdData.setModemTime(modemTime); // 해당미터 검침 값 수신시 모뎀시간
-		
-		setMeterModel(meterID, mdData.getCosemLogicalDevice(), mdData.getCosemVersion()); 
+			 
 	}
 	
 	/**
@@ -379,6 +378,9 @@ public class KepcoDLMSParser {
 		} catch (Exception e) {
 			LOG.error("error setMeterInfo", e);
 		}
+		
+		// meter model
+		setMeterModel(meterID, mdData.getCosemLogicalDevice(), mdData.getCosemVersion());
 	}
 	
 	/**
@@ -580,7 +582,6 @@ public class KepcoDLMSParser {
 		LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] vendorCd : [" + vendorCd + "] modelCd : [" + modelCd + "]");
 		LOG.debug("setMeterModel meterSerial : [" + meterSerial + "] cosemLogicalDeviceNo : [" + cosemLogicalDeviceNo + "] cosemVersion : [" + cosemVersion + "]");
 		
-
 		DLMSVARIABLE.METERTYPE type = DLMSVARIABLE.METERTYPE.getMeterType(modelCd);
 		DLMSVARIABLE.METERPHASE phase = DLMSVARIABLE.METERPHASE.getMeterPhase(modelCd);
 				
