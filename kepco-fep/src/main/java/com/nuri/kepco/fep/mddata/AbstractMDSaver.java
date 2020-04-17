@@ -76,15 +76,17 @@ public abstract class AbstractMDSaver {
 				meter = new MeterInfo();
 				isNewMeter = true;
 			}
+			
 			String meterType = mdData.getMeterType();
 			String meterPhase = mdData.getMeterPhase();
 			
 			// meter type
 			if (!"".equals(meterType) && meterType != null) {
 				meter.setMeter_type(meterType);
-			} else {
-				meter.setMeter_type(MeterType.METERTYPE.UNKNOWN.getCode());
-			}
+			} 
+//			else {
+//				meter.setMeter_type(MeterType.METERTYPE.UNKNOWN.getCode());
+//			}
 
 			meter.setMeter_phase(meterPhase);
 			meter.setMeter_serial(mdData.getMeterID());
