@@ -324,6 +324,8 @@ function successResultHandler(data, status) {
 function resetForm() {
 	$('#sdate').val("");
 	$('#edate').val("");
+	$('#sdateView').val("");
+	$('#edateView').val("");
 	$('#lsdate').val("");
 	$('#ledate').val("");
 	$("#branch_parent_id").val($("#target option:first").val());
@@ -349,7 +351,7 @@ function init() {
 	comboMeterType();
 	comboDeviceStatus();
 	comboBranch();
-	setSearchPeriod('today');
+	//setSearchPeriod('today');
 	
 	// Grid
 	initGrid();

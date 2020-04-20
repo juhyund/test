@@ -192,8 +192,13 @@ function setSearchParam(sdateView, edateView){
  */
 function setSearchParam2(sdateView, edateView){
 	//2019/12/12 --> 201912120000으로 변경
-	var sdate = sdateView.split("/").join("")+"0000";
-	var edate = edateView.split("/").join("")+"2359";
+	var sdate = "";
+	var edate = "";
+	
+	if(sdateView && edateView){
+		sdate = sdateView.split("/").join("")+"0000";
+		edate = edateView.split("/").join("")+"2359";
+	}
 	
 	$("#sdate").val(sdate);
 	$("#edate").val(edate);
