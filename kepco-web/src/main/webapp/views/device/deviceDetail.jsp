@@ -201,8 +201,10 @@ function firmwarelist() {
 										<th class="device-detail-head">모뎀IP/PORT</th>
 										<td class="device-detail-body"><input type="text" id="di_ip" style="width:80px; display:none; border: none" value="{{device_info.ip}}" readonly="readonly" > /
 											<input type="text" id="di_port" style="width:80px; display:none; border: none" value="{{device_info.port}}" readonly="readonly" ></td>
-										<th class="device-detail-head">모델명</th>
-										<td class="device-detail-body"><span id="model_nm_span" style="display: none;">{{device_info.model_nm}}</span></td>
+										<th class="device-detail-head"></th>
+										<td class="device-detail-body"><span id="model_nm_span" style="display: none;"></span></td>
+										<!--<th class="device-detail-head">모델명</th>
+										<td class="device-detail-body"><span id="model_nm_span" style="display: none;">{{device_info.model_nm}}</span></td> -->
 									</tr>
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>

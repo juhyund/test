@@ -45,7 +45,7 @@ public class DeviceController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String[] commStr = { "branch_parent_id", "branch_id", "model_seq", "device_status", "lsdate", "ledate" };
+			String[] commStr = { "branch_parent_id", "branch_id", "model_seq", "device_status", "lsdate", "ledate","fw_version" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			
