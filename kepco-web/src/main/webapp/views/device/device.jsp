@@ -27,7 +27,23 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
-
+<style>
+	.rag-red-outer {
+	    color: red;
+	    font-weight: bold;
+	}
+	
+	.rag-green-outer {
+	    color: blue;
+	    font-weight: bold;
+	}
+	
+	.rag-grey-outer {
+	    color: e3f704;
+	    font-weight: bold;
+	}
+  	
+</style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
@@ -197,7 +213,12 @@ var columnDefs = [
 	/* {headerName: "모뎀모델", field: "model_nm"}, */
 	{headerName: "펌웨어 버전", field: "fw_version"},
 	{headerName: "제조사", field: "vendor_nm"},
-	{headerName: "모뎀상태", field: "code_local_nm"},
+	{headerName: "모뎀상태", field: "code_local_nm",
+        cellClassRules: {
+            'rag-green-outer': function(params) { return params.value == '정상'},
+            'rag-grey-outer': function(params) { return params.value == '대기중'},
+            'rag-red-outer': function(params) { return params.value == '등록해제'}
+        }},
 	{headerName: "최종통신일시", field: "last_comm_dt"},
 	{headerName: "등록일자", field: "reg_dt"}
 ];
