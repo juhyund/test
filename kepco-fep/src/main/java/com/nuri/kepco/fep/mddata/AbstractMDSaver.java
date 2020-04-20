@@ -76,16 +76,17 @@ public abstract class AbstractMDSaver {
 				meter = new MeterInfo();
 				isNewMeter = true;
 			}
+			
 			String meterType = mdData.getMeterType();
 			String meterPhase = mdData.getMeterPhase();
 			
 			// meter type
 			if (!"".equals(meterType) && meterType != null) {
 				meter.setMeter_type(meterType);
-			} else {
+			}else {
 				meter.setMeter_type(MeterType.METERTYPE.UNKNOWN.getCode());
 			}
-
+			
 			meter.setMeter_phase(meterPhase);
 			meter.setMeter_serial(mdData.getMeterID());
 			meter.setMeterModel(); // serial vendorCd, modelCd 
@@ -125,6 +126,14 @@ public abstract class AbstractMDSaver {
 			if(mdData.getAvgPowerPeriod() != null) {
 				meter.setAvg_power_period(mdData.getAvgPowerPeriod());
 			}
+			
+			// 보안계기 여부 확인
+			if(meter.getCosem_device_name() != null) {
+				if(isSecureMeterType(meter.getCosem_device_name())) {						
+					logger.debug("METER SECURE TYPE? : {} - {}", meter.getMeter_serial(), isSecureMeterType(meter.getCosem_device_name()));
+					meter.setMeter_type(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName());
+				}
+			}						
 
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
@@ -180,6 +189,8 @@ public abstract class AbstractMDSaver {
 	// update시 cosem id 정보가 있다면 비교하여 구분한다. 
 	protected int checkMeter(MeterInfo meterInfo) {
 		
+		logger.debug("checkMeter meterInfo {}", meterInfo.getMeter_serial());
+		
 		int result = 0;
 		
 		try {
@@ -214,7 +225,8 @@ public abstract class AbstractMDSaver {
 				
 				// 보안계기 여부 확인
 				if(meter.getCosem_device_name() != null) {
-					if(isSecureMeterType(meter.getCosem_device_name())) {
+					if(isSecureMeterType(meter.getCosem_device_name())) {						
+						logger.debug("METER SECURE TYPE? : {} - {}", meter.getMeter_serial(), isSecureMeterType(meter.getCosem_device_name()));
 						meterInfo.setMeter_type(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName());
 					}
 				}
@@ -553,19 +565,18 @@ public abstract class AbstractMDSaver {
 		boolean isSecureMeter = false;
 		
 		byte[] bcosem = cosemDeviceName.getBytes();
-		byte[] blogicalDeviceNo = new byte[1];
-		byte[] bversion = new byte[1];
+		byte[] bversion1 = new byte[1];
+		byte[] bversion2 = new byte[1];
 		
-		System.arraycopy(bcosem, 14, blogicalDeviceNo, 0, blogicalDeviceNo.length);
-		System.arraycopy(bcosem, 15, bversion, 0, bversion.length);
+		System.arraycopy(bcosem, 14, bversion1, 0, bversion1.length);
+		System.arraycopy(bcosem, 15, bversion2, 0, bversion2.length);
 		
-		String logicalDeviceNo = new String(blogicalDeviceNo);
-		String version = DataUtil.getBCDtoBytes(bversion);
-		
-		if(KEPCO_LD.equals(logicalDeviceNo)) {
-			if(Integer.parseInt(version) >= KEPCO_SECURE_METER) {
-				isSecureMeter = true;
-			}
+		String version1 = new String(bversion1);
+		String version2 = new String(bversion2);
+		String version = version1 + "" + version2;
+				
+		if(Integer.parseInt(version) >= KEPCO_SECURE_METER) {
+			isSecureMeter = true;
 		}
 		
 		return isSecureMeter;

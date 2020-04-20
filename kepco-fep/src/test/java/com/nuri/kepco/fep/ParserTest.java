@@ -28,9 +28,9 @@ public class ParserTest {
 	@Test
     public void test() {
 		
-		String json = "{\"deviceId\":\"LG-PC02\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"806662840758920E\",\"mid\":\"18966\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MTIzNDU2Nzgx\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxOTAyMDQyNDIH4woSBRMCAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfjChIFEwItAYAAAAEAAAECHgABAgAOCQwH4wETBg4NMgCAAAAAAGIBAR4ABwIAfQYAAGY7BgABGbcGAAAAAAYAAJciFz8M1RIGAAA2NgYAAJcEBgAAAAAGAABQURc/DpD3BgAAMAUGAACCswYAAAAABgAARtEXPwuoxgYAAAAABgAAAAAGAAAAAAYAAAAAF7+AAAAGAAAAAAYAAAAABgAAAAAGAAAAABe/gAAA\\\"}]}\"}";		
+		String json = "{\"deviceId\":\"01220884726\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"806662840758920E\",\"mid\":\"18966\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjA4ODQ3MjYgMQ==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MDI1MjAwMDAwMDMUBBEFCQkgCQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkBA8DChQd//3kAAAAKgAA/wABAgASCRBQU1QZATAxMDIwMiAgIDIwAQEACAT/AAMCAAIRDwAADwAA/wAWBAARAQECAgkEAAAA/wkF////Af8BAQADAP8AAwIABRdGHEAAAQAA8gD/AAECAAoJCBMDAAEAAAcIAQCAAAz/AAMCAAIRDwEBAAMB/wADAgAFF0YcQAABAQADAv8AAwIABRdGHEAA\\\"}]}\"}";		
 		process.process(json);
-		process.process(json);
+		
 	
     }
 	
