@@ -27,7 +27,23 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
-
+<style>
+	.rag-red-outer {
+	    color: red;
+	    font-weight: bold;
+	}
+	
+	.rag-green-outer {
+	    color: blue;
+	    font-weight: bold;
+	}
+	
+	.rag-grey-outer {
+	    color: e3f704;
+	    font-weight: bold;
+	}
+  	
+</style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
@@ -73,10 +89,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<option value=''>선택</option>
 														</select>
 													</div>
-													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
+													<label class="col-sm-1 col-form-label" style="padding-left: 10px;">펌웨어 버전</label>
+													<div class="col-lg-3">
+														<input type="text" class="form-control" name="fw_version" id="fw_version" style="height: 33px; vertical-align: top; display: inline;">
+													</div>
+													<!-- <label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀모델</label>
 													<div class="col-lg-3">
 														<select class="form-control" name="model_seq" id="model_seq"></select>
-													</div>
+													</div> -->
 													<label class="col-sm-1 col-form-label">등록일자</label>
 													<div class="col-sm-3" id="datePicker">
 														<div class="input-group date"
@@ -190,9 +210,15 @@ var columnDefs = [
 	{headerName: "모뎀번호", field: "device_serial"},
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
-	{headerName: "모뎀모델", field: "model_nm"},
+	/* {headerName: "모뎀모델", field: "model_nm"}, */
+	{headerName: "펌웨어 버전", field: "fw_version"},
 	{headerName: "제조사", field: "vendor_nm"},
-	{headerName: "모뎀상태", field: "code_local_nm"},
+	{headerName: "모뎀상태", field: "code_local_nm",
+        cellClassRules: {
+            'rag-green-outer': function(params) { return params.value == '정상'},
+            'rag-grey-outer': function(params) { return params.value == '대기중'},
+            'rag-red-outer': function(params) { return params.value == '등록해제'}
+        }},
 	{headerName: "최종통신일시", field: "last_comm_dt"},
 	{headerName: "등록일자", field: "reg_dt"}
 ];
@@ -252,7 +278,8 @@ function successResultHandler(data, status) {
 
 // device type
 function comboDeviceType() {
-	var combo = [ 'ajaxParentBranchCombo', 'ajaxDeviceModelCombo' ];
+	//var combo = [ 'ajaxParentBranchCombo', 'ajaxDeviceModelCombo' ];
+	var combo = [ 'ajaxParentBranchCombo' ];
 	for (var i = 0; i < combo.length; i++) {
 		var options = { 
 	           beforeSend  : showRequest,
@@ -284,7 +311,8 @@ function resetForm() {
 	$('#ledate').datepicker('setDate', null);
 	$("#branch_parent_id").val($("#target option:first").val());
 	$("#branch_id").val($("#target option:first").val());
-	$("#model_seq").val($("#target option:first").val());
+	//$("#model_seq").val($("#target option:first").val());
+	$("#fw_version").val("");
 	$("#searchfield").val($("#target option:first").val());
 	$("#device_status").val($("#target option:first").val());
 	$("#searchquery").val("");

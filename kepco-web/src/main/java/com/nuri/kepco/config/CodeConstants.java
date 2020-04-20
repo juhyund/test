@@ -45,10 +45,10 @@ public class CodeConstants {
 	public enum DEVICE_STAT {
 		NORMAL("DS001", "정상"),
 		WAIT("DS002", "대기"),
-		DE_REGISTER("DS003", "해지"),
+		DE_REGISTER("DS003", "등록해제"),
 		POWER_DOWN("DS004", "정전"),
 		NEW_REGISTER("DS005", "등록"),
-		DELETE("DS006", "삭제(철거)");
+		DELETE("DS006", "삭제 (철거)");
 		
 		private String dcodeId;
 		private String descr;

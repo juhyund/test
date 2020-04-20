@@ -23,6 +23,9 @@
         <if test="branch_id != null and branch_id != ''" >     
             AND a.branch_id = #{branch_id}
         </if>
+        <if test="fw_version != null and fw_version != ''" >     
+            AND a.fw_version = #{fw_version}
+        </if>
         <if test="model_seq != null and model_seq != ''" >     
             AND a.model_seq = #{model_seq}
         </if>
@@ -266,6 +269,7 @@
 			, DATE_FORMAT(c.last_comm_dt,'${prop.dt}') AS last_comm_dt 
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt 
 			, a.mobile_no
+			, a.fw_version
 		FROM
 			EMI_DEVICE_INFO a
 			LEFT OUTER JOIN EMI_DEVICE_MODEL b ON a.model_seq = b.model_seq

@@ -176,7 +176,7 @@ public class FileDownloadController {
 		 @GetMapping("/downloadDevicelist")
 		   public ResponseEntity<InputStreamResource> downloadDevicelist(HttpServletRequest request) throws IOException {
 			
-			 String[] commStr = { "branch_parent_id", "branch_id", "device_status", "lsdate", "ledate" };
+			 String[] commStr = { "branch_parent_id", "branch_id", "device_status", "lsdate", "ledate","fw_version" };
 			 String file_path = "";
 
 				try {
