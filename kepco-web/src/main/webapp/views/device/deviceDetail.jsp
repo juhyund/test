@@ -46,6 +46,10 @@ function resetForm() {
 	$("#instances").val("");
 }
 
+function speedModal() {
+	$('#speedModal').modal('show');
+}
+
 function coapModal() {
 	$('#coapModal').modal('show');
 }
@@ -459,6 +463,9 @@ function firmwarelist() {
 							<i class="fa fa-undo"> 목록으로 돌아가기</i>
 						</button>
 						<div id='info_btn' style="float: right">
+							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="speedModal()">
+								<i class="fas fa-stopwatch"> 속도 테스트</i>
+							</button>
 							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="coapModal()">
 								<i class="fas fa-wifi"> CoAP Ping</i>
 							</button>
@@ -479,6 +486,46 @@ function firmwarelist() {
 				<!-- body -->
 			</div>
 		</div>
+		
+		
+		<!-- modal -->
+		<div class="modal bs-example-modal-sm" id="speedModal" tabindex="-1" role="dialog"
+		aria-labelledby="speedModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
+					<h4 class="modal-title">Payload 상향/하향 속도 테스트</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<form class="form-horizontal" role="form" method="post" id="form">	
+				<div class="form-group row">
+					<table class="table table-borderless" style="height: 100%; margin: 7px 0px;" border="1">
+						<tbody>
+							<tr>
+								<td style="text-align: right">
+									<button class="btn btn-primary" style="height: 100%;" type="button" ng-click="speedtest();">속도 테스트 실행</button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="form-group form-group-end row">
+										<label class="col-lg-3 col-form-label" style="padding-left: 10px;">실행결과</label>
+										<textarea style="border: 0px; width: 100%">{{speed.statusMsg}}</textarea>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
+			</div>
+		</div>
+		</div>
+		<!-- modal -->
 		
 		<!-- modal -->
 		<div class="modal bs-example-modal-sm" id="coapModal" tabindex="-1" role="dialog"

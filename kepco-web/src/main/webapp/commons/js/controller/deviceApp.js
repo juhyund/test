@@ -338,4 +338,33 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    });
 		hideLoading();
     };
+    
+    $scope.speedtest = function () {
+    	showLoading();
+    	$scope.speed = {};
+		$http({
+			method: 'POST',
+	        url: COMMON_URL + "/ajaxExecResource",
+	        params : {
+	        	"url" : "clients/execute/",
+	        	"method" : "Execute", 
+        		"device_id" : $("#device_id").val(),
+        		"service_id" : $("#service_id").val(),
+	        	"device_serial" : $("#device_serial").val(),
+	        	"resource" : "/26243/0/20" 
+        	}
+		
+	    }).then(function SuccessCallback(data, status, headers, config) {
+	    	$scope.speed.statusMsg = data.data.statusMsg;
+	    	if(data.data.statusCode == "200") {
+	    		//alert("전송성공 \nTID: [" + data.data.tid + "]");
+	    	} else {
+	    		alert("제어실패 [" + data.data.statusMsg + "]");
+	    	}
+	    	
+    	}, function errorCallback(response) {
+	        alert("전송실패");
+	    });
+		hideLoading();
+    };
 });
