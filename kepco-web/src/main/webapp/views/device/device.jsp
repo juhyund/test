@@ -121,7 +121,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="col-lg-3">
 														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 															<option value=''>선택</option>
-															<option value='device_id'>모뎀ID</option>
+															<!-- <option value='device_id'>모뎀ID</option> -->
 															<option value='device_serial'>모뎀 번호</option>
 														</select>
 														<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">

@@ -115,14 +115,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<thead>
 								<tr class="text-navy">
 									<th>모뎀번호</th>
-									<th>모뎀ID</th>
+									<!-- <th>모뎀ID</th> -->
 									<th>모뎀상태<th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td><h3>${deviceSerial}</h3></td>
-									<td><h3>${deviceId}</h3></td>
+									<%-- <td><h3>${deviceId}</h3></td> --%>
 									<td><h3>${deviceStatusNm}</h3></td>
 								</tr>
 							</tbody>
