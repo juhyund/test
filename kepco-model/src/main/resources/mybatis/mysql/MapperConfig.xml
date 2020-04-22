@@ -25,6 +25,7 @@
 		<typeAlias alias="deviceSecLog" type="com.nuri.kepco.model.DeviceSecLog"/>
 		<typeAlias alias="deviceSecurity" type="com.nuri.kepco.model.DeviceSecurity" />
 		<typeAlias alias="deviceStatus" type="com.nuri.kepco.model.DeviceStatus" />
+		<typeAlias alias="devicePowerLog" type="com.nuri.kepco.model.DevicePowerLog" />
 		<typeAlias alias="groupInfo" type="com.nuri.kepco.model.GroupInfo" />
 		<typeAlias alias="meterBilling" type="com.nuri.kepco.model.MeterBilling" />
 		<typeAlias alias="meterInfo" type="com.nuri.kepco.model.MeterInfo" />
@@ -52,6 +53,7 @@
 		<mapper resource="mybatis/mysql/DeviceModelMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceStatusMapper.xml" />
 		<mapper resource="mybatis/mysql/DeviceResourceMapper.xml" />				
+		<mapper resource="mybatis/mysql/DevicePowerLogMapper.xml" />				
 		<mapper resource="mybatis/mysql/MeterBillingMapper.xml" />
 		<mapper resource="mybatis/mysql/MeterInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/MeterMonthlyDemandMapper.xml" />

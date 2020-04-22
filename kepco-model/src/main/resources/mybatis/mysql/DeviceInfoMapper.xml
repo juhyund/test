@@ -48,7 +48,7 @@
 		<if test="device_status != null and device_status != ''" >     
             AND c.device_status = #{device_status}
         </if>
-		<if test="sdate != null and edate != null and ledate != '' and edate != ''">
+		<if test="sdate != null and edate != null and sdate != '' and edate != ''">
 			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
 		<if test="lsdate != null and ledate != null and lsdate != '' and ledate != ''">

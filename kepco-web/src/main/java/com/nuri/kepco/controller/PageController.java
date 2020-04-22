@@ -97,4 +97,10 @@ public class PageController {
 	public String firmware() throws Exception {
 		return "history/deviceFwHistory";
 	}
+	
+	@RequestMapping("/devicePowerLog")
+	public String devicePowerLog() throws Exception {
+		return "device/devicePowerLog";
+	}
+	
 }

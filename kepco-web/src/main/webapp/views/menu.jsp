@@ -16,6 +16,7 @@
 	        <ul class="nav nav-second-level collapse" aria-expanded="false">
 	            <li><a href="<%=COMMON_URL%>/device" target="contentsFrame">모뎀 목록 조회</a></li>
 	            <li><a href="<%=COMMON_URL%>/NMS" target="contentsFrame">NMS</a></li>
+	            <li><a href="<%=COMMON_URL%>/devicePowerLog" target="contentsFrame">정전/복전 이력 조회</a></li>
 	            <li><a href="<%=COMMON_URL%>/firmware" target="contentsFrame">펌웨어 관리 이력</a></li>
 	        </ul>
 	    </li>
