@@ -133,7 +133,7 @@ public abstract class AbstractMDSaver {
 					logger.debug("METER SECURE TYPE? : {} - {}", meter.getMeter_serial(), isSecureMeterType(meter.getCosem_device_name()));
 					meter.setMeter_type(DLMSVARIABLE.METERTYPE.SECMETERTYPE.getName());
 				}
-			}						
+			}
 
 			logger.debug("mdData.getMeterTime() : {}", mdData.getMeterTime());
 			logger.debug("isNewMeter : {}", isNewMeter);
@@ -574,7 +574,14 @@ public abstract class AbstractMDSaver {
 		String version1 = new String(bversion1);
 		String version2 = new String(bversion2);
 		String version = version1 + "" + version2;
-				
+		
+		// version 숫자여부 체크
+		for(int i = 0 ; i < version.length(); i++) {
+			if(!Character.isDigit(version.charAt(i))) {
+				return false;
+			}
+		}
+		
 		if(Integer.parseInt(version) >= KEPCO_SECURE_METER) {
 			isSecureMeter = true;
 		}
