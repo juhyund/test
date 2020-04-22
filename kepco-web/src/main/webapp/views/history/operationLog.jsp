@@ -90,7 +90,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<div class="col-lg-3">
 																<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 																	<option value=''>선택</option>
-																	<option value='device_id'>모뎀ID</option>
+																	<!--<option value='device_id'>모뎀ID</option>  -->
 																	<option value='device_serial'>모뎀 번호</option>
 																	<option value='object_id'>Object ID</option>
 																</select>
@@ -212,7 +212,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
-	{headerName: "모뎀ID", field: "device_id"}, 	// detail 조회용 컬럼
+	// {headerName: "모뎀ID", field: "device_id"}, 	// detail 조회용 컬럼
 	{headerName: "모뎀번호", field: "device_serial"}, 	// detail 조회용 컬럼
 	{headerName: "리소스 경로", field: "resource_sum"},
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼

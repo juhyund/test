@@ -65,8 +65,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										<tr>
 											<th class="device-detail-head">모뎀번호</th>
 											<td class="device-detail-body" id="device_serial"></td>
-											<th class="device-detail-head">모뎀ID</th>
-											<td class="device-detail-body" id="device_id"></td>
+											<!-- <th class="device-detail-head">모뎀ID</th>
+											<td class="device-detail-body" id="device_id"></td> -->
 										</tr>
 										<tr>
 											<th class="device-detail-head">제어요청일시</th>
