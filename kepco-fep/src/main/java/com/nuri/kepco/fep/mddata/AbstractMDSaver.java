@@ -66,7 +66,7 @@ public abstract class AbstractMDSaver {
 	protected int checkMeter(MDData mdData, DeviceInfo deviceInfo) {
 
 		int result = 0;
-		boolean isNewMeter = false;
+		boolean isNewMeter = false; 
 
 		try {
 			String meterSerial = mdData.getMeterID();

@@ -1,6 +1,7 @@
 package com.nuri.kepco.fep.datatype;
 
 import java.util.List;
+import java.util.Map;
 
 import com.nuri.kepco.model.MeterBilling;
 import com.nuri.kepco.model.MeterInfo;
@@ -44,4 +45,6 @@ public class MDData {
 	List<MeterBilling> billingExportData;
 	
 	List<MeterBilling> eTypeBillingImportData;
+	
+	Map<String, Object> dynamicDatas;
 }

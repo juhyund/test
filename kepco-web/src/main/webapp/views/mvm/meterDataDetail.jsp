@@ -97,10 +97,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th>계기 타입</th>
 													<th>검침 항목</th>
 													<th>검침일</th>
-													
-													<!-- <th>모뎀 시간</th>
-													<th>계기 시간</th>
-													<th>(본부)지사 </th> -->
+													<th>최종 통신일자</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -110,10 +107,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td><h3 id = "meter_type"></h3></td>
 													<td><h3 id = "obis_code_descr"></h3></td>
 													<td><h3 id = "read_dt"></h3></td>
-													
-													<!-- <td><h3 id = "itime"></h3></td>
-													<td><h3 id = "mtime"></h3></td>
-													<td><h3 id = "parent_branch_nm"></h3><h3 id = "branch_nm"></h3></td> -->
+													<td><h3 id = "last_comm_dt"></h3></td>
 												</tr>
 											</tbody>
 										</table>
@@ -130,16 +124,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								</form>
 								<!--  end : search_area  -->
 
-								<!--  start : table_area  -->
+								<!--  start : payload_area  -->
 								<div>
 									<div style="width: 99%; height: 100%; margin: 40px 0px 0px 0px">
-										<p><textarea id="payload" style=" width: 100%;  height: 500px" readonly></textarea></p>
+										<p><textarea id="payload" style=" width: 100%;  height: 100px" readonly></textarea></p>
 									</div>
-									<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px; float: right" type="button" onclick="javascript:history.back(-1)">
-										<i class="fa fa-undo"> 목록으로 돌아가기</i>
-									</button>	
 								</div>
-								<!--  end : table_area  -->
+								<!--  end : payload_area  -->
 
 										
 								
@@ -197,6 +188,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			$('#meter_type'		).text(data.resultGrid[0].meter_type);
 			$('#meter_serial'	).text(data.resultGrid[0].meter_serial);
 			$('#device_serial'	).text(data.resultGrid[0].device_serial);
+			$('#last_comm_dt'	).text(data.resultGrid[0].last_comm_dt);
 			
 			$('#payload'	    ).text(data.resultGrid[0].payload);
 			$('#obis_code_descr').text(data.resultGrid[0].obis_code_descr);
