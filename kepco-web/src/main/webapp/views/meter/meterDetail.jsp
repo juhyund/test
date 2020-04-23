@@ -447,16 +447,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								</thead>
 								<tbody>
 									<tr align="center">
-										<td>MeterID</td>
-										<td>대상 계기번호</td>
+										<td> MeterID</td>
+										<td> 대상 계기번호</td>
 										<td></td>
 									</tr>
 									<tr align="center">
 										<td>* * * * *</td>
 										<td>순서대로 분(0-59) 시간(0-23) 일(1-31) 월(1-12) 요일(0-7)</td>
 										<td>
-											※ 요일의 0,7은 일요일<br>
-											※ * 값은 값의 반복
+											- 요일의 0,7은 일요일<br>
+											- *는 각 시작 값으로 반복
 										</td>
 									</tr>
 								</tbody>
