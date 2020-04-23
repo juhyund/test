@@ -21,7 +21,7 @@
             AND a.power_status = #{power_status}
         </if>
         <if test="searchfield != null and searchquery != null  and searchfield != '' and searchquery != ''" >
-			AND a.${searchfield} like concat(#{searchquery},'%')
+			AND b.${searchfield} like concat(#{searchquery},'%')
 		</if>
 		<if test="sdate != null and edate != null and sdate != '' and edate != ''">
 			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
@@ -60,10 +60,10 @@
 			a.power_log_seq
 			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = c.branch_parent_id) AS parent_branch_nm
 			, c.branch_nm
-			, a.device_id
+			, b.device_serial
 			, DATE_FORMAT(a.power_on_time,'${prop.dt}') as power_on_time
 			, DATE_FORMAT(a.power_off_time,'${prop.dt}') as power_off_time
-			, a.power_status
+			, CASE a.power_status WHEN 1 THEN '복전' WHEN 0 THEN '정전' ELSE '-' END AS power_status
 			, a.itime
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 		FROM emi_device_power_log a
@@ -82,10 +82,10 @@
 			a.power_log_seq
 			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = c.branch_parent_id) AS parent_branch_nm
 			, c.branch_nm
-			, a.device_id
+			, b.device_serial
 			, DATE_FORMAT(a.power_on_time,'${prop.dt}') as power_on_time
 			, DATE_FORMAT(a.power_off_time,'${prop.dt}') as power_off_time	
-			, a.power_status
+			, CASE a.power_status WHEN 1 THEN '복전' WHEN 0 THEN '정전' ELSE '-' END AS power_status
 			, a.itime
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt			
 		FROM emi_device_power_log a

@@ -121,8 +121,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="col-lg-3">
 														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 															<option value=''>선택</option>
-															<option value='device_id'>모뎀ID</option>
-															<!-- <option value='device_serial'>모뎀 번호</option> -->
+															<!-- <option value='device_id'>모뎀ID</option> -->
+															<option value='device_serial'>모뎀 번호</option>
 														</select>
 														<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 													</div>
@@ -163,12 +163,15 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 												</div>
 											</td>
-											<td width="120" height="80" style="text-align: right">
+											<td width="180" height="80" style="text-align: right">
 												<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
 													<i class="fa fa-search"></i>
 												</button>
 												<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
 													<i class="fa fa-undo"></i>
+												</button>
+												<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
+													<i class="fa fa-download"></i>
 												</button>
 											</td>
 										</tr>
@@ -212,17 +215,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:80},
-	{headerName: "모뎀번호", field: "device_id"},
+	{headerName: "모뎀번호", field: "device_serial"},
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
-	{headerName: "마지막 복전 시간", field: "power_on_time"},
-	{headerName: "마지막 정전 시간", field: "power_off_time"},
+	{headerName: "복전 시간", field: "power_on_time"},
+	{headerName: "정전 시간", field: "power_off_time"},
 	{headerName: "정전 상태", field: "power_status",
         cellClassRules: {
             'rag-green-outer': function(params) { return params.value == '복전'},
             'rag-red-outer': function(params) { return params.value == '정전'}
         }},
-	{headerName: "등록 일자", field: "reg_dt"}
+	{headerName: "서버 등록 일시", field: "reg_dt"}
 ];
 
 var initGrid = function() {
@@ -251,6 +254,21 @@ function ajaxSearchForm() {
      $.ajax(options);
 }
 
+function excelDownload() {
+	
+	 $('#search_form').attr('action', COMMON_URL + "/downloadDevicePowerLoglist");
+	 $('#search_form').attr('method',"GET");
+	 $('#search_form').submit();
+	Swal.fire({
+		position: 'center',
+		icon: 'info',
+		text: 'excel 생성중',
+		showConfirmButton: false,
+			timer: 1500
+	});
+
+}
+
 function showRequest() {
 	// $("#loading").show();
 }
@@ -258,16 +276,6 @@ function showRequest() {
 function successResultHandler(data, status) {	
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
-	
-	
-	for(var i=0;i<data.resultGrid.length;i++){
-		var row = data.resultGrid[i];
-		if(row.power_status == '1'){
-			row.power_status = "복전";
-		} else {
-			row.power_status = "정전";
-		}
-	}
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
