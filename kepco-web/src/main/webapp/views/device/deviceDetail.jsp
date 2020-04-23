@@ -464,7 +464,7 @@ function firmwarelist() {
 						</button>
 						<div id='info_btn' style="float: right">
 							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="speedModal()">
-								<i class="fas fa-stopwatch"> 속도 테스트</i>
+								<i class="fas fa-rss"> 속도 테스트</i>
 							</button>
 							<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px" type="button" onclick="coapModal()">
 								<i class="fas fa-wifi"> CoAP Ping</i>
@@ -511,7 +511,7 @@ function firmwarelist() {
 								<td colspan="2">
 									<div class="form-group form-group-end row">
 										<label class="col-lg-3 col-form-label" style="padding-left: 10px;">실행결과</label>
-										<textarea style="border: 0px; width: 100%">{{speed.statusMsg}}</textarea>
+										<textarea id="speedtest_text" style="border: 0px; width: 100%">{{speedtest.statusMsg}}</textarea>
 									</div>
 								</td>
 							</tr>
@@ -557,7 +557,7 @@ function firmwarelist() {
 								<td colspan="2">
 									<div class="form-group form-group-end row">
 										<label class="col-lg-3 col-form-label" style="padding-left: 10px;">실행결과</label>
-										<textarea style="border: 0px; width: 100%">{{coapping.statusMsg}}</textarea>
+										<textarea id="coapping_text" style="border: 0px; width: 100%">{{coapping.statusMsg}}</textarea>
 									</div>
 								</td>
 							</tr>
