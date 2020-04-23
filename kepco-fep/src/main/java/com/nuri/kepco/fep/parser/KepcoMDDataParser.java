@@ -133,7 +133,7 @@ public class KepcoMDDataParser extends DataParser {
 					
 						// 복전시간
 						long l = Double.valueOf(e.getFloatValue().doubleValue()).longValue();						
-						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmSS");
+						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmss");
 						String power_on_time = format.format(new Date(l * 1000));
 						devicePowerLog.setPower_on_time(power_on_time);
 					} 
@@ -142,7 +142,7 @@ public class KepcoMDDataParser extends DataParser {
 						
 						// 정전시간
 						long l = Double.valueOf(e.getFloatValue().doubleValue()).longValue();						
-						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmSS");
+						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmss");
 						String power_off_time = format.format(new Date(l * 1000));	
 						devicePowerLog.setPower_off_time(power_off_time);
 																		
