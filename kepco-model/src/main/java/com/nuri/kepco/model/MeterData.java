@@ -28,6 +28,6 @@ public class MeterData extends CommonObj {
 	private String parent_branch_nm;
 	private String read_dt_int;
 	private String last_comm_dt;
-	
+	private String kepco_obis;
 }
 

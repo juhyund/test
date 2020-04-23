@@ -73,6 +73,7 @@
 			, DATE_FORMAT(CONCAT(a.itime),'${prop.dt}') AS itime
 			, DATE_FORMAT(CONCAT(a.mtime),'${prop.dt}') AS mtime
 			, a.obis_code
+			, c.kepco_obis
 		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
@@ -103,6 +104,7 @@
 			, DATE_FORMAT(CONCAT(a.mtime,'00'),'${prop.dt}') AS mtime
 			, payload
 			, DATE_FORMAT(ds.last_comm_dt,'${prop.dt}') AS last_comm_dt
+			, c.kepco_obis
 		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)

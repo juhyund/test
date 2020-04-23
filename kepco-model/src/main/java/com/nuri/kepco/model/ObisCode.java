@@ -24,5 +24,7 @@ public class ObisCode extends CommonObj {
 	private String obis_cnt;
 	private String arr_resource_instance_id;
 	private String arr_obis_code;
-
+	private String kepco_object;
+	private String kepco_obis;
+	
 }
