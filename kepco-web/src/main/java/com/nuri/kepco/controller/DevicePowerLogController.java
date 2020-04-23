@@ -31,7 +31,7 @@ public class DevicePowerLogController {
 		
 		JSONObject json = new JSONObject();
 		try {
-			String[] commStr = { "branch_parent_id", "branch_id", "device_id", "power_status", "s_on_time", "e_on_time", "s_off_time", "e_off_time" };
+			String[] commStr = { "branch_parent_id", "branch_id", "device_id", "power_status", "s_on_date", "e_on_date", "s_off_date", "e_off_date" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
 			ControllerUtil.getCustomParam(request, commStr, param);
 			

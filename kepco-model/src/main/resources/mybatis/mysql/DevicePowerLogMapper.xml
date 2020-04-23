@@ -18,7 +18,7 @@
             AND b.branch_id = #{branch_id}
         </if>
         <if test="power_status != null and power_status != ''" >     
-            AND a.power_status = #{device_status}
+            AND a.power_status = #{power_status}
         </if>
         <if test="searchfield != null and searchquery != null  and searchfield != '' and searchquery != ''" >
 			AND a.${searchfield} like concat(#{searchquery},'%')
@@ -26,11 +26,11 @@
 		<if test="sdate != null and edate != null and sdate != '' and edate != ''">
 			AND a.reg_dt between date_format(concat(#{sdate},'000000'), '%Y-%m-%d %H:%i:%s') AND date_format(concat(#{edate},'235959'), '%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="s_on_time != null and e_on_time != null and s_on_time != '' and e_on_time != ''">
-			AND a.power_on_time between #{s_on_time} AND #{e_on_time}
+		<if test="s_on_date != null and e_on_date != null and s_on_date != '' and e_on_date != ''">
+			AND a.power_on_time between concat(#{s_on_date},'000000') AND concat(#{e_on_date},'235959')
 		</if>
-		<if test="s_off_time != null and e_off_time != null and s_off_time != '' and e_off_time != ''">
-			AND a.power_off_time between #{s_off_time} AND #{e_off_time}
+		<if test="s_off_date != null and e_off_date != null and s_off_date != '' and e_off_date != ''">
+			AND a.power_off_time between concat(#{s_off_date},'000000') AND concat(#{e_off_date},'235959')
 		</if>
 		</where>
 	</sql>
@@ -49,7 +49,9 @@
 	
 	<select id="selectCount" resultType="java.lang.Integer" parameterType="devicePowerLog">	
 		SELECT COUNT(*) co
-		FROM emi_device_power_log a		
+		FROM emi_device_power_log a	
+		LEFT OUTER JOIN emi_device_info b ON a.device_id = b.device_id 
+		LEFT OUTER JOIN emi_branch_info c ON b.branch_id = c.branch_id
 		<include refid="base_where_list" /> 
 	</select>
 

@@ -91,7 +91,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													<label class="col-sm-1 col-form-label" style="padding-left: 10px;">정전상태</label>
 													<div class="col-lg-3">
-														<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="power_status" id="power_status">
+														<select class="form-control" style="width: 100%; vertical-align: top; display: inline;" name="power_status" id="power_status">
 															<option value=''>선택</option>
 															<option value='0'>정전</option>
 															<option value='1'>복전</option>
@@ -131,14 +131,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<div class="col-sm-3" id="datePicker">
 														<div class="input-group date"
 															style="width: 48%; float: left;">
-															<input type="text" class="form-control" id="s_on_time" name="s_on_time" value=""> 
+															<input type="text" class="form-control" id="s_on_date" name="s_on_date" value=""> 
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
 														</div>
 														<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 														<div class="input-group date" style="width: 48%;">
-															<input type="text" class="form-control"  id="e_on_time" name="e_on_time" value=""> 
+															<input type="text" class="form-control"  id="e_on_date" name="e_on_date" value=""> 
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
@@ -148,14 +148,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<label class="col-sm-1 col-form-label">복전일자</label>
 													<div class="col-sm-3" id="datePicker">
 														<div class="input-group date" style="width: 48%; float: left;">
-															<input type="text" class="form-control" id="s_off_time" name="s_off_time"value=""> 
+															<input type="text" class="form-control" id="s_off_date" name="s_off_date"value=""> 
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
 														</div>
 														<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 														<div class="input-group date" style="width: 48%;">
-															<input type="text" class="form-control"  id="e_off_time" name="e_off_time" value=""> 
+															<input type="text" class="form-control"  id="e_off_date" name="e_off_date" value=""> 
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
@@ -219,8 +219,8 @@ var columnDefs = [
 	{headerName: "마지막 정전 시간", field: "power_off_time"},
 	{headerName: "정전 상태", field: "power_status",
         cellClassRules: {
-            'rag-green-outer': function(params) { return params.value == '1'},
-            'rag-red-outer': function(params) { return params.value == '0'}
+            'rag-green-outer': function(params) { return params.value == '복전'},
+            'rag-red-outer': function(params) { return params.value == '정전'}
         }},
 	{headerName: "등록 일자", field: "reg_dt"}
 ];
@@ -309,10 +309,10 @@ function resetForm() {
 	$('#edate').datepicker('setDate', null);
 	$("#searchfield").val($("#target option:first").val());
 	$("#searchquery").val("");
-	$('#s_on_time').datepicker('setDate', null);
-	$('#e_on_time').datepicker('setDate', null);
-	$('#s_off_time').datepicker('setDate', null);
-	$('#e_off_time').datepicker('setDate', null);
+	$('#s_on_date').datepicker('setDate', null);
+	$('#e_on_date').datepicker('setDate', null);
+	$('#s_off_date').datepicker('setDate', null);
+	$('#e_off_date').datepicker('setDate', null);
 }
 
 function init() {

@@ -20,10 +20,10 @@ public class DevicePowerLog extends CommonObj {
 	private String branch_id;
 	private String branch_nm;
 	
-	private String s_on_time;
-	private String e_on_time;
-	private String s_off_time;
-	private String e_off_time;
+	private String s_on_date;
+	private String e_on_date;
+	private String s_off_date;
+	private String e_off_date;
 	
 }
 
