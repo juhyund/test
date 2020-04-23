@@ -137,6 +137,10 @@ public class DLMSHeader {
 			if (attr == DLMS_CLASS_ATTR.SINGLE_ACTION_SCHEDULE_ATTR04.getAttr())
 				this.attr = DLMS_CLASS_ATTR.SINGLE_ACTION_SCHEDULE_ATTR04;			
 			break;
+		case ACTIVITY_CALENDAR:
+			if (attr == DLMS_CLASS_ATTR.ACTIVITY_CALENDAR_ATTR02.getAttr())
+				this.attr = DLMS_CLASS_ATTR.ACTIVITY_CALENDAR_ATTR02;			
+			break;
 		default:
 			break;
 		}

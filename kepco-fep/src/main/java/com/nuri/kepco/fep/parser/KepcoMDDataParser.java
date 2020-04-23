@@ -75,7 +75,7 @@ public class KepcoMDDataParser extends DataParser {
 			
 			for (JsonArrayEntry e : jsonObject.getResourceList()) {
 				
-				String strPath = bn + "/" + e.getName();
+				String strPath = bn + "/" + e.getName(); 
 				LwM2mPath path = new LwM2mPath(strPath);
 				
 				LOG.debug("path.getObjectId() : " + path.getObjectId());

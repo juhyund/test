@@ -28,7 +28,7 @@ public class LwM2mEventDataSaver extends AbstractMDSaver {
 		String modemTime = parser.getModemTime();
 		String ip = parser.getIp().replace("/", "");
 		Integer port = parser.getPort();
-		
+		 
 		String method = lwm2mEventLog.getMethod();
 		
 		LOG.debug("deviceSerial {} / method : {}", deviceSerial, method);

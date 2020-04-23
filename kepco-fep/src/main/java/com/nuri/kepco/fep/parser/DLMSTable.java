@@ -35,7 +35,7 @@ public class DLMSTable {
 		this.dlmsHeader = dlmsHeader;
 	}
 
-	public List<DLMSTag> getDlmsTags() {
+	public List<DLMSTag> getDlmsTags() { 
 		return dlmsTags;
 	}
 
@@ -155,7 +155,7 @@ public class DLMSTable {
 						} catch (Exception e) {
 							LOG.warn("Exception : {}", e);
 						}
-					}
+					} 
 				}
 				if (obis == OBIS.NET_METERING && dlmsTags.size() != 0) {
 					
@@ -163,6 +163,15 @@ public class DLMSTable {
 					
 					if(data.length >= 3) {
 						ret.put(OBIS.NET_METERING.getName(), DataUtil.getIntToByte(data[2]));
+					}
+				}
+				
+				if (obis == OBIS.CURRENT_TARIFF && dlmsTags.size() != 0) {	
+					
+					if(dlmsTags.get(0).getTag() == DLMS_TAG_TYPE.UINT8) {
+						int currentTariff = dlmsTags.get(0).getUint8();
+						LOG.debug("currentTariff : {}" , currentTariff);
+						ret.put(OBIS.CURRENT_TARIFF.getName(), currentTariff);
 					}
 				}
 			default:
@@ -301,7 +310,7 @@ public class DLMSTable {
 			case SINGLE_ACTION_SCHEDULE_ATTR04: // execution_time, array
 				try {
 					if (obis == OBIS.MEASUREMENT_DATE && dlmsTags.size() != 0) {
-						
+						 
 						if(dlmsTags.get(3) != null) {					
 							byte[] data = dlmsTags.get(3).getOCTET().getValue();
 							if (data.length == 5) {
@@ -314,6 +323,22 @@ public class DLMSTable {
 								}
 							}
 						}
+					}
+				} catch (Exception e) {
+					LOG.error("ERROR", e);
+				}
+				break;
+			}
+			break;
+		case ACTIVITY_CALENDAR :
+			if (attr == null)
+				break;
+			switch (attr) {
+			case ACTIVITY_CALENDAR_ATTR02: // current_tou
+				try {
+					if (obis == OBIS.CURRENT_TOU && dlmsTags.size() != 0) {
+						
+						ret.put(OBIS.CURRENT_TOU.getName(), new String(dlmsTags.get(0).getOCTET().getValue()));
 					}
 				} catch (Exception e) {
 					LOG.error("ERROR", e);
