@@ -35,8 +35,6 @@ import com.nuri.kepco.model.dao.MeterInfoDAO;
 import com.nuri.kepco.model.dao.MeterValueDAO;
 import com.nuri.kepco.model.dao.OperationLogDAO;
 
-import jdk.internal.jline.internal.Log;
-
 @Service
 public class KepcoMDDataSaver extends AbstractMDSaver {
 	
