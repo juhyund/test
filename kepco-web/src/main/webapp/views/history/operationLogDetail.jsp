@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">제어이력 상세 조회</h3>
+						<h3 style="margin-top: 6px">제어이력 상세 &lt;모뎀번호: <span id="device_serial"></span>&gt;</h3>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
@@ -57,17 +57,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="col-lg-12">
 						<div class="ibox">
 							<div class="ibox-content">
-								<div class="col-lg-10">
-									<h4 style="margin-top: 6px">제어이력 상세 정보</h4>
-								</div>
 								<table class="table table-bordered white-bg" style="width: 100%">
 									<thead>
-										<tr>
-											<th class="device-detail-head">모뎀번호</th>
-											<td class="device-detail-body" id="device_serial"></td>
-											<!-- <th class="device-detail-head">모뎀ID</th>
-											<td class="device-detail-body" id="device_id"></td> -->
-										</tr>
 										<tr>
 											<th class="device-detail-head">제어요청일시</th>
 											<td class="device-detail-body" id="request_dt"></td>
