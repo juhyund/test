@@ -1,7 +1,9 @@
 package com.nuri.kepco.fep.parser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aimir.util.Hex;
+import com.aimir.util.TimeUtil;
 import com.nuri.kepco.fep.datatype.MDData;
 import com.nuri.kepco.fep.datatype.MeterAccessResult;
 import com.nuri.kepco.fep.datatype.ResultMessage;
 import com.nuri.kepco.fep.mddata.DataParser;
+import com.nuri.kepco.model.DevicePowerLog;
 
 public class KepcoMDDataParser extends DataParser {
 
@@ -33,12 +37,18 @@ public class KepcoMDDataParser extends DataParser {
 	private final int APDU_RESOURCE_ID = 106;
 	private final int STATUS_RESOURCE_ID = 107;
 	
+	private final int MODEM_PWR_ONOFF_ID = 31021;
+	private final int MODEM_PWR_ON_RESOURCE_ID = 101;
+	private final int MODEM_PWR_OFF_RESOURCE_ID = 102;
+	private final int MODEM_PWR_STATUS_RESOURCE_ID = 103;
+	
 	List<MDData> mdLists = null;
 	byte[] modemInfo = null;
 	Map<Integer, byte[]> meterInfo = null;
 	Map<Integer, byte[]> meterData = null;
 	Map<Integer, String> meterStatus = null;
 	MeterAccessResult meterAccessResult = null;
+	DevicePowerLog devicePowerLog = null;
 	
 	String deviceId = "";
 	String modemTime = "";
@@ -51,12 +61,12 @@ public class KepcoMDDataParser extends DataParser {
 		
 		this.mdLists = new ArrayList<MDData>();
 		this.meterInfo = new HashMap<Integer, byte[]>();
-		this.meterData = new HashMap<Integer, byte[]>();
+		this.meterData = new HashMap<Integer, byte[]>();		
 		this.meterStatus = new HashMap<Integer, String>(); // meter access result
 		
 		this.deviceId = deviceId;
 		this.modemTime = modemTime;
-	
+		
 		String meterAccessFrame = "";	
 		try {
 		
@@ -67,6 +77,8 @@ public class KepcoMDDataParser extends DataParser {
 				
 				String strPath = bn + "/" + e.getName();
 				LwM2mPath path = new LwM2mPath(strPath);
+				
+				LOG.debug("path.getObjectId() : " + path.getObjectId());
 
 				if (path.getObjectId() == METERING_DATA_ID) {
 
@@ -109,7 +121,38 @@ public class KepcoMDDataParser extends DataParser {
 						if (path.getResourceInstanceId() != null) {					
 							meterStatus.put(path.getResourceInstanceId(), String.valueOf(e.getFloatValue().intValue()));
 						}
-					}					
+					}				
+				} else if(path.getObjectId() == MODEM_PWR_ONOFF_ID) { // ModemPwrOnOff
+					
+					if(this.devicePowerLog == null) {
+						this.devicePowerLog = new DevicePowerLog();
+						this.devicePowerLog.setDevice_serial(deviceId); // deviceId
+					}
+					
+					if(path.getResourceId() == MODEM_PWR_ON_RESOURCE_ID) { // PwrOnTime						
+					
+						// 복전시간
+						long l = Double.valueOf(e.getFloatValue().doubleValue()).longValue();						
+						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmSS");
+						String power_on_time = format.format(new Date(l));
+						devicePowerLog.setPower_on_time(power_on_time);
+					} 
+					
+					if(path.getResourceId() == MODEM_PWR_OFF_RESOURCE_ID) { // PwrOffTime
+						
+						// 정전시간
+						long l = Double.valueOf(e.getFloatValue().doubleValue()).longValue();						
+						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmSS");
+						String power_off_time = format.format(new Date(l));	
+						devicePowerLog.setPower_off_time(power_off_time);
+																		
+					} 
+					
+					if(path.getResourceId() == MODEM_PWR_STATUS_RESOURCE_ID) { // Status
+						
+						LOG.debug("e.status :{}", e.getFloatValue().intValue());						
+						devicePowerLog.setPower_status(String.valueOf(e.getFloatValue().intValue()));
+					}
 				}
 			}
 			
@@ -158,6 +201,10 @@ public class KepcoMDDataParser extends DataParser {
 
 	public void setMeterAccessResult(MeterAccessResult meterAccessResult) {
 		this.meterAccessResult = meterAccessResult;
+	}
+	
+	public DevicePowerLog getDevicePowerLog() {
+		return this.devicePowerLog;
 	}
 
 	@Override

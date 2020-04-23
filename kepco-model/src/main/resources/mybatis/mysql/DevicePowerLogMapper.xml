@@ -95,34 +95,30 @@
 	</select>
 	
 	<insert id="insert" parameterType="devicePowerLog">
-		INSERT INTO EMI_DEVICE_INFO (
-			  power_log_seq
-			, device_id
+		INSERT INTO emi_device_power_log (
+			  device_id
 			, power_on_time
 			, power_off_time
 			, power_status
 			, itime
 			, reg_dt
 		) VALUES (
-			  #{power_log_seq}
-			, #{device_id}
+			  #{device_id}
 			, #{power_on_time}
 			, #{power_off_time}
 			, #{power_status}
-			, #{itime}
-			, #{reg_id}
+			, #{itime}			
 			, now()			
 		)
     </insert>
     
     <update id="update" parameterType="devicePowerLog">
-		UPDATE EMI_DEVICE_INFO SET
+		UPDATE emi_device_power_log SET
 			<if test="device_id != null" > , device_id = #{device_id}</if>
 			<if test="power_on_time != null" > , power_on_time = #{power_on_time}</if>
 			<if test="power_off_time != null" > , power_off_time = #{power_off_time}</if>
 			<if test="power_status != null" > , power_status = #{power_status}</if>
-			<if test="itime != null" > , itime = #{itime}</if>
-			<if test="mobile_no != null" > , mobile_no = #{mobile_no}</if>	
+			<if test="itime != null" > , itime = #{itime}</if>				
 		WHERE power_log_seq = #{power_log_seq}
 	</update>
 	
