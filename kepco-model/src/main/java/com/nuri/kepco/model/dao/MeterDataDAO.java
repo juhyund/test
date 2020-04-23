@@ -9,9 +9,6 @@ import com.nuri.kepco.model.MeterData;
 @Mapper
 public interface MeterDataDAO extends GenericDAO<MeterData> {
 
-	List<MeterData> selectListDetail(MeterData param) throws Exception;
-	
-	List<Map<String, Object>> selectMeterInfo(MeterData param);	
-	
+	List<MeterData> selectDetail(MeterData param) throws Exception;
 }
 

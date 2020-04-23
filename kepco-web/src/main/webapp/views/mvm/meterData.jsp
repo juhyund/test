@@ -179,12 +179,7 @@ var columnDefs = [
 	{headerName: "지사", 		field: "branch_nm",			width:100},
 	{headerName: "계기타입", 	field: "meter_type", 		width:100},
 	{headerName: "모뎀번호", 	field: "device_serial", 	width:200},
-   	{headerName: "검침항목", width:100,	
-			   	field: "obis_code_descr", 
-			   	suppressSizeToFit: true,
-			   	valueFormatter: numberFormatter,
-			   	cellStyle: { 'text-align': "right" }}, 
-
+   	{headerName: "검침항목",  field: "obis_code_descr",   width:200}, 
 	{headerName: "등록시간", field: "reg_dt",	width:200}
 ];
 
@@ -226,7 +221,7 @@ function excelDownload() {
 				timer: 1500
 			});
 	}else{ */
-		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterValue");
+		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterData");
 		 $('#search_form').attr('method',"GET");
 		 $('#search_form').submit();
 		Swal.fire({
@@ -255,17 +250,20 @@ function excelDownload() {
 
 onRowClicked = function(event){
 	var meter_id = event.data.meter_id;
-	var billing_dt = event.data.billing_dt_int;
+	var read_dt = event.data.read_dt_int;
+	var obis_code = event.data.obis_code;
 	
 	var param = "?meter_id="+meter_id;
-	param += "&billing_dt="+billing_dt;
+	param += "&read_dt="+read_dt;
+	param += "&obis_code="+obis_code;
+	
 	param += "&sdate="+$("#sdateView").val();
 	param += "&edate="+$("#edateView").val();
 	
 	location.href = CONTEXT_PATH + "/meterDataDetail"+param;
 }
 
-
+/* 
 var winObj;
 function showDetailMeterData(meter_id){ 
 	var opts="width=1200, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
@@ -278,7 +276,7 @@ function showDetailMeterData(meter_id){
 	param += "&edate="+$("#edateView").val();
 	
     winObj = window.open(COMMON_URL+"/MeterDataDetail"+param, "", opts);
-}
+} */
 
 function resetForm(){
 	$("#search_form")[0].reset();

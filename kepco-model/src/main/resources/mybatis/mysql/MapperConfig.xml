@@ -40,6 +40,7 @@
 		<typeAlias alias="vendorInfo" type="com.nuri.kepco.model.VendorInfo" />
 		<typeAlias alias="operationLog" type="com.nuri.kepco.model.OperationLog" />
 		<typeAlias alias="obisCode" type="com.nuri.kepco.model.ObisCode"/>
+		<typeAlias alias="meterData" type="com.nuri.kepco.model.MeterData"/>
   	</typeAliases>
 
 	<mappers>
@@ -66,6 +67,7 @@
 		<mapper resource="mybatis/mysql/VendorInfoMapper.xml" />
 		<mapper resource="mybatis/mysql/OperationLogMapper.xml" />
 		<mapper resource="mybatis/mysql/ObisCodeMapper.xml" />
+		<mapper resource="mybatis/mysql/MeterDataMapper.xml" />
 		
 	</mappers>
 
