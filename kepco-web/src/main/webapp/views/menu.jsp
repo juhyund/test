@@ -30,7 +30,8 @@
 	        <a href="#"><i class="fa fa-chart-area"></i> <span class="nav-label">검침정보</span> <span class="fa arrow"></span></a>
 	        <ul class="nav nav-second-level collapse" aria-expanded="false">
 	            <li><a href="<%=COMMON_URL%>/metering" target="contentsFrame">LP검침</a></li>
-	            <li><a href="<%=COMMON_URL%>/billing" target="contentsFrame">정기검침</a></li>                           
+	            <li><a href="<%=COMMON_URL%>/billing" target="contentsFrame">정기검침</a></li>   
+	            <li><a href="<%=COMMON_URL%>/meterData" target="contentsFrame">기타검침</a></li>                        
 	        </ul>
 	    </li>
 	    <li>
