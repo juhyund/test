@@ -188,10 +188,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</tr>
 												<tr>
 													<th></th>
-													<th>Total</th>
-													<th>T1</th>
-													<th>T2</th>
-													<th>T3</th>
+													<th>합계</th>
+													<th>중부하</th>
+													<th>최대부하</th>
+													<th>경부하</th>
 												</tr>
 												<tr>
 													<th>유효전력량(kWh)</td>
@@ -238,10 +238,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</tr>
 												<tr>
 													<th></th>
-												<th>Total</th>
-													<th>T1</th>
-													<th>T2</th>
-													<th>T3</th>
+													<th>합계</th>
+													<th>중부하</th>
+													<th>최대부하</th>
+													<th>경부하</th>
 												</tr>
 												<tr>
 													<th>(역)유효전력량(kWh)</td>
