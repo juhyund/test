@@ -510,8 +510,8 @@ function firmwarelist() {
 							<tr>
 								<td colspan="2">
 									<div class="form-group form-group-end row">
-										<label class="col-lg-3 col-form-label" style="padding-left: 10px;">실행결과</label>
-										<textarea id="speedtest_text" style="border: 0px; width: 100%">{{speedtest.statusMsg}}</textarea>
+										<H3>[상향/하향 속도테스트 결과]</H3>
+										<textarea style="border: 0px; min-height: 60px; width: 100%">{{speedtest.statusMsg}}</textarea>
 									</div>
 								</td>
 							</tr>
@@ -557,7 +557,7 @@ function firmwarelist() {
 								<td colspan="2">
 									<div class="form-group form-group-end row">
 										<label class="col-lg-3 col-form-label" style="padding-left: 10px;">실행결과</label>
-										<textarea id="coapping_text" style="border: 0px; width: 100%">{{coapping.statusMsg}}</textarea>
+										<textarea style="border: 0px; width: 100%">{{coapping.statusMsg}}</textarea>
 									</div>
 								</td>
 							</tr>
