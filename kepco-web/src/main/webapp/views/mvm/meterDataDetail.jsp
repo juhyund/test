@@ -68,7 +68,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">정기검침 > 상세 데이터 조회</h3>
+						<h3 style="margin-top: 6px">기타검침 > 상세 데이터 조회</h3>
 					</div>
 				</div>
 				<!-- navigator -->
@@ -188,10 +188,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</tr>
 												<tr>
 													<th></th>
-													<th>합계</th>
-													<th>중부하</th>
-													<th>최대부하</th>
-													<th>경부하</th>
+													<th>Total</th>
+													<th>T1</th>
+													<th>T2</th>
+													<th>T3</th>
 												</tr>
 												<tr>
 													<th>유효전력량(kWh)</td>
@@ -238,10 +238,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</tr>
 												<tr>
 													<th></th>
-													<th>합계</th>
-													<th>중부하</th>
-													<th>최대부하</th>
-													<th>경부하</th>
+												<th>Total</th>
+													<th>T1</th>
+													<th>T2</th>
+													<th>T3</th>
 												</tr>
 												<tr>
 													<th>(역)유효전력량(kWh)</td>

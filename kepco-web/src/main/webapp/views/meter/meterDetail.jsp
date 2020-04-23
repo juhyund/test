@@ -248,7 +248,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<th>리소스 ID</th>
 																		<th style="text-align: left">리소스명</th>
 																		<th>리소스값</th>
-																		<th>단위</th>
+																		<th>단위 <i class="fas fa-info-circle" style="font-size: 14px; vertical-align: middle; cursor: pointer;" onclick="viewInfo()"></i></th>
 																		<th colspan="2">값 설정</th>																		
 																	</tr>
 																</thead>
@@ -366,7 +366,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																		<th>리소스 ID</th>
 																		<th style="text-align: left">리소스명</th>
 																		<th>리소스값</th>
-																		<th>단위</th>
+																		<th>단위 <i class="fas fa-info-circle" style="font-size: 14px; vertical-align: middle; cursor: pointer;" onclick="viewInfo()"></i></th>
 																		<th colspan="2">값 변경</th>
 																	</tr>
 																</thead>
@@ -423,12 +423,51 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<form name="control_detail_form" id="control_detail_form" method="post">
 					<input type="hidden" id="_meter_serial" name="_meter_serial" value="${meter_serial}" class="form-control">
 				</form>
-				
-						
+					
 				</div>
 				<!--  end : summary_area  -->
 				
-												
+				<div class="modal bs-example-modal-sm" id="infoModal" tabindex="-1" role="dialog"
+				aria-labelledby="infoModal" aria-hidden="true">
+				<div class="modal-dialog" style="max-width: 650px">
+					<div class="modal-content">
+						<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
+							<h4 class="modal-title">단위 정보</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-content" style="text-align: center; padding: 15px">
+							<table class="table">
+								<thead class ="gray-bg">
+									<tr>
+										<th align="center">단위</th>
+										<th align="center">설명</th>
+										<th align="center">비고</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr align="center">
+										<td>MeterID</td>
+										<td>대상 계기번호</td>
+										<td></td>
+									</tr>
+									<tr align="center">
+										<td>* * * * *</td>
+										<td>순서대로 분(0-59) 시간(0-23) 일(1-31) 월(1-12) 요일(0-7)</td>
+										<td>
+											※ 요일의 0,7은 일요일<br>
+											※ * 값은 값의 반복
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer" style="justify-content: center">
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+				</div>							
 
 			   <button class="btn btn-outline btn-primary m-t-sm" style="height: 100%; float: right" type="button" onclick="javascript:history.back(-1)">
 					<i class="fa fa-undo"> 목록으로 돌아가기</i>
@@ -581,6 +620,10 @@ function settingDynamicObisCode(obis, obis_cnt, resource_nm) {
 	Scope().$apply(function () {
         Scope().settingDynamicObisCode(obis, obis_cnt, resource_nm);
     });
+}
+
+function viewInfo() {
+	$('#infoModal').modal('show');
 }
 
 </script>

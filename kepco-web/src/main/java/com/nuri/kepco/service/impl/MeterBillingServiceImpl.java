@@ -83,8 +83,8 @@ public class MeterBillingServiceImpl implements MeterBillingService {
 		
 		String template_filepath = "/template/template_excel.xlsx";
 		String filename = "meter_billing_" + DateUtil.getNowDateTime() + ".xlsx";			
-		String filepath = fileDownloadDir + "/meterBiling/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
-
+		String filepath = fileDownloadDir + "/meterBilling/" + DateUtil.GetYear() + "/" + DateUtil.GetMonth();
+		
 		List<MeterBilling> result = this.meterBillingDAO.selectList(meterBilling);
 		
 		

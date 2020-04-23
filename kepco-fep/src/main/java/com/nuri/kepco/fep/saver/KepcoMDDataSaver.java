@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aimir.util.TimeUtil;
 import com.nuri.kepco.fep.datatype.LPData;
 import com.nuri.kepco.fep.datatype.MDData;
 import com.nuri.kepco.fep.datatype.MeterAccessResult;
@@ -18,11 +19,13 @@ import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
 import com.nuri.kepco.fep.parser.KepcoMDDataParser;
 import com.nuri.kepco.model.DeviceInfo;
+import com.nuri.kepco.model.DevicePowerLog;
 import com.nuri.kepco.model.MeterBilling;
 import com.nuri.kepco.model.MeterInfo;
 import com.nuri.kepco.model.MeterValue;
 import com.nuri.kepco.model.OperationLog;
 import com.nuri.kepco.model.dao.DeviceInfoDAO;
+import com.nuri.kepco.model.dao.DevicePowerLogDAO;
 import com.nuri.kepco.model.dao.MeterBillingDAO;
 import com.nuri.kepco.model.dao.MeterInfoDAO;
 import com.nuri.kepco.model.dao.MeterValueDAO;
@@ -47,6 +50,9 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 	
 	@Autowired
 	OperationLogDAO operationLogDAO;
+	
+	@Autowired
+	DevicePowerLogDAO devicePowerLogDAO;
 		
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
@@ -60,6 +66,10 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		} else if(parser.getMDList().size() > 0) { // 검침정보 
 			
 			mdDataSaver(parser, md);
+			
+		} else if(parser.getDevicePowerLog() != null) { // devicePowerOnOff
+			
+			mdDevicePowerLogSaver(parser, md);
 		}
 		
 		return true;
@@ -369,6 +379,46 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 					LOG.error("error", e);
 				}
 			}			
+		}
+		
+		return result;
+	}
+	
+	public int mdDevicePowerLogSaver(KepcoMDDataParser parser, IMeasurementData md) {
+		
+		int result = 0;
+		
+		DevicePowerLog devicePowerLog = parser.getDevicePowerLog();
+		
+		try {
+			
+			// TODO : 발생 일시 중복 시 저장하지 않아야 함.
+			
+			DeviceInfo deviceInfo = deviceInfoDAO.selectByDeviceSerial(devicePowerLog.getDevice_serial());
+			devicePowerLog.setDevice_id(deviceInfo.getDevice_id());			
+			// 현재년도
+			String year = TimeUtil.getCurrentDay().substring(0, 4);
+			int check = 0;
+			
+			if(!year.equals(devicePowerLog.getPower_off_time().substring(0, 4))) {
+				check++;
+			}
+			
+			if(!year.equals(devicePowerLog.getPower_on_time().substring(0, 4))) {
+				check++;
+			}
+			
+			if(check > 1) {
+				
+				LOG.debug("POWER ON TIME : {} / POWER OFF TIME : {}",devicePowerLog.getPower_on_time(), devicePowerLog.getPower_off_time());
+				LOG.debug("현재시간 불일치로 저장하지 않음");
+				
+			} else {
+				result = devicePowerLogDAO.insert(devicePowerLog);
+			}
+			
+		} catch (Exception e) {
+			LOG.error("error", e);
 		}
 		
 		return result;

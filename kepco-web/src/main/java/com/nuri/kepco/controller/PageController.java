@@ -47,6 +47,11 @@ public class PageController {
 		return "mvm/billing";
 	}
 	
+	@RequestMapping("/meterData")
+	public String meterData() throws Exception {
+		return "mvm/meterData";
+	}
+	
 	@RequestMapping("/NMS") 
 	public String NMS() throws Exception {
 		return "device/NMS";
@@ -102,5 +107,6 @@ public class PageController {
 	public String devicePowerLog() throws Exception {
 		return "device/devicePowerLog";
 	}
+	
 	
 }
