@@ -12,7 +12,7 @@
 	<sql id="base_where_list">
 		<where>
         <if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
-            AND a.billing_dt between #{sdate} AND #{edate}
+            AND a.read_dt between #{sdate} AND #{edate}
         </if>
         <if test="meter_type != null and meter_type != ''" >     
             AND  mi.meter_type = #{meter_type}
@@ -20,8 +20,8 @@
         <if test="device_serial != null and device_serial != ''" >     
             AND device_serial = #{device_serial}
         </if>
-        <if test="billing_dt != null and billing_dt != ''" >
-            AND a.billing_dt = #{billing_dt}
+        <if test="read_dt != null and read_dt != ''" >
+            AND a.read_dt = #{read_dt}
         </if>
         <if test="meter_serial != null and meter_serial != ''" >     
             AND mi.meter_serial = #{meter_serial}
@@ -47,43 +47,36 @@
 		</if>
 	</sql>
 	
-	<select id="selectCount" resultType="java.lang.Integer" parameterType="meterBilling">	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="meterData">	
 		SELECT COUNT(*) co
-		FROM EMI_METER_BILLING a	
+		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
+		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code)
 		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
 		<include refid="base_where_list" /> 
 	</select>
 
-	<select id="selectList" resultType="meterBilling" parameterType="meterBilling">	
+	<select id="selectList" resultType="meterData" parameterType="meterData">	
 		SELECT 
 			a. meter_id
 			, meter_serial
 			, b.branch_nm
 			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = b.branch_parent_id) AS parent_branch_nm
 			, meter_serial
-			, ifnull(fnc_get_code_nm(mi.meter_type),'') as meter_type
+			, IFNULL(fnc_get_code_nm(mi.meter_type),'') AS meter_type
+			, c.descr AS obis_code_descr
 			, device_serial
-			, DATE_FORMAT(CONCAT(a.billing_dt,'00'),'${prop.dt}') AS billing_dt
-			, a.billing_dt AS billing_dt_int
-			, active_imp_tot			, apprent_imp_tot			, lead_imp_tot			, lagging_imp_tot			, pf_imp_tot
-			, active_imp_rate1			, apprent_imp_rate1			, lead_imp_rate1		, lagging_imp_rate1			, pf_imp_rate1	
-			, active_imp_rate2			, apprent_imp_rate2			, lead_imp_rate2		, lagging_imp_rate2			, pf_imp_rate2
-			, active_imp_rate3			, apprent_imp_rate3			, lead_imp_rate3		, lagging_imp_rate3			, pf_imp_rate3
-			, active_imp_rate4			, apprent_imp_rate4			, lead_imp_rate4		, lagging_imp_rate4			, pf_imp_rate4
-			, active_exp_tot			, apprent_exp_tot			, lead_exp_tot			, lagging_exp_tot			, pf_exp_tot
-			, active_exp_rate1			, apprent_exp_rate1			, lead_exp_rate1		, lagging_exp_rate1			, pf_exp_rate1
-			, active_exp_rate2			, apprent_exp_rate2			, lead_exp_rate2		, lagging_exp_rate2			, pf_exp_rate2
-			, active_exp_rate3			, apprent_exp_rate3			, lead_exp_rate3		, lagging_exp_rate3			, pf_exp_rate3
-			, active_exp_rate4			, apprent_exp_rate4			, lead_exp_rate4		, lagging_exp_rate4			, pf_exp_rate4
+			, DATE_FORMAT(CONCAT(a.read_dt,'00'),'${prop.dt}') AS read_dt
+			, a.read_dt AS read_dt_int
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
-			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
 			, DATE_FORMAT(CONCAT(a.itime,'00'),'${prop.dt}') AS itime
 			, DATE_FORMAT(CONCAT(a.mtime,'00'),'${prop.dt}') AS mtime
-		FROM EMI_METER_BILLING a	
+			, a.obis_code
+		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
+		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code)
 		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
 			
 		<include refid="base_where_list" />
@@ -94,48 +87,41 @@
 		
 	</select>
 	
-	<select id="selectListDetail" resultType="meterBilling" parameterType="meterBilling">	
+	<select id="selectDetail" resultType="meterData" parameterType="meterData">	
 		SELECT 
 			a. meter_id
 			, meter_serial
 			, b.branch_nm
 			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = b.branch_parent_id) AS parent_branch_nm
 			, meter_serial
-			, ifnull(fnc_get_code_nm(mi.meter_type),'') as meter_type
+			, IFNULL(fnc_get_code_nm(mi.meter_type),'') AS meter_type
+			, c.descr AS obis_code_descr
 			, device_serial
-			, DATE_FORMAT(CONCAT(a.billing_dt,'00'),'${prop.dt}') AS billing_dt
-			, a.billing_dt AS billing_dt_int
-			, active_imp_tot			, apprent_imp_tot			, lead_imp_tot			, lagging_imp_tot			, pf_imp_tot
-			, active_imp_rate1			, apprent_imp_rate1			, lead_imp_rate1		, lagging_imp_rate1			, pf_imp_rate1	
-			, active_imp_rate2			, apprent_imp_rate2			, lead_imp_rate2		, lagging_imp_rate2			, pf_imp_rate2
-			, active_imp_rate3			, apprent_imp_rate3			, lead_imp_rate3		, lagging_imp_rate3			, pf_imp_rate3
-			, active_imp_rate4			, apprent_imp_rate4			, lead_imp_rate4		, lagging_imp_rate4			, pf_imp_rate4
-			, active_exp_tot			, apprent_exp_tot           , lead_exp_tot			, lagging_exp_tot			, pf_exp_tot
-			, active_exp_rate1			, apprent_exp_rate1			, lead_exp_rate1		, lagging_exp_rate1			, pf_exp_rate1
-			, active_exp_rate2			, apprent_exp_rate2			, lead_exp_rate2		, lagging_exp_rate2			, pf_exp_rate2
-			, active_exp_rate3			, apprent_exp_rate3			, lead_exp_rate3		, lagging_exp_rate3			, pf_exp_rate3
-			, active_exp_rate4			, apprent_exp_rate4			, lead_exp_rate4		, lagging_exp_rate4			, pf_exp_rate4
+			, DATE_FORMAT(CONCAT(a.read_dt,'00'),'${prop.dt}') AS read_dt
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
-			, DATE_FORMAT(a.update_dt,'${prop.dt}') AS update_dt
 			, DATE_FORMAT(CONCAT(a.itime,'00'),'${prop.dt}') AS itime
 			, DATE_FORMAT(CONCAT(a.mtime,'00'),'${prop.dt}') AS mtime
-		FROM EMI_METER_BILLING a	
+			, payload
+		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
+		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code)
 		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
-		WHERE a.meter_id = '${meter_id}'   AND a.billing_dt = '${billing_dt}';
+		WHERE a.meter_id = '${meter_id}'   
+			AND a.read_dt = '${read_dt}'
+			AND a.obis_code = '${obis_code}'
 		
 	</select>
 	
-	<select id="selectOne" resultType="meterBilling" parameterType="meterBilling">	
+	<select id="selectOne" resultType="meterData" parameterType="meterData">	
 	
 	</select>
 	
-	<insert id="insert" parameterType="meterBilling">     	
+	<insert id="insert" parameterType="meterData">     	
     </insert>
     
     
-    <insert id="insertAll" parameterType="meterBilling">     	
+    <insert id="insertAll" parameterType="meterData">     	
     </insert>
     
 </mapper>

@@ -49,10 +49,10 @@ public class MeterDataServiceImpl implements MeterDataService {
 	}
 	
 	@Override
-	public JSONArray selectListDetail(Map<String, Object> param) throws Exception {
+	public JSONArray selectDetail(Map<String, Object> param) throws Exception {
 		MeterData meterData = new MeterData();
 		ConversionUtil.getModelByMap(meterData, param);
-		List<MeterData> list = this.meterDataDAO.selectListDetail(meterData);
+		List<MeterData> list = this.meterDataDAO.selectDetail(meterData);
 
 		return ConversionUtil.getJSONArrayByModel(list,meterData.getStart());
 	}
