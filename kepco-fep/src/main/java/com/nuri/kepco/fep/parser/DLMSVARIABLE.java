@@ -30,7 +30,7 @@ public class DLMSVARIABLE {
         APPRENTPOWER_CONSTANT("0101000302FF","ApparentPower Constant"),	// 피상전력량 계기 정수
         LP_INTERVAL("0101000804FF","LP INTERVAL"),	// LP 수집 주기
         MEASUREMENT_DATE("00000F0000FF","Measurement Date"),	// 정기검침일 
-        ENERGY_LOAD_PROFILE("0100630100FF", "Load Profile"),	// Load Profile
+        ENERGY_LOAD_PROFILE("0100630100FF", "Load Profile"),	// Load Profile 
         
         BILLING_PERIOD_COUNTER("0100000100FF", "Billing Period Counter"),	// 검침횟수
         BILLING_DATE("010000010200", "Monthly Billing Date"),	// 검침일자
@@ -39,13 +39,16 @@ public class DLMSVARIABLE {
         
         ETYPE_BILLING("010101080001", "EtypeBilling"), // ETYPE 정기검침
         
-        NET_METERING("010000F200FF", "Net Metering"), // 01 - 역방향 /00 - 순방향 양방향
-        
-        AVG_POWER_PERIOD("010080000CFF", "AveragePowerPeriod"), // 평균전압전류주기
-            	
-        HW_VER("00002A0000FF", "METER VERSION");	// COSEM 계기 식별자
-    
-        private String code;
+        NET_METERING("010000F200FF", "Net Metering"), // 01 - 역방향 /00 - 순방향 양방향        
+        AVG_POWER_PERIOD("010080000CFF", "AveragePowerPeriod"), // 평균전압전류주기            	
+        HW_VER("00002A0000FF", "METER VERSION"),	// COSEM 계기 식별자    	
+    	
+    	// 동적스케줄 OBIS
+    	CURRENT_TARIFF("010000F000FF", "Current Tariff"),
+    	CURRENT_TOU("00000D0000FF", "Current TOU");
+    	
+    	
+        private String code; 
         private String name;
         
         OBIS(String code, String name) {
@@ -341,8 +344,9 @@ public class DLMSVARIABLE {
     	LIMIT_ATTR07(7),
         SCRIPT_TABLE_ATTR01(1),
         SCRIPT_TABLE_ATTR02(2),
-        SINGLE_ACTION_SCHEDULE_ATTR04(4); // execution_time, array;
-        
+        SINGLE_ACTION_SCHEDULE_ATTR04(4), // execution_time, array;
+    	ACTIVITY_CALENDAR_ATTR02(2);
+    	
         private int attr;
         
         DLMS_CLASS_ATTR(int attr) {

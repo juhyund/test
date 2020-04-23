@@ -67,11 +67,11 @@
 			, IFNULL(fnc_get_code_nm(mi.meter_type),'') AS meter_type
 			, c.descr AS obis_code_descr
 			, device_serial
-			, DATE_FORMAT(CONCAT(a.read_dt,'00'),'${prop.dt}') AS read_dt
+			, DATE_FORMAT(CONCAT(a.read_dt),'${prop.dt}') AS read_dt
 			, a.read_dt AS read_dt_int
 			, DATE_FORMAT(a.reg_dt,'${prop.dt}') AS reg_dt
-			, DATE_FORMAT(CONCAT(a.itime,'00'),'${prop.dt}') AS itime
-			, DATE_FORMAT(CONCAT(a.mtime,'00'),'${prop.dt}') AS mtime
+			, DATE_FORMAT(CONCAT(a.itime),'${prop.dt}') AS itime
+			, DATE_FORMAT(CONCAT(a.mtime),'${prop.dt}') AS mtime
 			, a.obis_code
 		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
@@ -119,7 +119,24 @@
 	
 	</select>
 	
-	<insert id="insert" parameterType="meterData">     	
+	<insert id="insert" parameterType="meterData">
+		INSERT INTO EMI_METER_DATA (
+			METER_ID
+			, READ_DT
+			, OBIS_CODE
+			, MTIME
+			, ITIME
+			, PAYLOAD
+			, REG_DT
+		) VALUES (
+			#{meter_id}
+			, #{read_dt}
+			, #{obis_code}
+			, #{mtime}
+			, #{itime}
+			, #{payload}
+			, now()
+		)
     </insert>
     
     

@@ -17,19 +17,25 @@ import com.nuri.kepco.fep.datatype.MDData;
 import com.nuri.kepco.fep.datatype.MeterAccessResult;
 import com.nuri.kepco.fep.mddata.AbstractMDSaver;
 import com.nuri.kepco.fep.mddata.IMeasurementData;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE;
+import com.nuri.kepco.fep.parser.DLMSVARIABLE.OBIS;
 import com.nuri.kepco.fep.parser.KepcoMDDataParser;
 import com.nuri.kepco.model.DeviceInfo;
 import com.nuri.kepco.model.DevicePowerLog;
 import com.nuri.kepco.model.MeterBilling;
+import com.nuri.kepco.model.MeterData;
 import com.nuri.kepco.model.MeterInfo;
 import com.nuri.kepco.model.MeterValue;
 import com.nuri.kepco.model.OperationLog;
 import com.nuri.kepco.model.dao.DeviceInfoDAO;
 import com.nuri.kepco.model.dao.DevicePowerLogDAO;
 import com.nuri.kepco.model.dao.MeterBillingDAO;
+import com.nuri.kepco.model.dao.MeterDataDAO;
 import com.nuri.kepco.model.dao.MeterInfoDAO;
 import com.nuri.kepco.model.dao.MeterValueDAO;
 import com.nuri.kepco.model.dao.OperationLogDAO;
+
+import jdk.internal.jline.internal.Log;
 
 @Service
 public class KepcoMDDataSaver extends AbstractMDSaver {
@@ -53,6 +59,9 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 	
 	@Autowired
 	DevicePowerLogDAO devicePowerLogDAO;
+	
+	@Autowired
+	MeterDataDAO meterDataDAO;
 		
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
@@ -70,8 +79,9 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 		} else if(parser.getDevicePowerLog() != null) { // devicePowerOnOff
 			
 			mdDevicePowerLogSaver(parser, md);
+			
 		}
-		
+		 
 		return true;
 	}
 	
@@ -163,6 +173,9 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				// 0. check meter
 				checkMeter(mdData, deviceInfo);
 				
+				// 1. update dynamic Schedule
+				saveDynamicData(mdData, deviceInfo);
+				
 				LOG.debug("meter time : {}" , mdData.getMeterTime());
 				
 				if(mdData.getMeterInfo() != null) {	
@@ -185,6 +198,39 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				}
 			}
 		}
+	}
+	
+	public int saveDynamicData(MDData mdData, DeviceInfo deviceInfo) {
+		
+		int result = 0;		
+		
+		Map<String, Object> map = mdData.getDynamicDatas();
+		for(String key : map.keySet()) {
+			
+			try {
+				
+				MeterData meterData = new MeterData();
+				MeterInfo meterInfo = mdData.getMeterInfo();	
+				
+				if(meterInfo != null) {
+					
+					meterData.setRead_dt(mdData.getModemTime());
+					meterData.setMeter_id(meterInfo.getMeter_id());
+					meterData.setObis_code(key);
+					meterData.setItime(mdData.getModemTime());
+					meterData.setMtime(mdData.getMeterTime());
+					meterData.setPayload(String.valueOf(map.get(key)));
+					meterDataDAO.insert(meterData);
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
 	}
 	
 	/**
