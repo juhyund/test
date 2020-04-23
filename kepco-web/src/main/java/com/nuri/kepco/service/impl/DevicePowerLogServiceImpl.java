@@ -45,7 +45,7 @@ public class DevicePowerLogServiceImpl implements DevicePowerLogService {
 		ConversionUtil.getModelByMap(devicePowerLog, param);
 		List<DevicePowerLog> list = this.devicePowerLogDAO.selectList(devicePowerLog);
 		
-		return ConversionUtil.getJSONArrayByModel(list);
+		return ConversionUtil.getJSONArrayByModel(list, devicePowerLog.getStart());
 	}
 
 	@Override
