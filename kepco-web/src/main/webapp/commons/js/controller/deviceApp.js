@@ -59,7 +59,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 		];
 		
 		var initGrid = function() {
-		  dataGrid = new DataGrid('grid_b', columnDefs, true, 500);    
+		  dataGrid = new DataGrid('grid_b', columnDefs, true, 500);
 		  dataGrid.makeGrid();
 		  dataGrid.showNoRows();
 		};
@@ -307,12 +307,12 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    		$scope.coapping.statusMsg = "제어실패 [" + coapping.statusMsg + "]";
 	    	}
 	    	*/
-	    	
+	    	hideLoading();
     	}, function errorCallback(response) {
 	        alert("전송실패");
 	       // coapping.statusMsg = "제어실패";	    	
+	        hideLoading();
 	    });
-		hideLoading();
     };
     
     $scope.reset = function () {
@@ -335,11 +335,11 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	} else {
 	    		alert("제어실패 [" + data.data.statusMsg + "]");
 	    	}
-	    	
+	    	hideLoading();
     	}, function errorCallback(response) {
 	        alert("전송실패");
+	        hideLoading();
 	    });
-		hideLoading();
     };
     
     $scope.speedtest = function () {
@@ -358,17 +358,32 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         	}
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
-	    	$scope.speedtest.statusMsg = data.data.statusMsg;
-	    	/*
 	    	if(data.data.statusCode == "200") {
-	    		//alert("전송성공 \nTID: [" + data.data.tid + "]");
+	    		if(data.data.statusMsg == ''){
+	    			var text = "요청 성공\n";
+		    		text += "타겟ID: "+ data.data.tid;
+		    		
+		    		$scope.speedtest.statusMsg = text;
+	    		} else {
+	    			var msg = eval("("+data.data.statusMsg+")");
+		    		if(msg.status == undefined){
+		    			var text = "모뎀번호: "+msg.endpoint +"\n";
+			    		text += "상향: "+ msg.up + "MB/sec\n";
+			    		text += "하향: "+ msg.down + "MB/sec";
+			    		
+			    		$scope.speedtest.statusMsg = text;
+		    		} else {
+			    		$scope.speedtest.statusMsg = data.data.statusMsg;
+		    		}	
+	    		}
 	    	} else {
 	    		alert("제어실패 [" + data.data.statusMsg + "]");
 	    	}
-	    	 */	    	
+	    	hideLoading();
     	}, function errorCallback(response) {
 	        alert("전송실패");
+	        hideLoading();
 	    });
-		hideLoading();
+		
     };
 });

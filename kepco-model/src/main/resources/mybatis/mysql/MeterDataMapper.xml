@@ -102,10 +102,12 @@
 			, DATE_FORMAT(CONCAT(a.itime,'00'),'${prop.dt}') AS itime
 			, DATE_FORMAT(CONCAT(a.mtime,'00'),'${prop.dt}') AS mtime
 			, payload
+			, DATE_FORMAT(ds.last_comm_dt,'${prop.dt}') AS last_comm_dt
 		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
 		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code)
+		LEFT JOIN EMI_DEVICE_STATUS AS ds ON (mi.device_id = ds.device_id)
 		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
 		WHERE a.meter_id = '${meter_id}'   
 			AND a.read_dt = '${read_dt}'
