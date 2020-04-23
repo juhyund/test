@@ -9,6 +9,7 @@ public class DevicePowerLog extends CommonObj {
 
 	private String power_log_seq;
 	private String device_id;
+	private String device_serial;
 	private String power_on_time;
 	private String power_off_time;
 	private String power_status;
