@@ -284,7 +284,8 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     
     $scope.coapping = function () {
     	showLoading();
-    	$scope.coapping = {};
+    	$scope.coapping.statusMsg = '전송 요청 중..';
+    	//$scope.coapping = {};
 		$http({
 			method: 'POST',
 	        url: COMMON_URL + "/ajaxCoAPpIng",
@@ -299,15 +300,17 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
 	    	$scope.coapping.statusMsg = data.data.statusMsg;
+	    	/*
 	    	if(data.data.statusCode == "200") {
 	    		//alert("전송성공\nTID:  [" + data.data.tid + "]");
 	    	} else {
-	    		alert("제어실패 [" + coapping.statusMsg + "]");
+	    		$scope.coapping.statusMsg = "제어실패 [" + coapping.statusMsg + "]";
 	    	}
+	    	*/
 	    	
     	}, function errorCallback(response) {
 	        alert("전송실패");
-	        coapping.statusMsg = "제어실패";	    	
+	       // coapping.statusMsg = "제어실패";	    	
 	    });
 		hideLoading();
     };
@@ -341,7 +344,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
     
     $scope.speedtest = function () {
     	showLoading();
-    	$scope.speed = {};
+    	$scope.speedtest.statusMsg = '전송 요청 중..';
 		$http({
 			method: 'POST',
 	        url: COMMON_URL + "/ajaxExecResource",
@@ -355,13 +358,14 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
         	}
 		
 	    }).then(function SuccessCallback(data, status, headers, config) {
-	    	$scope.speed.statusMsg = data.data.statusMsg;
+	    	$scope.speedtest.statusMsg = data.data.statusMsg;
+	    	/*
 	    	if(data.data.statusCode == "200") {
 	    		//alert("전송성공 \nTID: [" + data.data.tid + "]");
 	    	} else {
 	    		alert("제어실패 [" + data.data.statusMsg + "]");
 	    	}
-	    	
+	    	 */	    	
     	}, function errorCallback(response) {
 	        alert("전송실패");
 	    });
