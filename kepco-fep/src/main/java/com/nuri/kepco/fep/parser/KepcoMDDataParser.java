@@ -38,8 +38,8 @@ public class KepcoMDDataParser extends DataParser {
 	private final int STATUS_RESOURCE_ID = 107;
 	
 	private final int MODEM_PWR_ONOFF_ID = 31021;
-	private final int MODEM_PWR_ON_RESOURCE_ID = 101;
-	private final int MODEM_PWR_OFF_RESOURCE_ID = 102;
+	private final int MODEM_PWR_ON_RESOURCE_ID = 101; // 복전
+	private final int MODEM_PWR_OFF_RESOURCE_ID = 102; // 정전
 	private final int MODEM_PWR_STATUS_RESOURCE_ID = 103;
 	
 	List<MDData> mdLists = null;
@@ -134,7 +134,7 @@ public class KepcoMDDataParser extends DataParser {
 						// 복전시간
 						long l = Double.valueOf(e.getFloatValue().doubleValue()).longValue();						
 						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmSS");
-						String power_on_time = format.format(new Date(l));
+						String power_on_time = format.format(new Date(l * 1000));
 						devicePowerLog.setPower_on_time(power_on_time);
 					} 
 					
@@ -143,7 +143,7 @@ public class KepcoMDDataParser extends DataParser {
 						// 정전시간
 						long l = Double.valueOf(e.getFloatValue().doubleValue()).longValue();						
 						SimpleDateFormat format = new  SimpleDateFormat("yyyyMMddHHmmSS");
-						String power_off_time = format.format(new Date(l));	
+						String power_off_time = format.format(new Date(l * 1000));	
 						devicePowerLog.setPower_off_time(power_off_time);
 																		
 					} 
