@@ -104,6 +104,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	            params : { "device_id" : $("#device_id").val(), "object_id" : item.object_id }
 	    	
 	        }).then(function resourceSuccessCallback(data, status, headers, config) {
+	        	console.log(data.data.result);
 	        	// instance
 	        	item.instance = data.data.result;
 	        	$scope.objects[index] = item;
@@ -361,7 +362,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	if(data.data.statusCode == "200") {
 	    		if(data.data.statusMsg == ''){
 	    			var text = "요청 성공\n";
-		    		text += "타겟ID: "+ data.data.tid;
+		    		text += "계기번호: "+ data.data.tid;
 		    		
 		    		$scope.speedtest.statusMsg = text;
 	    		} else {

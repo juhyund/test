@@ -58,7 +58,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		<div class="ibox">
 			<div class="ibox-content">
 				<form name="search_form" id="search_form" method="post">
-				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+				<input type="hidden" id="limit" name="limit" value ="15" class="form-control">
 				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
 					<table class="table table-borderless" style="height: 100%; "
 						style="margin-bottom: 7px;" border="1">
@@ -155,7 +155,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<label id="cur_page_num" class="col-form-label"></label>
 								<div style ="float:right; margin-bottom:5px">
 									<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-										<option value=10 selected>10개씩</option>
+										<option value=15 selected>15개씩</option>
 										<option value=100>100개씩 </option>
 										<option value=250>250개씩 </option>
 									</select>
@@ -163,7 +163,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</div>
 						</div>
 						<!-- grid -->
-						<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
+						<div id="grid" style="height:500px;" class="ag-theme-balham"></div>
 						
 						<!-- grid pagination -->
 						<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -194,59 +194,60 @@ var columnDefs = [
 	{headerName: "계기타입", 	field: "meter_type", 	width:100,	suppressSizeToFit: true},
 	{headerName: "모뎀번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
 	{headerName: '순방향 유효전력량(kWh)',
-       children: [{headerName: "전체",  width:100, 
+       children: [{headerName: "합계",  width:100, 
     	   				suppressSizeToFit: true,
 					   	field: "active_imp_tot", 
 					   	valueFormatter: numberFormatter,
 					   	cellStyle: { 'text-align': "right" }},
-				   	{headerName: "T1", width:100, 
+				   	{headerName: "중부하", width:100, 
 	    	   			suppressSizeToFit: true,
 					   	field: "active_imp_rate1", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}, 
-					{headerName: "T2", width:100,
+					{headerName: "최대부하", width:100,
 					   	field: "active_imp_rate2", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}, 
-				   	{headerName: "T3", width:100,
+				   	{headerName: "경부하", width:100,
 					   	field: "active_imp_rate3", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }},   
+					   	cellStyle: { 'text-align': "right" }}
+					   	/*,   
 					{headerName: "T4", width:100,
 					   	field: "active_imp_rate4", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }}]
+					   	cellStyle: { 'text-align': "right" }}*/]
 	},
 	{headerName: '역방향 유효전력량(kWh)',
-       children: [{headerName: "전체", width:100,
+       children: [{headerName: "합계", width:100,
 					   	field: "active_exp_tot", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }},
-				   	{headerName: "T1", width:100,
+				   	{headerName: "중부하", width:100,
 					   	field: "active_exp_rate1", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }}, 
-					{headerName: "T2", width:100,
+					{headerName: "최대부하", width:100,
 					   	field: "active_exp_rate2", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
 					   	cellStyle: { 'text-align': "right" }},
-				   	{headerName: "T3", width:100,
+				   	{headerName: "경부하", width:100,
 					   	field: "active_exp_rate3", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }},   
+					   	cellStyle: { 'text-align': "right" }}/*,   
 				   	{headerName: "T4", width:100,
 					   	field: "active_exp_rate4", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }}]
+					   	cellStyle: { 'text-align': "right" }}*/]
 		},
 	{headerName: "저장일시", field: "reg_dt", width:200, suppressSizeToFit: true}
 ];

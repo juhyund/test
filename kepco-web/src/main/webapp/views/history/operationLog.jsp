@@ -79,7 +79,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<div class="ibox">
 							<div class="ibox-content">
 								<form name="search_form" id="search_form" method="post">
-								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+								<input type="hidden" id="limit" name="limit" value ="15" class="form-control">
 								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
 									<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
 										<tbody>
@@ -99,7 +99,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">전송일시</label>
-														<div class="col-sm-4" id="datePicker">
+														<div class="col-sm-3" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
 																<input type="text" class="form-control" id="request_sdate" name="request_sdate" value="">
 																<span class="input-group-addon" style="list-style: none;">
@@ -116,7 +116,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 														
 														<label class="col-lg-1 col-form-label">트랜잭션ID</label>
-														<div style="min-width: 170px; max-width: min-content;">
+														<div class="col-lg-3">
 															<input class="form-control" name="tid" id="tid"></input>
 														</div>
 													</div>
@@ -138,7 +138,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														
 														<label class="col-lg-1 col-form-label"
 															style="padding-left: 10px;">응답일시</label>
-														<div class="col-sm-4" id="datePicker">
+														<div class="col-sm-3" id="datePicker">
 															<div class="input-group date" style="width: 48%; float: left;">
 																<input type="text" class="form-control" id="result_sdate" name="result_sdate" value="">
 																<span class="input-group-addon" style="list-style: none;">
@@ -154,8 +154,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															</div>
 														</div>
 														
-														<label class="col-lg-1 col-form-label">타겟ID</label>
-														<div style="min-width: 170px; max-width: min-content;">
+														<label class="col-lg-1 col-form-label">계기번호</label>
+														<div class="col-lg-3">
 															<input class="form-control" name="target_meter" id="target_meter"></input>
 														</div>
 													</div>
@@ -183,7 +183,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<label id="cur_page_num" class="col-form-label"></label>
 											<div style ="float:right; margin-bottom:5px">
 												<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-													<option value=10 selected>10개씩</option>
+													<option value=15 selected>15개씩</option>
 													<option value=100>100개씩 </option>
 													<option value=250>250개씩 </option>
 												</select>
@@ -191,7 +191,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									<!-- grid -->
-									<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
+									<div id="grid" style="height:500px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
 									<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -218,7 +218,7 @@ var columnDefs = [
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
 	{headerName: "오브젝트명", field: "object_nm"},
 	{headerName: "리소스명", field: "resource_nm", width:160, cellStyle:{'text-align': "center"}},
-	{headerName: "타겟ID", field: "target_meter", cellStyle:{'text-align': "center"}},
+	{headerName: "계기번호", field: "target_meter", cellStyle:{'text-align': "center"}},
 	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
 	{headerName: "제어결과", field: "result", width:130,
         cellClassRules: {
@@ -262,7 +262,6 @@ function selectMethodComboBox(combo_id, parent_code) {
 
 // branch
 function comboBranch() {
-	console.log("1");
 	var combo = [ 'ajaxParentBranchCombo'];
 	for (var i = 0; i < combo.length; i++) {
 		console.log(combo[i]);
@@ -321,7 +320,6 @@ var initGrid = function() {
 }
 
 function ajaxSearchForm() {
-	
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
@@ -336,7 +334,6 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	
 	$('#search_form').attr('action', COMMON_URL + "/downloadOperationLogList");
 	$('#search_form').attr('method',"GET");
 	$('#search_form').submit();
@@ -396,12 +393,13 @@ function successResultHandler(data, status) {
 }
 
 function resetForm() {
+	var today = new Date();	
 	$('#searchquery').val("");
 	$("#searchfield").val($("#target option:first").val());
 	$("#method_type").val($("#target option:first").val());
 	$("#result_status").val($("#target option:first").val());
-	$("#request_sdate").val("");
-	$("#request_edate").val("");
+	$("#request_sdate").datepicker( "setDate", today);
+	$("#request_edate").datepicker( "setDate", today);
 	$("#result_sdate").val("");
 	$("#result_edate").val("");
 	$("#target_meter").val("");
@@ -409,6 +407,9 @@ function resetForm() {
 
 
 function init() {
+	var today = new Date();	
+	$("#request_sdate").datepicker( "setDate", today);
+	$("#request_edate").datepicker( "setDate", today);
 	
 	// init
 	// combo

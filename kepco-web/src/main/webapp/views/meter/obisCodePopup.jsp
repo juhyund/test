@@ -42,7 +42,16 @@
 	}
   table th.text-navy {
   	color: #676a6c !important;
-  }	
+  }
+  .defined-green{
+	background-color: lightgreen;
+	border: solid 1px;
+  }
+  
+  .undefined-yellow{
+	background-color: yellow;
+	border: solid 1px;
+  }
 </style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -139,7 +148,13 @@ var columnDefs = [
 	// {headerName: "resource_instance_id",field: "arr_resource_instance_id"},
 	{headerName: "오브젝트 ID",				field: "object_id"},
 	{headerName: "오브젝트 인스턴스 ID",		field: "object_instance_id", 	width:100,	suppressSizeToFit: true},
-	{headerName: "OBIS 코드", 			field: "arr_obis_code",			width:300}
+	{headerName: "OBIS 코드", 			field: "arr_obis_code",			width:300},
+	{headerName: "오브젝트 정의",			field: "kepco_object", 
+		cellClassRules: {
+			'defined-green': function(params) { return params.value == 'KEPCO' },
+	        'undefined-yellow': function(params) { return params.value == 'OTHER' },
+	    }
+	},
 ];
 
 
@@ -195,7 +210,13 @@ function showRequest() {
 }
 
 function successResultHandler(data, status) {
-	
+	for(var i = 0 ; i < data.result.length ; i++){
+		if(data.result[i].kepco_object == "0") {
+			data.result[i].kepco_object = "KEPCO";
+		} else {
+			data.result[i].kepco_object = "OTHER";
+		}
+	}
 	dataGrid.setData(data.result);
 	
 }

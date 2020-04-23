@@ -58,7 +58,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		<div class="ibox">
 			<div class="ibox-content">
 				<form name="search_form" id="search_form" method="post">
-				<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+				<input type="hidden" id="limit" name="limit" value ="15" class="form-control">
 				<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
 					<table class="table table-borderless" style="height: 100%; "
 						style="margin-bottom: 7px;" border="1">
@@ -142,7 +142,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<label id="cur_page_num" class="col-form-label"></label>
 								<div style ="float:right; margin-bottom:5px">
 									<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-										<option value=10 selected>10개씩</option>
+										<option value=15 selected>15개씩</option>
 										<option value=100>100개씩 </option>
 										<option value=250>250개씩 </option>
 									</select>
@@ -150,7 +150,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</div>
 						</div>
 						<!-- grid -->
-						<div id="grid" style="height:400px;" class="ag-theme-balham"></div>
+						<div id="grid" style="height:500px;" class="ag-theme-balham"></div>
 						
 						<!-- grid pagination -->
 						<div id="grid-page" style ="display:none;" class="m-t-sm">

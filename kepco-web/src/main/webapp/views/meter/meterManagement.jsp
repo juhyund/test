@@ -59,7 +59,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<div class="ibox">
 							<div class="ibox-content">
 								<form name="search_form" id="search_form" method="post">
-								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+								<input type="hidden" id="limit" name="limit" value ="15" class="form-control">
 								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
 									<table class="table table-borderless" style="height: 100%;" style="margin-bottom: 7px;" border="1">
 										<tbody>
@@ -150,7 +150,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<label id="cur_page_num" class="col-form-label"></label>
 											<div style ="float:right; margin-bottom:5px">
 												<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-													<option value=10 selected>10개씩</option>
+													<option value=15 selected>15개씩</option>
 													<option value=100>100개씩 </option>
 													<option value=250>250개씩 </option>
 												</select>
@@ -158,7 +158,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									<!-- grid -->
-									<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
+									<div id="grid" style="height:500px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
 									<div id="grid-page" style ="display:none;" class="m-t-sm">
@@ -189,7 +189,7 @@ var columnDefs = [
 	{headerName: "마지막 검침 일시", field: "last_comm_dt"},
 	{headerName: "모뎀번호", field: "device_serial"},
 	{headerName: "모뎀 최종통신일자", field: "last_comm_dt"},
-	{headerName: "인가여부", field: "allow_yn", width:130, cellStyle:{'text-align': "center"}}
+	//{headerName: "인가여부", field: "allow_yn", width:130, cellStyle:{'text-align': "center"}}
 	/* {headerName: "계약상태", field: ""},
 	{headerName: "고객번호", field: ""} */
 ];
@@ -279,17 +279,18 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	
-		 $('#search_form').attr('action', COMMON_URL + "/downloadMeterlist");
-		 $('#search_form').attr('method',"GET");
-		 $('#search_form').submit();
-		Swal.fire({
-			position: 'center',
-			icon: 'info',
-			text: 'excel 생성중',
-			showConfirmButton: false,
-				timer: 1500
-		});
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
+
+	$('#search_form').attr('action', COMMON_URL + "/downloadMeterlist");
+	$('#search_form').attr('method',"GET");
+	$('#search_form').submit();
+	Swal.fire({
+		position: 'center',
+		icon: 'info',
+		text: 'excel 생성중',
+		showConfirmButton: false,
+			timer: 1500
+	});
 
 }
 
@@ -322,10 +323,8 @@ function successResultHandler(data, status) {
 }
 
 function resetForm() {
-	$('#sdate').val("");
-	$('#edate').val("");
-	$('#sdateView').val("");
-	$('#edateView').val("");
+	setSearchPeriod('thisMonth');
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	$('#lsdate').val("");
 	$('#ledate').val("");
 	$("#branch_parent_id").val($("#target option:first").val());
@@ -345,6 +344,8 @@ function initDate() {
 }
 
 function init() {
+	
+	setSearchPeriod('thisMonth');
 	
 	// init
 	// combo

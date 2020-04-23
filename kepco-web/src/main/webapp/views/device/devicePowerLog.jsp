@@ -75,7 +75,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<div class="ibox">
 							<div class="ibox-content">
 								<form name="search_form" id="search_form" method="post">
-								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+								<input type="hidden" id="limit" name="limit" value ="15" class="form-control">
 								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
 								<table class="table table-borderless" style="height: 100%; style="margin-bottom: 7px;" border="1">
 									<tbody>
@@ -98,17 +98,19 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</select>
 													</div>
 													<label class="col-sm-1 col-form-label">등록일자</label>
-													<div class="col-sm-3" id="datePicker">
+													<div class="col-lg-3" id="datePicker">
 														<div class="input-group date"
 															style="width: 48%; float: left;">
-															<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
+															<input type="hidden" class="form-control" id="sdate" name="sdate" value="">
+															<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
 														</div>
 														<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 														<div class="input-group date" style="width: 48%;">
-															<input type="text" class="form-control"  id="edate" name="edate" value=""> 
+															<input type="hidden" class="form-control"  id="edate" name="edate" value=""> 
+															<input type="text" class="form-control" id="edateView" name="edateView" value="">
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
@@ -186,7 +188,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<label id="cur_page_num" class="col-form-label"></label>
 											<div style ="float:right; margin-bottom:5px">
 												<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-													<option value=10 selected>10개씩</option>
+													<option value=15 selected>15개씩</option>
 													<option value=100>100개씩 </option>
 													<option value=250>250개씩 </option>
 												</select>
@@ -194,7 +196,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									<!-- grid -->
-									<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
+									<div id="grid" style="height:490px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
 									<center>
@@ -240,7 +242,7 @@ onRowClicked = function(event){
 }
 
 function ajaxSearchForm() {
-
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
@@ -255,7 +257,7 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	 $('#search_form').attr('action', COMMON_URL + "/downloadDevicePowerLoglist");
 	 $('#search_form').attr('method',"GET");
 	 $('#search_form').submit();
@@ -313,8 +315,8 @@ function resetForm() {
 	$("#branch_parent_id").val($("#target option:first").val());
 	$("#branch_id").val($("#target option:first").val());
 	$("#power_status").val($("#target option:first").val());
-	$('#sdate').datepicker('setDate', null);
-	$('#edate').datepicker('setDate', null);
+	setSearchPeriod('thisMonth');
+	setSearchParam2($("#sdateView").val(), $("#edateView").val());
 	$("#searchfield").val($("#target option:first").val());
 	$("#searchquery").val("");
 	$('#s_on_date').datepicker('setDate', null);
@@ -327,6 +329,8 @@ function init() {
 	
 	// init
 	initGrid();
+	
+	setSearchPeriod('thisMonth');
 	
 	// form search
 	ajaxSearchForm();
