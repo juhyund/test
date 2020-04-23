@@ -236,7 +236,7 @@ function excelDownload() {
 }
 
 /* onRowClicked = function(event){
-	//선택된 row의 meter_id를 파라미터로 MeteringDetail.jsp를 팝업으로 연다.
+	//선택된 row의 meter_id를 파라미터로 MeterData.jsp를 팝업으로 연다.
 	
 	var selectedRows = dataGrid.getSelectedRow();
     var selectedRowsString = '';
@@ -246,8 +246,9 @@ function excelDownload() {
     
     showDetailMeterData(selectedRowsString);
     
-} */
+}  */
 
+var winObj;
 onRowClicked = function(event){
 	var meter_id = event.data.meter_id;
 	var read_dt = event.data.read_dt_int;
@@ -257,14 +258,15 @@ onRowClicked = function(event){
 	param += "&read_dt="+read_dt;
 	param += "&obis_code="+obis_code;
 	
-	param += "&sdate="+$("#sdateView").val();
-	param += "&edate="+$("#edateView").val();
+	if(winObj)
+        winObj.close();
 	
-	location.href = CONTEXT_PATH + "/meterDataDetail"+param;
+	var opts="width=1200, height=350,left=200, top=200, resizable=no, toolbar=yes"; 
+	winObj = window.open(COMMON_URL+"/meterDataDetail"+param, "", opts);
 }
 
 /* 
-var winObj;
+
 function showDetailMeterData(meter_id){ 
 	var opts="width=1200, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
 
@@ -281,7 +283,6 @@ function showDetailMeterData(meter_id){
 function resetForm(){
 	$("#search_form")[0].reset();
 	setSearchPeriod('today');
-	$("#grid-page").hide();
 };
 
 
