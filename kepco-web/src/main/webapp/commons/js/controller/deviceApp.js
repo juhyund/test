@@ -364,7 +364,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	if(data.data.statusCode == "200") {
 	    		if(data.data.statusMsg == ''){
 	    			var text = "요청 성공\n";
-		    		text += "계기번호: "+ data.data.tid;
+		    		text += "트랜잭션ID: "+ data.data.tid;
 		    		
 		    		$scope.speedtest.statusMsg = text;
 	    		} else {
