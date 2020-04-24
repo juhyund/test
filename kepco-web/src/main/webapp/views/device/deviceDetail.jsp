@@ -153,11 +153,11 @@ function firmwarelist() {
 				<div class="row">
 					<ul class="nav nav-tabs" style="width: 100%;">
 						<li class="nav-item"><a class="nav-link active"
-							data-toggle="tab" href="#info">기본정보</a></li>
+							data-toggle="tab" href="#info" ng-click="deviceInfo()">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#firmware">펌웨어 업그레이드</a></li>
+							href="#firmware" ng-click="firmware()">펌웨어 업그레이드</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#object">오브젝트 정보</a></li>
+							href="#object" ng-click="objectModel()">오브젝트 정보</a></li>
 						<!-- 
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#observe">Observe 상태</a></li>
@@ -238,7 +238,7 @@ function firmwarelist() {
 							</table>
 						</div>
 						
-						<div class="tab-pane fade" id="firmware" ng-init="firmware()">
+						<div class="tab-pane fade" id="firmware">
 							<div class="col-lg-10">
 								<h4 style="margin-top: 6px">펌웨어 업그레이드</h4>
 							</div>
@@ -303,7 +303,7 @@ function firmwarelist() {
 							</div>
 						</div>
 						
-						<div class="tab-pane fade" id="object" ng-init="objectModel()">
+						<div class="tab-pane fade" id="object">
 							<div class="col-lg-10">
 								<h4 style="margin-top: 6px">오브젝트 정보</h4>
 							</div>
