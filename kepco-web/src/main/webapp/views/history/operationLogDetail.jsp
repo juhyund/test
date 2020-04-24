@@ -84,15 +84,12 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<td class="device-detail-body" id="resource_nm"></td>
 										</tr>
 										<tr>
-											<th class="device-detail-head">TOKEN</th>
-											<td class="device-detail-body" id="token"></td>
 											<th class="device-detail-head">트랜잭션ID</th>
 											<td class="device-detail-body" id="tid"></td>
-										</tr>
-										<tr id="dynamic_schedule_id">
 											<th class="device-detail-head">동적스케줄 리소스명</th>
-											<td class="device-detail-body" colspan="3" id="metering_type_nm"></td>
+											<td class="device-detail-body"  id="metering_type_nm"></td>
 										</tr>
+										
 										<tr>
 											<th class="device-detail-head">결과내용</th>
 											<td class="device-detail-body" colspan="3" id="payload"></td>
@@ -184,13 +181,7 @@ function successResultHandler(data, status) {
 	$('#resource_sum').text(data.result.resource_sum);
 	
 	// 동적스케줄 리소스명 추가
-	if(data.result.metering_type_nm != "" && data.result.metering_type_nm != null) {
-		$('#dynamic_schedule_id').show();
-		$('#metering_type_nm').text(data.result.metering_type_nm);
-	} else {
-		$('#dynamic_schedule_id').hide();
-		$('#metering_type_nm').text();
-	}
+	$('#metering_type_nm').text(data.result.metering_type_nm);
 	
 }
 
