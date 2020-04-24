@@ -248,7 +248,7 @@ onRowClicked = function(event){
 	if(winObj)
         winObj.close();
 	
-	var opts="width=1200, height=350,left=200, top=200, resizable=no, toolbar=yes"; 
+	var opts="width=1200, height=550,left=200, top=200, resizable=no, toolbar=yes"; 
 	winObj = window.open(COMMON_URL+"/meterDataDetail"+param, "", opts);
 }
 
@@ -348,4 +348,3 @@ $('#datePicker .input-group.date').datepicker({
 
 
 </script>
-<!--  wra

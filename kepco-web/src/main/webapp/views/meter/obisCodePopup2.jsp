@@ -43,6 +43,15 @@
   table th.text-navy {
   	color: #676a6c !important;
   }	
+  .defined-green{
+	background-color: lightgreen;
+	border: solid 1px;
+  }
+  
+  .undefined-yellow{
+	background-color: yellow;
+	border: solid 1px;
+  }
 </style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -137,7 +146,14 @@ var columnDefs = [
  	{headerName: "OBIS 코드명",	field: "descr"},
  	{headerName: "데이터타입",		field: "datatype"},
 	{headerName: "속성",			field: "attribute_no"},
-	{headerName: "권한",			field: "access_right"}
+	{headerName: "권한",			field: "access_right"},
+	{headerName: "OBIS 정의",	field: "kepco_obis", 
+		cellClassRules: {
+			'defined-green': function(params) { return params.value == 'KEPCO' },
+			'undefined-yellow': function(params) { return params.value == 'OTHER' },
+	    }
+	},
+	
 ];
 
 var initGrid = function() {
@@ -191,6 +207,13 @@ function showRequest() {
 }
 
 function successResultHandler(data, status) {
+	for(var i = 0 ; i < data.result.length ; i++){
+		if(data.result[i].kepco_obis == "0") {
+			data.result[i].kepco_obis = "KEPCO";
+		} else {
+			data.result[i].kepco_obis = "OTHER";
+		}
+	}
 	dataGrid.setData(data.result);
 }
 

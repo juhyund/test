@@ -24,14 +24,14 @@ public class ParserTest {
 	
 	@Autowired
 	MDDataProcess process;
-
-	@Test
-    public void test() {
-		
-		String json = "{\"deviceId\":\"01220884726\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"806662840758920E\",\"mid\":\"18966\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjA4ODQ3MjYgMQ==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MDI1MjAwMDAwMDMUBBEFCQkgCQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAABAAD/AAgCAA4JDAfkBA8DChQd//3kAAAAKgAA/wABAgASCRBQU1QZATAxMDIwMiAgIDIwAQEACAT/AAMCAAIRDwAADwAA/wAWBAARAQECAgkEAAAA/wkF////Af8BAQADAP8AAwIABRdGHEAAAQAA8gD/AAECAAoJCBMDAAEAAAcIAQCAAAz/AAMCAAIRDwEBAAMB/wADAgAFF0YcQAABAQADAv8AAwIABRdGHEAA\\\"}]}\"}";		
-		process.process(json);
-		
 	
+	@Test
+    public void test() {		
+		//String json = "{\"deviceId\":\"01220884726\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"806662840758920E\",\"mid\":\"18966\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjA4ODQ3MjYgMg==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxOTAxODc1NDcUBBcEFCgnAQA=\\\"},{\\\"n\\\":\\\"102/1\\\",\\\"sv\\\":\\\"MDI1MjAwMDAwMDMUBBcEFCgkAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AAANAAD/ABQCAAoJCDMwNFNSU0tF\\\"},{\\\"n\\\":\\\"103/1\\\",\\\"sv\\\":\\\"AAANAAD/ABQCAAoJCDIwMVJSVTAw\\\"}]}\"}";
+		
+		
+		String json = "{\"deviceId\":\"01220884726\",\"method\":\"DATAPUSH\",\"format\":\"JSON\",\"token\":\"806662840758920E\",\"mid\":\"18966\",\"payload\":\"{\\\"bn\\\":\\\"/31008/0\\\",\\\"e\\\":[{\\\"n\\\":\\\"101\\\",\\\"sv\\\":\\\"MjA4ODQ3MjYgMg==\\\"},{\\\"n\\\":\\\"102/0\\\",\\\"sv\\\":\\\"MjQxOTAxODc1NDcUBBcEFCkKAQA=\\\"},{\\\"n\\\":\\\"102/1\\\",\\\"sv\\\":\\\"MDI1MjAwMDAwMDMUBBcEFCkIAQA=\\\"},{\\\"n\\\":\\\"103/0\\\",\\\"sv\\\":\\\"AQEACAT/AAMCAAIRDw==\\\"},{\\\"n\\\":\\\"103/1\\\",\\\"sv\\\":\\\"AQEACAT/AAMCAAIRDw==\\\"}]}\"}";
+		process.process(json);
     }
 	
 }

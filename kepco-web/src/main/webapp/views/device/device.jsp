@@ -75,7 +75,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						<div class="ibox">
 							<div class="ibox-content">
 								<form name="search_form" id="search_form" method="post">
-								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">
+								<input type="hidden" id="limit" name="limit" value ="15" class="form-control">
 								<input type="hidden" id="page" name="page" value ="1" class="form-control" onchange="ajaxSearchForm()">
 								<table class="table table-borderless" style="height: 100%; style="margin-bottom: 7px;" border="1">
 									<tbody>
@@ -99,9 +99,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div> -->
 													<label class="col-sm-1 col-form-label">등록일자</label>
 													<div class="col-sm-3" id="datePicker">
-														<div class="input-group date"
-															style="width: 48%; float: left;">
-															<input type="text" class="form-control" id="sdate" name="sdate" value=""> 
+														<div class="input-group date" style="width: 48%; float: left;">
+															<input type="text" class="form-control" id="sdate" name="sdate"value=""> 
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
@@ -178,7 +177,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 											<label id="cur_page_num" class="col-form-label"></label>
 											<div style ="float:right; margin-bottom:5px">
 												<select id="data_per_page" class="form-control" name="data_per_page" onchange="javascript:changeLimit(this);">
-													<option value=10 selected>10개씩</option>
+													<option value=15 selected>15개씩</option>
 													<option value=100>100개씩 </option>
 													<option value=250>250개씩 </option>
 												</select>
@@ -186,7 +185,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 										</div>
 									</div>
 									<!-- grid -->
-									<div id="grid" style="height:350px;" class="ag-theme-balham"></div>
+									<div id="grid" style="height:490px;" class="ag-theme-balham"></div>
 									
 									<!-- grid pagination -->
 									<center>
@@ -235,7 +234,6 @@ onRowClicked = function(event){
 }
 
 function ajaxSearchForm() {
-
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
@@ -250,10 +248,9 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	
-	 $('#search_form').attr('action', COMMON_URL + "/downloadDevicelist");
-	 $('#search_form').attr('method',"GET");
-	 $('#search_form').submit();
+	$('#search_form').attr('action', COMMON_URL + "/downloadDevicelist");
+	$('#search_form').attr('method',"GET");
+	$('#search_form').submit();
 	Swal.fire({
 		position: 'center',
 		icon: 'info',
@@ -305,10 +302,16 @@ function successResultCombo(data, status) {
 }
 
 function resetForm() {
+	
+	var today = new Date();
+	var settingDate = new Date();
+	settingDate.setMonth(today.getMonth());
+	settingDate.setDate(1);
+
 	$('#sdate').datepicker('setDate', null);
 	$('#edate').datepicker('setDate', null);
-	$('#lsdate').datepicker('setDate', null);
-	$('#ledate').datepicker('setDate', null);
+	$("#lsdate").datepicker( "setDate", settingDate);
+	$("#ledate").datepicker( "setDate", today);
 	$("#branch_parent_id").val($("#target option:first").val());
 	$("#branch_id").val($("#target option:first").val());
 	//$("#model_seq").val($("#target option:first").val());
@@ -322,6 +325,14 @@ function init() {
 	
 	// init
 	initGrid();
+	
+	var today = new Date();
+	var settingDate = new Date();
+	settingDate.setMonth(today.getMonth());
+	settingDate.setDate(1);
+
+	$("#lsdate").datepicker( "setDate", settingDate);
+	$("#ledate").datepicker( "setDate", today);
 	
 	// form search
 	ajaxSearchForm();

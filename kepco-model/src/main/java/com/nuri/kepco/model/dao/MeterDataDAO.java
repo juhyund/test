@@ -10,5 +10,6 @@ import com.nuri.kepco.model.MeterData;
 public interface MeterDataDAO extends GenericDAO<MeterData> {
 
 	List<MeterData> selectDetail(MeterData param) throws Exception;
+	
 }
 
