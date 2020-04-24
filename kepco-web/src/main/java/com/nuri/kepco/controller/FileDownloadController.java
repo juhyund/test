@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.nuri.kepco.service.DeviceInfoService;
 import com.nuri.kepco.service.MeterBillingService;
+import com.nuri.kepco.service.MeterDataService;
 import com.nuri.kepco.service.MeterInfoService;
 import com.nuri.kepco.service.MeterValueService;
 import com.nuri.kepco.service.NMSInfoService;
@@ -37,6 +38,9 @@ public class FileDownloadController {
 
 	@Autowired
 	private MeterBillingService meterBillingService;
+	
+	@Autowired
+	private MeterDataService meterDataService;
 
 	@Autowired
 	private DeviceInfoService deviceInfoService;
@@ -161,6 +165,40 @@ public class FileDownloadController {
 				.contentType(MediaType.APPLICATION_PDF).contentLength(file.length()).body(resource);
 	}
 
+	
+	@GetMapping("/downloadMeterData")
+	public ResponseEntity<InputStreamResource> downloadMeterData(HttpServletRequest request) throws IOException {
+
+		String[] commStr = { "meter_id","meter_serial", "device_serial","meter_type","branch_id","itime","mtime"};
+		String file_path = "";
+
+		try {
+
+			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+
+			for (String key : commStr) {
+				if (request.getParameterMap().containsKey(key)) {
+					param.put(key, request.getParameter(key));
+				}
+			}
+			param.put("limit", 0);
+			param.put("sort", "read_dt");
+			param.put("dir", "DESC");
+
+			Map<String, String> output = this.meterDataService.excelMeterData(param);
+			file_path = output.get("filepath") + "/" + output.get("filename");
+
+		} catch (Exception e) {
+			logger.error("error : " + e);
+		}
+
+		File file = new File(file_path);
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+				.contentType(MediaType.APPLICATION_PDF).contentLength(file.length()).body(resource);
+	}
+	
 	@GetMapping("/downloadDevicelist")
 	public ResponseEntity<InputStreamResource> downloadDevicelist(HttpServletRequest request) throws IOException {
 

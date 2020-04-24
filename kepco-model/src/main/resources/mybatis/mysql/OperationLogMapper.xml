@@ -245,11 +245,14 @@
 			, ifnull(date_format(ol.result_dt, '%Y-%m-%d %H:%i:%s'),'') as result_dt
 			, ol.reg_id
 			, om.object_nm
-			, rm.resource_nm								
+			, rm.resource_nm
+			, cf.metering_type_nm							
 		FROM EMI_DEVICE_INFO a		
 		INNER JOIN EMI_OPERATION_LOG OL ON a.DEVICE_ID = OL.DEVICE_ID
 		LEFT OUTER JOIN EMI_OBJECT_MODEL OM ON OL.OBJECT_ID = OM.OBJECT_ID
 		LEFT OUTER JOIN EMI_RESOURCE_MODEL RM ON OM.OBJECT_ID = RM.OBJECT_ID AND OL.RESOURCE_ID = RM.RESOURCE_ID
+		LEFT OUTER JOIN EMI_METER_INFO M ON ol.target_meter = M.METER_SERIAL
+		LEFT OUTER JOIN EMI_METERING_CONFIG CF ON ol.OBJECT_ID = CF.OBJECT_ID AND ol.OBJECT_INSTANCE_ID = CF.OBJECT_INSTANCE_ID AND CF.METER_TYPE = M.METER_TYPE
 		WHERE 1=1
 		<if test="device_id != null and device_id != ''" >
 			AND OL.device_id = #{device_id} 

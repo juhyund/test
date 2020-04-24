@@ -235,19 +235,6 @@ function excelDownload() {
 
 }
 
-/* onRowClicked = function(event){
-	//선택된 row의 meter_id를 파라미터로 MeterData.jsp를 팝업으로 연다.
-	
-	var selectedRows = dataGrid.getSelectedRow();
-    var selectedRowsString = '';
-    selectedRows.forEach( function(selectedRow, index) {
-    	selectedRowsString = selectedRow.meter_id;
-    });
-    
-    showDetailMeterData(selectedRowsString);
-    
-}  */
-
 var winObj;
 onRowClicked = function(event){
 	var meter_id = event.data.meter_id;
@@ -265,20 +252,6 @@ onRowClicked = function(event){
 	winObj = window.open(COMMON_URL+"/meterDataDetail"+param, "", opts);
 }
 
-/* 
-
-function showDetailMeterData(meter_id){ 
-	var opts="width=1200, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
-
-	if(winObj)
-        winObj.close();
-	
-	var param = "?detail_meter_id="+meter_id;
-	param += "&sdate="+$("#sdateView").val();
-	param += "&edate="+$("#edateView").val();
-	
-    winObj = window.open(COMMON_URL+"/MeterDataDetail"+param, "", opts);
-} */
 
 function resetForm(){
 	$("#search_form")[0].reset();

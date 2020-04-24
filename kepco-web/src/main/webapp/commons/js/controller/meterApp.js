@@ -50,7 +50,7 @@ meterApp.controller('meterCtrl', function MeterController($scope, $http) {
 					object_instance_id = 82;
 		   	   		break;
 		   		}
-				case "SEC-TYPE":  {
+				case "SE-TYPE":  {
 					object_instance_id = 110;
 		   	   		break;
 		   		}
