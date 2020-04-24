@@ -152,6 +152,8 @@ public class MeterController {
 		try {
 			String[] commStr = { "meter_type","obis_code","metering_type_nm" };
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			param.put("limit", 0);
+			
 			ControllerUtil.getCustomParam(request, commStr, param);
 			JSONArray jarr = this.obisCodeService.selectObisList(param);
 			
@@ -172,8 +174,9 @@ public class MeterController {
 		JSONObject json = new JSONObject();
 		try {
 			String[] commStr = { "meter_type","obis_code","descr" };
-			
 			Map<String, Object> param = ControllerUtil.getCommonParam(request);
+			param.put("limit", 0);
+			
 			ControllerUtil.getCustomParam(request, commStr, param);
 			JSONArray jarr = this.obisCodeService.selectObisList2(param);
 			
