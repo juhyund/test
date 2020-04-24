@@ -220,13 +220,12 @@ var columnDefs = [
 	{headerName: "모뎀번호", field: "device_serial"},
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
-	{headerName: "복전 시간", field: "power_on_time"},
-	{headerName: "정전 시간", field: "power_off_time"},
-	{headerName: "정전 상태", field: "power_status",
+	{headerName: "이벤트", field: "power_status",
         cellClassRules: {
             'rag-green-outer': function(params) { return params.value == '복전'},
             'rag-red-outer': function(params) { return params.value == '정전'}
         }},
+    {headerName: "이벤트 시간", field: "event_time"},
 	{headerName: "서버 등록 일시", field: "reg_dt"}
 ];
 
@@ -278,6 +277,14 @@ function showRequest() {
 function successResultHandler(data, status) {	
 	var dataPerPage = $("#limit").val();
 	var currentPage = $("#page").val();
+	
+	for(var i = 0 ; i < data.resultGrid.length ; i++){
+		if (data.resultGrid[i].power_status == "정전") {
+			data.resultGrid[i].event_time = data.resultGrid[i].power_off_time;
+		} else {
+			data.resultGrid[i].event_time = data.resultGrid[i].power_on_time;
+		}
+	}
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
