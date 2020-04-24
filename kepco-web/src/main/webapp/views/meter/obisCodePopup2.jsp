@@ -144,7 +144,7 @@ var columnDefs = [
 	{headerName: "CLASS",		field: "class_id"},
 	{headerName: "OBIS 코드",		field: "obis_code",width:300},
  	{headerName: "OBIS 코드명",	field: "descr"},
- 	{headerName: "데이터타입",		field: "datatype"},
+ 	//{headerName: "데이터타입",		field: "datatype"},
 	{headerName: "속성",			field: "attribute_no"},
 	{headerName: "권한",			field: "access_right"},
 	{headerName: "OBIS 정의",	field: "kepco_obis", 
