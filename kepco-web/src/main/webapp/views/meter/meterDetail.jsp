@@ -123,10 +123,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<tr>
 														<th class="text-navy" scope="row">통신사:</th>
 														<td id = "">SKT</td>
-														<th class="text-navy" scope="row">모뎀 아이피:</th>
-														<td id = "ip"></td>
 														<th class="text-navy" scope="row">통신 방식:</th>
 														<td id = "comm_type"></td>
+														<th class="text-navy" scope="row"></th>
+														<td></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
 													</tr>
