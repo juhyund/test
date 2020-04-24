@@ -98,19 +98,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<select class="form-control" name="model_seq" id="model_seq"></select>
 													</div> -->
 													<label class="col-sm-1 col-form-label">등록일자</label>
-													<div class="col-lg-3" id="datePicker">
-														<div class="input-group date"
-															style="width: 48%; float: left;">
-															<input type="hidden" class="form-control" id="sdate" name="sdate" value="">
-															<input type="text" class="form-control" id="sdateView" name="sdateView" value="">
+													<div class="col-sm-3" id="datePicker">
+														<div class="input-group date" style="width: 48%; float: left;">
+															<input type="text" class="form-control" id="sdate" name="sdate"value=""> 
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
 														</div>
 														<label class="col-form-label" style="width: 4%; float: left; text-align: center">~</label>
 														<div class="input-group date" style="width: 48%;">
-															<input type="hidden" class="form-control"  id="edate" name="edate" value=""> 
-															<input type="text" class="form-control" id="edateView" name="edateView" value="">
+															<input type="text" class="form-control"  id="edate" name="edate" value=""> 
 															<span class="input-group-addon" style="list-style: none;">
 																<i class="fa fa-calendar"></i>
 															</span>
@@ -237,8 +234,6 @@ onRowClicked = function(event){
 }
 
 function ajaxSearchForm() {
-	setSearchParam2($("#sdateView").val(), $("#edateView").val());
-
     var options = { 
            beforeSend  : showRequest,
            success     : successResultHandler,
@@ -253,8 +248,6 @@ function ajaxSearchForm() {
 }
 
 function excelDownload() {
-	setSearchParam2($("#sdateView").val(), $("#edateView").val());
-
 	$('#search_form').attr('action', COMMON_URL + "/downloadDevicelist");
 	$('#search_form').attr('method',"GET");
 	$('#search_form').submit();
@@ -309,10 +302,16 @@ function successResultCombo(data, status) {
 }
 
 function resetForm() {
-	setSearchPeriod('thisMonth');
-	setSearchParam2($("#sdateView").val(), $("#edateView").val());
-	$('#lsdate').datepicker('setDate', null);
-	$('#ledate').datepicker('setDate', null);
+	
+	var today = new Date();
+	var settingDate = new Date();
+	settingDate.setMonth(today.getMonth());
+	settingDate.setDate(1);
+
+	$('#sdate').datepicker('setDate', null);
+	$('#edate').datepicker('setDate', null);
+	$("#lsdate").datepicker( "setDate", settingDate);
+	$("#ledate").datepicker( "setDate", today);
 	$("#branch_parent_id").val($("#target option:first").val());
 	$("#branch_id").val($("#target option:first").val());
 	//$("#model_seq").val($("#target option:first").val());
@@ -327,7 +326,13 @@ function init() {
 	// init
 	initGrid();
 	
-	setSearchPeriod('thisMonth');
+	var today = new Date();
+	var settingDate = new Date();
+	settingDate.setMonth(today.getMonth());
+	settingDate.setDate(1);
+
+	$("#lsdate").datepicker( "setDate", settingDate);
+	$("#ledate").datepicker( "setDate", today);
 	
 	// form search
 	ajaxSearchForm();
