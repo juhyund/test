@@ -212,9 +212,15 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				
 				if(meterInfo != null) {
 					
+					String obis_code = key.substring(0, 12);
+					String class_id = key.substring(12, 16);
+					String attribute_no = key.substring(16, 18);
+				
 					meterData.setRead_dt(mdData.getModemTime());
 					meterData.setMeter_id(meterInfo.getMeter_id());
-					meterData.setObis_code(key);
+					meterData.setObis_code(obis_code);
+					meterData.setClass_id(class_id);
+					meterData.setAttribute_no(attribute_no);
 					meterData.setItime(mdData.getModemTime());
 					meterData.setMtime(mdData.getMeterTime());
 					meterData.setPayload(String.valueOf(map.get(key)));

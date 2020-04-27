@@ -605,7 +605,7 @@ public abstract class AbstractMDSaver {
 	public String getDefaultBranch() {
 		
 		String branchId = "";
-		String arrBranch[] = { "2194", "2197", "3130", "3710", "3730", "3610", "3510", "3410", "3110", "3010"};
+		String arrBranch[] = { "2194", "1999", "2483", "2520", "3730", "3820", "3510", "3435", "3530", "3930"};
 		
 		int r = (int)(Math.random() * 10);			
 		branchId = arrBranch[r];
