@@ -4391,7 +4391,7 @@ samp {
 body {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #2f4050;
-  font-size: 13px;
+  font-size: 16px;
   color: #676a6c;
   overflow-x: hidden;
 }
@@ -9664,11 +9664,11 @@ body.md-skin {
 
 .device-detail-head {
 	font-weight: bold;
-	width: 13%;
+	width: 15%;
 }
 
 .device-detail-body {
-	width: 37%;
+	width: 30%;
 	background-color: #FFFFFF !important;
 }
 .billing-detail-table th{
@@ -9704,4 +9704,19 @@ body.md-skin {
   margin-left: auto;
   margin-right: auto;
   width: 10%;
+}
+
+
+.ag-header-cell-label,.ag-header-group-cell-label{
+  font-size: 16px;
+  font-weight:bold;
+} 
+
+.ag-cell{
+   font-size: 16px;
+}
+
+.ag-header{
+	/* color : rgb(86, 86, 86); */
+	color : rgb(0, 0, 0);/* black */
 }

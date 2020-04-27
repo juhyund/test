@@ -28,29 +28,53 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
 <style>
+	.rag-red-outer {
+	    color: red;
+	    font-weight: bold;
+	}
+	
+	.rag-green-outer {
+	    color: blue;
+	    font-weight: bold;
+	}
+	
+	.rag-grey-outer {
+	    color: e3f704;
+	    font-weight: bold;
+	}
 	.warning-red{
 		background-color: red;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-green{
 		background-color: lightgreen;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-yellow{
 		background-color: yellow;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-orange{
 		background-color: orange;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-grey{
 		background-color: #b3b5b7;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.col-custom{
@@ -97,6 +121,9 @@
 	    cursor: pointer;
 	}
 	
+
+		
+	
 </style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -115,7 +142,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">NMS</h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> NMS</h2>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
@@ -125,6 +152,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <!-- body -->
 <div class="row">
+
 	<div class="col-lg-12">	
 		<div class="ibox">
 			<div class="ibox-content">
@@ -250,7 +278,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="row m-t-n-n" style="margin:-1px"  >
 						<div style="width :100%;vertical-align:center">
 							<label id="cur_page_num" class="col-form-label"></label>
-							<div style ="float:right;margin-bottom:5px;width: 290px;">
+							<div style ="float:right;margin-bottom:5px;width: 330px;">
 								<button class="btn btn-outline btn-primary" style ="float:left;" onclick="onBtShowCodeGuide()">(도움말) 코드 상태값 가이드</button>
 								<select id="data_per_page" class="form-control" name="data_per_page" style ="float:right;width: fit-content;" onchange="javascript:changeLimit(this);">
 									<option value=15 selected>15개씩</option>
@@ -284,13 +312,19 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:80},
-	{headerName: "모뎀번호", field: "deviceSerial"},
+	{headerName: "번호", field: "no", width:50,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "모뎀번호", field: "deviceSerial",suppressSizeToFit: true, pinned:"left"},
+	{headerName: "모뎀상태", field: "deviceStatusNm",suppressSizeToFit: true, width:140, pinned:"left",
+		 cellClassRules: {
+	            'rag-green-outer': function(params) { return params.value == '정상'},
+	            'rag-grey-outer': function(params) { return params.value == '대기중'},
+	            'rag-red-outer': function(params) { return params.value == '등록해제'}
+	        }},
 	{headerName: "_모뎀번호", field: "deviceId", hide:"true"},
-	{headerName: "본부", field: "parentBranchNm", width:140},
-	{headerName: "지사", field: "branchNm", width:140},
-	{headerName: "모뎀상태", field: "deviceStatusNm", width:140},
-	{headerName: "CPU(%)", field: "cpuUsage", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "본부", field: "parentBranchNm", width:200,	suppressSizeToFit: true},
+	{headerName: "지사", field: "branchNm", width:100,	suppressSizeToFit: true},
+	{headerName: "CPU(%)", field: "cpuUsage", width:150,suppressSizeToFit: true, 
+		cellStyle:{'text-align': "right"},
 		cellClassRules: {
 			'warning-green': function(params) { return params.value <= 50 && params.value != null},
             'warning-yellow': function(params) { return params.value > 50 && params.value <= 70},
@@ -299,7 +333,8 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "Memory(%)", field: "ramUsage", width:170, cellStyle:{'text-align': "right"},
+	{headerName: "Memory(%)", field: "ramUsage", width:170,suppressSizeToFit: true, 
+    	cellStyle:{'text-align': "right"},
 		cellClassRules: {
             'warning-green': function(params) { return params.value <= 50 && params.value != null},
             'warning-yellow': function(params) { return params.value > 50 && params.value <= 70},
@@ -308,7 +343,8 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "RSRP(dBm)", field: "rsrp", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "RSRP(dBm)", field: "rsrp", width:150,suppressSizeToFit: true,
+    	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -80 && params.value != null},
                'warning-yellow': function(params) { return params.value < -80 && params.value >= -90},
@@ -317,7 +353,8 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "RSRQ(dB)", field: "rsrq", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "RSRQ(dB)", field: "rsrq", width:150,suppressSizeToFit: true,
+    	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -10 && params.value != null},
                'warning-yellow': function(params) { return params.value < -10 && params.value >= -15},
@@ -326,7 +363,8 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "SNR(dB)", field: "ssnr", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "SNR(dB)", field: "ssnr", width:150,suppressSizeToFit: true,
+    	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= 20 && params.value != null},
                'warning-yellow': function(params) { return params.value >= 13 && params.value < 20},
@@ -335,8 +373,8 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "최종 통신일자", field: "usageTime"},
-	{headerName: "등록일자", field: "saveTime"}
+	{headerName: "최종 통신일자", field: "usageTime", width:150,suppressSizeToFit: true},
+	{headerName: "등록일자", field: "saveTime", width:150,suppressSizeToFit: true}
 ];
 
 //device type
@@ -461,6 +499,7 @@ function successResultHandler(data, status) {
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
+    dataGrid.autoSizeAll();
 }
 
 function init() {

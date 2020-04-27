@@ -312,7 +312,7 @@ public class KepcoDLMSParser {
 				
 				LOG.debug("MEASUREMENT_DATE[" + billingDay + "]"); // 정기검침일(미터정보 업데이트)
 				mdData.setBillingDay(billingDay);
-				mdData.getDynamicDatas().put(OBIS.MEASUREMENT_DATE.getCode(), billingDay);
+				mdData.getDynamicDatas().put(OBIS.MEASUREMENT_DATE.getCode() + "001604", billingDay);
 			}
 			
 			map = (Map<String, Object>) result.get(OBIS.LP_INTERVAL.getCode());
@@ -322,7 +322,7 @@ public class KepcoDLMSParser {
 					lpInterval = Integer.parseInt(String.valueOf(obj));
 				LOG.debug("LP INTERVAL[" + lpInterval + "]");
 				mdData.setLpPeriod(lpInterval);
-				mdData.getDynamicDatas().put(OBIS.LP_INTERVAL.getCode(), lpInterval);
+				mdData.getDynamicDatas().put(OBIS.LP_INTERVAL.getCode() + "000302", lpInterval);
 			}
 			
 			map = (Map<String, Object>) result.get(OBIS.ACTIVEPOWER_CONSTANT.getCode());
@@ -395,7 +395,7 @@ public class KepcoDLMSParser {
 					int currentTariff = (Integer)obj;
 					
 					LOG.debug("CURRENT_TARIFF[" + currentTariff + "]");
-					mdData.getDynamicDatas().put(OBIS.CURRENT_TARIFF.getCode(), currentTariff);
+					mdData.getDynamicDatas().put(OBIS.CURRENT_TARIFF.getCode() + "000102", currentTariff);
 				}	
 			}
 			
@@ -407,7 +407,7 @@ public class KepcoDLMSParser {
 					String currentTOU = new String((String)obj);
 					
 					LOG.debug("CURRENT_TOU[" + currentTOU + "]");
-					mdData.getDynamicDatas().put(OBIS.CURRENT_TOU.getCode(), currentTOU);
+					mdData.getDynamicDatas().put(OBIS.CURRENT_TOU.getCode() + "001402", currentTOU);
 				}
 			}
 			
@@ -418,18 +418,7 @@ public class KepcoDLMSParser {
 				if (obj != null) {
 					Double activeConstant = Double.parseDouble(String.valueOf(obj));					
 					LOG.debug("ACTIVEPOWER_CONSTANT[" + activeConstant + "]");
-					mdData.getDynamicDatas().put(OBIS.ACTIVEPOWER_CONSTANT.getCode(), activeConstant);
-				}
-			}
-			
-			// 유효계기정수
-			map = (Map<String, Object>) result.get(OBIS.ACTIVEPOWER_CONSTANT.getCode());
-			if (map != null) {
-				Object obj = map.get(OBIS.ACTIVEPOWER_CONSTANT.getName());
-				if (obj != null) {
-					Double activeConstant = Double.parseDouble(String.valueOf(obj));					
-					LOG.debug("ACTIVEPOWER_CONSTANT[" + activeConstant + "]");
-					mdData.getDynamicDatas().put(OBIS.ACTIVEPOWER_CONSTANT.getCode(), activeConstant);
+					mdData.getDynamicDatas().put(OBIS.ACTIVEPOWER_CONSTANT.getCode() + "000302", activeConstant);
 				}
 			}
 			

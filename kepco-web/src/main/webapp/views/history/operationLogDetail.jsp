@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">제어이력 상세 &lt;모뎀번호: <span id="device_serial"></span>&gt;</h3>
+						<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 제어이력 상세 &lt;모뎀번호: <span id="device_serial"></span>&gt;</h2>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">

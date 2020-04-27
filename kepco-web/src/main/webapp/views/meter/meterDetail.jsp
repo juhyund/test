@@ -65,7 +65,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">계기 상세 정보</h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 계기 상세정보</h2>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
@@ -77,9 +77,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div>
 	<div class="col-lg-12">	
 		<div class="ibox">
-			<div class="ibox-content">
-					<!-- start :summary_area -->
-					
+			<div class="ibox-content" style="background-color: #F3F3F4;">
 				<div class="row m-b-md ">
 					<div class="col-lg-6">
                     <div class="tabs-container" style=width:200%;>
@@ -95,100 +93,79 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                             <div role="tabpanel" id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
                                 	<div class="ibox">
-	                                	<div class="ibox-title">
-	                                		<h5>모뎀 정보</h5>
+	                                	<div class="ibox-title" style=width:100%;>
+	                                		<h3>모뎀 정보 &lt;모뎀번호: <span id="device_serial"></span>&gt;</h3>
 	                                	</div>
 		                                	<table class="table text-center">
 		                                		<colgroup>
-										            <col width="10%" />
-										            <col width="14%" />
-										            <col width="12%" />
-										            <col width="14%" />
-										            <col width="12%" />
-										            <col width="14%" />
 										            <col width="12%" />
 										            <col width="12%" />
+										            <col width="12%" />
+										            <col width="12%" />
+										            <col width="12%" />
+										            <col width="12%" />
+										            <col width="12%" />
+										            <col width="18%" />
 												</colgroup>
 												<tbody>
 													<tr>
-														<th class="text-navy" scope="row">모뎀 번호:</th>
-														<td id = "device_serial"></td>
 														<th class="text-navy" scope="row">운전 상태:</th>
 														<td id = "op_status"></td>
-														<th class="text-navy" scope="row">최종 통신 일시:</th>
-														<td id = "last_comm_dt"></td>
-														<th class="text-navy" scope="row"></th>
-														<td id = ""></td>
-													</tr>
-													<tr>
 														<th class="text-navy" scope="row">통신사:</th>
 														<td id = "">SKT</td>
 														<th class="text-navy" scope="row">통신 방식:</th>
 														<td id = "comm_type"></td>
-														<th class="text-navy" scope="row"></th>
-														<td></td>
-														<th class="text-navy" scope="row"></th>
-														<td id = ""></td>
+														<th class="text-navy" scope="row">최종 통신 일시:</th>
+														<td id = "last_comm_dt"></td>
 													</tr>
 												</tbody>
 											</table>
 									</div>
 									<div class="ibox">
 										<div class="ibox-title">
-	                                		<h5>계기 정보</h5>
+	                                		<h3>계기 정보 &lt;계기 번호: <span id="meter_serial"></span>&gt;</h3>
 	                                	</div>
 										<table class="table text-center">
 											 <colgroup>
-									            <col width="7%" />
+									            <col width="10%" />
 									            <col width="10%" />
 									            <col width="12%" />
-									            <col width="10%" />
-									            <col width="13%" />
+									            <col width="5%" />
+									            <col width="12%" />
 									            <col width="7%" />
-									            <col width="13%" />
-									            <col width="10%" />
-									            <col width="10%" />
-									            <col width="8%" />
+									            <col width="14%" />
+									            <col width="20%" />
 											</colgroup>
 											<tbody>
 												<tr>
-													<th class="text-navy" scope="row">계기번호:</th>
-													<td id = "meter_serial"></td>
-													<th class="text-navy" scope="row"> COSEM 계기 식별자:</th>
-													<td id = "cosem_device_name"></td>
-													<th class="text-navy" scope="row">검침 주기(분):</th>
-													<td id = "lp_period"></td>
-													<th class="text-navy" scope="row">마지막 검침 일시:</th>
-													<td id = "last_lp_dt" colspan="3"></td>
-													<!--  
-													<th class="text-navy" scope="row">계기 시간:</th>
-													<td id = "mtime"></td>
-													-->
-												</tr>
-												<tr>
 													<th class="text-navy" scope="row">계기타입:</th>
 													<td id = "meter_type"></td>
+													<th class="text-navy" scope="row">검침 주기(분):</th>
+													<td id = "lp_period"></td>
 													<th class="text-navy" scope="row">유효전력량 계기정수:</th>
 													<td id = "acon"></td>
-													<th class="text-navy" scope="row">무효전력량 계기정수:</th>
-													<td id = "rcon"></td>
-													<th class="text-navy" scope="row">피상전력량 계기정수:</th>
-													<td id = "pcon"></td>
-													<th class="text-navy" scope="row">정기검침일자:</th>
-													<td id = "billing_dt"></td>
+													<th class="text-navy" scope="row"> COSEM 계기 식별자:</th>
+													<td id = "cosem_device_name"></td>
 												</tr>
 												<tr>
 													<th class="text-navy" scope="row">제조사:</th>
 													<td id = "vendor_nm"></td>
+													<th class="text-navy" scope="row">정기검침일자:</th>
+													<td id = "billing_dt"></td>
+													<th class="text-navy" scope="row">무효전력량 계기정수:</th>
+													<td id = "rcon"></td>
+													<th class="text-navy" scope="row">선식구분:</th>
+													<td id = "meter_phase"></td>
+												</tr>
+												<tr>
 													<th class="text-navy" scope="row">양방향계량수행:</th>
 													<td id = "net_metering"></td>
 													<th class="text-navy" scope="row">평균전압전류주기(분):</th>
 													<td id = "avg_power_period"></td>
-													<th class="text-navy" scope="row">선식구분:</th>
-													<td id = "meter_phase" colspan="3"></td>
-													<!--<th class="text-navy" scope="row">계기프로그램버전:</th>
-													<td id = "prog_version"></td>
-													-->
+													<th class="text-navy" scope="row">피상전력량 계기정수:</th>
+													<td id = "pcon"></td>
+													<th class="text-navy" scope="row">마지막 검침 일시:</th>
+													<td id = "last_lp_dt"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -196,11 +173,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                                 </div>
                             </div>
                             <div role="tabpanel" id="tab-2" class="tab-pane">
-                               <div class="col-lg-10">
-										<h4 style="margin-top: 6px"></h4>
-									</div>
-									<div>
-										<div class="row" style="margin-top: 10px">
+									<div style="background-color: #FFF">
+										<div class="row" style="padding-top: 10px">
 											<div class="col-lg-12">
 												<div class="ibox">
 													<div class="row m-b-md">
@@ -241,7 +215,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<input type="hidden" id=device_id name="device_id" value=""> </input>
 															
 														</div>
-														<div class="table-responsive"  id="resource">
+														<div id="resource">
 															<table class="table">
 																<thead class ="gray-bg">
 																	<tr align="center" >
@@ -317,12 +291,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                             </div>
                                                         
                             <div role="tabpanel" id="tab-3" class="tab-pane">
-									<div class="col-lg-10">
-										<h4 style="margin-top: 6px"></h4>
-									</div>
-									
-									<div>
-										<div class="row" style="margin-top: 10px">
+									<div style="background-color: #FFF">
+										<div class="row" style="padding-top: 10px">
 											<div class="col-lg-12">
 												<div class="ibox">
 													<div class="row m-b-md">
@@ -358,8 +328,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													
 													<div class="ibox-content">
-														<div class="table-responsive"  id="resource">
 														<input type="hidden" name="object_instance_id" id="object_instance_id" value="">															
+														<div id="resource">
 															<table class="table">
 																<thead class ="gray-bg">
 																	<tr align="center" >
@@ -399,7 +369,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																</tbody>
 															</table>															
 															<div name="schedule-buttons" class="row" style="margin:0; height:35px">
-																<button class="btn btn-danger" style="margin-right:10px; width: 140px" type="button" ng-click="write(resources)">
+																<button class="btn btn-danger" style="margin-right:10px; width: 200px" type="button" ng-click="write(resources)">
 																	<i class="fa fa-play"> 동적 스케줄 실행</i>
 																</button>
 															</div>
@@ -573,7 +543,7 @@ function successResultHandler(data, status) {
 var winObj;
 function popupObisCode(){ //검침스케줄
 
-	var opts="width=1000, height=750,left=200, top=200, resizable=no, toolbar=yes";
+	var opts="width=1200, height=750,left=200, top=200, resizable=no, toolbar=yes";
 	if(winObj)
         winObj.close();
 	var param = "?meter_type="+meterTypeCode;
@@ -583,7 +553,7 @@ function popupObisCode(){ //검침스케줄
 
 function popupObisCode2(){ //미터설정
 	
-	var opts="width=1000, height=750,left=200, top=200, resizable=no, toolbar=yes";
+	var opts="width=1200, height=750,left=200, top=200, resizable=no, toolbar=yes";
 	if(winObj)
         winObj.close();
 	var param = "?meter_type="+meterTypeCode;

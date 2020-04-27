@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">기타검침 데이터 조회</h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 기타검침 데이터 조회</h2>
 </div>
 <div class="col-lg-2">
 	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
@@ -248,7 +248,7 @@ onRowClicked = function(event){
 	if(winObj)
         winObj.close();
 	
-	var opts="width=1200, height=550,left=200, top=200, resizable=no, toolbar=yes"; 
+	var opts="width=1200, height=550,left=200, top=200, resizable=no, toolbar=no"; 
 	winObj = window.open(COMMON_URL+"/meterDataDetail"+param, "", opts);
 }
 
@@ -271,6 +271,7 @@ function successResultHandler(data, status) {
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 	
 	totalCnt = data.totalCount;
+    //dataGrid.autoSizeAll();
 }
 
 //device type

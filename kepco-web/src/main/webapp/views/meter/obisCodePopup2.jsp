@@ -74,7 +74,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">OBIS CODE 선택</h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> OBIS CODE 선택</h2>
 </div>						
 </div>
 <!-- navigator -->
@@ -140,14 +140,14 @@ var selectedObisCode = '';
 var obis_nm = '';
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", 			field: "no", 	   width:50,suppressSizeToFit: true},
-	{headerName: "CLASS",		field: "class_id"},
-	{headerName: "OBIS 코드",		field: "obis_code",width:300},
- 	{headerName: "OBIS 코드명",	field: "descr"},
+	{headerName: "번호", 			field: "no", 	   width:100,suppressSizeToFit: true},
+	{headerName: "CLASS",		field: "class_id", width:120},
+	{headerName: "OBIS 코드",		field: "obis_code",width:200},
+ 	{headerName: "OBIS 코드명",	field: "descr",width:250},
  	//{headerName: "데이터타입",		field: "datatype"},
-	{headerName: "속성",			field: "attribute_no"},
-	{headerName: "권한",			field: "access_right"},
-	{headerName: "OBIS 정의",	field: "kepco_obis", 
+	{headerName: "속성",			field: "attribute_no",width:100},
+	{headerName: "권한",			field: "access_right",width:100},
+	{headerName: "OBIS 정의",	field: "kepco_obis", width:150, 
 		cellClassRules: {
 			'defined-green': function(params) { return params.value == 'KEPCO' },
 			'undefined-yellow': function(params) { return params.value == 'OTHER' },

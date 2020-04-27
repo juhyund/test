@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">LP검침 데이터 조회</h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> LP검침 데이터 조회</h2>
 </div>
 <div class="col-lg-2">
 	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
@@ -173,7 +173,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", 		field: "no", 				width:50,	suppressSizeToFit: true},
-	{headerName: "검침일", 	field: "read_dt",			width:200},
+	{headerName: "검침일", 	field: "read_dt",			width:250},
 	{headerName: "계기번호",   field: "meter_serial",		width:100},
 	{headerName: "본부", 	  	field: "parent_branch_nm", 	width:200},
 	{headerName: "지사", 		field: "branch_nm",			width:100},
@@ -256,7 +256,7 @@ onRowClicked = function(event){
 
 var winObj;
 function showDetailMeterValue(meter_id){ 
-	var opts="width=1200, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
+	var opts="width=1400, height=800,left=200, top=200, resizable=no"; 
 
 	if(winObj)
         winObj.close();
@@ -287,6 +287,7 @@ function successResultHandler(data, status) {
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 	
 	totalCnt = data.totalCount;
+    //dataGrid.autoSizeAll();
 }
 
 //device type

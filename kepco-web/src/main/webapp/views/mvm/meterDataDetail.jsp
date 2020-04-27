@@ -68,7 +68,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">기타검침 > 상세 데이터 조회</h3>
+						<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 기타검침 - 상세 데이터 조회</h2>
 					</div>
 				</div>
 				<!-- navigator -->
@@ -126,8 +126,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 								<!--  start : payload_area  -->
 								<div>
-									<div style="width: 99%; height: 340px margin: 40px 0px 0px 0px">
-										<h3><textarea id="payload" style=" width: 100%;  height: 330px; font-size: 25px; font-weight: bold;" readonly></textarea></h3>
+									<div style="width: 99%; height: 250px margin: 40px 0px 0px 0px">
+										<h3><textarea id="payload" style=" width: 100%;  height: 240px; font-size: 25px; font-weight: bold;" readonly></textarea></h3>
 									</div>
 								</div>
 								<!--  end : payload_area  -->

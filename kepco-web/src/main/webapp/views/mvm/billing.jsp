@@ -44,7 +44,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">정기검침 데이터 조회</h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 정기검침 데이터 조회</h2>
 </div>					
 <div class="col-lg-2">
 	<ol class="breadcrumb" style="float: right; margin-top: 10px;">
@@ -193,7 +193,7 @@ var columnDefs = [
 	{headerName: "지사", 		field: "branch_nm",		width:100,	suppressSizeToFit: true},
 	{headerName: "계기타입", 	field: "meter_type", 	width:100,	suppressSizeToFit: true},
 	{headerName: "모뎀번호", 	field: "device_serial", width:100,	suppressSizeToFit: true},
-	{headerName: '순방향 유효전력량(kWh)',
+	{headerName: '유효전력량(kWh)',
        children: [{headerName: "합계",  width:100, 
     	   				suppressSizeToFit: true,
 					   	field: "active_imp_tot", 
@@ -214,15 +214,9 @@ var columnDefs = [
 					   	field: "active_imp_rate3", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }}
-					   	/*,   
-					{headerName: "T4", width:100,
-					   	field: "active_imp_rate4", 
-					   	valueFormatter: numberFormatter, 
-	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }}*/]
+					   	cellStyle: { 'text-align': "right" }}]
 	},
-	{headerName: '역방향 유효전력량(kWh)',
+	/* {headerName: '역방향 유효전력량(kWh)',
        children: [{headerName: "합계", width:100,
 					   	field: "active_exp_tot", 
 					   	valueFormatter: numberFormatter, 
@@ -242,13 +236,8 @@ var columnDefs = [
 					   	field: "active_exp_rate3", 
 					   	valueFormatter: numberFormatter, 
 	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }}/*,   
-				   	{headerName: "T4", width:100,
-					   	field: "active_exp_rate4", 
-					   	valueFormatter: numberFormatter, 
-	    	   			suppressSizeToFit: true,
-					   	cellStyle: { 'text-align': "right" }}*/]
-		},
+					   	cellStyle: { 'text-align': "right" }}]
+		}, */
 	{headerName: "저장일시", field: "reg_dt", width:200, suppressSizeToFit: true}
 ];
 
