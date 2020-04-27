@@ -61,7 +61,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">모뎀 목록 조회</h3>
+						<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 모뎀 목록 조회</h2>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
@@ -154,13 +154,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 												</div>
 											</td>
-<<<<<<< HEAD
 											<td width="180" height="80" style="text-align: right; padding-left: 0px;">
 												<button class="btn btn-primary" style="height: 96%; width: 50px" type="button" onclick="ajaxSearchForm();">
-=======
-											<td width="175" height="80" style="text-align: right">
-												<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
->>>>>>> branch 'develop' of https://guyrune@git-n.nuritelecom.com/scm/aimirpf/kepco-lwm2m-5.0.git
 													<i class="fa fa-search"></i>
 												</button>
 												<button class="btn btn-warning" style="height: 96%; width: 50px" type="button" onclick="resetForm();">

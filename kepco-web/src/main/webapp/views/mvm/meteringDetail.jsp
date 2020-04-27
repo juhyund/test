@@ -63,7 +63,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">LP검침 > 상세 데이터 조회 </h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> LP검침 - 상세 데이터 조회</h2>
 </div>
 					
 </div>

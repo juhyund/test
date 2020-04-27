@@ -502,7 +502,7 @@ function firmwarelist() {
 								<td colspan="2">
 									<div class="form-group form-group-end row">
 										<H3>[상향/하향 속도테스트 결과]</H3>
-										<textarea style="border: 0px; min-height: 60px; width: 100%">{{speedtest.statusMsg}}</textarea>
+										<textarea style="border: 0px; min-height: 90px; width: 100%">{{speedtest.statusMsg}}</textarea>
 									</div>
 								</td>
 							</tr>
@@ -541,7 +541,7 @@ function firmwarelist() {
 									</div>
 								</td>
 								<td style="text-align: right">
-									<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" ng-click="coapping();">실행</button>
+									<button class="btn btn-primary" style="height: 100%; width: 60px" type="button" ng-click="coapping();">실행</button>
 								</td>
 							</tr>
 							<tr>

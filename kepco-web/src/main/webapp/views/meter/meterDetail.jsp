@@ -64,9 +64,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div id="page-wrapper" style="width:100%" class="gray-bg" >
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
-<div class="col-lg-10" >
-	<h3 style="margin-top:6px">계기 상세 정보</h3>
-</div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
 		</ol>
@@ -77,9 +74,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <div>
 	<div class="col-lg-12">	
 		<div class="ibox">
-			<div class="ibox-content">
-					<!-- start :summary_area -->
-					
+			<div class="ibox-content" style="background-color: #F3F3F4;">
 				<div class="row m-b-md ">
 					<div class="col-lg-6">
                     <div class="tabs-container" style=width:200%;>
@@ -175,11 +170,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                                 </div>
                             </div>
                             <div role="tabpanel" id="tab-2" class="tab-pane">
-                               <div class="col-lg-10">
-										<h4 style="margin-top: 6px"></h4>
-									</div>
-									<div>
-										<div class="row" style="margin-top: 10px">
+									<div style="background-color: #FFF">
+										<div class="row" style="padding-top: 10px">
 											<div class="col-lg-12">
 												<div class="ibox">
 													<div class="row m-b-md">
@@ -296,12 +288,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
                             </div>
                                                         
                             <div role="tabpanel" id="tab-3" class="tab-pane">
-									<div class="col-lg-10">
-										<h4 style="margin-top: 6px"></h4>
-									</div>
-									
-									<div>
-										<div class="row" style="margin-top: 10px">
+									<div style="background-color: #FFF">
+										<div class="row" style="padding-top: 10px">
 											<div class="col-lg-12">
 												<div class="ibox">
 													<div class="row m-b-md">
