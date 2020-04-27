@@ -119,7 +119,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- <div class="row m-b-md ">
 				</div> -->
 				
-				 <div id="grid" style="height:300px;" class="ag-theme-balham m-b-md"></div>								
+				 <div id="grid" style="height:500px;" class="ag-theme-balham m-b-md"></div>								
 				<div>
 					<button class="btn btn-primary m-t-sm" style="height: 100%" type="button" onclick="selectObis()">
 						<i class="fa">OBIS 선택</i>
