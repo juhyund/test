@@ -35,6 +35,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	};
 	
 	$scope.objectModel = function () {
+		showLoading();
 		$scope.objects = {};
 		$http({
 	        method: 'POST',
@@ -47,9 +48,11 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    }).then(successCallback, function errorCallback(response) {
 	        alert("error");
 	    });
+		hideLoading();
 	};
 	
 	$scope.firmware = function () {
+		showLoading();
 		var columnDefs = [
 			{headerName: "번호", field: "no", width:80},
 			{headerName: "생성일자", field: "reg_dt"},
@@ -93,9 +96,9 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 		}, function errorCallback(response) {
 	        alert("error");
 	    });
+		hideLoading();
 	};
-	
-	
+
 	function successCallback(data, status, headers, config) {
         $.each(data.data.result, function (index, item) {
 	    	$http({
@@ -104,7 +107,6 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	            params : { "device_id" : $("#device_id").val(), "object_id" : item.object_id }
 	    	
 	        }).then(function resourceSuccessCallback(data, status, headers, config) {
-	        	console.log(data.data.result);
 	        	// instance
 	        	item.instance = data.data.result;
 	        	$scope.objects[index] = item;
@@ -362,7 +364,7 @@ deviceApp.controller('deviceCtrl', function DeviceController($scope, $http) {
 	    	if(data.data.statusCode == "200") {
 	    		if(data.data.statusMsg == ''){
 	    			var text = "요청 성공\n";
-		    		text += "계기번호: "+ data.data.tid;
+		    		text += "트랜잭션ID: "+ data.data.tid;
 		    		
 		    		$scope.speedtest.statusMsg = text;
 	    		} else {

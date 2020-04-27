@@ -199,7 +199,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							<table class="table table-bordered white-bg">
 								<thead>
 									<tr>
-										<th class="text-center">제어명령</th>
+										<th width="100" class="text-center">제어명령</th>
 										<th width="150" class="text-right">성공</th>
 										<th width="150" class="text-right">실패</th>
 										<th width="150" class="text-right">대기</th>

@@ -123,10 +123,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<tr>
 														<th class="text-navy" scope="row">통신사:</th>
 														<td id = "">SKT</td>
-														<th class="text-navy" scope="row">모뎀 아이피:</th>
-														<td id = "ip"></td>
 														<th class="text-navy" scope="row">통신 방식:</th>
 														<td id = "comm_type"></td>
+														<th class="text-navy" scope="row"></th>
+														<td></td>
 														<th class="text-navy" scope="row"></th>
 														<td id = ""></td>
 													</tr>
@@ -573,7 +573,7 @@ function successResultHandler(data, status) {
 var winObj;
 function popupObisCode(){ //검침스케줄
 
-	var opts="width=1000, height=550,left=200, top=200, resizable=no, toolbar=yes";
+	var opts="width=1000, height=750,left=200, top=200, resizable=no, toolbar=yes";
 	if(winObj)
         winObj.close();
 	var param = "?meter_type="+meterTypeCode;
@@ -583,7 +583,7 @@ function popupObisCode(){ //검침스케줄
 
 function popupObisCode2(){ //미터설정
 	
-	var opts="width=1000, height=550,left=200, top=200, resizable=no, toolbar=yes";
+	var opts="width=1000, height=750,left=200, top=200, resizable=no, toolbar=yes";
 	if(winObj)
         winObj.close();
 	var param = "?meter_type="+meterTypeCode;
