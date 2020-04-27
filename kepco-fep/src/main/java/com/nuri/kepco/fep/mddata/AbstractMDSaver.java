@@ -50,7 +50,7 @@ public abstract class AbstractMDSaver {
 	@Autowired
 	DeviceInfoDAO deviceInfoDAO;
 	
-	@Value("${device.model.name}")
+	@Value("${device.model.name:NAMR-S240LT}")
 	private String defaultModelName;
 	
 	@Value("${unknown.model.name:UNKNOWN}")
@@ -292,7 +292,7 @@ public abstract class AbstractMDSaver {
 		return -1;
 	}
 	
-	private Integer getModelSeqByName(String modelName) {
+	public Integer getModelSeqByName(String modelName) {
 		
 		DeviceModel deviceInfo = null;
 		try {
@@ -413,13 +413,13 @@ public abstract class AbstractMDSaver {
 				
 				deviceInfo.setInit_reg_dt(init_reg_dt);
 				
-				deviceInfo.setBranch_id(defaultBranchId);
+				deviceInfo.setBranch_id(getDefaultBranch());
 				result = deviceInfoDAO.insert(deviceInfo);
 				
 			} else {
 				
 				if(deviceInfo.getBranch_id() == null) {
-					deviceInfo.setBranch_id(defaultBranchId);	
+					deviceInfo.setBranch_id(getDefaultBranch());	
 				}
 				
 				result = deviceInfoDAO.update(deviceInfo);
