@@ -80,16 +80,16 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<table class="table table-borderless" style="height: 100%; style="margin-bottom: 7px;" border="1">
 									<tbody>
 										<tr class="table-border">
-											<td height="80">
+											<td height="80" style="padding-right: 0px;">
 												<div class="form-group row">
-													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">지역본부</label>
+													<label class="col-lg-1 col-form-label">지역본부</label>
 													<div class="col-lg-3">
 														<select class="form-control" style="width: 49%; display: inline;" name="branch_parent_id" id="branch_parent_id" onchange="changeParent()"></select>
 														<select class="form-control" style="width: 49%; vertical-align: top; display: inline;" name="branch_id" id="branch_id">
 															<option value=''>선택</option>
 														</select>
 													</div>
-													<label class="col-sm-1 col-form-label" style="padding-left: 10px;">소프트웨어 버전</label>
+													<label class="col-sm-1 col-form-label">소프트웨어 버전</label>
 													<div class="col-lg-3">
 														<input type="text" class="form-control" name="fw_version" id="fw_version" style="height: 33px; vertical-align: top; display: inline;">
 													</div>
@@ -116,7 +116,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</div>
 
 												<div class="form-group form-group-end row">
-													<label class="col-sm-1 col-form-label" style="padding-left: 10px;">검색</label>
+													<label class="col-sm-1 col-form-label">검색</label>
 													<div class="col-lg-3">
 														<select class="form-control" name="searchfield" id="searchfield" style="width: 29%; display: inline;">
 															<option value=''>선택</option>
@@ -126,7 +126,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														<input type="text" class="form-control" name="searchquery" id="searchquery" style="width: 69%; height: 33px; vertical-align: top; display: inline;">
 													</div>
 													
-													<label class="col-lg-1 col-form-label" style="padding-left: 10px;">모뎀상태</label>
+													<label class="col-lg-1 col-form-label">모뎀상태</label>
 													<div class="col-lg-3">
 														<select class="form-control" name="device_status" id="device_status">
 															<option value=''>선택</option>
@@ -154,14 +154,14 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 												</div>
 											</td>
-											<td width="180" height="80" style="text-align: right">
-												<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
+											<td width="180" height="80" style="text-align: right; padding-left: 0px;">
+												<button class="btn btn-primary" style="height: 96%; width: 50px" type="button" onclick="ajaxSearchForm();">
 													<i class="fa fa-search"></i>
 												</button>
-												<button class="btn btn-warning" style="height: 100%; width: 50px" type="button" onclick="resetForm();">
+												<button class="btn btn-warning" style="height: 96%; width: 50px" type="button" onclick="resetForm();">
 													<i class="fa fa-undo"></i>
 												</button>
-												<button class="btn btn-outline btn-primary" style="height: 100%; width: 50px" type="button" onclick="excelDownload();">
+												<button class="btn btn-outline btn-primary" style="height: 96%; width: 50px" type="button" onclick="excelDownload();">
 													<i class="fa fa-download"></i>
 												</button>
 											</td>
