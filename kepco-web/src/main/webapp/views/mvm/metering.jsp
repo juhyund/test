@@ -256,7 +256,7 @@ onRowClicked = function(event){
 
 var winObj;
 function showDetailMeterValue(meter_id){ 
-	var opts="width=1200, height=800,left=200, top=200, resizable=no, toolbar=yes"; 
+	var opts="width=1400, height=800,left=200, top=200, resizable=no"; 
 
 	if(winObj)
         winObj.close();

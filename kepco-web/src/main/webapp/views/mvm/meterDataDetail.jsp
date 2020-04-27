@@ -126,8 +126,8 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 								<!--  start : payload_area  -->
 								<div>
-									<div style="width: 99%; height: 340px margin: 40px 0px 0px 0px">
-										<h3><textarea id="payload" style=" width: 100%;  height: 330px; font-size: 25px; font-weight: bold;" readonly></textarea></h3>
+									<div style="width: 99%; height: 250px margin: 40px 0px 0px 0px">
+										<h3><textarea id="payload" style=" width: 100%;  height: 240px; font-size: 25px; font-weight: bold;" readonly></textarea></h3>
 									</div>
 								</div>
 								<!--  end : payload_area  -->

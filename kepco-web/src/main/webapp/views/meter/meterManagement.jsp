@@ -27,7 +27,23 @@
 
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
-
+<style>
+	.rag-red-outer {
+	    color: red;
+	    font-weight: bold;
+	}
+	
+	.rag-green-outer {
+	    color: blue;
+	    font-weight: bold;
+	}
+	
+	.rag-grey-outer {
+	    color: e3f704;
+	    font-weight: bold;
+	}
+  	
+</style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
 </script>
@@ -127,7 +143,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 													
 												</td>
-												<td width="180" height="80" style="float: right">
+												<td width="180" height="80" style="text-align: right">
 													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
 														<i class="fa fa-search"></i>
 													</button>
@@ -179,12 +195,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", field: "no", width:90, cellStyle:{'text-align': "center"}},
-	{headerName: "본부", field: "parent_branch_nm", width:100, cellStyle:{'text-align': "center"}},
-	{headerName: "지사", field: "branch_nm", width:100, cellStyle:{'text-align': "center"}},
+	{headerName: "본부", field: "parent_branch_nm", width:200, cellStyle:{'text-align': "center"}},
+	{headerName: "지사", field: "branch_nm", width:200, cellStyle:{'text-align': "center"}},
 	{headerName: "계기타입", field: "meter_type", width:150, cellStyle:{'text-align': "center"}},
 	{headerName: "계기번호", field: "meter_serial", width:150, cellStyle:{'text-align': "center"}},
 	{headerName: "검침주기(분)", field: "lp_period", width:140, cellStyle:{'text-align': "center"}},
-	{headerName: "통신상태", field: "code_local_nm", width:150, cellStyle:{'text-align': "center"}},
+	{headerName: "통신상태", field: "code_local_nm", width:150, 
+		cellClassRules: {
+            'rag-green-outer': function(params) { return params.value == '정상'},
+            'rag-grey-outer': function(params) { return params.value == '대기중'},
+            'rag-red-outer': function(params) { return params.value == '등록해제'}
+        }},
 	{headerName: "제조사", field: "vendor_nm", width:150},
 	{headerName: "마지막 검침 일시", field: "last_comm_dt"},
 	{headerName: "모뎀번호", field: "device_serial"},
