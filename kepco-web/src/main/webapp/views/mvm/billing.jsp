@@ -321,7 +321,7 @@ function successResultHandler(data, status) {
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
-	//dataGrid.autoSizeAll();
+	dataGrid.autoSizeAll();
 	totalCnt = data.totalCount;
 }
 
