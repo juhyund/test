@@ -1121,7 +1121,7 @@ body:not(.fixed-sidebar):not(.canvas-menu).mini-navbar .nav li:hover > .nav-seco
   height: auto;
 }
 body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
-  font-size: 12px;
+  font-size: 16px;
   border-radius: 3px;
 }
 .fixed-nav .slimScrollDiv #side-menu {

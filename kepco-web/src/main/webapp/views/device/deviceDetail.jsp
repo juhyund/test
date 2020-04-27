@@ -144,9 +144,7 @@ function firmwarelist() {
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">모뎀 관리</h3>
-					</div>
-					<div class="col-lg-2">
+						<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 모뎀 상세정보</h2>
 					</div>
 				</div>
 				<!-- navigator -->
@@ -179,18 +177,18 @@ function firmwarelist() {
 							<table class="table table-bordered white-bg" style="width: 100%">
 								<thead>
 									<tr>
+										<th class="device-detail-head">모뎀번호</th>
+										<td class="device-detail-body"><span id="device_serial_span" style="display: none;">{{device_info.device_serial}}</span></td>
+										<th class="device-detail-head">모뎀상태</th>
+										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
+									</tr>
+									<tr>
 										<th class="device-detail-head">지역본부</th>
 										<td class="device-detail-body"><span id="branch_span" style="display: none;">{{device_info.parent_branch_nm}} {{device_info.branch_nm}}</span></td>
 										<th class="device-detail-head">모뎀IP/PORT</th>
 										<td class="device-detail-body"><input type="text" id="di_ip" style="width:100px; display:none; border: none" value="{{device_info.ip}}" readonly="readonly" > /
 											<input type="text" id="di_port" style="width:80px; display:none; border: none" value="{{device_info.port}}" readonly="readonly" ></td>
 										
-									</tr>
-									<tr>
-										<th class="device-detail-head">모뎀번호</th>
-										<td class="device-detail-body"><span id="device_serial_span" style="display: none;">{{device_info.device_serial}}</span></td>
-										<th class="device-detail-head">모뎀상태</th>
-										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">제조사</th>
