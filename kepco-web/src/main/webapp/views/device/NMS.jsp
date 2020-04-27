@@ -31,26 +31,36 @@
 	.warning-red{
 		background-color: red;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-green{
 		background-color: lightgreen;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-yellow{
 		background-color: yellow;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-orange{
 		background-color: orange;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.warning-grey{
 		background-color: #b3b5b7;
 		border: solid 1px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 	
 	.col-custom{
@@ -97,6 +107,9 @@
 	    cursor: pointer;
 	}
 	
+
+		
+	
 </style>
 <script>
 var CONTEXT_PATH = "<%=COMMON_URL%>";
@@ -125,6 +138,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <!-- body -->
 <div class="row">
+
 	<div class="col-lg-12">	
 		<div class="ibox">
 			<div class="ibox-content">

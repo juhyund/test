@@ -154,7 +154,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 												</div>
 											</td>
-											<td width="180" height="80" style="text-align: right">
+											<td width="175" height="80" style="text-align: right">
 												<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
 													<i class="fa fa-search"></i>
 												</button>

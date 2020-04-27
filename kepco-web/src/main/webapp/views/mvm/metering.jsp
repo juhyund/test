@@ -173,7 +173,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //specify the columns
 var columnDefs = [
 	{headerName: "번호", 		field: "no", 				width:50,	suppressSizeToFit: true},
-	{headerName: "검침일", 	field: "read_dt",			width:200},
+	{headerName: "검침일", 	field: "read_dt",			width:250},
 	{headerName: "계기번호",   field: "meter_serial",		width:100},
 	{headerName: "본부", 	  	field: "parent_branch_nm", 	width:200},
 	{headerName: "지사", 		field: "branch_nm",			width:100},

@@ -106,11 +106,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 
 													<div class="form-group form-group-end row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">소프트웨어 파일</label>
+														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">소프트웨어 파일</label>
 														<div class="col-lg-3">
 															<input type="text" class="form-control" name="fw_file_nm" id="fw_file_nm" style="height: 33px; vertical-align: top; display: inline;">
 														</div>
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">소프트웨어 버전</label>
+														<label class="col-lg-1 col-form-label" style="padding-left: 10px;">소프트웨어 버전</label>
 														<div class="col-lg-3">
 															<input type="text" class="form-control" name="fw_version" id="fw_version" style="height: 33px; vertical-align: top; display: inline;">
 														</div>
@@ -133,7 +133,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 														</div>
 													</div>
 												</td>
-												<td width="120" height="80" style="text-align: right">
+												<td width="130" height="80" style="text-align: right">
 													<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
 														<i class="fa fa-search"></i>
 													</button>
@@ -185,7 +185,7 @@ var columnDefs = [
 	{headerName: "모뎀 번호", field: "device_serial", cellStyle:{'text-align': "center"}},
 	{headerName: "소프트웨어 파일", field: "fw_file_nm", cellStyle:{'text-align': "center"}},
 	{headerName: "소프트웨어 버전", field: "fw_version", cellStyle:{'text-align': "center"}},
-	{headerName: "TID", field: "tid", cellStyle:{'text-align': "center"}},
+	{headerName: "트랜잭션ID", field: "tid", cellStyle:{'text-align': "center"}},
 	{headerName: "실행 일시", field: "fw_write_dt", cellStyle:{'text-align': "center"}},
 	{headerName: "소프트웨어 실행 상태", field: "fw_issue_status_nm", cellStyle:{'text-align': "center"}},
 	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		

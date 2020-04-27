@@ -211,25 +211,25 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
+	{headerName: "번호", field: "no",width:50,	suppressSizeToFit: true, cellStyle:{'text-align': "center"}, pinned:"left"},	
 	// {headerName: "모뎀ID", field: "device_id"}, 	// detail 조회용 컬럼
-	{headerName: "모뎀번호", field: "device_serial"}, 	// detail 조회용 컬럼
-	{headerName: "리소스 경로", field: "resource_sum"},
+	{headerName: "모뎀번호", field: "device_serial",	suppressSizeToFit: true, pinned:"left"}, 	// detail 조회용 컬럼
+	{headerName: "오브젝트명", field: "object_nm",	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "리소스명", field: "resource_nm",	suppressSizeToFit: true, cellStyle:{'text-align': "center"}, pinned:"left"},
+	{headerName: "리소스 경로", field: "resource_sum",	suppressSizeToFit: true},
 	{headerName: "_응답 일시", field: "_request_dt", hide:"true"},	// detail 조회용 컬럼
-	{headerName: "오브젝트명", field: "object_nm"},
-	{headerName: "리소스명", field: "resource_nm", width:160, cellStyle:{'text-align': "center"}},
-	{headerName: "계기번호", field: "target_meter", cellStyle:{'text-align': "center"}},
-	{headerName: "제어항목", field: "method", cellStyle:{'text-align': "center"}},
-	{headerName: "제어결과", field: "result", width:130,
+	{headerName: "계기번호", field: "target_meter",suppressSizeToFit: true, cellStyle:{'text-align': "center"}},
+	{headerName: "제어항목", field: "method",suppressSizeToFit: true, cellStyle:{'text-align': "center"}},
+	{headerName: "제어결과", field: "result",suppressSizeToFit: true, width:130,
         cellClassRules: {
             'rag-green-outer': function(params) { return params.value == '성공'},
             'rag-grey-outer': function(params) { return params.value == '대기중'},
             'rag-red-outer': function(params) { return params.value == '실패'}
         }},
-	{headerName: "트랜잭션ID", field: "tid"},
-	{headerName: "전송 일시", field: "request_dt"},
-	{headerName: "응답 일시", field: "result_dt"},
-	{headerName: "요청자", field: "reg_id", width:150, cellStyle:{'text-align': "center"}}		
+	{headerName: "트랜잭션ID", field: "tid",suppressSizeToFit: true},
+	{headerName: "전송 일시", field: "request_dt",suppressSizeToFit: true},
+	{headerName: "응답 일시", field: "result_dt",suppressSizeToFit: true},
+	{headerName: "요청자", field: "reg_id",suppressSizeToFit: true, width:150, cellStyle:{'text-align': "center"}}		
 ];
 
 // init selectComboBox
@@ -390,6 +390,7 @@ function successResultHandler(data, status) {
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
+    dataGrid.autoSizeAll();
 }
 
 function resetForm() {
