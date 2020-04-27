@@ -49,7 +49,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">펌웨어 관리 이력</h3>
+						<h3 style="margin-top: 6px">소프트웨어 관리 이력</h3>
 					</div>
 					<div class="col-lg-2">
 						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
@@ -106,11 +106,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 
 													<div class="form-group form-group-end row">
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">펌웨어 파일</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">소프트웨어 파일</label>
 														<div class="col-lg-3">
 															<input type="text" class="form-control" name="fw_file_nm" id="fw_file_nm" style="height: 33px; vertical-align: top; display: inline;">
 														</div>
-														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">펌웨어 버전</label>
+														<label class="col-sm-1 col-form-label" style="padding-left: 10px;">소프트웨어 버전</label>
 														<div class="col-lg-3">
 															<input type="text" class="form-control" name="fw_version" id="fw_version" style="height: 33px; vertical-align: top; display: inline;">
 														</div>
@@ -183,11 +183,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 var columnDefs = [
 	{headerName: "번호", field: "no", width:100, cellStyle:{'text-align': "center"}},	
 	{headerName: "모뎀 번호", field: "device_serial", cellStyle:{'text-align': "center"}},
-	{headerName: "펌웨어 파일", field: "fw_file_nm", cellStyle:{'text-align': "center"}},
-	{headerName: "펌웨어 버전", field: "fw_version", cellStyle:{'text-align': "center"}},
+	{headerName: "소프트웨어 파일", field: "fw_file_nm", cellStyle:{'text-align': "center"}},
+	{headerName: "소프트웨어 버전", field: "fw_version", cellStyle:{'text-align': "center"}},
 	{headerName: "TID", field: "tid", cellStyle:{'text-align': "center"}},
 	{headerName: "실행 일시", field: "fw_write_dt", cellStyle:{'text-align': "center"}},
-	{headerName: "펌웨어 실행 상태", field: "fw_issue_status_nm", cellStyle:{'text-align': "center"}},
+	{headerName: "소프트웨어 실행 상태", field: "fw_issue_status_nm", cellStyle:{'text-align': "center"}},
 	{headerName: "요청자", field: "reg_id", cellStyle:{'text-align': "center"}}		
 ];
 

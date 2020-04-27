@@ -155,7 +155,7 @@ function firmwarelist() {
 						<li class="nav-item"><a class="nav-link active"
 							data-toggle="tab" href="#info" ng-click="deviceInfo()">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#firmware" ng-click="firmware()">펌웨어 업그레이드</a></li>
+							href="#firmware" ng-click="firmware()">소프트웨어 업그레이드</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#object" ng-click="objectModel()">오브젝트 정보</a></li>
 						<!-- 
@@ -206,7 +206,7 @@ function firmwarelist() {
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:80px; display:none; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
-										<th class="device-detail-head">펌웨어 버전</th>
+										<th class="device-detail-head">소프트웨어 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:80px; display:none; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
 									</tr>
 									<tr>
@@ -240,7 +240,7 @@ function firmwarelist() {
 						
 						<div class="tab-pane fade" id="firmware">
 							<div class="col-lg-10">
-								<h4 style="margin-top: 6px">펌웨어 업그레이드</h4>
+								<h4 style="margin-top: 6px">소프트웨어 업그레이드</h4>
 							</div>
 							<div class="row">
 								<input type="hidden" id="limit" name="limit" value ="10" class="form-control">

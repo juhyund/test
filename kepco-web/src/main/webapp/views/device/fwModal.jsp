@@ -148,7 +148,7 @@ showLoading();
 	<div class="modal-dialog" style="max-width: 700px">
 		<div class="modal-content">
 			<div class="modal-header">				
-				<h4 class="modal-title">펌웨어 파일 목록</h4>
+				<h4 class="modal-title">소프트웨어 파일 목록</h4>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
 			</div>
@@ -244,7 +244,7 @@ showLoading();
 	<div class="modal-dialog" style="max-width: 850px">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
-				<h4 class="modal-title">펌웨어 업그레이드</h4>
+				<h4 class="modal-title">소프트웨어 업그레이드</h4>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
 			</div>
