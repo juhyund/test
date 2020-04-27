@@ -271,6 +271,7 @@ function successResultHandler(data, status) {
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
 	
 	totalCnt = data.totalCount;
+    dataGrid.autoSizeAll();
 }
 
 //device type
