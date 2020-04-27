@@ -9705,3 +9705,17 @@ body.md-skin {
   margin-right: auto;
   width: 10%;
 }
+
+
+.ag-header-cell-label{
+  font-size: 16px;
+  font-weight:bold;
+} 
+
+.ag-cell{
+   font-size: 16px;
+}
+
+.ag-header{
+	color : rgb(86, 86, 86);
+}

@@ -154,8 +154,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													</div>
 												</div>
 											</td>
+<<<<<<< HEAD
 											<td width="180" height="80" style="text-align: right; padding-left: 0px;">
 												<button class="btn btn-primary" style="height: 96%; width: 50px" type="button" onclick="ajaxSearchForm();">
+=======
+											<td width="175" height="80" style="text-align: right">
+												<button class="btn btn-primary" style="height: 100%; width: 50px" type="button" onclick="ajaxSearchForm();">
+>>>>>>> branch 'develop' of https://guyrune@git-n.nuritelecom.com/scm/aimirpf/kepco-lwm2m-5.0.git
 													<i class="fa fa-search"></i>
 												</button>
 												<button class="btn btn-warning" style="height: 96%; width: 50px" type="button" onclick="resetForm();">
