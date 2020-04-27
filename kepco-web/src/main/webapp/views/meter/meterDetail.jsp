@@ -241,7 +241,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<input type="hidden" id=device_id name="device_id" value=""> </input>
 															
 														</div>
-														<div class="table-responsive"  id="resource">
+														<div id="resource">
 															<table class="table">
 																<thead class ="gray-bg">
 																	<tr align="center" >

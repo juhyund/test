@@ -250,7 +250,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="row m-t-n-n" style="margin:-1px"  >
 						<div style="width :100%;vertical-align:center">
 							<label id="cur_page_num" class="col-form-label"></label>
-							<div style ="float:right;margin-bottom:5px;width: 290px;">
+							<div style ="float:right;margin-bottom:5px;width: 330px;">
 								<button class="btn btn-outline btn-primary" style ="float:left;" onclick="onBtShowCodeGuide()">(도움말) 코드 상태값 가이드</button>
 								<select id="data_per_page" class="form-control" name="data_per_page" style ="float:right;width: fit-content;" onchange="javascript:changeLimit(this);">
 									<option value=15 selected>15개씩</option>
