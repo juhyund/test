@@ -28,6 +28,20 @@
 <script src="<%=COMMON_PATH_JS%>/ag-grid/ag-grid-enterprise.js"></script>
 <script src="<%=COMMON_PATH_JS%>/ag-grid/aggrid.js"></script>
 <style>
+	.rag-red-outer {
+	    color: red;
+	    font-weight: bold;
+	}
+	
+	.rag-green-outer {
+	    color: blue;
+	    font-weight: bold;
+	}
+	
+	.rag-grey-outer {
+	    color: e3f704;
+	    font-weight: bold;
+	}
 	.warning-red{
 		background-color: red;
 		border: solid 1px;
@@ -298,13 +312,19 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 
 //specify the columns
 var columnDefs = [
-	{headerName: "번호", field: "no", width:80},
-	{headerName: "모뎀번호", field: "deviceSerial"},
+	{headerName: "번호", field: "no", width:50,	suppressSizeToFit: true, pinned:"left"},
+	{headerName: "모뎀번호", field: "deviceSerial",suppressSizeToFit: true, pinned:"left"},
+	{headerName: "모뎀상태", field: "deviceStatusNm",suppressSizeToFit: true, width:140, pinned:"left",
+		 cellClassRules: {
+	            'rag-green-outer': function(params) { return params.value == '정상'},
+	            'rag-grey-outer': function(params) { return params.value == '대기중'},
+	            'rag-red-outer': function(params) { return params.value == '등록해제'}
+	        }},
 	{headerName: "_모뎀번호", field: "deviceId", hide:"true"},
-	{headerName: "본부", field: "parentBranchNm", width:140},
-	{headerName: "지사", field: "branchNm", width:140},
-	{headerName: "모뎀상태", field: "deviceStatusNm", width:140},
-	{headerName: "CPU(%)", field: "cpuUsage", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "본부", field: "parentBranchNm", width:200,	suppressSizeToFit: true},
+	{headerName: "지사", field: "branchNm", width:100,	suppressSizeToFit: true},
+	{headerName: "CPU(%)", field: "cpuUsage", width:150,suppressSizeToFit: true, 
+		cellStyle:{'text-align': "right"},
 		cellClassRules: {
 			'warning-green': function(params) { return params.value <= 50 && params.value != null},
             'warning-yellow': function(params) { return params.value > 50 && params.value <= 70},
@@ -313,7 +333,8 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "Memory(%)", field: "ramUsage", width:170, cellStyle:{'text-align': "right"},
+	{headerName: "Memory(%)", field: "ramUsage", width:170,suppressSizeToFit: true, 
+    	cellStyle:{'text-align': "right"},
 		cellClassRules: {
             'warning-green': function(params) { return params.value <= 50 && params.value != null},
             'warning-yellow': function(params) { return params.value > 50 && params.value <= 70},
@@ -322,7 +343,8 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "RSRP(dBm)", field: "rsrp", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "RSRP(dBm)", field: "rsrp", width:150,suppressSizeToFit: true,
+    	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -80 && params.value != null},
                'warning-yellow': function(params) { return params.value < -80 && params.value >= -90},
@@ -331,7 +353,8 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "RSRQ(dB)", field: "rsrq", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "RSRQ(dB)", field: "rsrq", width:150,suppressSizeToFit: true,
+    	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -10 && params.value != null},
                'warning-yellow': function(params) { return params.value < -10 && params.value >= -15},
@@ -340,7 +363,8 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "SNR(dB)", field: "ssnr", width:150, cellStyle:{'text-align': "right"},
+	{headerName: "SNR(dB)", field: "ssnr", width:150,suppressSizeToFit: true,
+    	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= 20 && params.value != null},
                'warning-yellow': function(params) { return params.value >= 13 && params.value < 20},
@@ -349,8 +373,8 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "최종 통신일자", field: "usageTime"},
-	{headerName: "등록일자", field: "saveTime"}
+	{headerName: "최종 통신일자", field: "usageTime", width:150,suppressSizeToFit: true},
+	{headerName: "등록일자", field: "saveTime", width:150,suppressSizeToFit: true}
 ];
 
 //device type
@@ -475,6 +499,7 @@ function successResultHandler(data, status) {
 	
 	dataGrid.setData(data.resultGrid);
 	gridPage(data.totalCount, dataPerPage, 10, currentPage);
+    dataGrid.autoSizeAll();
 }
 
 function init() {
