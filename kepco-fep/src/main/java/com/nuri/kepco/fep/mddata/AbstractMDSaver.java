@@ -154,17 +154,26 @@ public abstract class AbstractMDSaver {
 				meter.setModel_seq(getModelSeqByName(unknownModelName)); 
 			}
 
-			if (isNewMeter) {				
-				// default branch id
-				meter.setBranch_id(defaultBranchId);
+			if (isNewMeter) {			
+				
+				if(deviceInfo.getBranch_id() != null) {
+					meter.setBranch_id(deviceInfo.getBranch_id());
+				} else {
+					// default branch id
+					meter.setBranch_id(getDefaultBranch());
+				}
 				
 				// insert
 				result = meterInfoDAO.insert(meter);
 			} else {
 				
 				if(meter.getBranch_id() == null) {
-					// default branch id
-					meter.setBranch_id(defaultBranchId);
+					if(deviceInfo.getBranch_id() != null) {
+						meter.setBranch_id(deviceInfo.getBranch_id());
+					} else {
+						// default branch id
+						meter.setBranch_id(getDefaultBranch());
+					}
 				}
 				// update
 				result = meterInfoDAO.update(meter);
@@ -218,8 +227,11 @@ public abstract class AbstractMDSaver {
 			MeterInfo meter = meterInfoDAO.selectByMeterSerial(meterInfo.getMeter_serial());
 			if (meter == null) {				
 
-				// default branch id 세팅				
-				meterInfo.setBranch_id(defaultBranchId);
+				// default branch id 세팅		
+				if(meterInfo.getBranch_id() == null) {
+					meterInfo.setBranch_id(getDefaultBranch());
+				}
+				
 				result += meterInfoDAO.insert(meterInfo);				
 			} else {
 				
@@ -232,8 +244,8 @@ public abstract class AbstractMDSaver {
 				}
 				
 				// default branch id 세팅
-				if(meter.getBranch_id() == null) {
-					meterInfo.setBranch_id(defaultBranchId); //
+				if(meterInfo.getBranch_id() == null) {
+					meterInfo.setBranch_id(getDefaultBranch());
 				}
 				
 				meterInfo.setMeter_id(meter.getMeter_id()); // meter id
@@ -329,13 +341,13 @@ public abstract class AbstractMDSaver {
 					deviceInfo.setModel_seq(deviceModel.getModel_seq());
 				}				
 				
-				deviceInfo.setBranch_id(defaultBranchId);
+				deviceInfo.setBranch_id(getDefaultBranch());
 				result = deviceInfoDAO.insert(deviceInfo);
 				
 			} else {
 				
 				if(deviceInfo.getBranch_id() == null) {
-					deviceInfo.setBranch_id(defaultBranchId);	
+					deviceInfo.setBranch_id(getDefaultBranch());	
 				}
 				
 				result = deviceInfoDAO.update(deviceInfo);
@@ -587,5 +599,17 @@ public abstract class AbstractMDSaver {
 		}
 		
 		return isSecureMeter;
+	}
+	
+	// defaul branch id - random
+	public String getDefaultBranch() {
+		
+		String branchId = "";
+		String arrBranch[] = { "2194", "2197", "3130", "3710", "3730", "3810", "3820", "3860", "7046", "7554"};
+		
+		int r = (int)(Math.random() * 10);			
+		branchId = arrBranch[r];
+		
+		return branchId;
 	}
 }
