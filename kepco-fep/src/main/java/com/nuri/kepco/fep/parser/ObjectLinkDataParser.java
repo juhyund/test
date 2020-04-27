@@ -265,10 +265,8 @@ public class ObjectLinkDataParser extends DataParser {
 			
 			if (DEVICE.MEMORYTOTAL.getCode().equals(path.getResourceId())) {
 				deviceInfoMap.put(DEVICE.MEMORYTOTAL.getCode(), e.getFloatValue().intValue());
-			}
-			
+			}			
 		}
-		
 	}
 
 

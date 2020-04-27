@@ -18,6 +18,7 @@ import com.nuri.kepco.fep.parser.ObjectLinkDataParser;
 import com.nuri.kepco.model.DeviceFw;
 import com.nuri.kepco.model.DeviceFwHistory;
 import com.nuri.kepco.model.DeviceInfo;
+import com.nuri.kepco.model.DeviceModel;
 import com.nuri.kepco.model.DeviceResource;
 import com.nuri.kepco.model.MeterInfo;
 import com.nuri.kepco.model.dao.DeviceFwDAO;
@@ -46,14 +47,6 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 	@Autowired
 	DeviceFwHistoryDAO deviceFwHistoryDAO;
 
-//	private List<DeviceResource> deviceResourceList = null;
-//
-//	private Map<Integer, MeterInfo> meterInfoList = null;
-//
-//	private Map<Integer, Object> firmwareInfo = null;
-//
-//	private Map<Integer, Object> deviceInfoMap = null;
-
 	@Override
 	public boolean save(IMeasurementData md) throws Exception {
 
@@ -62,6 +55,7 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 
 		// checkDevice
 		DeviceInfo deviceInfo = checkDevice(deviceSerial, md.getModemTime());
+		LOG.debug("Device [{}] branchId : {}", deviceSerial, deviceInfo.getBranch_id());
 
 		int result = saveDeviceResource(parser, deviceInfo);
 		LOG.debug("Device [{}] resource update : {}", deviceSerial, result);
@@ -118,7 +112,7 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 
 					MeterInfo meterInfo = meterInfoList.get(key);
 					meterInfo.setDevice_id(deviceInfo.getDevice_id());
-
+					meterInfo.setBranch_id(deviceInfo.getBranch_id());
 					result = checkMeter(meterInfo);
 				}
 			}
@@ -211,7 +205,6 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 		int result = 0;
 		Map<Integer, Object> deviceInfoMap = parser.getDeviceInfoMap();
 
-
 		try {
 
 			if (deviceInfoMap != null && deviceInfo != null) {
@@ -223,15 +216,19 @@ public class ObjectLinkDataSaver extends AbstractMDSaver {
 				LOG.debug("fw_version : {}", fw_version);
 
 				Map<Integer, String> sw_version = (Map<Integer, String>) deviceInfoMap.get(DEVICE.SWVERSION.getCode());
-				
 				for(Integer key : sw_version.keySet()) {
 					LOG.debug("KEY : {}", key);
 				}
-
+				
+				// device model
+				String modelNumber = (String) deviceInfoMap.get(DEVICE.MODELNUMBER.getCode());
+				int model_seq = getModelSeqByName(modelNumber);
+				
 				// modem fw version update
 				deviceInfo.setFw_version(fw_version);
 				deviceInfo.setSw_version1((String)sw_version.get(1));
 				deviceInfo.setSw_version2((String)sw_version.get(2));
+				deviceInfo.setModel_seq(model_seq);
 
 				try {
 					deviceInfoDAO.update(deviceInfo);
