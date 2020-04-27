@@ -187,11 +187,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<th class="text-navy" colspan="5">순방향</th>
 												</tr> -->
 												<tr>
-													<th></th>
-													<th>합계</th>
-													<th>중부하</th>
-													<th>최대부하</th>
-													<th>경부하</th>
+													<th style="width:20%"></th>
+													<th style="width:20%">합계</th>
+													<th style="width:20%">중부하</th>
+													<th style="width:20%">최대부하</th>
+													<th style="width:20%">경부하</th>
 												</tr>
 												<tr>
 													<th>유효전력량(kWh)</td>
