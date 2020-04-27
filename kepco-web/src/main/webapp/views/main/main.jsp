@@ -49,16 +49,6 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 		<div id="wrapper">
 			<div id="page-wrapper" style="width: 100%" class="gray-bg">
 				<!-- navigator -->
-				<div class="row wrapper page-heading" style="padding: 5px">
-					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">Dashboard</h3>
-					</div>
-					<div class="col-lg-2">
-						<ol class="breadcrumb" style="float: right; margin-top: 10px;">
-						</ol>
-					</div>
-				</div>
-				<!-- navigator -->
 				<!-- body -->
 				<div class="wrapper wrapper-content ">
 					<div class="row">
