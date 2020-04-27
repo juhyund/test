@@ -230,6 +230,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.error("e", e);
 			}
 			
 		}
