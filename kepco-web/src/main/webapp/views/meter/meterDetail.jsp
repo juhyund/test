@@ -573,7 +573,7 @@ function successResultHandler(data, status) {
 var winObj;
 function popupObisCode(){ //검침스케줄
 
-	var opts="width=1000, height=550,left=200, top=200, resizable=no, toolbar=yes";
+	var opts="width=1000, height=750,left=200, top=200, resizable=no, toolbar=yes";
 	if(winObj)
         winObj.close();
 	var param = "?meter_type="+meterTypeCode;
@@ -583,7 +583,7 @@ function popupObisCode(){ //검침스케줄
 
 function popupObisCode2(){ //미터설정
 	
-	var opts="width=1000, height=550,left=200, top=200, resizable=no, toolbar=yes";
+	var opts="width=1000, height=750,left=200, top=200, resizable=no, toolbar=yes";
 	if(winObj)
         winObj.close();
 	var param = "?meter_type="+meterTypeCode;
