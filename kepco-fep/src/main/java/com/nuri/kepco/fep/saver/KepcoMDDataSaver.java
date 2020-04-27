@@ -212,6 +212,8 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 				
 				if(meterInfo != null) {
 					
+					LOG.debug("key : {}", key);
+					
 					String obis_code = key.substring(0, 12);
 					String class_id = key.substring(12, 16);
 					String attribute_no = key.substring(16, 18);
@@ -230,6 +232,7 @@ public class KepcoMDDataSaver extends AbstractMDSaver {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.error("e", e);
 			}
 			
 		}
