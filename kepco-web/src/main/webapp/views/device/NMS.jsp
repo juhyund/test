@@ -323,7 +323,7 @@ var columnDefs = [
 	{headerName: "_모뎀번호", field: "deviceId", hide:"true"},
 	{headerName: "본부", field: "parentBranchNm", width:200,	suppressSizeToFit: true},
 	{headerName: "지사", field: "branchNm", width:100,	suppressSizeToFit: true},
-	{headerName: "CPU(%)", field: "cpuUsage", width:150,suppressSizeToFit: true, 
+	{headerName: "CPU(%)", field: "cpuUsage", width:150,
 		cellStyle:{'text-align': "right"},
 		cellClassRules: {
 			'warning-green': function(params) { return params.value <= 50 && params.value != null},
@@ -333,7 +333,7 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "Memory(%)", field: "ramUsage", width:170,suppressSizeToFit: true, 
+	{headerName: "Memory(%)", field: "ramUsage", width:170,
     	cellStyle:{'text-align': "right"},
 		cellClassRules: {
             'warning-green': function(params) { return params.value <= 50 && params.value != null},
@@ -343,7 +343,7 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "RSRP(dBm)", field: "rsrp", width:150,suppressSizeToFit: true,
+	{headerName: "RSRP(dBm)", field: "rsrp", width:150,
     	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -80 && params.value != null},
@@ -353,7 +353,7 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "RSRQ(dB)", field: "rsrq", width:150,suppressSizeToFit: true,
+	{headerName: "RSRQ(dB)", field: "rsrq", width:150,
     	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -10 && params.value != null},
@@ -363,7 +363,7 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "SNR(dB)", field: "ssnr", width:150,suppressSizeToFit: true,
+	{headerName: "SNR(dB)", field: "ssnr", width:150,
     	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= 20 && params.value != null},

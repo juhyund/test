@@ -127,7 +127,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<!--  start : payload_area  -->
 								<div>
 									<div style="width: 99%; height: 250px margin: 40px 0px 0px 0px">
-										<h3><textarea id="payload" style=" width: 100%;  height: 240px; font-size: 25px; font-weight: bold;" readonly></textarea></h3>
+										<h3>
+											<textarea id="payload" style=" width: 100%;  height: 240px; font-size: 25px; font-weight: bold;" readonly></textarea>
+										</h3>
 									</div>
 								</div>
 								<!--  end : payload_area  -->
@@ -190,7 +192,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 			$('#device_serial'	).text(data.resultGrid[0].device_serial);
 			$('#last_comm_dt'	).text(data.resultGrid[0].last_comm_dt);
 			
-			$('#payload'	    ).text(data.resultGrid[0].payload);
+			$('#payload'	    ).text(data.resultGrid[0].obis_code_descr+": "+data.resultGrid[0].payload);
 			$('#obis_code_descr').text(data.resultGrid[0].obis_code_descr);
 			
 		}
