@@ -133,7 +133,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js" charset="UTF-8"></script>
 <%-- <script src="<%=COMMON_PATH_JS%>/icheckbox.css"></script> --%>
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
-<link href="<%=COMMON_PATH_CSS%>/style.css?ver=1" rel="stylesheet">
+<link href="<%=COMMON_PATH_CSS%>/style.css" rel="stylesheet">
 </head>
 <body>
 <!--  wrapper -->
