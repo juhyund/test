@@ -97,10 +97,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</thead>
 							<tbody>
 								<tr>
-									<td><h3 id = "meter_serial"></h3></td>
-									<td><h3 id = "device_serial"></h3></td>
-									<td><h3 id = "meter_type"></h3></td>
-									<td><h3 id = "last_comm_dt"></h3></td>
+									<td><h2 id = "meter_serial"></h2></td>
+									<td><h2 id = "device_serial"></h2></td>
+									<td><h2 id = "meter_type"></h2></td>
+									<td><h2 id = "last_comm_dt"></h2></td>
 								</tr>
 							</tbody>
 						</table>

@@ -199,11 +199,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																</thead>
 																<tbody>
 																	<tr>
-																		<td><h3 id = "device_serial_tab2"></h3></td>
-																		<td><h3 id = "meter_type_tab2"></h3></td>
-																		<td><h3 id = "meter_serial_tab2"></h3></td>
-																		<td><h3 id = "lp_period_tab2"></h3></td>
-																		<td><h3 id = "net_metering_tab2"></h3></td>
+																		<td><h2 id = "device_serial_tab2"></h2></td>
+																		<td><h2 id = "meter_type_tab2"></h2></td>
+																		<td><h2 id = "meter_serial_tab2"></h2></td>
+																		<td><h2 id = "lp_period_tab2"></h2></td>
+																		<td><h2 id = "net_metering_tab2"></h2></td>
 																	</tr>
 																</tbody>
 															</table>
@@ -316,11 +316,11 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 																</thead>
 																<tbody>
 																	<tr>
-																		<td><h3 id = "device_serial_tab3"></h3></td>
-																		<td><h3 id = "meter_type_tab3"></h3></td>
-																		<td><h3 id = "meter_serial_tab3"></h3></td>
-																		<td><h3 id = "lp_period_tab3"></h3></td>
-																		<td><h3 id = "net_metering_tab3"></h3></td>
+																		<td><h2 id = "device_serial_tab3"></h2></td>
+																		<td><h2 id = "meter_type_tab3"></h2></td>
+																		<td><h2 id = "meter_serial_tab3"></h2></td>
+																		<td><h2 id = "lp_period_tab3"></h2></td>
+																		<td><h2 id = "net_metering_tab3"></h2></td>
 																	</tr>
 																</tbody>
 															</table>
