@@ -92,14 +92,11 @@
 	#nmsCodeGuide tr {
 	    background-color: #fff;
 	}
-	
-	#nmsCodeGuide tr:hover {
-	    background-color: #ccc;
-	}
-	
+
 	#nmsCodeGuide th {
 	    background-color: #343a40;
 	    font-weight: bold;
+	    border: solid 1px;
 	    color: white;
 	}
 	
@@ -115,14 +112,18 @@
 	#nmsCodeGuide th, #nmsCodeGuide td {
 	    padding: 3px 5px;
 	    border: solid 1px;
+	    text-align: center;
+	}
+	#nmsCodeGuide td {
+	    color: #000;
 	}
 	
-	#nmsCodeGuide td:hover {
-	    cursor: pointer;
+	.status {
+		width: 80px;
 	}
-	
-
-		
+	.data {
+		width: 160px;
+	}	
 	
 </style>
 <script>
@@ -218,13 +219,13 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div>
 						<table id="nmsCodeGuide" style="display: none;">
 						<tr>
-						    <th>상태</th>
-						    <th>CPU/Memory</th>
-						    <th style="width: 90px; background-color: white;"></th>
-						    <th>상태</th>
-						    <th>RSRP(dBm)</th>
-						    <th>RSRQ(dB)</th>
-						    <th>SNR(dB)</th>
+						    <th class="status" style="border-left: solid 1px #000; border-top: solid 1px #000">상태</th>
+						    <th class="data" style="border-right: solid 1px #000; border-top: solid 1px #000">CPU/Memory</th>
+						    <th style="width: 70px; background-color: white; border-right: solid 1px #000;"></th>
+						    <th class="status" style="border-left: solid 1px #000; border-top: solid 1px #000">상태</th>
+						    <th class="data" style="border-top: solid 1px #000">RSRP(dBm)</th>
+						    <th class="data" style="border-top: solid 1px #000">RSRQ(dB)</th>
+						    <th class="data" style="border-right: solid 1px #000; border-top: solid 1px #000">SNR(dB)</th>
 						</tr>
 						<tr>
 						    <td class="warning-green td-custom">정상</td>

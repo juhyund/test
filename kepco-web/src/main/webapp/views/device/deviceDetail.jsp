@@ -153,7 +153,7 @@ function firmwarelist() {
 						<li class="nav-item"><a class="nav-link active"
 							data-toggle="tab" href="#info" ng-click="deviceInfo()">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#firmware" ng-click="firmware()">소프트웨어 업그레이드</a></li>
+							href="#firmware" ng-click="firmware()">SW 업그레이드</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#object" ng-click="objectModel()">오브젝트 정보</a></li>
 						<!-- 
@@ -201,7 +201,7 @@ function firmwarelist() {
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:100px; display:none; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
-										<th class="device-detail-head">소프트웨어 버전</th>
+										<th class="device-detail-head">SW 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:100px; display:none; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
 									</tr>
 									<tr>
@@ -244,11 +244,11 @@ function firmwarelist() {
 												<tr class="table-border">
 													<td width="90%">
 														<div class="form-group row" style="margin-left: 0px">
-															<label class="col-sm-2 col-form-label">소프트웨어 명</label>
+															<label class="col-sm-2 col-form-label">SW 명</label>
 															<div class="col-lg-4">
 																<input type="text" class="form-control" name="fw_file_nm_b" id="fw_file_nm_b" style="height: 38px; display: inline;">
 															</div>
-															<label class="col-sm-2 col-form-label">소프트웨어 버전</label>
+															<label class="col-sm-2 col-form-label">SW 버전</label>
 															<div class="col-lg-4">
 																<input type="text" class="form-control" name="fw_version_b" id="fw_version_b" style="height: 38px; display: inline;">
 															</div>

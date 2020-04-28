@@ -89,7 +89,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 															<option value=''>선택</option>
 														</select>
 													</div>
-													<label class="col-sm-1 col-form-label">소프트웨어 버전</label>
+													<label class="col-sm-1 col-form-label">SW 버전</label>
 													<div class="col-lg-3">
 														<input type="text" class="form-control" name="fw_version" id="fw_version" style="height: 33px; vertical-align: top; display: inline;">
 													</div>
@@ -210,7 +210,7 @@ var columnDefs = [
 	{headerName: "본부", field: "parent_branch_nm"},
 	{headerName: "지사", field: "branch_nm"},
 	/* {headerName: "모뎀모델", field: "model_nm"}, */
-	{headerName: "소프트웨어 버전", field: "fw_version"},
+	{headerName: "SW 버전", field: "fw_version"},
 	{headerName: "제조사", field: "vendor_nm"},
 	{headerName: "모뎀상태", field: "code_local_nm",
         cellClassRules: {
