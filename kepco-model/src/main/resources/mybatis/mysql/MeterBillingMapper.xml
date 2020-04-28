@@ -67,31 +67,31 @@
 			, device_serial
 			, DATE_FORMAT(CONCAT(a.billing_dt,'00'),'${prop.dt}') AS billing_dt
 			, a.billing_dt AS billing_dt_int
-			, ifnull(active_imp_tot, active_exp_tot) as active_imp_tot		
-			, ifnull(apprent_imp_tot, apprent_exp_tot) as apprent_imp_tot 			
-			, ifnull(lead_imp_tot, lead_exp_tot) as lead_imp_tot			
-			, ifnull(lagging_imp_tot, lagging_exp_tot) as lagging_imp_tot			
-			, ifnull(pf_imp_tot, pf_exp_tot) as pf_imp_tot
-			, ifnull(active_imp_rate1, active_exp_rate1) as active_imp_rate1			
-			, ifnull(apprent_imp_rate1, apprent_exp_rate1) as apprent_imp_rate1			
-			, ifnull(lead_imp_rate1, lead_exp_rate1) as lead_imp_rate1		
-			, ifnull(lagging_imp_rate1, lagging_exp_rate1) as lagging_imp_rate1			
-			, ifnull(pf_imp_rate1, pf_exp_rate1) as pf_imp_rate1	
-			, ifnull(active_imp_rate2, active_exp_rate2) as active_imp_rate2			
-			, ifnull(apprent_imp_rate2, apprent_exp_rate2) as apprent_imp_rate2			
-			, ifnull(lead_imp_rate2, lead_exp_rate2) as lead_imp_rate2		
-			, ifnull(lagging_imp_rate2, lagging_exp_rate2) as lagging_imp_rate2			
-			, ifnull(pf_imp_rate2, pf_exp_rate2) as pf_imp_rate2
-			, ifnull(active_imp_rate3, active_exp_rate3) as active_imp_rate3			
-			, ifnull(apprent_imp_rate3, apprent_exp_rate3) as apprent_imp_rate3			
-			, ifnull(lead_imp_rate3, lead_exp_rate3) as lead_imp_rate3		
-			, ifnull(lagging_imp_rate3, lagging_exp_rate3) as lagging_imp_rate3			
-			, ifnull(pf_imp_rate3, pf_exp_rate3) as pf_imp_rate3
-			, ifnull(active_imp_rate4, active_exp_rate4) as active_imp_rate4			
-			, ifnull(apprent_imp_rate4, apprent_exp_rate4) as apprent_imp_rate4			
-			, ifnull(lead_imp_rate4, lead_exp_rate4) as lead_imp_rate4		
-			, ifnull(lagging_imp_rate4, lagging_exp_rate4) as lagging_imp_rate4			
-			, ifnull(pf_imp_rate4, pf_exp_rate4) as pf_imp_rate4
+			, active_imp_tot		
+			, apprent_imp_tot 			
+			, lead_imp_tot			
+			, lagging_imp_tot			
+			, pf_imp_tot
+			, active_imp_rate1			
+			, apprent_imp_rate1			
+			, lead_imp_rate1		
+			, lagging_imp_rate1			
+			, pf_imp_rate1	
+			, active_imp_rate2			
+			, apprent_imp_rate2			
+			, lead_imp_rate2		
+			, lagging_imp_rate2			
+			, pf_imp_rate2
+			, active_imp_rate3			
+			, apprent_imp_rate3			
+			, lead_imp_rate3		
+			, lagging_imp_rate3			
+			, pf_imp_rate3
+			, active_imp_rate4			
+			, apprent_imp_rate4			
+			, lead_imp_rate4		
+			, lagging_imp_rate4			
+			, pf_imp_rate4
 			, active_exp_tot			
 			, apprent_exp_tot			
 			, lead_exp_tot			
@@ -145,31 +145,31 @@
 			, device_serial
 			, DATE_FORMAT(CONCAT(a.billing_dt,'00'),'${prop.dt}') AS billing_dt
 			, a.billing_dt AS billing_dt_int
-			, ifnull(active_imp_tot, active_exp_tot) as active_imp_tot		
-			, ifnull(apprent_imp_tot, apprent_exp_tot) as apprent_imp_tot 			
-			, ifnull(lead_imp_tot, lead_exp_tot) as lead_imp_tot			
-			, ifnull(lagging_imp_tot, lagging_exp_tot) as lagging_imp_tot			
-			, ifnull(pf_imp_tot, pf_exp_tot) as pf_imp_tot
-			, ifnull(active_imp_rate1, active_exp_rate1) as active_imp_rate1			
-			, ifnull(apprent_imp_rate1, apprent_exp_rate1) as apprent_imp_rate1			
-			, ifnull(lead_imp_rate1, lead_exp_rate1) as lead_imp_rate1		
-			, ifnull(lagging_imp_rate1, lagging_exp_rate1) as lagging_imp_rate1			
-			, ifnull(pf_imp_rate1, pf_exp_rate1) as pf_imp_rate1	
-			, ifnull(active_imp_rate2, active_exp_rate2) as active_imp_rate2			
-			, ifnull(apprent_imp_rate2, apprent_exp_rate2) as apprent_imp_rate2			
-			, ifnull(lead_imp_rate2, lead_exp_rate2) as lead_imp_rate2		
-			, ifnull(lagging_imp_rate2, lagging_exp_rate2) as lagging_imp_rate2			
-			, ifnull(pf_imp_rate2, pf_exp_rate2) as pf_imp_rate2
-			, ifnull(active_imp_rate3, active_exp_rate3) as active_imp_rate3			
-			, ifnull(apprent_imp_rate3, apprent_exp_rate3) as apprent_imp_rate3			
-			, ifnull(lead_imp_rate3, lead_exp_rate3) as lead_imp_rate3		
-			, ifnull(lagging_imp_rate3, lagging_exp_rate3) as lagging_imp_rate3			
-			, ifnull(pf_imp_rate3, pf_exp_rate3) as pf_imp_rate3
-			, ifnull(active_imp_rate4, active_exp_rate4) as active_imp_rate4			
-			, ifnull(apprent_imp_rate4, apprent_exp_rate4) as apprent_imp_rate4			
-			, ifnull(lead_imp_rate4, lead_exp_rate4) as lead_imp_rate4		
-			, ifnull(lagging_imp_rate4, lagging_exp_rate4) as lagging_imp_rate4			
-			, ifnull(pf_imp_rate4, pf_exp_rate4) as pf_imp_rate4
+			, active_imp_tot		
+			, apprent_imp_tot 			
+			, lead_imp_tot			
+			, lagging_imp_tot			
+			, pf_imp_tot
+			, active_imp_rate1			
+			, apprent_imp_rate1			
+			, lead_imp_rate1		
+			, lagging_imp_rate1			
+			, pf_imp_rate1	
+			, active_imp_rate2			
+			, apprent_imp_rate2			
+			, lead_imp_rate2		
+			, lagging_imp_rate2			
+			, pf_imp_rate2
+			, active_imp_rate3			
+			, apprent_imp_rate3			
+			, lead_imp_rate3		
+			, lagging_imp_rate3			
+			, pf_imp_rate3
+			, active_imp_rate4			
+			, apprent_imp_rate4			
+			, lead_imp_rate4		
+			, lagging_imp_rate4			
+			, pf_imp_rate4
 			, active_exp_tot			
 			, apprent_exp_tot          
 			, lead_exp_tot			
