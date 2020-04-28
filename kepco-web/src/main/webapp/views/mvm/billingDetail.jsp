@@ -181,17 +181,17 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 								<!--  start : table_area  -->
 								<div name="table_area">
 									<div class="row" style="width: 100%; margin: 40px 0px 0px 0px">
-										<table name="유효전력량 " class="table table-bordered white-bg billing-detail-table" style="width:100%">
+										<table name="순방향 " class="table table-bordered white-bg billing-detail-table" style="width: 49.5%">
 											<thead>
-												<!-- <tr>
-													<th class="text-navy" colspan="5">순방향</th>
-												</tr> -->
 												<tr>
-													<th style="width:20%"></th>
-													<th style="width:20%">합계</th>
-													<th style="width:20%">중부하</th>
-													<th style="width:20%">최대부하</th>
-													<th style="width:20%">경부하</th>
+													<th class="text-navy" colspan="5">순방향</th>
+												</tr>
+												<tr>
+													<th></th>
+													<th>합계</th>
+													<th>중부하</th>
+													<th>최대부하</th>
+													<th>경부하</th>
 												</tr>
 												<tr>
 													<th>유효전력량(kWh)</td>
@@ -230,7 +230,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 												</tr>
 											</thead>
 										</table>
-										<!-- <table style="width: 1%"></table>
+										<table style="width: 1%"></table>
 										<table name="table2" class="table table-bordered white-bg billing-detail-table" style="width: 49.5%">
 											<thead>
 												<tr>
@@ -279,7 +279,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 													<td id = "PF_EXP_T3"></td>
 												</tr>
 											</thead>
-										</table> -->
+										</table>
 									</div>
 									<button class="btn btn-outline btn-primary m-t-sm" style="margin-right: 5px; height: 35px; float: right" type="button" onclick="javascript:history.back(-1)">
 										<i class="fa fa-undo"> 목록으로 돌아가기</i>
