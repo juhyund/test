@@ -312,7 +312,7 @@ public class KepcoDLMSParser {
 				
 				LOG.debug("MEASUREMENT_DATE[" + billingDay + "]"); // 정기검침일(미터정보 업데이트)
 				mdData.setBillingDay(billingDay);
-				mdData.getDynamicDatas().put(OBIS.MEASUREMENT_DATE.getCode() + "001604", billingDay);
+//				mdData.getDynamicDatas().put(OBIS.MEASUREMENT_DATE.getCode() + "001604", billingDay);
 			}
 			
 			map = (Map<String, Object>) result.get(OBIS.LP_INTERVAL.getCode());
@@ -322,7 +322,7 @@ public class KepcoDLMSParser {
 					lpInterval = Integer.parseInt(String.valueOf(obj));
 				LOG.debug("LP INTERVAL[" + lpInterval + "]");
 				mdData.setLpPeriod(lpInterval);
-				mdData.getDynamicDatas().put(OBIS.LP_INTERVAL.getCode() + "000302", lpInterval);
+//				mdData.getDynamicDatas().put(OBIS.LP_INTERVAL.getCode() + "000302", lpInterval);
 			}
 			
 			map = (Map<String, Object>) result.get(OBIS.ACTIVEPOWER_CONSTANT.getCode());
@@ -418,7 +418,7 @@ public class KepcoDLMSParser {
 				if (obj != null) {
 					Double activeConstant = Double.parseDouble(String.valueOf(obj));					
 					LOG.debug("ACTIVEPOWER_CONSTANT[" + activeConstant + "]");
-					mdData.getDynamicDatas().put(OBIS.ACTIVEPOWER_CONSTANT.getCode() + "000302", activeConstant);
+//					mdData.getDynamicDatas().put(OBIS.ACTIVEPOWER_CONSTANT.getCode() + "000302", activeConstant);
 				}
 			}
 			
