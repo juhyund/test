@@ -14,6 +14,8 @@ public class MeterData extends CommonObj {
 	private String meter_id;
 	private String read_dt;
 	private String obis_code;
+	private String class_id;
+	private String attribute_no;
 	private String mtime;
 	private String itime;
 	private String payload;
