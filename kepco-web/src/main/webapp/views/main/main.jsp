@@ -130,7 +130,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="row">
 						<div class="col-lg-4">
 
-							<table class="table table-bordered white-bg">
+							<table class="table table-bordered white-bg" style="color: #000">
 								<thead>
 									<tr>
 										<th width="170" class="text-center">통신 상태</th>
@@ -171,7 +171,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						</div>
 						<div class="col-lg-4">
 
-							<table class="table table-bordered white-bg">
+							<table class="table table-bordered white-bg" style="color: #000">
 								<thead>
 									<tr>
 										<th class="text-center">계기타입</th>
@@ -186,7 +186,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						</div>
 						<div class="col-lg-4">
 
-							<table class="table table-bordered white-bg">
+							<table class="table table-bordered white-bg" style="color: #000">
 								<thead>
 									<tr>
 										<th width="100" class="text-center">제어명령</th>
