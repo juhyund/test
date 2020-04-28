@@ -147,8 +147,8 @@ showLoading();
 	aria-labelledby="fwListModalLabel" aria-hidden="true">
 	<div class="modal-dialog" style="max-width: 700px">
 		<div class="modal-content">
-			<div class="modal-header">				
-				<h4 class="modal-title">소프트웨어 파일 목록</h4>
+			<div class="modal-header">
+				<span class="modal-title" style="font-size: 20px; font-weight: bold">SW 파일 목록</span>		
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
 			</div>
@@ -207,8 +207,8 @@ showLoading();
 	aria-labelledby="fwUploadModalLabel" aria-hidden="true">
 	<div class="modal-dialog" style="max-width: 420px">
 		<div class="modal-content">
-			<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
-				<h4 class="modal-title">파일 업로드</h4>
+			<div class="modal-header" style="background-color: #1ab394; color: #FFF">
+				<span class="modal-title" style="font-size: 20px; font-weight: bold">파일 업로드</span>	
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
 			</div>
@@ -244,7 +244,7 @@ showLoading();
 	<div class="modal-dialog" style="max-width: 850px">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
-				<h4 class="modal-title">소프트웨어 업그레이드</h4>
+				<span class="modal-title" style="font-size: 20px; font-weight: bold">SW 업그레이드</span>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
 			</div>

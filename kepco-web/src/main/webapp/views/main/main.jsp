@@ -130,32 +130,32 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div class="row">
 						<div class="col-lg-4">
 
-							<table class="table table-bordered white-bg">
+							<table class="table table-bordered white-bg" style="color: #000">
 								<thead>
 									<tr>
-										<th class="text-center">통신 상태</th>
+										<th width="170" class="text-center">통신 상태</th>
 										<th width="150" class="text-right">건수</th>
 										<th width="150" class="text-right">통신율(%)</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td class="text-center">24H 이내</td>
+										<td><i class="fas fa-circle" style="color: #0009FF"></i>&nbsp;24H 이내</td>
 										<td class="text-right" id="d1_cnt"></td>
 										<td class="text-right" id="d1_rate"></td>
 									</tr>
 									<tr>
-										<td class="text-center">24H - 48H</td>
+										<td><i class="fas fa-circle" style="color: #FFE510"></i>&nbsp;24H - 48H</td>
 										<td class="text-right" id="d2_cnt"></td>
 										<td class="text-right" id="d2_rate"></td>
 									</tr>
 									<tr>
-										<td class="text-center">48H 초과</td>
+										<td><i class="fas fa-circle" style="color: #FF0900"></i>&nbsp;48H 초과</td>
 										<td class="text-right" id="d3_cnt"></td>
 										<td class="text-right" id="d3_rate"></td>
 									</tr>
 									<tr>
-										<td class="text-center">통신기록 없음</td>
+										<td><i class="fas fa-circle" style="color: #7A753F"></i>&nbsp;통신기록 없음</td>
 										<td class="text-right" id="d4_cnt"></td>
 										<td class="text-right" id="d4_rate"></td>
 									</tr>
@@ -171,7 +171,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						</div>
 						<div class="col-lg-4">
 
-							<table class="table table-bordered white-bg">
+							<table class="table table-bordered white-bg" style="color: #000">
 								<thead>
 									<tr>
 										<th class="text-center">계기타입</th>
@@ -186,7 +186,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 						</div>
 						<div class="col-lg-4">
 
-							<table class="table table-bordered white-bg">
+							<table class="table table-bordered white-bg" style="color: #000">
 								<thead>
 									<tr>
 										<th width="100" class="text-center">제어명령</th>

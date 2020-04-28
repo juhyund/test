@@ -121,9 +121,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</thead>
 							<tbody>
 								<tr>
-									<td><h3>${deviceSerial}</h3></td>
+									<td><h2>${deviceSerial}</h2></td>
 									<%-- <td><h3>${deviceId}</h3></td> --%>
-									<td><h3>${deviceStatusNm}</h3></td>
+									<td><h2>${deviceStatusNm}</h2></td>
 								</tr>
 							</tbody>
 						</table>

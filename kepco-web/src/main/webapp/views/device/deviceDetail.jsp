@@ -153,7 +153,7 @@ function firmwarelist() {
 						<li class="nav-item"><a class="nav-link active"
 							data-toggle="tab" href="#info" ng-click="deviceInfo()">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#firmware" ng-click="firmware()">소프트웨어 업그레이드</a></li>
+							href="#firmware" ng-click="firmware()">SW 업그레이드</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#object" ng-click="objectModel()">오브젝트 정보</a></li>
 						<!-- 
@@ -201,7 +201,7 @@ function firmwarelist() {
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:100px; display:none; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
-										<th class="device-detail-head">소프트웨어 버전</th>
+										<th class="device-detail-head">SW 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:100px; display:none; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
 									</tr>
 									<tr>
@@ -244,11 +244,11 @@ function firmwarelist() {
 												<tr class="table-border">
 													<td width="90%">
 														<div class="form-group row" style="margin-left: 0px">
-															<label class="col-sm-2 col-form-label">소프트웨어 명</label>
+															<label class="col-sm-2 col-form-label">SW 명</label>
 															<div class="col-lg-4">
 																<input type="text" class="form-control" name="fw_file_nm_b" id="fw_file_nm_b" style="height: 38px; display: inline;">
 															</div>
-															<label class="col-sm-2 col-form-label">소프트웨어 버전</label>
+															<label class="col-sm-2 col-form-label">SW 버전</label>
 															<div class="col-lg-4">
 																<input type="text" class="form-control" name="fw_version_b" id="fw_version_b" style="height: 38px; display: inline;">
 															</div>
@@ -483,7 +483,7 @@ function firmwarelist() {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
-					<h4 class="modal-title">Payload 상향/하향 속도 테스트</h4>
+					<span class="modal-title" style="font-size: 20px; font-weight: bold">Payload 상향/하향 속도 테스트</span>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>
@@ -522,7 +522,7 @@ function firmwarelist() {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
-					<h4 class="modal-title">CoAP PING</h4>
+					<h3 class="modal-title">CoAP PING</h3>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>
@@ -533,7 +533,7 @@ function firmwarelist() {
 							<tr>
 								<td>
 									<div class="form-group row">
-										<label class="col-lg-4 col-form-label" style="padding-left: 10px;">CoAP Ping</label>
+										<span class="modal-title" style="font-size: 20px; font-weight: bold">CoAP Ping</span>
 										<input type="text" class="form-control" name="sec" id="sec" style="width: 15%; height: 33px; vertical-align: top; display: inline;" value="5">
 										<label class="col-lg-1 col-form-label" style="padding-left: 10px;">초</label>
 									</div>
@@ -567,8 +567,8 @@ function firmwarelist() {
 		aria-labelledby="rebootModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header" style="background-color: #1ab394; color: #FFF">				
-					<h4 class="modal-title">Reset</h4>
+				<div class="modal-header" style="background-color: #1ab394; color: #FFF">
+					<span class="modal-title" style="font-size: 20px; font-weight: bold">Reset</span>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>
@@ -590,8 +590,8 @@ function firmwarelist() {
 		aria-labelledby="writeModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">				
-					<h4 class="modal-title" id="writeModalLabel"></h4>
+				<div class="modal-header">
+					<span class="modal-title" style="font-size: 20px; font-weight: bold" id="writeModalLabel"></span>	
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>

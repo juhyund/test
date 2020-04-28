@@ -92,14 +92,11 @@
 	#nmsCodeGuide tr {
 	    background-color: #fff;
 	}
-	
-	#nmsCodeGuide tr:hover {
-	    background-color: #ccc;
-	}
-	
+
 	#nmsCodeGuide th {
 	    background-color: #343a40;
 	    font-weight: bold;
+	    border: solid 1px;
 	    color: white;
 	}
 	
@@ -115,14 +112,18 @@
 	#nmsCodeGuide th, #nmsCodeGuide td {
 	    padding: 3px 5px;
 	    border: solid 1px;
+	    text-align: center;
+	}
+	#nmsCodeGuide td {
+	    color: #000;
 	}
 	
-	#nmsCodeGuide td:hover {
-	    cursor: pointer;
+	.status {
+		width: 85px;
 	}
-	
-
-		
+	.data {
+		width: 160px;
+	}	
 	
 </style>
 <script>
@@ -132,7 +133,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <script type="text/javascript" src="<%=COMMON_PATH_JS%>/common.js" charset="UTF-8"></script>
 <%-- <script src="<%=COMMON_PATH_JS%>/icheckbox.css"></script> --%>
 <script src="<%=COMMON_PATH_JS%>/resize_window.js"></script>
-<link href="<%=COMMON_PATH_CSS%>/style.css?ver=1" rel="stylesheet">
+<link href="<%=COMMON_PATH_CSS%>/style.css" rel="stylesheet">
 </head>
 <body>
 <!--  wrapper -->
@@ -218,46 +219,46 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 					<div>
 						<table id="nmsCodeGuide" style="display: none;">
 						<tr>
-						    <th>상태</th>
-						    <th>CPU/Memory</th>
-						    <th style="width: 90px; background-color: white;"></th>
-						    <th>상태</th>
-						    <th>RSRP(dBm)</th>
-						    <th>RSRQ(dB)</th>
-						    <th>SNR(dB)</th>
+						    <th class="status" style="border-left: solid 1px #000; border-top: solid 1px #000">상태</th>
+						    <th class="data" style="border-right: solid 1px #000; border-top: solid 1px #000">CPU/Memory</th>
+						    <th style="width: 70px; background-color: white; border-right: solid 1px #000;"></th>
+						    <th class="status" style="border-left: solid 1px #000; border-top: solid 1px #000">상태</th>
+						    <th class="data" style="border-top: solid 1px #000">RSRP(dBm)</th>
+						    <th class="data" style="border-top: solid 1px #000">RSRQ(dB)</th>
+						    <th class="data" style="border-right: solid 1px #000; border-top: solid 1px #000">SNR(dB)</th>
 						</tr>
 						<tr>
-						    <td class="warning-green td-custom">정상</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: lightgreen"></i>&nbsp;정상</td>
 						    <td><= 50%</td>
 						    <td class="border-bottom-color"></td>
-						    <td class="warning-green td-custom">정상</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: lightgreen"></i>&nbsp;정상</td>
 						    <td>>= (-80)</td>
 						    <td>>= (-10)</td>
 						    <td>>= (20)</td>
 						</tr>
 						<tr>
-						    <td class="warning-yellow td-custom">양호</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: yellow"></i>&nbsp;양호</td>
 						    <td>50% to 70%</td>
 						    <td class="border-bottom-color"></td>
-						    <td class="warning-yellow td-custom">양호</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: yellow"></i>&nbsp;양호</td>
 						    <td>(-80) to (-90)</td>
 						    <td>(-10) to (-15)</td>
 						    <td>(13) to (20)</td>
 						</tr>
 						<tr>
-						    <td class="warning-orange td-custom">경고</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: orange"></i>&nbsp;경고</td>
 						    <td>70% to 90%</td>
 						    <td class="border-bottom-color"></td>
-						    <td class="warning-orange td-custom">약함</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: orange"></i>&nbsp;약함</td>
 						    <td>(-90) to (-100)</td>
 						    <td>(-15) to (-20)</td>
 						    <td>(0) to (13)</td>
 						</tr>
 						<tr>
-						    <td class="warning-red td-custom">위험</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: red"></i>&nbsp;위험</td>
 						    <td>90% to 100%</td>
 						    <td class="border-bottom-color"></td>
-						    <td class="warning-red td-custom">불량</td>
+						    <td class="td-custom"><i class="fas fa-square" style="color: red"></i>&nbsp;불량</td>
 						    <td><=(-100)</td>
 						    <td><(-20)</td>
 						    <td><=(0)</td>
@@ -323,7 +324,7 @@ var columnDefs = [
 	{headerName: "_모뎀번호", field: "deviceId", hide:"true"},
 	{headerName: "본부", field: "parentBranchNm", width:200,	suppressSizeToFit: true},
 	{headerName: "지사", field: "branchNm", width:100,	suppressSizeToFit: true},
-	{headerName: "CPU(%)", field: "cpuUsage", width:150,suppressSizeToFit: true, 
+	{headerName: "CPU(%)", field: "cpuUsage", width:150,
 		cellStyle:{'text-align': "right"},
 		cellClassRules: {
 			'warning-green': function(params) { return params.value <= 50 && params.value != null},
@@ -333,7 +334,7 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "Memory(%)", field: "ramUsage", width:170,suppressSizeToFit: true, 
+	{headerName: "Memory(%)", field: "ramUsage", width:170,
     	cellStyle:{'text-align': "right"},
 		cellClassRules: {
             'warning-green': function(params) { return params.value <= 50 && params.value != null},
@@ -343,7 +344,7 @@ var columnDefs = [
             'warning-grey': function(params) { return params.value == null || params.value == ""}
         }
     },
-	{headerName: "RSRP(dBm)", field: "rsrp", width:150,suppressSizeToFit: true,
+	{headerName: "RSRP(dBm)", field: "rsrp", width:150,
     	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -80 && params.value != null},
@@ -353,7 +354,7 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "RSRQ(dB)", field: "rsrq", width:150,suppressSizeToFit: true,
+	{headerName: "RSRQ(dB)", field: "rsrq", width:150,
     	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= -10 && params.value != null},
@@ -363,7 +364,7 @@ var columnDefs = [
                'warning-grey': function(params) { return params.value == null || params.value == ""}
            }
     },
-	{headerName: "SNR(dB)", field: "ssnr", width:150,suppressSizeToFit: true,
+	{headerName: "SNR(dB)", field: "ssnr", width:150,
     	cellStyle:{'text-align': "right"},
    		cellClassRules: {
                'warning-green': function(params) { return params.value >= 20 && params.value != null},

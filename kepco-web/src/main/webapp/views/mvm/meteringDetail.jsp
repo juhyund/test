@@ -97,10 +97,10 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</thead>
 							<tbody>
 								<tr>
-									<td><h3 id = "meter_serial"></h3></td>
-									<td><h3 id = "device_serial"></h3></td>
-									<td><h3 id = "meter_type"></h3></td>
-									<td><h3 id = "last_comm_dt"></h3></td>
+									<td><h2 id = "meter_serial"></h2></td>
+									<td><h2 id = "device_serial"></h2></td>
+									<td><h2 id = "meter_type"></h2></td>
+									<td><h2 id = "last_comm_dt"></h2></td>
 								</tr>
 							</tbody>
 						</table>
@@ -185,6 +185,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 //var meter_id = $('#detail_meter_id').val();// ${meterId};
 var channelName = new Array();
 var channel_cnt = 0;
+var colwidth = 70;
 
 $(document).ready(function() {	
 	init();
@@ -216,6 +217,10 @@ var columnDefs = [
 function useChannelList(data, status) {
 	//미터가 사용하는 채널에 따라 유동적으로 헤더를 생성
 	channel_cnt = data.resultGrid.length;
+	var useSuppressSizeToFit = true;
+	if(channel_cnt<=4){
+		useSuppressSizeToFit = false;
+	}
 	
 	for(i=0;i<channel_cnt;i++){
 		//channelName[i]에 channel_idx가 i+1인 값이 들어감. 
@@ -223,8 +228,8 @@ function useChannelList(data, status) {
 		columnDefs.push({headerName: channelName[i], 
 						field: "c"+(i+1)+"_metervalue",
 						valueFormatter: numberFormatter,
-						width:70, 	
-						suppressSizeToFit: true,
+						suppressSizeToFit: useSuppressSizeToFit,
+						width:150,
 						cellStyle: { 'text-align': "right" }});
 	}
 	
