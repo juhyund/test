@@ -144,9 +144,7 @@ function firmwarelist() {
 				<!-- navigator -->
 				<div class="row wrapper page-heading" style="padding: 5px">
 					<div class="col-lg-10">
-						<h3 style="margin-top: 6px">모뎀 관리</h3>
-					</div>
-					<div class="col-lg-2">
+						<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> 모뎀 상세정보</h2>
 					</div>
 				</div>
 				<!-- navigator -->
@@ -155,7 +153,7 @@ function firmwarelist() {
 						<li class="nav-item"><a class="nav-link active"
 							data-toggle="tab" href="#info" ng-click="deviceInfo()">기본정보</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#firmware" ng-click="firmware()">소프트웨어 업그레이드</a></li>
+							href="#firmware" ng-click="firmware()">SW 업그레이드</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#object" ng-click="objectModel()">오브젝트 정보</a></li>
 						<!-- 
@@ -179,18 +177,18 @@ function firmwarelist() {
 							<table class="table table-bordered white-bg" style="width: 100%">
 								<thead>
 									<tr>
+										<th class="device-detail-head">모뎀번호</th>
+										<td class="device-detail-body"><span id="device_serial_span" style="display: none;">{{device_info.device_serial}}</span></td>
+										<th class="device-detail-head">모뎀상태</th>
+										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
+									</tr>
+									<tr>
 										<th class="device-detail-head">지역본부</th>
 										<td class="device-detail-body"><span id="branch_span" style="display: none;">{{device_info.parent_branch_nm}} {{device_info.branch_nm}}</span></td>
 										<th class="device-detail-head">모뎀IP/PORT</th>
 										<td class="device-detail-body"><input type="text" id="di_ip" style="width:100px; display:none; border: none" value="{{device_info.ip}}" readonly="readonly" > /
 											<input type="text" id="di_port" style="width:80px; display:none; border: none" value="{{device_info.port}}" readonly="readonly" ></td>
 										
-									</tr>
-									<tr>
-										<th class="device-detail-head">모뎀번호</th>
-										<td class="device-detail-body"><span id="device_serial_span" style="display: none;">{{device_info.device_serial}}</span></td>
-										<th class="device-detail-head">모뎀상태</th>
-										<td class="device-detail-body"><span id="code_local_nm_span" style="display: none;">{{device_info.code_local_nm}}</span></td>
 									</tr>
 									<tr>
 										<th class="device-detail-head">제조사</th>
@@ -203,7 +201,7 @@ function firmwarelist() {
 									<tr>
 										<th class="device-detail-head">하드웨어 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_hw_version" style="width:100px; display:none; border: none" value="{{device_info.hw_version}}" readonly="readonly"></td>
-										<th class="device-detail-head">소프트웨어 버전</th>
+										<th class="device-detail-head">SW 버전</th>
 										<td class="device-detail-body"><input type="text" id="di_fw_version" style="width:100px; display:none; border: none" value="{{device_info.fw_version}}" readonly="readonly"></td>
 									</tr>
 									<tr>
@@ -246,11 +244,11 @@ function firmwarelist() {
 												<tr class="table-border">
 													<td width="90%">
 														<div class="form-group row" style="margin-left: 0px">
-															<label class="col-sm-2 col-form-label">소프트웨어 명</label>
+															<label class="col-sm-2 col-form-label">SW 명</label>
 															<div class="col-lg-4">
 																<input type="text" class="form-control" name="fw_file_nm_b" id="fw_file_nm_b" style="height: 38px; display: inline;">
 															</div>
-															<label class="col-sm-2 col-form-label">소프트웨어 버전</label>
+															<label class="col-sm-2 col-form-label">SW 버전</label>
 															<div class="col-lg-4">
 																<input type="text" class="form-control" name="fw_version_b" id="fw_version_b" style="height: 38px; display: inline;">
 															</div>

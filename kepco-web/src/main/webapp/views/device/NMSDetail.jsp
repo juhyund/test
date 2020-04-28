@@ -88,7 +88,7 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 <!-- navigator -->
 <div class="row wrapper page-heading" style="padding:5px">
 <div class="col-lg-10" >
-	<h3 style="margin-top:6px">NMS 상세정보 </h3>
+	<h2 style="margin-top: 10px; font-weight: bold"><i class="fas fa-angle-double-right"></i> NMS 상세정보</h2>
 </div>
 <div class="col-lg-2" >
 	<ol class="breadcrumb" style="float:right;margin-top:10px;">
@@ -121,9 +121,9 @@ var CONTEXT_PATH = "<%=COMMON_URL%>";
 							</thead>
 							<tbody>
 								<tr>
-									<td><h3>${deviceSerial}</h3></td>
+									<td><h2>${deviceSerial}</h2></td>
 									<%-- <td><h3>${deviceId}</h3></td> --%>
-									<td><h3>${deviceStatusNm}</h3></td>
+									<td><h2>${deviceStatusNm}</h2></td>
 								</tr>
 							</tbody>
 						</table>
