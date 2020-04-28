@@ -88,7 +88,63 @@
 		WHERE object_id = #{object_id}
 	</select>
 	
+	<select id="getMeterValue" resultType="MeterValue" parameterType="MeterValue">
+		SELECT 
+			mv.meter_id
+			, mi.meter_serial
+			, DATE_FORMAT(CONCAT(mv.read_dt,'00'), '${prop.dt}') AS read_dt
+			, ifnull(fnc_get_code_nm(mi.meter_type),'') as meter_type
+			, mv.meter_value
+			, d.device_serial
+			, DATE_FORMAT(mv.reg_dt,'${prop.dt}') AS reg_dt
+			, b.branch_nm
+			, (SELECT branch_nm FROM emi_branch_info WHERE branch_id = b.branch_parent_id) AS parent_branch_nm
+		FROM (
+			SELECT * FROM (
+			SELECT
+				mv.meter_id	
+				, mv.read_dt
+				, mv.channel
+				, mv.meter_value
+				, mv.sect_meter_value
+				, mv.reg_dt		
+				, ROW_NUMBER() OVER (PARTITION BY mv.meter_id ORDER BY mv.read_dt DESC) AS rownum 
+			FROM EMI_METER_VALUE AS mv 
+			WHERE mv.channel = 'CH001'
+			<if test="meter_id != null and meter_id != ''" >     
+	            AND mv.meter_id = #{meter_id}
+	        </if>
+	        <if test="read_dt != null and read_dt != ''" >     
+	            AND mv.read_dt = #{read_dt}
+	        </if>		        
+	        <if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
+	            AND mv.read_dt between #{sdate} AND #{edate}
+	        </if>
+			) AS a WHERE rownum = 1
+		) AS mv
+		INNER JOIN EMI_METER_INFO AS mi ON mi.meter_id = mv.meter_id
+		INNER JOIN EMI_DEVICE_INFO AS d	ON mi.device_id = d.device_id	
+		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
+		<where>
+			<if test="branch_id != null and branch_id != ''" >     
+            	AND b.branch_id = #{branch_id}
+        	</if> 
+        	<if test="device_serial != null and device_serial != ''" >     
+	            AND d.device_serial = #{device_serial}
+	        </if>
+	        <if test="meter_type != null and meter_type != ''" >     
+	            AND mi.meter_type = #{meter_type}
+	        </if>
+	        <if test="meter_serial != null and meter_serial != ''" >     
+	            AND mi.meter_serial = #{meter_serial}
+	        </if>
+		</where>
+		<include refid="order_by_list" />
+		<include refid="query_limit" />		
+	</select>
+	
 	<!-- 검침 메뉴 메인 그리드  -->
+	<!--
 	<select id="getMeterValue" resultType="MeterValue" parameterType="MeterValue">
 		SELECT 
 			a.meter_id,
@@ -119,11 +175,56 @@
         	</if> 
 		</where>
 		<include refid="order_by_list" />
-		<include refid="query_limit" />
-		
+		<include refid="query_limit" />		
 	</select>
+	-->
 	
 	<!-- 검침 메뉴 메인 그리드 개수  -->
+	<select id="getMeterValueCount" resultType="java.lang.Integer" parameterType="MeterValue">
+		SELECT 
+			COUNT(*)
+		FROM (
+			SELECT * FROM (
+			SELECT
+				mv.meter_id	
+				, mv.read_dt
+				, mv.channel
+				, mv.meter_value
+				, mv.sect_meter_value
+				, mv.reg_dt		
+				, ROW_NUMBER() OVER (PARTITION BY mv.meter_id ORDER BY mv.read_dt DESC) AS rownum 
+			FROM EMI_METER_VALUE AS mv 
+			WHERE mv.channel = 'CH001'
+			<if test="meter_id != null and meter_id != ''" >     
+	            AND mv.meter_id = #{meter_id}
+	        </if>
+	        <if test="read_dt != null and read_dt != ''" >     
+	            AND mv.read_dt = #{read_dt}
+	        </if>		        
+	        <if test="sdate != null and edate != null and sdate != '' and edate != '' " >     
+	            AND mv.read_dt between #{sdate} AND #{edate}
+	        </if>
+			) AS a WHERE rownum = 1
+		) AS mv
+		INNER JOIN EMI_METER_INFO AS mi ON mi.meter_id = mv.meter_id
+		INNER JOIN EMI_DEVICE_INFO AS d	ON mi.device_id = d.device_id	
+		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
+		<where>
+			<if test="branch_id != null and branch_id != ''" >     
+            	AND b.branch_id = #{branch_id}
+        	</if> 
+        	<if test="device_serial != null and device_serial != ''" >     
+	            AND d.device_serial = #{device_serial}
+	        </if>
+	        <if test="meter_type != null and meter_type != ''" >     
+	            AND mi.meter_type = #{meter_type}
+	        </if>
+	        <if test="meter_serial != null and meter_serial != ''" >     
+	            AND mi.meter_serial = #{meter_serial}
+	        </if>
+		</where>		
+	</select>
+	<!--
 	<select id="getMeterValueCount" resultType="java.lang.Integer" parameterType="MeterValue">
 		SELECT COUNT(*) 
 		FROM (
@@ -141,6 +242,7 @@
         	</if> 
 		</where>
 	</select>
+	-->
 	
 	
 	<!-- 검침메뉴 상세창의 미터 정보-->
