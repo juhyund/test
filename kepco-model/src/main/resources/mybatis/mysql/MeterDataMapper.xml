@@ -77,7 +77,7 @@
 		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
-		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code and a.class_id = c.class_id and a.attribute_no = c.attribute_no)
+		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code and a.class_id = c.class_id and a.attribute_no = c.attribute_no and kepco_obis = 0)
 		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
 			
 		<include refid="base_where_list" />
@@ -108,7 +108,7 @@
 		FROM EMI_METER_Data a	
 		INNER JOIN EMI_METER_INFO mi ON (a.METER_ID = mi.METER_ID)
 		INNER JOIN EMI_DEVICE_INFO di ON (mi.DEVICE_ID = di.DEVICE_ID)
-		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code and a.class_id = c.class_id and a.attribute_no = c.attribute_no)
+		INNER JOIN EMI_OBIS_CODE c ON (mi.meter_type = c.meter_type AND a.obis_code = c.obis_code and a.class_id = c.class_id and a.attribute_no = c.attribute_no and kepco_obis = 0)
 		LEFT JOIN EMI_DEVICE_STATUS AS ds ON (mi.device_id = ds.device_id)
 		LEFT OUTER JOIN emi_branch_info b ON (b.branch_id = mi.branch_id)
 		WHERE a.meter_id = #{meter_id}   
